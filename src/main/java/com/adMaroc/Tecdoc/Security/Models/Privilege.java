@@ -20,8 +20,9 @@ public class Privilege {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "Privilege_id")
-    private int id;
+    private Long id;
     private String name;
+    private String description;
     @ManyToMany(mappedBy = "privileges")
     @JsonIgnore
     private List<Role> roles;

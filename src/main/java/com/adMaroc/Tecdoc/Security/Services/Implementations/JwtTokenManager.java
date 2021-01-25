@@ -1,5 +1,6 @@
 package com.adMaroc.Tecdoc.Security.Services.Implementations;
 
+import com.adMaroc.Tecdoc.Security.Exceptions.InternalServerException;
 import com.adMaroc.Tecdoc.Security.Models.JwtConfig;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
@@ -44,22 +45,27 @@ public class JwtTokenManager {
 
     public boolean validateToken(String authToken) {
         try {
+
             Jwts.parser()
                     .setSigningKey(jwtConfig.getSecret().getBytes())
                     .parseClaimsJws(authToken);
+//            Date issuedAT = Jwts.parser()
+//                    .setSigningKey(jwtConfig.getSecret().getBytes())
+//                    .parseClaimsJws(authToken).getBody().getIssuedAt();
+//            if(lastLogged.before(issuedAT))
+//                throw new InternalServerException("Already Logged");
 
             return true;
         } catch (SignatureException ex) {
-            log.error("Invalid JWT signature");
+            throw new InternalServerException("Invalid JWT signature");
         } catch (MalformedJwtException ex) {
-            log.error("Invalid JWT token");
+            throw new InternalServerException("Invalid JWT token");
         } catch (ExpiredJwtException ex) {
-            log.error("Expired JWT token");
+            throw new InternalServerException("Expired JWT token");
         } catch (UnsupportedJwtException ex) {
-            log.error("Unsupported JWT token");
+            throw new InternalServerException("Unsupported JWT token");
         } catch (IllegalArgumentException ex) {
-            log.error("JWT claims string is empty.");
+            throw new InternalServerException("JWT claims string is empty.");
         }
-        return false;
     }
 }

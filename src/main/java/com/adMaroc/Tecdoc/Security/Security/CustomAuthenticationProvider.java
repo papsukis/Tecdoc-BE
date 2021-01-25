@@ -43,40 +43,20 @@ public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
             if ((user == null)) {
                 throw new BadCredentialsException("Invalid username or password");
             }
-
-            if(!bCryptPasswordEncoder.matches((CharSequence) auth.getCredentials(),userDetailsAdapter.getPassword()))
-            {
-                throw new BadCredentialsException("Invalid username or password");
+            if(userDetailsAdapter.getPassword().length()>0){
+                if(!bCryptPasswordEncoder.matches((CharSequence) auth.getCredentials(),userDetailsAdapter.getPassword()))
+                {
+                    throw new BadCredentialsException("Invalid username or password");
+                }
+            }else{
+                throw  new InternalServerException("Password cannot be empty");
             }
 
             WebAuthenticationDetails details = (WebAuthenticationDetails) auth.getDetails();
-            return new UsernamePasswordAuthenticationToken(userDetailsAdapter, userDetailsAdapter.getPassword(), userDetailsAdapter.getAuthorities());
-
-
-        /*int minH=config.min.getHourOfDay();
-        int minM=config.min.getMinuteOfHour();
-        int maxH=config.max.getHourOfDay();
-        int maxM=config.max.getMinuteOfHour();
-        DateTime current=new DateTime();
-        int currentH=current.getHourOfDay();
-        int currentM=current.getMinuteOfHour();*/
-//
-
-        // to verify verification code
-
-       /* if ((!isValidLong(verificationCode) || !totp.verify(verificationCode))) {
-            throw new BadCredentialsException("Invalid verfication code");
-        }*/
-
-//        if(!user.getUsual_IP().matches(details.getRemoteAddress()))
-//        {
-//            throw new BadCredentialsException("Bad IP address");
-//        }
-      /* if(!( (( minH <= currentH ) || (minH==currentH && minM <= currentM )) && (( maxH >= currentH ) || (maxH==currentH && maxM >= currentM ))))
-        {
-            throw new BadCredentialsException("Incorrect time to conect");
-        }*/
-
+            return new UsernamePasswordAuthenticationToken(
+                    userDetailsAdapter,
+                    userDetailsAdapter.getPassword(),
+                    userDetailsAdapter.getAuthorities());
 
     }
 

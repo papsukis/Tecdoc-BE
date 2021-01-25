@@ -10,6 +10,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -65,11 +66,19 @@ public class User {
     @LastModifiedDate
     private Instant updatedAt;
 
+    @JsonIgnore
     private boolean active;
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+
+    private Date lastLogged;
+
+
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(	name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
+    @JsonIgnore
     private String secret;
 }

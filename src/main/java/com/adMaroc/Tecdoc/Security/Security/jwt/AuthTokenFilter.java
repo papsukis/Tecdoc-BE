@@ -1,6 +1,8 @@
 package com.adMaroc.Tecdoc.Security.Security.jwt;
 
+import com.adMaroc.Tecdoc.Security.Exceptions.ResourceNotFoundException;
 import com.adMaroc.Tecdoc.Security.Models.JwtConfig;
+import com.adMaroc.Tecdoc.Security.Models.User;
 import com.adMaroc.Tecdoc.Security.Models.UserDetailsAdapter;
 import com.adMaroc.Tecdoc.Security.Services.Implementations.JwtTokenManager;
 import com.adMaroc.Tecdoc.Security.Services.Implementations.UserDetailsServiceImpl;
@@ -21,6 +23,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
 public class AuthTokenFilter extends OncePerRequestFilter {
 
@@ -62,10 +65,11 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
         // 3. Get the token
         String token = header.replace(jwtConfig.getPrefix(), "");
-
+//        User user=userService.findByUsername(username).orElseThrow(() ->new ResourceNotFoundException("user does not exist"));
         if(tokenProvider.validateToken(token)) {
-            Claims claims = tokenProvider.getClaimsFromJWT(token);
-            String username = claims.getSubject();
+
+        Claims claims = tokenProvider.getClaimsFromJWT(token);
+        String username = claims.getSubject();
 
             UsernamePasswordAuthenticationToken auth =
                     userService.findByUsername(username)

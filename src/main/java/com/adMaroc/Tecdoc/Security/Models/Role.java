@@ -24,7 +24,7 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "role_id")
-    private int id;
+    private Long id;
     private String name;
     private String description;
 
@@ -32,8 +32,11 @@ public class Role {
     @JsonIgnore
     private List<User> users;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "roles_privileges", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "privilege_id"))
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "roles_privileges",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "privilege_id")
+            )
     private List<Privilege> privileges;
 
     public Role(String name){

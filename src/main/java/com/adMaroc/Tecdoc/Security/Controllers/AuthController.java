@@ -66,31 +66,7 @@ public class AuthController {
         return ResponseEntity.ok(new JwtAuthenticationResponse(token));
     }
 
-    @PostMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createUser( @RequestBody SignupRequest payload) {
-        log.info("creating user {}", payload.getUsername());
 
-        User user = User
-                .builder()
-                .username(payload.getUsername())
-                .email(payload.getEmail())
-                .password(payload.getPassword())
-                .build();
-
-        User saved;
-        try {
-            saved = userService.registerUser(user, new Role("USER"));
-        } catch (UsernameAlreadyExistsException | EmailAlreadyExistsException e) {
-            throw new BadRequestException(e.getMessage());
-        }
-
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentContextPath().path("/users/{username}")
-                .buildAndExpand(user.getUsername()).toUri();
-
-        return ResponseEntity
-                .ok(true);
-    }
 //
 //    @PostMapping("/register")
 //    public ResponseEntity<?> registerUser@RequestBody SignupRequest signUpRequest) {

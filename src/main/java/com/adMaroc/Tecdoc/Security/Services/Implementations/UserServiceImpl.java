@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -45,22 +46,27 @@ public class UserServiceImpl implements UserService {
                 .findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException( String.format("username %s", username)));
 
-        if(!totpManager.verifyCode(code, user.getSecret())) {
-            throw new IncorrectOTPCodeException("Code is incorrect");
-        }
-
-        return Optional.of(user)
+        String jwt = Optional.of(user)
                 .map(UserDetailsAdapter :: new)
                 .map(userDetails -> new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()))
                 .map(jwtTokenManager::generateToken)
                 .orElseThrow(() ->
                         new InternalServerException("Unable to generate access token"));
+        if(!totpManager.verifyCode(code, user.getSecret())) {
+            throw new IncorrectOTPCodeException("Code is incorrect");
+        }
+        Long now = System.currentTimeMillis();
+        user.setLastLogged(new Date(now));
+
+        userRepository.save(user);
+
+        return jwt;
     }
     @Override
-    public User registerUser(User user, Role role) {
+    public User registerUser(User user) {
         log.info("registering user {}", user.getUsername());
-
+        User saved = user;
         if(userRepository.existsByUsername(user.getUsername())) {
             log.warn("username {} already exists.", user.getUsername());
 
@@ -74,18 +80,21 @@ public class UserServiceImpl implements UserService {
             throw new EmailAlreadyExistsException(
                     String.format("email %s already exists", user.getEmail()));
         }
-        user.setActive(true);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(new HashSet<Role>() {{
-            add(role);
-        }});
-
-
-            user.setSecret(totpManager.generateSecret());
-
-
+        saved.setActive(true);
+        saved.setPassword(passwordEncoder.encode("password"));
+        saved.setSecret(totpManager.generateSecret());
+        saved.setRoles(user.getRoles());
         return userRepository.save(user);
     }
+
+    @Override
+    public User updateUser(User user) {
+        User tmp = userRepository.getOne(user.getId());
+        tmp.setRoles(user.getRoles());
+        return userRepository.save(tmp);
+
+    }
+
     @Override
     public List<User> findAll() {
         log.info("retrieving all users");

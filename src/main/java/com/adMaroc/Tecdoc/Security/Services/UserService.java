@@ -13,7 +13,9 @@ public interface UserService {
 
     String verify(String username, String code);
 
-    User registerUser(User user, Role role);
+    User registerUser(User user);
+
+    User updateUser(User user);
 
     List<User> findAll();
 
