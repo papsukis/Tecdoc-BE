@@ -5,6 +5,7 @@ import com.adMaroc.Tecdoc.Security.Exceptions.ResourceNotFoundException;
 import com.adMaroc.Tecdoc.Security.Models.User;
 import com.adMaroc.Tecdoc.Security.Models.UserDetailsAdapter;
 import com.adMaroc.Tecdoc.Security.Repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 
 @Component
+@Slf4j
 public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
 
     private final Logger logger = LoggerFactory.getLogger(CustomAuthenticationProvider .class);
@@ -68,7 +70,13 @@ public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
             return true;
         }
 
-        
+
+    @Override
+    protected void doAfterPropertiesSet() {
+        if(super.getUserDetailsService() != null){
+            log.info("UserDetailsService has been configured properly");
+        }
+    }
     @Override
     public boolean supports(Class<?> authentication) {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
