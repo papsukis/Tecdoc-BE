@@ -1,7 +1,6 @@
 package com.adMaroc.Tecdoc.Security.Services;
 
 
-import com.adMaroc.Tecdoc.Security.Models.Role;
 import com.adMaroc.Tecdoc.Security.Models.User;
 
 import java.util.List;
@@ -16,6 +15,8 @@ public interface UserService {
     User registerUser(User user);
 
     User updateUser(User user);
+
+    boolean updatePassword(String password, String username);
 
     List<User> findAll();
 

@@ -2,12 +2,14 @@ package com.adMaroc.Tecdoc.Security.Security;
 
 
 
+import com.adMaroc.Tecdoc.Security.Exceptions.AlreadyLoggedException;
 import com.adMaroc.Tecdoc.Security.Models.JwtConfig;
 import com.adMaroc.Tecdoc.Security.Security.jwt.AuthEntryPointJwt;
 import com.adMaroc.Tecdoc.Security.Security.jwt.AuthTokenFilter;
 import com.adMaroc.Tecdoc.Security.Services.Implementations.JwtTokenManager;
 import com.adMaroc.Tecdoc.Security.Services.Implementations.UserDetailsServiceImpl;
 import com.adMaroc.Tecdoc.Security.Services.UserService;
+import com.adMaroc.Tecdoc.Security.handler.RestExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,13 +26,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
-        // securedEnabled = true,
+         securedEnabled = true,
         // jsr250Enabled = true,
         prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -48,10 +51,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserService userService;
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
+    @Autowired
+    private HandlerExceptionResolver handlerExceptionResolver ;
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
-        return new AuthTokenFilter(jwtConfig, tokenProvider, userService);
+        return new AuthTokenFilter(jwtConfig, tokenProvider, userService,handlerExceptionResolver);
     }
 
     @Override
@@ -71,13 +76,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity http) throws Exception, AlreadyLoggedException {
         http.cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
                 .and()
-                .addFilterBefore(new AuthTokenFilter(jwtConfig, tokenProvider, userService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new AuthTokenFilter(jwtConfig, tokenProvider, userService,handlerExceptionResolver), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests().antMatchers(HttpMethod.POST,"/api/auth/**").permitAll().and()
                 .authorizeRequests().antMatchers("/public/**").permitAll().and()
                 .authorizeRequests().antMatchers("/privilege/findAll").permitAll().and()

@@ -16,9 +16,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 //import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-@Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
+
 
         @Override
         protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -32,13 +32,20 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
         //other exception handlers below
     @ExceptionHandler(InternalServerException.class)
-    protected ResponseEntity<Object> handleEntityNotFound(
+    protected ResponseEntity<Object> handleInternalServer(
             InternalServerException ex) {
         ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR);
-
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
     }
+    @ExceptionHandler(value = AlreadyLoggedException.class)
+    public ResponseEntity<Object> handleAlreadyLogged(
+            AlreadyLoggedException ex) {
+        ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR);
+        apiError.setMessage(ex.getMessage());
+        return new ResponseEntity(ex, HttpStatus.UNAUTHORIZED);
+    }
+
     @ExceptionHandler(BadRequestException.class)
     protected ResponseEntity<Object> handleEntityNotFound(
             BadRequestException ex) {

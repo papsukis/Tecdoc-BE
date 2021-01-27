@@ -2,7 +2,6 @@ package com.adMaroc.Tecdoc.Security.Services.Implementations;
 
 
 import com.adMaroc.Tecdoc.Security.Exceptions.*;
-import com.adMaroc.Tecdoc.Security.Models.Role;
 import com.adMaroc.Tecdoc.Security.Models.User;
 import com.adMaroc.Tecdoc.Security.Models.UserDetailsAdapter;
 import com.adMaroc.Tecdoc.Security.Repository.UserRepository;
@@ -16,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,17 +82,30 @@ public class UserServiceImpl implements UserService {
         saved.setPassword(passwordEncoder.encode("password"));
         saved.setSecret(totpManager.generateSecret());
         saved.setRoles(user.getRoles());
+        saved.setFirstLog(true);
+        saved.setCreatedAt(new Date().toInstant());
         return userRepository.save(user);
     }
 
     @Override
     public User updateUser(User user) {
         User tmp = userRepository.getOne(user.getId());
+        tmp.setEmail(user.getEmail());
+        tmp.setUsername(user.getUsername());
+        tmp.setUpdatedAt(new Date().toInstant());
         tmp.setRoles(user.getRoles());
         return userRepository.save(tmp);
 
     }
-
+    @Override
+    public boolean updatePassword(String password, String username){
+        User tmp = findByUsername(username).get();
+        tmp.setPassword(passwordEncoder.encode(password));
+        tmp.setUpdatedAt(new Date().toInstant());
+        tmp.setFirstLog(false);
+        userRepository.save(tmp);
+        return true;
+    }
     @Override
     public List<User> findAll() {
         log.info("retrieving all users");

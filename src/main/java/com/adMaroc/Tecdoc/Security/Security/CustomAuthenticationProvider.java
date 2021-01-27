@@ -35,7 +35,6 @@ public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
       throws AuthenticationException {
 
             final User user = userRepository.findByUsername(auth.getName()).orElseThrow(() -> new ResourceNotFoundException( String.format("username %s", auth.getName())));;
-            System.out.println(user.getUsername());
             UserDetailsAdapter userDetailsAdapter = new UserDetailsAdapter(user);
             boolean sameIP = true;
             boolean goodTime = true;
@@ -69,13 +68,7 @@ public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
             return true;
         }
 
-
-    @Override
-    protected void doAfterPropertiesSet() {
-        if(super.getUserDetailsService() != null){
-            System.out.println("UserDetailsService has been configured properly");
-        }
-    }
+        
     @Override
     public boolean supports(Class<?> authentication) {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);

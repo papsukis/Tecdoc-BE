@@ -1,5 +1,6 @@
 package com.adMaroc.Tecdoc.Security.Services.Implementations;
 
+import com.adMaroc.Tecdoc.Security.Exceptions.AlreadyLoggedException;
 import com.adMaroc.Tecdoc.Security.Exceptions.InternalServerException;
 import com.adMaroc.Tecdoc.Security.Models.JwtConfig;
 import io.jsonwebtoken.*;
@@ -43,20 +44,24 @@ public class JwtTokenManager {
                 .getBody();
     }
 
-    public boolean validateToken(String authToken) {
+    public boolean validateToken(String authToken,Date lastLogged) throws  InternalServerException{
         try {
-
             Jwts.parser()
                     .setSigningKey(jwtConfig.getSecret().getBytes())
                     .parseClaimsJws(authToken);
-//            Date issuedAT = Jwts.parser()
-//                    .setSigningKey(jwtConfig.getSecret().getBytes())
-//                    .parseClaimsJws(authToken).getBody().getIssuedAt();
-//            if(lastLogged.before(issuedAT))
-//                throw new InternalServerException("Already Logged");
+
+            Date issuedAT = Jwts.parser()
+                    .setSigningKey(jwtConfig.getSecret().getBytes())
+                    .parseClaimsJws(authToken).getBody().getIssuedAt();
+
+            if(issuedAT.before(lastLogged))
+                throw new AlreadyLoggedException("Already Logged");
 
             return true;
-        } catch (SignatureException ex) {
+        }catch(AlreadyLoggedException ex){
+            throw new AlreadyLoggedException(ex.getMessage());
+        }
+        catch (SignatureException ex) {
             throw new InternalServerException("Invalid JWT signature");
         } catch (MalformedJwtException ex) {
             throw new InternalServerException("Invalid JWT token");

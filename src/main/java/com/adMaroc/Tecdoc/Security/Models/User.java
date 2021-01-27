@@ -71,6 +71,9 @@ public class User {
 
     private Date lastLogged;
 
+    @Column(nullable = true)
+    private boolean isFirstLog=true;
+
 
 
     @ManyToMany(fetch = FetchType.EAGER)

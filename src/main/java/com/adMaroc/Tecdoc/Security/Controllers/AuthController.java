@@ -60,59 +60,16 @@ public class AuthController {
         }
 
     @PostMapping("/verify")
-    public ResponseEntity<?> verifyCode(@RequestBody VerifyCodeRequest verifyCodeRequest) {
+    public ResponseEntity<JwtAuthenticationResponse> verifyCode(@RequestBody VerifyCodeRequest verifyCodeRequest) {
+            boolean isFirstLog=false;
         String token = userService.verify(verifyCodeRequest.getUsername(), verifyCodeRequest.getCode());
-
-        return ResponseEntity.ok(new JwtAuthenticationResponse(token));
+            isFirstLog=userService.findByUsername(verifyCodeRequest.getUsername()).get().isFirstLog();
+        return ResponseEntity.ok(new JwtAuthenticationResponse(token,isFirstLog));
     }
-
-
-//
-//    @PostMapping("/register")
-//    public ResponseEntity<?> registerUser@RequestBody SignupRequest signUpRequest) {
-//        System.out.println(signUpRequest.toString());
-//        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-//            return ResponseEntity
-//                    .badRequest()
-//                    .body(new MessageResponse("Error: Username is already taken!"));
-//        }
-//
-//        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-//            return ResponseEntity
-//                    .badRequest()
-//                    .body(new MessageResponse("Error: Email is already in use!"));
-//        }
-//
-//        // Create new user's account
-//        User user = new User(signUpRequest.getUsername(),
-//                signUpRequest.getEmail(),
-//                encoder.encode(signUpRequest.getPassword()));
-//
-//        Set<String> strRoles = signUpRequest.getRole();
-//        Set<Role> roles = new HashSet<>();
-//
-//        if (strRoles == null) {
-//            Role userRole = roleRepository.findByName("USER")
-//                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//            roles.add(userRole);
-//        } else {
-//            strRoles.forEach(role -> {
-//                        Role roleOfNewUser = roleRepository.findByName(role)
-//                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//                        roles.add(roleOfNewUser);
-//                }
-//            );
-//        }
-//        user.setRoles(roles);
-//        User tmp = userRepository.save(user);
-//        UserDescription userDetails = signUpRequest.getUserDetails();
-//        userDetails.setUser(tmp);
-//        userDetailsRepository.save(userDetails);
-//
-//
-//
-//
-//        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
-//    }
+    @PostMapping("/setPassword")
+    public ResponseEntity<?> setPassword(@RequestBody ResetPasswordRequest request){
+        userService.updatePassword(request.getPassword(),request.getUsername());
+            return ResponseEntity.ok(true);
+    }
 
 }

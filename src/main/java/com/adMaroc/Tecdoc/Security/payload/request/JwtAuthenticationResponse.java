@@ -9,5 +9,6 @@ import lombok.NonNull;
 public class JwtAuthenticationResponse {
     @NonNull
     private String accessToken;
+    private boolean isFirstLog;
 
 }

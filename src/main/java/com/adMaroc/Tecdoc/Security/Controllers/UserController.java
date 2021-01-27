@@ -58,7 +58,7 @@ public class UserController {
 
         User saved;
         try {
-            if(user.getId() == 0)
+            if((Long)user.getId() == null)
             saved = userService.registerUser(user);
             else
                 saved=userService.updateUser(user);
