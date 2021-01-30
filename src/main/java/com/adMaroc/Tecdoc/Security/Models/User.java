@@ -66,7 +66,6 @@ public class User {
     @LastModifiedDate
     private Instant updatedAt;
 
-    @JsonIgnore
     private boolean active;
 
     private Date lastLogged;
@@ -74,7 +73,8 @@ public class User {
     @Column(nullable = true)
     private boolean isFirstLog=true;
 
-
+    @Column(nullable = true)
+    private long numberOfLogins;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(	name = "user_roles",

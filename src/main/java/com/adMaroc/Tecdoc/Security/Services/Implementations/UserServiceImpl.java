@@ -4,16 +4,21 @@ package com.adMaroc.Tecdoc.Security.Services.Implementations;
 import com.adMaroc.Tecdoc.Security.Exceptions.*;
 import com.adMaroc.Tecdoc.Security.Models.User;
 import com.adMaroc.Tecdoc.Security.Models.UserDetailsAdapter;
+import com.adMaroc.Tecdoc.Security.Models.UserLog;
 import com.adMaroc.Tecdoc.Security.Repository.UserRepository;
 import com.adMaroc.Tecdoc.Security.Security.CustomAuthenticationProvider;
+import com.adMaroc.Tecdoc.Security.Services.ConfigurationService;
+import com.adMaroc.Tecdoc.Security.Services.UserLogService;
 import com.adMaroc.Tecdoc.Security.Services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +32,9 @@ public class UserServiceImpl implements UserService {
     @Autowired private CustomAuthenticationProvider authenticationManager;
     @Autowired private JwtTokenManager jwtTokenManager;
     @Autowired private TotpManagerImpl totpManager;
+    @Autowired private UserLogService userLogService;
+    @Autowired private ConfigurationService configService;
+    @Autowired private HttpServletRequest context;
 
     @Override
     public User loginUser(String username, String password) {
@@ -43,6 +51,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository
                 .findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException( String.format("username %s", username)));
+        long nbrOfLogin = configService.getConfiguration("number_of_login").getNumberValue();
 
         String jwt = Optional.of(user)
                 .map(UserDetailsAdapter :: new)
@@ -51,12 +60,26 @@ public class UserServiceImpl implements UserService {
                 .map(jwtTokenManager::generateToken)
                 .orElseThrow(() ->
                         new InternalServerException("Unable to generate access token"));
+        if(nbrOfLogin<=user.getNumberOfLogins()){
+            user.setNumberOfLogins(0);
+            user.setActive(false);
+            userRepository.save(user);
+            throw new InternalServerException("Max number of attempts");
+        }
         if(!totpManager.verifyCode(code, user.getSecret())) {
+            user.setNumberOfLogins(user.getNumberOfLogins()+1);
+            userRepository.save(user);
             throw new IncorrectOTPCodeException("Code is incorrect");
         }
+
         Long now = System.currentTimeMillis();
         user.setLastLogged(new Date(now));
 
+        UserLog userLog = new UserLog(user.getUsername(),user.getLastLogged(),context.getRemoteAddr());
+
+        userLogService.saveUserLog(userLog);
+
+        user.setNumberOfLogins(0);
         userRepository.save(user);
 
         return jwt;
@@ -83,6 +106,7 @@ public class UserServiceImpl implements UserService {
         saved.setSecret(totpManager.generateSecret());
         saved.setRoles(user.getRoles());
         saved.setFirstLog(true);
+        saved.setNumberOfLogins(0);
         saved.setCreatedAt(new Date().toInstant());
         return userRepository.save(user);
     }
@@ -92,6 +116,8 @@ public class UserServiceImpl implements UserService {
         User tmp = userRepository.getOne(user.getId());
         tmp.setEmail(user.getEmail());
         tmp.setUsername(user.getUsername());
+        tmp.setActive(user.isActive());
+        tmp.setFirstLog(user.isFirstLog());
         tmp.setUpdatedAt(new Date().toInstant());
         tmp.setRoles(user.getRoles());
         return userRepository.save(tmp);

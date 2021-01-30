@@ -1,6 +1,7 @@
 package com.adMaroc.Tecdoc.Security.Security.jwt;
 
 import com.adMaroc.Tecdoc.Security.Exceptions.AlreadyLoggedException;
+import com.adMaroc.Tecdoc.Security.Exceptions.InternalServerException;
 import com.adMaroc.Tecdoc.Security.Exceptions.ResourceNotFoundException;
 import com.adMaroc.Tecdoc.Security.Models.ApiError;
 import com.adMaroc.Tecdoc.Security.Models.JwtConfig;
@@ -95,7 +96,7 @@ public class AuthTokenFilter extends OncePerRequestFilter implements Filter {
 
         // All secured paths that needs a token are already defined and secured in config class.
         // And If user tried to access without access token, then he won't be authenticated and an exception will be thrown.
-
+        log.info(request.getRemoteAddr());
         // 3. Get the token
         String token = header.replace(jwtConfig.getPrefix(), "");
         Claims claims = tokenProvider.getClaimsFromJWT(token);
@@ -103,9 +104,11 @@ public class AuthTokenFilter extends OncePerRequestFilter implements Filter {
         Optional<User> tmp = userService.findByUsername(username);
         try {
             if (tokenProvider.validateToken(token, tmp.get().getLastLogged())) {
+                if(!tmp.get().isActive()){
+                    throw new InternalServerException("User is not active");
+                }
                 UsernamePasswordAuthenticationToken auth =
-                        tmp
-                                .map(UserDetailsAdapter::new)
+                        tmp.map(UserDetailsAdapter::new)
                                 .map(userDetails -> {
                                     UsernamePasswordAuthenticationToken authentication =
                                             new UsernamePasswordAuthenticationToken(

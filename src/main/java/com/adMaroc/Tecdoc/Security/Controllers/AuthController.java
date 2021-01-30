@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.HashSet;
 import java.util.List;
@@ -52,9 +53,8 @@ public class AuthController {
     @Autowired private TotpManager totpManager;
 
         @PostMapping("/signin")
-        public ResponseEntity<?> authenticateUser( @RequestBody LoginRequest loginRequest) {
+        public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
             User user = userService.loginUser(loginRequest.getUsername(), loginRequest.getPassword());
-
             return ResponseEntity.ok(new LoginResponse(
                     totpManager.getUriForImage(user.getSecret(),user.getUsername())));
         }
@@ -62,6 +62,7 @@ public class AuthController {
     @PostMapping("/verify")
     public ResponseEntity<JwtAuthenticationResponse> verifyCode(@RequestBody VerifyCodeRequest verifyCodeRequest) {
             boolean isFirstLog=false;
+
         String token = userService.verify(verifyCodeRequest.getUsername(), verifyCodeRequest.getCode());
             isFirstLog=userService.findByUsername(verifyCodeRequest.getUsername()).get().isFirstLog();
         return ResponseEntity.ok(new JwtAuthenticationResponse(token,isFirstLog));

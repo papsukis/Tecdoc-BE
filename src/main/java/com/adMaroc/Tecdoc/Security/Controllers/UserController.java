@@ -6,6 +6,7 @@ import com.adMaroc.Tecdoc.Security.Exceptions.UsernameAlreadyExistsException;
 import com.adMaroc.Tecdoc.Security.Models.Role;
 import com.adMaroc.Tecdoc.Security.Models.User;
 import com.adMaroc.Tecdoc.Security.Repository.UserRepository;
+import com.adMaroc.Tecdoc.Security.Services.UserLogService;
 import com.adMaroc.Tecdoc.Security.Services.UserService;
 import com.adMaroc.Tecdoc.Security.payload.request.SignupRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -18,10 +19,11 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/user")
 @Slf4j
-
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserLogService userLogService;
 
     @GetMapping("/findAll")
     private ResponseEntity<?> findAllUsers(){
@@ -54,9 +56,10 @@ public class UserController {
     }
     @PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> saveUser( @RequestBody User user) {
-        log.info("creating user {}", user.getUsername());
+        log.info("updating user {}", user.getUsername());
 
         User saved;
+        System.out.println(user.toString());
         try {
             if((Long)user.getId() == null)
             saved = userService.registerUser(user);
@@ -69,4 +72,10 @@ public class UserController {
         return ResponseEntity
                 .ok(saved);
     }
+
+    @GetMapping(value="/findAllLogs")
+    public ResponseEntity<?> getAllLogs(@RequestParam String username ) {
+        return ResponseEntity.ok(userLogService.findByUsername(username));
+    }
+
 }
