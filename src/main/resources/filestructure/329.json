@@ -1,0 +1,81 @@
+{
+  "tableName": "Proposed Criteria",
+  "tableNumber": 329,
+  "length": 47,
+  "contents": "Proposed Criteria for generic articles",
+  "sorting": "genArtNr,lfdNr",
+  "primaryKey": "genArtNr,lfdNr",
+  "deltaKey": "",
+  "className" : "ProposedCriteria",
+  "attr": [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 329"
+    },
+    {
+      "name": "genArtNr",
+      "pos": 29,
+      "length": 5,
+      "type": "N",
+      "description": "Unambiguous number of the generic article(->320)"
+    },
+    {
+      "name": "lfdNr",
+      "pos": 34,
+      "length": 3,
+      "type": "N",
+      "description": "Sequential number within one genartNr"
+    },
+    {
+      "name": "lKZ",
+      "pos": 37,
+      "length": 3,
+      "type": "(C)",
+      "description": "Country code(->10)"
+    },
+    {
+      "name": "kritNr",
+      "pos": 40,
+      "length": 4,
+      "type": "N",
+      "description": "Criterion Number(->50)"
+    },
+    {
+      "name": "n210",
+      "pos": 44,
+      "length": 1,
+      "type": "N",
+      "description": "'1':must be specified as an article criterion (->210).otherwise 0"
+    },
+    {
+      "name": "n400",
+      "pos": 45,
+      "length": 1,
+      "type": "N",
+      "description": "'1':must be specified as linkage criterion (->210).otherwise 0"
+    },
+    {
+      "name": "exclude",
+      "pos": 46,
+      "length": 1,
+      "type": "N",
+      "description": "'1' = Country code is an exclusion, '0' = Country Code is an inclusion"
+    }
+  ]
+}

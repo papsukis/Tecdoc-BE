@@ -1,0 +1,98 @@
+{
+  "tableName" : "Manufacturer",
+  "tableNumber" : 100,
+  "length" : 40,
+  "contents" : "Description of all manufacturers",
+  "sorting" : "herNr",
+  "primaryKey" : "herNr",
+  "className" : "Manufacturer",
+  "attr" : [
+    {
+      "name" : "dLNr",
+      "pos" : 0,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 4,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 100"
+    },
+    {
+      "name" : "herNr",
+      "pos" : 7,
+      "length" : 6,
+      "type" : "N",
+      "description" : "Manufacturer Number"},
+      {
+      "name" : "hKZ",
+      "pos" : 13,
+      "length" : 10,
+      "type" : "C",
+      "description" : "Key Table Entry (numerical or alphanumerical depending on the Key table Type)"},
+      {
+      "name" : "lBezNr",
+      "pos" : 23,
+      "length" : 9,
+      "type" : "N",
+      "description" : "Description Number (->012)"},
+    {
+      "name" : "pKW",
+      "pos" : 32,
+      "length" : 1,
+      "type" : "N",
+      "description" : "PC Manufacturer (0=No, 1= Yes)"
+    },
+    {
+      "name" : "nKW",
+      "pos" : 33,
+      "length" : 1,
+      "type" : "N",
+      "description" : "PC Manufacturer (0=No, 1= Yes)"
+    },
+    {
+      "name" : "vGL",
+      "pos" : 34,
+      "length" : 1,
+      "type" : "N",
+      "description" : "Comparative Manufacturer (0=No, 1= Yes)"
+    },
+    {
+      "name" : "achse",
+      "pos" : 35,
+      "length" : 1,
+      "type" : "N",
+      "description" : "Axle Manufacturer (0=No, 1= Yes)"
+    } ,
+    {
+      "name" : "motor",
+      "pos" : 36,
+      "length" : 1,
+      "type" : "N",
+      "description" : "Engine Manufacturer (0=No, 1= Yes)"
+    },
+    {
+      "name" : "getriebe",
+      "pos" : 37,
+      "length" : 1,
+      "type" : "N",
+      "description" : "Transmission Manufacturer (0=No, 1= Yes)"
+    },
+    {
+      "name" : "transporter",
+      "pos" : 38,
+      "length" : 1,
+      "type" : "N",
+      "description" : "LCV Manufacturer (0=No, 1= Yes)"
+    },
+    {
+      "name" : "delet",
+      "pos" : 39,
+      "length" : 1,
+      "type" : "N",
+      "description" : "Transmission Manufacturer (0=No, 1= Yes)"
+    }
+  ]
+}

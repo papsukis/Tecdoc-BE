@@ -1,0 +1,90 @@
+{
+  "tableName": "Parts List Criteria",
+  "tableNumber": 208,
+  "length": 69,
+  "contents": "Criteria for component parts in a parts list",
+  "sorting": "artNr,lfdNr1,lfdNr,sortNr",
+  "primaryKey": "artNr,lfdNr1,lfdNr,sortNr",
+  "deltaKey": "artNr",
+  "className" : "PartsListCritera",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->100)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 207"
+    },
+    {
+      "name": "Reserviert",
+      "pos": 29,
+      "length": 3,
+      "type": "",
+      "description": "Former LKZ"
+    },
+    {
+      "name": "lfdNr",
+      "pos": 32,
+      "length": 5,
+      "type": "N",
+      "description": "Sequential Number"
+    },
+    {
+      "name": "sortNr",
+      "pos": 37,
+      "length": 3,
+      "type": "N",
+      "description": "Sorting order"
+    },
+    {
+      "name": "kritNr",
+      "pos": 40,
+      "length": 4,
+      "type": "N",
+      "description": "Criterion Number (KT -> 50)"
+    },
+    {
+      "name": "kritWert",
+      "pos": 44,
+      "length": 20,
+      "type": "C",
+      "description": "Criterion Value"
+    },
+    {
+      "name": "exclude",
+      "pos": 64,
+      "length": 1,
+      "type": "(N)",
+      "description": "'1' = Country code is an exclusion, '0' = country code is an inclusion"
+    },
+    {
+      "name": "lfdNr1",
+      "pos": 65,
+      "length": 3,
+      "type": "N",
+      "description": "lfdNr from DT205"
+    },
+
+    {
+      "name": "loschFlag",
+      "pos": 68,
+      "length": 1,
+      "type": "N",
+      "description": "1= delet all data records for the Delta key , otherwise 0"
+    }
+  ]
+}

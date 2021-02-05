@@ -1,0 +1,103 @@
+{
+  "tableName": "Context Sensitive graphics",
+  "tableNumber": 233,
+  "length": 46,
+  "contents": "Context Sensitive graphics",
+  "sorting": "bildNr,dokumentenArt,koordintenNr,lfdNr",
+  "primaryKey": "bildNr,dokumentenArt,koordintenNr,lfdNr",
+  "deltaKey": "bildNr,dokumentenArt,sprachNr",
+  "className" : "ContextSensitiveGraphics",
+  "attr": [
+    {
+      "name": "dLNr",
+      "pos": 0,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->100)"
+    },
+    {
+      "name": "sA",
+      "pos": 4,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 233"
+    },
+    {
+      "name": "bildNr",
+      "pos": 7,
+      "length": 9,
+      "type": "N",
+      "description": "Unambiguous Graphics Number(->231)(>=100.000 *DatSupNo , <100.000*(DatSupNo +1))"
+    },
+    {
+      "name": "dokumentenArt",
+      "pos": 16,
+      "length": 2,
+      "type": "N",
+      "description": "Document Type (->14)"
+    },
+    {
+      "name": "koordintenNr",
+      "pos": 18,
+      "length": 4,
+      "type": "N",
+      "description": "Coordinate number"
+    },
+    {
+      "name": "lfdNr",
+      "pos": 22,
+      "length": 3,
+      "type": "N",
+      "description": "Sequential number when more than one coordinate number"
+    },
+    {
+      "name": "sprachNr",
+      "pos": 25,
+      "length": 3,
+      "type": "N",
+      "description": "Language Number(->20)"
+    },
+    {
+      "name": "typ",
+      "pos": 34,
+      "length": 1,
+      "type": "(N)",
+      "description": "0=Circle,1=Square"
+    },
+    {
+      "name": "x1",
+      "pos": 29,
+      "length": 4,
+      "type": "N",
+      "description": "X-Coordinate centre of the circle/1. point of the square"
+    },
+    {
+      "name": "y1",
+      "pos": 33,
+      "length": 4,
+      "type": "N",
+      "description": "Y-Coordinate centre of the circle/1. point of the square"
+    },
+    {
+      "name": "x2",
+      "pos": 37,
+      "length": 4,
+      "type": "N",
+      "description": "Radius of the circle/ X-Coordinate 2. point of the square"
+    },
+    {
+      "name": "y2",
+      "pos": 41,
+      "length": 4,
+      "type": "N",
+      "description": "Y-Coordinate 2. point of the square"
+    },
+    {
+      "name": "loschFlag",
+      "pos": 45,
+      "length": 1,
+      "type": "N",
+      "description": "1= delet all data records for the Delta key , otherwise 0"
+    }
+  ]
+}

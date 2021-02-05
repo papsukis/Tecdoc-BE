@@ -1,0 +1,48 @@
+{
+  "tableName" : "Allocation of Body Types to Model Series",
+  "tableNumber" : 143,
+  "length" : 29,
+  "contents" : "Additional information on all vehicle model series ",
+  "sorting" : "kmodNr,lKZ,sortNr",
+  "primaryKey" : "kmodNr,lKZ,muster",
+  "deltaKey" : "",
+  "className" : "AllocationOfBodyTypesToModelSeries",
+  "attr" : [
+    {
+      "name" : "dLNr",
+      "pos" : 0,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 4,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 143"},
+    {
+      "name" : "kmodNr",
+      "pos" : 7,
+      "length" : 5,
+      "type" : "N",
+      "description" : "Unanmbiguous number of the vehicle model series"},
+      {
+        "name" : "lKZ",
+        "pos" : 12,
+        "length" : 3,
+        "type" : "(C)",
+        "description" : "Country Code(->10)"},
+    {
+      "name" : "sortNr",
+      "pos" : 15,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Display sequence of the sample within one (Model Series,LKZ)-Group"},
+      {
+        "name" : "muster",
+        "pos" : 19,
+        "length" : 10,
+        "type" : "C",
+        "description" : "Description number(->12) of the model generation"}
+  ]
+}

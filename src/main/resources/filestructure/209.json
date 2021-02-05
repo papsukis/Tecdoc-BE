@@ -1,0 +1,61 @@
+{
+  "tableName": "EAN",
+  "tableNumber": 209,
+  "length": 47,
+  "contents": "European article numbers",
+  "sorting": "artNr,eANNr,lKZ",
+  "primaryKey": "artNr,eANNr,lKZ",
+  "deltaKey": "artNr",
+  "className" : "EAN",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->100)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 207"
+    },
+    {
+      "name": "lKZ",
+      "pos": 29,
+      "length": 3,
+      "type": "(C)",
+      "description": "Country Code (->10 or 12)"
+    },
+    {
+      "name": "eANNr",
+      "pos": 32,
+      "length": 13,
+      "type": "N",
+      "description": "EAN of the article"
+    },
+    {
+      "name": "exclude",
+      "pos": 45,
+      "length": 1,
+      "type": "(N)",
+      "description": "'1' = Country code is an exclusion, '0' = country code is an inclusion"
+    },
+    {
+      "name": "loschFlag",
+      "pos": 46,
+      "length": 1,
+      "type": "N",
+      "description": "1= delet all data records for the Delta key , otherwise 0"
+    }
+  ]
+}

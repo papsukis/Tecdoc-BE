@@ -1,0 +1,49 @@
+{
+  "tableName" : "Document Types",
+  "tableNumber" : 14,
+  "length" : 43,
+  "contents" : "Definition of document types",
+  "sorting" : "dokumentenArt",
+  "primaryKey" : "dokumentenArt",
+  "className" : "DocumentTypes",
+  "attr" : [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name" : "dLNr",
+      "pos" : 22,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 26,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 012"
+    },
+    {
+      "name" : "dokumentenArt",
+      "pos" : 29,
+      "length" : 2,
+      "type" : "N",
+      "description" : "Unambiguous key of the document type"
+    },
+    {
+      "name" : "bezNr",
+      "pos" : 31,
+      "length" : 9,
+      "type" : "N",
+      "description" : "Description Number (->030)"},
+    {
+      "name" : "extension",
+      "pos" : 40,
+      "length" : 3,
+      "type" : "(C)",
+      "description" : "Country Code (->010)"}
+  ]
+}

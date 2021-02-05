@@ -1,0 +1,54 @@
+{
+  "tableName": "Transmission Country Restrictions",
+  "tableNumber": 545,
+  "length": 38,
+  "contents": "Inclusion of certain countries for a transmission",
+  "sorting": "getrNr,lKZ",
+  "primaryKey": "getrNr,lKZ",
+  "deltaKey": "",
+  "className" : "TransmissionCountryRestrictions",
+  "attr": [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant = 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 544"
+    },
+    {
+      "name": "getrNr",
+      "pos": 29,
+      "length":5,
+      "type": "N",
+      "description": "Unambiguous number of the transmission(->544)"
+    },
+    {
+      "name": "lKZ",
+      "pos": 34,
+      "length": 3,
+      "type": "C",
+      "description": "Country code (->10)"
+    },
+    {
+      "name": "exclude",
+      "pos": 37,
+      "length": 1,
+      "type": "(N)",
+      "description": "'1' = Country code is an exclusion , '0' country code is an inclusion"
+    }
+
+  ]
+}

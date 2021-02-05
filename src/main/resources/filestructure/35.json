@@ -1,0 +1,69 @@
+{
+  "tableName" : "Text Modules",
+  "tableNumber" : 35,
+  "length" : 103,
+  "contents" : "Text modules in various languages",
+  "sorting" : "tBSNr,sprachNr,lfdNr",
+  "primaryKey" : "tBSNr,sprachNr,lfdNr",
+  "deltaKey" : "tBSNr",
+  "className" : "TextModules",
+
+  "attr" : [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name" : "dLNr",
+      "pos" : 22,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant (->100) and  9999 for reference data"},
+    {
+      "name" : "sA",
+      "pos" : 26,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 030"
+    },
+          {
+      "name" : "tBSNr",
+      "pos" : 29,
+      "length" : 6,
+      "type" : "C",
+      "description" : "Match code of the text module"},
+    {
+      "name" : "sprachNr",
+      "pos" : 35,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Language Number (->020)"
+    },
+    {
+      "name" : "fixed",
+      "pos" : 38,
+      "length" : 1,
+      "type" : "N",
+      "description" : "Fixed font = '1' : A non-proportional font is used to display such a text module on the CD system"},
+      {
+      "name" : "lfdNr",
+      "pos" : 39,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Sequential number (=Line) of text"},
+      {
+      "name" : "text",
+      "pos" : 42,
+      "length" : 60,
+      "type" : "U",
+      "description" : "Text Line"},
+      {
+      "name" : "loschFlag",
+      "pos" : 102,
+      "length" : 1,
+      "type" : "N",
+      "description" : "1= delete all data records for the Delta key , otherwise = 0"}
+  ]
+}

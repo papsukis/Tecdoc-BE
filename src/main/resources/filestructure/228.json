@@ -1,0 +1,90 @@
+{
+  "tableName": "Accessory Lists Criteria",
+  "tableNumber": 228,
+  "length": 67,
+  "contents": "Country restrictions for parts lists information",
+  "sorting": "artNr,lfdNr1,sortNr1,lfdNr",
+  "primaryKey": "artNr,lfdNr1,sortNr1,lfdNr",
+  "deltaKey": "artNr",
+  "className" : "AccessoryListsCriteria",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->40)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 228"
+    },
+
+    {
+      "name": "lKZ",
+      "pos": 29,
+      "length": 3,
+      "type": "(C)",
+      "description": "Country Code (->10 or 12)"
+    },
+    {
+      "name": "lfdNr1",
+      "pos": 32,
+      "length": 3,
+      "type": "(N)",
+      "description": "lfdNr from DT 222"
+    },
+    {
+      "name": "sortNr1",
+      "pos": 35,
+      "length": 3,
+      "type": "N",
+      "description": "Sorting order"
+    },
+    {
+      "name": "lfdNr",
+      "pos": 38,
+      "length": 3,
+      "type": "N",
+      "description": "Sequential number for the accessory list criterion"
+    },
+    {
+      "name": "kritNr",
+      "pos": 41,
+      "length": 4,
+      "type": "N",
+      "description": "Criterion Number(KT->50)"
+    },
+    {
+      "name": "kritWert",
+      "pos": 45,
+      "length": 20,
+      "type": "C",
+      "description": "Criterion value"
+    },
+    {
+      "name": "exclude",
+      "pos": 65,
+      "length": 1,
+      "type": "(N)",
+      "description": "'1' = Country code is an exclusion, '0' = country code is an inclusion"
+    },
+    {
+      "name": "loschFlag",
+      "pos": 82,
+      "length": 1,
+      "type": "N",
+      "description": "1= delet all data records for the Delta key , otherwise 0"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "tableName": "Article to Generic Article Allocation",
+  "tableNumber": 211,
+  "length": 35,
+  "contents": "Allocation of generic articles to data supplier article numbers",
+  "sorting": "artNr,genArtNr",
+  "primaryKey": "artNr,genArtNr",
+  "deltaKey": "artNr",
+  "className" : "ArticleToGenericArticleAllocation",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->100)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 211"
+    },
+    {
+      "name": "genArtNr",
+      "pos": 29,
+      "length": 5,
+      "type": "N",
+      "description": "Unambiguous number of the generic article (->320)"
+    },
+    {
+      "name": "loschFlag",
+      "pos": 34,
+      "length": 1,
+      "type": "N",
+      "description": "1= delet all data records for the Delta key , otherwise 0"
+    }
+  ]
+}

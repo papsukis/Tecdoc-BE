@@ -1,0 +1,51 @@
+{
+  "tableName" : "Data Supplier Logos",
+  "tableNumber" : 42,
+  "length" : 22,
+  "contents" : "Logo of the data supplier",
+  "sorting" : "lKZ",
+  "primaryKey" : "lKZ",
+  "deltaKey" : "dLNr",
+  "className" : "DataSupplierLogos",
+  "attr" : [
+    {
+      "name" : "dLNr",
+      "pos" : 0,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant (->40) ,must correspond with the data supplier number from DT 001"},
+    {
+      "name" : "sA",
+      "pos" : 4,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 042"
+    },
+          {
+      "name" : "lKZ",
+      "pos" : 7,
+      "length" : 3,
+      "type" : "(C)",
+      "description" : "Country Code"},
+    {
+      "name" : "bildNr",
+      "pos" : 10,
+      "length" : 9,
+      "type" : "N",
+      "description" : "Unanmbiguous Graphic Number (DT 231) (>= 100.00 * DatSuperNo,<100.000 * (DatSupNo+1))"
+    },
+    {
+      "name" : "dokumentenArt",
+      "pos" : 19,
+      "length" : 2,
+      "type" : "N",
+      "description" : " -> KT 014"},
+      {
+      "name" : "loschFlag",
+      "pos" : 21,
+      "length" : 1,
+      "type" : "N",
+      "description" : "1= delete all data records for the Delta key , otherwise = 0"
+      }
+  ]
+}

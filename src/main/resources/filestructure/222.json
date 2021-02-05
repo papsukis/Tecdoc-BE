@@ -1,0 +1,106 @@
+{
+  "tableName": "Accessory Lists",
+  "tableNumber": 222,
+  "length": 83,
+  "contents": "Country restrictions for parts lists information",
+  "sorting": "artNr,lfdNr,sortNr",
+  "primaryKey": "artNr,lfdNr,sortNr",
+  "deltaKey": "artNr",
+  "className" : "AccessoryLists",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->100)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 207"
+    },
+    {
+      "name": "vKNART",
+      "pos": 29,
+      "length": 1,
+      "type": "(N)",
+      "description": "Type of linkage (Vehicle Manfacturer, Model series, pc, cv, engine manufacturer,engine)"
+    },
+    {
+      "name": "vKNValue",
+      "pos": 30,
+      "length": 6,
+      "type": "(N)",
+      "description": "kHerNr, MHerNr,KModNr,KTypNr,NTypNr or MotNr"
+    },
+    {
+      "name": "lfdNr",
+      "pos": 36,
+      "length": 3,
+      "type": "N",
+      "description": "Sequential number"
+    },
+    {
+      "name": "sortNr",
+      "pos": 39,
+      "length": 3,
+      "type": "N",
+      "description": "Sorting Number"
+    },
+
+    {
+      "name": "zArtNr",
+      "pos": 42,
+      "length": 22,
+      "type": "C",
+      "description": "Relevant accessory part, must be contained in the DT 200, kZZub must be '1'"
+    },
+
+    {
+      "name": "menge",
+      "pos": 64,
+      "length": 3,
+      "type": "N",
+      "description": "Quantity of accessory parts required"
+    },
+
+    {
+      "name": "zubGenArtNr",
+      "pos": 67,
+      "length": 5,
+      "type": "N",
+      "description": "Unambiguous number of the accessory generic article(->320)"
+    },
+    {
+      "name": "reserved",
+      "pos": 72,
+      "length": 1,
+      "type": "",
+      "description": "Previously Exclude , became obsolete because of the deletion of table 225"
+    },
+    {
+      "name": "bezNr",
+      "pos": 73,
+      "length": 9,
+      "type": "(N)",
+      "description": "Description Number(->30)"
+    },
+    {
+      "name": "loschFlag",
+      "pos": 82,
+      "length": 1,
+      "type": "N",
+      "description": "1= delet all data records for the Delta key , otherwise 0"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "tableName" : "Language Descriptions",
+  "tableNumber" : 30,
+  "length" : 102,
+  "contents" : "Descriptions in different languages",
+  "sorting" : "bezNr,sprachNr",
+  "primaryKey" : "bezNr,sprachNr",
+  "deltaKey" : "bezNr",
+  "className" : "LanguageDescriptions",
+
+  "attr" : [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name" : "dLNr",
+      "pos" : 22,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant (->100) and  9999 for reference data"},
+    {
+      "name" : "sA",
+      "pos" : 26,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 030"
+    },
+    {
+      "name" : "sprachNr",
+      "pos" : 38,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Language Number (->020)"
+    },
+    {
+      "name" : "bezNr",
+      "pos" : 29,
+      "length" : 9,
+      "type" : "N",
+      "description" : "Description Number "},
+    {
+      "name" : "bez",
+      "pos" : 41,
+      "length" : 60,
+      "type" : "U",
+      "description" : "Descriptions"},
+    {
+      "name" : "loschFlag",
+      "pos" : 101,
+      "length" : 1,
+      "type" : "N",
+      "description" : "1= delete all data records for the Delta key , otherwise = 0"}
+  ]
+}

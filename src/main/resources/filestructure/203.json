@@ -1,0 +1,89 @@
+{
+  "tableName": "Reference Numbers",
+  "tableNumber": 203,
+  "length": 71,
+  "contents": "Reference numbers for articles by vehicle manufacturers",
+  "sorting": "artNr,lKZ,sort,herNr",
+  "primaryKey": "artNr,lKZ,sort,herNr",
+  "deltaKey": "artNr",
+  "className" : "ReferenceNumbers",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->100)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 203"
+    },
+    {
+      "name": "herNr",
+      "pos": 29,
+      "length": 6,
+      "type": "N",
+      "description": "Vehicle Manufacturer(->100)"
+    },
+    {
+      "name": "lKZ",
+      "pos": 35,
+      "length": 3,
+      "type": "(C)",
+      "description": "Country code (->10 or 12)"
+    },
+    {
+      "name": "refNr",
+      "pos": 38,
+      "length": 22,
+      "type": "C",
+      "description": "OE Number for this Manufacturer"
+    },
+    {
+      "name": "exclude",
+      "pos": 60,
+      "length": 1,
+      "type": "N",
+      "description": "'1' = Country Code is an exclusion, '0' Country Code is an inclusion"
+    },
+    {
+      "name": "sort",
+      "pos": 61,
+      "length": 5,
+      "type": "N",
+      "description": "Display Sequence of this record"
+    },
+    {
+      "name": "additiv",
+      "pos": 66,
+      "length": 1,
+      "type": "N",
+      "description": "0/1 : Record builds a block with the parent"
+    },
+    {
+      "name": "referenzInfo",
+      "pos": 67,
+      "length": 3,
+      "type": "(C)",
+      "description": "Reference type(KT->270)"
+    },
+    {
+      "name": "loschFlag",
+      "pos": 70,
+      "length": 1,
+      "type": "N",
+      "description": "1=delet all data records for the Delta Key , otherwise =0"
+    }
+  ]
+}

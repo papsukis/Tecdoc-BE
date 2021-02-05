@@ -1,0 +1,62 @@
+{
+  "tableName" : "Key Table Entries",
+  "tableNumber" : 52,
+  "length" : 48,
+  "contents" : "Key Table Entries",
+  "sorting" : "tabNr,sortNr",
+  "primaryKey" : "tabNr,key",
+  "className" : "KeyTablesEntries",
+  "attr" : [
+     {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name" : "dLNr",
+      "pos" : 22,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 26,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 052"
+    },
+    {
+      "name" : "tabNr",
+      "pos" : 29,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Key Table Number(->051)"},
+      {
+      "name" : "key",
+      "pos" : 32,
+      "length" : 3,
+      "type" : "C",
+      "description" : "Key Table Entry (numerical or alphanumerical depending on the Key table Type)"},
+      {
+      "name" : "bezNr",
+      "pos" : 35,
+      "length" : 9,
+      "type" : "N",
+      "description" : "Description Number (->030)"},
+    {
+      "name" : "sortNr",
+      "pos" : 44,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Sort-Key for Sorting"
+    },
+    {
+      "name" : "delet",
+      "pos" : 47,
+      "length" : 1,
+      "type" : "N",
+      "description" : "1: Key Table Entry is proposed for deletion, otherwise 0"
+    }
+  ]
+}

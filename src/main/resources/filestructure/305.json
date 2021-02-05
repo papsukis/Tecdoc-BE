@@ -1,0 +1,47 @@
+{
+  "tableName": "Quick-Start icons",
+  "tableNumber": 305,
+  "length": 50,
+  "contents": "Description of the quick-start icons",
+  "sorting": "qsId",
+  "primaryKey": "qsId",
+  "deltaKey": "",
+  "className" : "QuickStartIcons",
+  "attr": [
+    {
+      "name": "dLNr",
+      "pos": 0,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 4,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 304"
+    },
+    {
+      "name": "qsId",
+      "pos": 7,
+      "length": 4,
+      "type": "N",
+      "description": "Unambiguous number of the quick-start icons"
+    },
+    {
+      "name": "bezNr",
+      "pos": 11,
+      "length": 9,
+      "type": "N",
+      "description": "Number of the description text (->30)"
+    },
+    {
+      "name": "bildName",
+      "pos": 20,
+      "length": 30,
+      "type": "C",
+      "description": "bildname with extension"
+    }
+  ]
+}

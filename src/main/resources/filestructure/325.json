@@ -1,0 +1,46 @@
+{
+  "tableName": "Purpose of use",
+  "tableNumber": 325,
+  "length": 42,
+  "contents": "Purpose of use",
+  "sorting": "verwNr",
+  "primaryKey": "verwNr",
+  "deltaKey": "",
+  "className" : "PurposeOfUse",
+  "attr": [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 323"
+    },
+    {
+      "name": "verwNr",
+      "pos": 29,
+      "length": 4,
+      "type": "N",
+      "description": "Unambiguous number of the usage purpose"
+    },
+    {
+      "name": "bezNr",
+      "pos": 33,
+      "length": 9,
+      "type": "N",
+      "description": "Description Number(->30)"
+    }
+  ]
+}

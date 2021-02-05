@@ -1,0 +1,61 @@
+{
+  "tableName": "Parts Lists Country Restrictions",
+  "tableNumber": 215,
+  "length": 37,
+  "contents": "Country restrictions for parts lists information",
+  "sorting": "artNr,lfdNr,lKZ",
+  "primaryKey": "artNr,lfdNr,lKZ",
+  "deltaKey": "artNr",
+  "className" : "PartsListsCountryRestrictions",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->100)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 207"
+    },
+    {
+      "name": "lfdNr",
+      "pos": 29,
+      "length": 3,
+      "type": "N",
+      "description": "Sequential number from DT205"
+    },
+    {
+      "name": "lKZ",
+      "pos": 32,
+      "length": 3,
+      "type": "(C)",
+      "description": "Country Code (->10 or 12)"
+    },
+    {
+      "name": "exclude",
+      "pos": 35,
+      "length": 1,
+      "type": "(N)",
+      "description": "'1' = Country code is an exclusion, '0' = country code is an inclusion"
+    },
+    {
+      "name": "loschFlag",
+      "pos": 36,
+      "length": 1,
+      "type": "N",
+      "description": "1= delet all data records for the Delta key , otherwise 0"
+    }
+  ]
+}

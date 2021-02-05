@@ -1,0 +1,74 @@
+{
+  "tableName": "CV Secondary types",
+  "tableNumber": 535,
+  "length": 116,
+  "contents": "Description of all CV Secondary type",
+  "sorting": "nTypNr,nTypSubNr",
+  "primaryKey": "nTypNr,nTypSubNr",
+  "deltaKey": "",
+  "className" : "CVSecondaryTypes",
+  "attr": [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant = 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 535"
+    },
+    {
+      "name": "nTypNr",
+      "pos": 29,
+      "length":9,
+      "type": "N",
+      "description": "Unambiguous number of the CV primary types(->532)"
+    },
+    {
+      "name": "nTypSubNr",
+      "pos": 38,
+      "length": 3,
+      "type": "N",
+      "description": "Unambiguous number of the secondary type within a primary type"
+    },
+    {
+      "name": "sortNr",
+      "pos": 41,
+      "length": 3,
+      "type": "N",
+      "description": "Sorting within the primary type"
+    },
+    {
+      "name": "bez",
+      "pos": 44,
+      "length": 60,
+      "type": "(C)",
+      "description": "Description of the cv secondary type"
+    },
+    {
+      "name": "bjvon",
+      "pos": 104,
+      "length": 6,
+      "type": "(N)",
+      "description": "Model Year from (YYYYMM)"
+    },
+    {
+      "name": "bjbis",
+      "pos": 110,
+      "length": 6,
+      "type": "(N)",
+      "description": "Model Year to YYYYMM"
+    }
+  ]
+}

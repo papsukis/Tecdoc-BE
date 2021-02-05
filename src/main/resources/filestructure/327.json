@@ -1,0 +1,60 @@
+{
+  "tableName": "Generic Article Synonyms",
+  "tableNumber": 327,
+  "length": 100,
+  "contents": "Synonyms of the generic articles",
+  "sorting": "genArtNr,lfdNr,sprachNr",
+  "primaryKey": "genArtNr,lfdNr,sprachNr",
+  "deltaKey": "",
+  "className" : "GenericArticleSynonyms",
+  "attr": [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 327"
+    },
+    {
+      "name": "genArtNr",
+      "pos": 29,
+      "length": 5,
+      "type": "N",
+      "description": "Unambiguous number of the generic article(->320)"
+    },
+    {
+      "name": "lfdNr",
+      "pos": 34,
+      "length": 3,
+      "type": "N",
+      "description": "Sequential number within a generic article"
+    },
+    {
+      "name": "sprachNr",
+      "pos": 37,
+      "length": 3,
+      "type": "N",
+      "description": "Language Number(->320)"
+    },
+    {
+      "name": "bez",
+      "pos": 40,
+      "length": 60,
+      "type": "C",
+      "description": "Description"
+    }
+  ]
+}

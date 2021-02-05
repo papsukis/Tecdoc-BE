@@ -1,0 +1,54 @@
+{
+  "tableName": "Allocation of Quick-Start icons to Nodes/leaves within one product area",
+  "tableNumber": 307,
+  "length": 24,
+  "contents": "Description of the quick-start icons",
+  "sorting": "treeTypNr,qsId,nodeId",
+  "primaryKey": "treeTypNr,qsId,nodeId",
+  "deltaKey": "",
+  "className" : "TheAllocationOfQuickStartIconsToNodesLeavesWithinOneProductArea",
+  "attr": [
+    {
+      "name": "dLNr",
+      "pos": 0,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 4,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 307"
+    },
+    {
+      "name": "treeTypNr",
+      "pos": 7,
+      "length": 3,
+      "type": "N",
+      "description": "Product area of the search node"
+    },
+    {
+      "name": "qsId",
+      "pos": 10,
+      "length": 4,
+      "type": "N",
+      "description": "Unambiguous number of the quick-start icon (->305)"
+    },
+    {
+      "name": "nodeId",
+      "pos": 14,
+      "length": 7,
+      "type": "N",
+      "description": "Unambiguous number of the search node (->301)"
+    },
+    {
+      "name": "sortNr",
+      "pos": 21,
+      "length": 3,
+      "type": "N",
+      "description": "Sorting of nodes/leaves within one product area after calling the quick-start icons (separate search tree, may deviate from DT->301)"
+    }
+  ]
+}

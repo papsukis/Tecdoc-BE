@@ -5,16 +5,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry;
+import org.apache.commons.compress.archivers.sevenz.SevenZFile;
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import org.springframework.util.StringUtils;
+import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -116,48 +120,49 @@ public class FtpClient {
         return file;
     }
 
-//    public void uncompressFile(String file, String path) throws IOException {
-//
-//        ByteArrayOutputStream fos = new ByteArrayOutputStream();
-//        ftp.retrieveFile(file,fos);
-//        InputStream fi=new ByteArrayInputStream(fos.toByteArray());
-//        String d=splitFileName(file);
-//        ftp.makeDirectory(d);
-//        updateHierarchy(d);
-//        SevenZFile zis = new SevenZFile(convertInputStreamToFile(fi));
-//        SevenZArchiveEntry entry;
-//
-//        while ((entry= zis.getNextEntry())  != null){
-//            if (entry.isDirectory()){
-//                continue;
-//            }
-//            File curfile = new File(entry.getName());
-//            ByteArrayOutputStream out = new ByteArrayOutputStream();
-//            byte[] content = new byte[(int) entry.getSize()];
-//            zis.read(content, 0, content.length);
-//            out.write(content);
-//            InputStream is=new ByteArrayInputStream(out.toByteArray());
-//            putFileToPath(is,d+"/"+entry.getName());
-//
-//            out.close();
-//        }
-//
-//    }
+    public void uncompressFile(String file, String path) throws IOException {
+
+        log.info("Uncompressing file {} in {}",file,path);
+        ByteArrayOutputStream fos = new ByteArrayOutputStream();
+        ftp.retrieveFile(file,fos);
+        InputStream fi=new ByteArrayInputStream(fos.toByteArray());
+        String d=splitFileName(file);
+        ftp.makeDirectory(d);
+
+        SevenZFile zis = new SevenZFile(convertInputStreamToFile(fi));
+        SevenZArchiveEntry entry;
+
+        while ((entry= zis.getNextEntry())  != null){
+            if (entry.isDirectory()){
+                continue;
+            }
+            File curfile = new File(entry.getName());
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            byte[] content = new byte[(int) entry.getSize()];
+            zis.read(content, 0, content.length);
+            out.write(content);
+            InputStream is=new ByteArrayInputStream(out.toByteArray());
+            putFileToPath(is,d+"/"+entry.getName());
+
+            out.close();
+        }
+
+    }
 
 
-    private String splitFileName(String name){
+    public String splitFileName(String name){
         return StringUtils.delete(name,".7z");
 
     }
-//    public File convertInputStreamToFile(InputStream f) throws IOException {
-//
-//        InputStream initialStream = f;
-//
-//        File targetFile = File.createTempFile("test",null);
-//
-//        FileUtils.copyInputStreamToFile(initialStream, targetFile);
-//        return targetFile;
-//    }
+    public File convertInputStreamToFile(InputStream f) throws IOException {
+
+        InputStream initialStream = f;
+
+        File targetFile = File.createTempFile("test",null);
+
+        FileUtils.copyInputStreamToFile(initialStream, targetFile);
+        return targetFile;
+    }
 
     public String currentDirectory() throws IOException {
         return ftp.printWorkingDirectory();
@@ -242,7 +247,9 @@ public class FtpClient {
 
     }
 
-    public List<String> getData(String path) throws IOException {
+    public FtpFile getData(String path,String fileName) throws IOException {
+        FtpFile file = new FtpFile();
+        log.info(path);
         List<String> ipList = new ArrayList<>();
         ByteArrayOutputStream fos = new ByteArrayOutputStream();
         ftp.retrieveFile(path,fos);
@@ -254,7 +261,12 @@ public class FtpClient {
             }
             reader.close();
         }
-        return ipList;
+        file.setFullPath(path);
+        file.setFileName(fileName);
+        file.setLines(ipList);
+        log.info("filename : " + fileName.substring(0,3));
+        file.setTable(Integer.parseInt(fileName.substring(0,3)));
+        return file;
     }
 
 

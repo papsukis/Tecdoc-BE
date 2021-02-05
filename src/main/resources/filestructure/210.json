@@ -1,0 +1,90 @@
+{
+  "tableName": "Article Criteria",
+  "tableNumber": 210,
+  "length": 69,
+  "contents": "Criteria for component parts in a parts list",
+  "sorting": "artNr,sortNr",
+  "primaryKey": "artNr,sortNr",
+  "deltaKey": "artNr",
+  "className" : "ArticleCriteria",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->100)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 207"
+    },
+    {
+      "name": "Reserviert",
+      "pos": 29,
+      "length": 5,
+      "type": "",
+      "description": "Former genArtNr"
+    },
+    {
+      "name": "lKZ",
+      "pos": 34,
+      "length": 3,
+      "type": "(C)",
+      "description": "Country Code (->10 or 12)"
+    },
+    {
+      "name": "sortNr",
+      "pos": 37,
+      "length": 3,
+      "type": "N",
+      "description": "Display Sequence"
+    },
+    {
+      "name": "kritNr",
+      "pos": 40,
+      "length": 4,
+      "type": "N",
+      "description": "Criterion Number (KT -> 50)"
+    },
+    {
+      "name": "kritWert",
+      "pos": 44,
+      "length": 20,
+      "type": "C",
+      "description": "Criterion Value"
+    },
+    {
+      "name": "anzSofort",
+      "pos": 64,
+      "length": 1,
+      "type": "N",
+      "description": "Immediate Display ='1, otherwise '0'"
+    },
+    {
+      "name": "exclude",
+      "pos": 65,
+      "length": 1,
+      "type": "(N)",
+      "description": "'1' = Country code is an exclusion, '0' = country code is an inclusion"
+    },
+
+    {
+      "name": "loschFlag",
+      "pos": 66,
+      "length": 1,
+      "type": "N",
+      "description": "1= delet all data records for the Delta key , otherwise 0"
+    }
+  ]
+}

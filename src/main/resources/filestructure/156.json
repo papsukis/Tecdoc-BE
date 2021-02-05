@@ -1,0 +1,36 @@
+{
+  "tableName" : "Engine Country Restrictions",
+  "tableNumber" : 156,
+  "length" : 15,
+  "contents" : "Country restrictions for engines ",
+  "sorting" : "motNr,lKZ",
+  "primaryKey" : "motNr,lKZ",
+  "deltaKey" : "",
+  "className" : "EngineCountryRestrictions",
+  "attr" : [
+    {
+      "name" : "dLNr",
+      "pos" : 0,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 4,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 147"},
+    {
+      "name" : "motNr",
+      "pos" : 7,
+      "length" : 5,
+      "type" : "N",
+      "description" : "Unambiguous engin numbers (DT -> 155)"},
+      {
+        "name" : "lKZ",
+        "pos" : 12,
+        "length" : 3,
+        "type" : "C",
+        "description" : "Country code(Key 10 or 13)"}
+  ]
+}

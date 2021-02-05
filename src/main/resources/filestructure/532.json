@@ -1,0 +1,137 @@
+{
+  "tableName": "CV types",
+  "tableNumber": 532,
+  "length": 104,
+  "contents": "Description of all CV primary types",
+  "sorting": "nTypNr",
+  "primaryKey": "nTypNr",
+  "deltaKey": "",
+  "className" : "CVTypes",
+  "attr": [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant = 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 532"
+    },
+    {
+      "name": "nTypNr",
+      "pos": 29,
+      "length": 9,
+      "type": "N",
+      "description": "Unambiguous number of the CV primary types"
+    },
+    {
+      "name": "kModNr",
+      "pos": 38,
+      "length": 5,
+      "type": "N",
+      "description": "Model Series CV (->110)"
+    },
+    {
+      "name": "sort",
+      "pos": 43,
+      "length": 4,
+      "type": "N",
+      "description": "Sorting within one model series"
+    },
+    {
+      "name": "lbezNr",
+      "pos": 47,
+      "length": 9,
+      "type": "N",
+      "description": "Description of the CV type (->SA 12)"
+    },
+    {
+      "name": "bjvon",
+      "pos": 56,
+      "length": 6,
+      "type": "(N)",
+      "description": "Model Year from (YYYYMM)"
+    },
+    {
+      "name": "bjbis",
+      "pos": 62,
+      "length": 6,
+      "type": "(N)",
+      "description": "Model Year to YYYYMM"
+    },
+    {
+      "name": "bauart",
+      "pos": 68,
+      "length": 3,
+      "type": "N",
+      "description": "Body Type(KT->60)"
+    },
+    {
+      "name": "motart",
+      "pos": 71,
+      "length": 3,
+      "type": "N",
+      "description": "Engin Type(KT->80)"
+    },
+    {
+      "name": "kwvon",
+      "pos": 74,
+      "length": 4,
+      "type": "N",
+      "description": "Engine output from in kW"
+    },    {
+      "name": "kwbis",
+      "pos": 78,
+      "length": 4,
+      "type": "(N)",
+      "description": "Engine output to in kW"
+    },    {
+      "name": "psvon",
+      "pos": 82,
+      "length": 4,
+      "type": "N",
+      "description": "Engine output from in HP"
+    },    {
+      "name": "psbis",
+      "pos": 86,
+      "length": 4,
+      "type": "(N)",
+      "description": "Engine output to in HP"
+    },    {
+      "name": "ccmTech",
+      "pos": 90,
+      "length": 5,
+      "type": "N",
+      "description": "Engine capacity in cc (technical)"
+    },    {
+      "name": "tonnage",
+      "pos": 95,
+      "length": 5,
+      "type": "N",
+      "description": "tonnages in tonnes with 2 decimal spaces(999v99)"
+    },    {
+      "name": "achsconfig",
+      "pos": 100,
+      "length": 3,
+      "type": "(N)",
+      "description": "Axle Configuration (KT->65)"
+    },    {
+      "name": "delet",
+      "pos": 103,
+      "length": 1,
+      "type": "N",
+      "description": "1 = Criterion is proposed for deletion , otherwise = 0"
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "tableName" : "KBA Type Allocation",
+  "tableNumber" : 121,
+  "length" : 129,
+  "contents" : "Allocation of KBA codes to vehicle types",
+  "sorting" : "kBANr,kTypNr",
+  "primaryKey" : "kBANr,kTypNr",
+  "className" : "KBATypeAllocation",
+  "attr" : [
+     {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name" : "dLNr",
+      "pos" : 22,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 26,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 121"
+    },
+     {
+      "name" : "kBANr",
+      "pos" : 29,
+      "length" : 7,
+      "type" : "C",
+      "description" : "German KBA NO(9999999)"},
+    {
+      "name" : "kTypNr",
+      "pos" : 36,
+      "length" : 9,
+      "type" : "N",
+      "description" : "Vehicle type Number(->120)"},
+     {
+      "name" : "aufbauArt",
+      "pos" : 45,
+      "length" : 3,
+      "type" : "(N)",
+      "description" : "Body type (KT 86)"},
+      {
+      "name" : "aBENr",
+      "pos" : 48,
+      "length" : 25,
+      "type" : "(C)",
+      "description" : "General approval number"},
+      {
+      "name" : "aBEvon",
+      "pos" : 73,
+      "length" : 6,
+      "type" : "(N)",
+      "description" : "ABE Month YYYYMM"},
+      {
+      "name" : "statHer",
+      "pos" : 79,
+      "length" : 25,
+      "type" : "(C)",
+      "description" : "Stat. Manufacturer description"},
+       {
+      "name" : "statTyp",
+      "pos" : 104,
+      "length" : 25,
+      "type" : "(C)",
+      "description" : "Stat. Type Description"}
+  ]
+}

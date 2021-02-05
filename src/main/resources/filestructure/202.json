@@ -1,0 +1,54 @@
+{
+  "tableName": "Article Country Restrictions",
+  "tableNumber": 202,
+  "length": 34,
+  "contents": "Inclusion/Exclusion of certain countries for an article",
+  "sorting": "artNr,lKZ",
+  "primaryKey": "artNr,lKZ",
+  "deltaKey": "artNr",
+  "className" : "ArticleCountryRestrictions",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->100)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 202"
+    },
+    {
+      "name": "lKZ",
+      "pos": 29,
+      "length": 3,
+      "type": "C",
+      "description": "Country code(->10 or 12)"
+    },
+    {
+      "name": "exclude",
+      "pos": 32,
+      "length": 1,
+      "type": "N",
+      "description": "'1' = Country code is an exclusion, '0' = country code is an inclusion"
+    },
+    {
+      "name": "loschFlag",
+      "pos": 33,
+      "length": 1,
+      "type": "N",
+      "description": "'1'=delet all data records for the Delta key, otherwise = 0"
+    }
+  ]
+}

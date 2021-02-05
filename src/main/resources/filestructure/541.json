@@ -1,0 +1,118 @@
+{
+  "tableName": "CV Driver Cabs",
+  "tableNumber": 541,
+  "length": 120,
+  "contents": "Description of all CV driver cabs",
+  "sorting": "fHausNr",
+  "primaryKey": "fHausNr",
+  "deltaKey": "",
+  "className" : "CVDriverCabs",
+  "attr": [
+    {
+      "name": "dLNr",
+      "pos": 0,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant = 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 4,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 541"
+    },
+    {
+      "name": "fHausNr",
+      "pos": 7,
+      "length": 5,
+      "type": "N",
+      "description": "Unambiguous number of the driver cab"
+    },
+    {
+      "name": "herNr",
+      "pos": 12,
+      "length": 6,
+      "type": "N",
+      "description": "Unambiguous number of the driver cab manufacturer (->100)"
+    },
+    {
+      "name": "kModNr",
+      "pos": 18,
+      "length": 5,
+      "type": "N",
+      "description": "Unambiguous number of the CV model series to which the driver cab is allocated (->110)"
+    },
+    {
+      "name": "baumuster",
+      "pos": 23,
+      "length": 30,
+      "type": "(C)",
+      "description": "Cab Design"
+    },
+
+    {
+      "name": "lbezNr",
+      "pos": 53,
+      "length": 9,
+      "type": "N",
+      "description": "Description number (->10) for the sales description"
+    },
+    {
+      "name": "Reserviert",
+      "pos": 62,
+      "length": 21,
+      "type": "C",
+      "description": "Constantly blank"
+    },
+    {
+      "name": "size",
+      "pos": 83,
+      "length": 3,
+      "type": "(N)",
+      "description": "Driver Cab Size(->69)"
+    },
+    {
+      "name": "bjvon",
+      "pos": 86,
+      "length": 6,
+      "type": "(N)",
+      "description": "Model Year from (YYYYMM)"
+    },
+    {
+      "name": "bjbis",
+      "pos": 92,
+      "length": 6,
+      "type": "(N)",
+      "description": "Model Year to YYYYMM"
+    },
+    {
+      "name": "length",
+      "pos": 98,
+      "length": 7,
+      "type": "(N)",
+      "description": "Driver cab length in mm"
+    },
+    {
+      "name": "height",
+      "pos": 105,
+      "length": 7,
+      "type": "(N)",
+      "description": "Driver cab height in mm"
+    },
+    {
+      "name": "width",
+      "pos": 112,
+      "length": 7,
+      "type": "(N)",
+      "description": "Driver cab width in mm"
+    },
+    {
+      "name": "delet",
+      "pos": 48,
+      "length": 1,
+      "type": "(N)",
+      "description": "'1' = Criterion is proposed for deletion ,otherwise '0'"
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "tableName": "Axle",
+  "tableNumber": 160,
+  "length": 121,
+  "contents": "Description of all axle types ",
+  "sorting": "aTypNr",
+  "primaryKey": "aTypNr",
+  "deltaKey": "",
+  "className" : "Axle",
+  "attr": [
+    {
+      "name": "dLNr",
+      "pos": 0,
+      "length": 4,
+      "type": "N",
+      "description": "Data Supplier Number Constant = 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 4,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 160"
+    },
+    {
+      "name": "aTypNr",
+      "pos": 7,
+      "length": 5,
+      "type": "N",
+      "description": "Unambiguous Axle number"
+    },
+    {
+      "name": "bezeichnung",
+      "pos": 12,
+      "length": 30,
+      "type": "C",
+      "description": "Description(Axle type)"
+    },
+    {
+      "name": "kmodNr",
+      "pos": 42,
+      "length": 5,
+      "type": "N",
+      "description": "Model-key(->110)"
+    },
+    {
+      "name": "sortNr",
+      "pos": 47,
+      "length": 4,
+      "type": "N",
+      "description": "Sort-Key for Sorting"
+    },
+    {
+      "name": "bjvon",
+      "pos": 51,
+      "length": 6,
+      "type": "(N)",
+      "description": "Model year from YYYYMM"
+    },
+
+    {
+      "name": "bjbis",
+      "pos": 57,
+      "length": 6,
+      "type": "(N)",
+      "description": "Model year to YYYYMM"
+    },
+    {
+      "name": "achsArt",
+      "pos": 63,
+      "length": 3,
+      "type": "N",
+      "description": "Axle type(KT->68)"
+    },
+    {
+      "name": "ausfuhrung",
+      "pos": 66,
+      "length": 3,
+      "type": "N",
+      "description": "Style(KT->95)"
+    },
+    {
+      "name": "bremsAusf",
+      "pos": 69,
+      "length": 3,
+      "type": "(N)",
+      "description": "Brake type (KT->83)"
+    },
+    {
+      "name": "achskorper",
+      "pos": 72,
+      "length": 3,
+      "type": "(N)",
+      "description": "Axle Body(KT 214)"
+    },
+    {
+      "name": "zulLastVon",
+      "pos": 75,
+      "length": 5,
+      "type": "(N)",
+      "description": "Maximum axle load in kg from"
+    },
+    {
+      "name": "zulLastBis",
+      "pos": 80,
+      "length": 5,
+      "type": "(N)",
+      "description": "Maximum axle load in kg to"
+    },
+    {
+      "name": "radBefestigung",
+      "pos": 85,
+      "length": 3,
+      "type": "(N)",
+      "description": "Wheel mounting(KT->213)"
+    },
+    {
+      "name": "spurweite",
+      "pos": 88,
+      "length": 4,
+      "type": "(N)",
+      "description": "Track Width (mm)"
+    },
+    {
+      "name": "nabensystem",
+      "pos": 92,
+      "length": 20,
+      "type": "(C)",
+      "description": "Hub System"
+    },
+    {
+      "name": "fahrhoheVon",
+      "pos": 112,
+      "length": 4,
+      "type": "(N)",
+      "description": "Distance between road pavement and vehicle frame from"
+    },
+    {
+      "name": "fahrhoheBis",
+      "pos": 116,
+      "length": 4,
+      "type": "(N)",
+      "description": "Distance between road pavement and vehicle frame to"
+    },
+    {
+      "name": "delet",
+      "pos": 120,
+      "length": 1,
+      "type": "N",
+      "description": "1 : AtypNr series is proposed fo deletion , otherwise 0"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "tableName": "CV Types country deviations",
+  "tableNumber": 534,
+  "length": 53,
+  "contents": "Description of all country-specific deviations of CV type",
+  "sorting": "nTypNr,lKZ",
+  "primaryKey": "nTypNr,lKZ",
+  "deltaKey": "",
+  "className" : "CVCountrySpecificDeviations",
+  "attr": [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant = 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 534"
+    },
+    {
+      "name": "nTypNr",
+      "pos": 29,
+      "length":9,
+      "type": "N",
+      "description": "Unambiguous number of the CV primary types(->532)"
+    },
+    {
+      "name": "lKZ",
+      "pos": 38,
+      "length": 3,
+      "type": "C",
+      "description": "Country code (->10)"
+    },
+    {
+      "name": "bjvon",
+      "pos": 41,
+      "length": 6,
+      "type": "(N)",
+      "description": "Model Year from (YYYYMM)"
+    },
+    {
+      "name": "bjbis",
+      "pos": 47,
+      "length": 6,
+      "type": "(N)",
+      "description": "Model Year to YYYYMM"
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "tableName": "Allocation of a Transmission to a CV",
+  "tableNumber": 546,
+  "length": 64,
+  "contents": "The allocation of transmissions to CV primary and secondary types",
+  "sorting": "nTypNr,nTypSubNr,lfdNr",
+  "primaryKey": "nTypNr,nTypSubNr,lfdNr",
+  "deltaKey": "",
+  "className" : "AllocationOfATransmissionToACV",
+  "attr": [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant = 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 546"
+    },
+    {
+      "name": "nTypNr",
+      "pos": 29,
+      "length":9,
+      "type": "N",
+      "description": "Unambiguous number of the CV primary types(->532)"
+    },
+    {
+      "name": "nTypSubNr",
+      "pos": 38,
+      "length": 3,
+      "type": "N",
+      "description": "Unambiguous number of the secondary type within a primary type(->535)"
+    },
+    {
+      "name": "lfdNr",
+      "pos": 41,
+      "length": 2,
+      "type": "N",
+      "description": "Sequential numbers within a NtypNr-NTYPSubNr combination"
+    },
+    {
+      "name": "getrNr",
+      "pos": 43,
+      "length":5,
+      "type": "N",
+      "description": "Unambiguous number of the transmission"
+    },
+    {
+      "name": "bjvon",
+      "pos": 48,
+      "length": 6,
+      "type": "(N)",
+      "description": "Model Year from (YYYYMM)"
+    },
+    {
+      "name": "bjbis",
+      "pos": 54,
+      "length": 6,
+      "type": "(N)",
+      "description": "Model Year to YYYYMM"
+    },
+    {
+      "name": "lKZ",
+      "pos": 60,
+      "length": 3,
+      "type": "C",
+      "description": "Country code (->10)"
+    },
+    {
+      "name": "exclude",
+      "pos": 63,
+      "length": 1,
+      "type": "(N)",
+      "description": "'1' = Country code is an exclusion , '0' country code is an inclusion"
+    }
+
+  ]
+}

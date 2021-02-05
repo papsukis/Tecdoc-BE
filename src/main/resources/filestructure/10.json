@@ -1,0 +1,103 @@
+{
+  "tableName" : "Country Table",
+  "tableNumber" : 10,
+  "length" : 71,
+  "contents" : "Description of all countries and relevant Information",
+  "sorting" : "lKZ",
+  "primaryKey" : "lKZ",
+  "className" : "CountryTable",
+
+  "attr" : [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name" : "dLNr",
+      "pos" : 22,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 26,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 010"
+    },
+    {
+      "name" : "lKZ",
+      "pos" : 29,
+      "length" : 3,
+      "type" : "C",
+      "description" : "Country Code(Vehicle Registration Number)"
+    },
+    {
+      "name" : "bezNr",
+      "pos" : 32,
+      "length" : 9,
+      "type" : "N",
+      "description" : "Description Number (->030)"},
+    {
+      "name" : "verkehr",
+      "pos" : 41,
+      "length" : 1,
+      "type" : "(C)",
+      "description" : "'L' Left-hand traffic, 'R' Right-hand traffic"},
+    {
+      "name" : "warNr",
+      "pos" : 42,
+      "length" : 3,
+      "type" : "(N)",
+      "description" : "Int. currency number according to ISO"
+    },
+    {
+      "name" : "wKZ",
+      "pos" : 45,
+      "length" : 3,
+      "type" : "(C)",
+      "description" : "Currency Code , i. e. EUR"
+
+    },
+    {
+        "name" : "warBezNr",
+        "pos" : 48,
+        "length" : 9,
+        "type" : "(N)",
+        "description" : "Currency Description Number (->030)"
+    },
+    {
+      "name" : "vorwahl",
+      "pos" : 57,
+      "length" : 5,
+      "type" : "(C)",
+      "description" : "International Telephone Code"
+    },
+    {
+      "name" : "istGruppe",
+      "pos" : 62,
+      "length" : 1,
+      "type" : "N",
+      "description" : "Country Groups = 1,otherwise 0"},
+    {
+      "name" : "isoCode2",
+      "pos" : 63,
+      "length" : 2,
+      "type" : "(C)",
+      "description" : "2-digit ISO 6166-Code of the country"},
+    {
+      "name" : "isoCode3",
+      "pos" : 65,
+      "length" : 3,
+      "type" : "(C)",
+      "description" : "3-digit ISO 3166-Code of the country"},
+    {
+      "name" : "isoCodeNr",
+      "pos" : 57,
+      "length" : 1,
+      "type" : "N",
+      "description" : "Numeral ISO 3466-Code of the country"}
+  ]
+}

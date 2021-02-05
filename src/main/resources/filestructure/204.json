@@ -1,0 +1,68 @@
+{
+  "tableName": "Superseding Articles",
+  "tableNumber": 204,
+  "length": 61,
+  "contents": "The numbers of superseding articles",
+  "sorting": "artNr,sort,lKZ",
+  "primaryKey": "artNr,ersatzNr,lKZ",
+  "deltaKey": "artNr",
+  "className" : "SupersedingArticles",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->100)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 203"
+    },
+    {
+      "name": "lKZ",
+      "pos": 29,
+      "length": 3,
+      "type": "(C)",
+      "description": "Country code(->10 or 12)"
+    },
+    {
+      "name": "ersatzNr",
+      "pos": 32,
+      "length": 22,
+      "type": "C",
+      "description": "Article artNr supersedes Article ersatzNr"
+    },
+    {
+      "name": "exclude",
+      "pos": 54,
+      "length": 1,
+      "type": "(N)",
+      "description": "'1' = Country Code is an exclusion, '0' Country Code is an inclusion"
+    },
+    {
+      "name": "sort",
+      "pos": 55,
+      "length": 5,
+      "type": "N",
+      "description": "Display Sequence of this record"
+    },
+    {
+      "name": "loschFlag",
+      "pos": 60,
+      "length": 1,
+      "type": "N",
+      "description": "1=delet all data records for the Delta Key , otherwise =0"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "tableName": "Standardised Article description",
+  "tableNumber": 323,
+  "length": 43,
+  "contents": "Standardised Article description",
+  "sorting": "nartNr",
+  "primaryKey": "nartNr",
+  "deltaKey": "",
+  "className" : "StandardisedArticleDescription",
+  "attr": [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 323"
+    },
+    {
+      "name": "nartNr",
+      "pos": 29,
+      "length": 5,
+      "type": "N",
+      "description": "Unambiguous number of the standardised article description"
+    },
+    {
+      "name": "bezNr",
+      "pos": 34,
+      "length": 9,
+      "type": "N",
+      "description": "Description Number(->30)"
+    }
+  ]
+}

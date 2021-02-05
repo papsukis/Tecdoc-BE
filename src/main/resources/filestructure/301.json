@@ -1,0 +1,82 @@
+{
+  "tableName": "Tecdoc Search Structure",
+  "tableNumber": 301,
+  "length": 60,
+  "contents": "Hierarchically structure search tree",
+  "sorting": "nodeId",
+  "primaryKey": "nodeId",
+  "deltaKey": "",
+  "className" : "TecdocSearchStructure",
+  "attr": [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 301"
+    },
+    {
+      "name": "nodeId",
+      "pos": 29,
+      "length": 7,
+      "type": "N",
+      "description": "Unambiguous number of the search node"
+    },
+    {
+      "name": "treeTypNr",
+      "pos": 36,
+      "length": 3,
+      "type": "N",
+      "description": "Product Section of the search node (KT->999)"
+    },
+    {
+      "name": "stufe",
+      "pos": 39,
+      "length": 2,
+      "type": "N",
+      "description": "Number of the hierachical level of the search"
+    },
+    {
+      "name": "nodeParentId",
+      "pos": 41,
+      "length": 7,
+      "type": "(N)",
+      "description": "Node_id of an entry in the relevant superior hierachy level that is allocated this search node"
+    },
+    {
+      "name": "sortNr",
+      "pos": 48,
+      "length": 2,
+      "type": "N",
+      "description": "Sorting order of the search node that belongs to as node_parent_id"
+    },
+    {
+      "name": "bezNr",
+      "pos": 50,
+      "length": 9,
+      "type": "N",
+      "description": "Number of the description text(->30)"
+    },
+    {
+      "name": "wertOk",
+      "pos": 59,
+      "length": 1,
+      "type": "N",
+      "description": "0, when grouping, 1, when the generic article is allowed for this code"
+    }
+
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "tableName" : "Language",
+  "tableNumber" : 20,
+  "length" : 47,
+  "contents" : "Description of the languages used",
+  "sorting" : "sprachNr",
+  "primaryKey" : "sprachNr",
+  "className" : "Language",
+
+  "attr" : [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name" : "dLNr",
+      "pos" : 22,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 26,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 020"
+    },
+    {
+      "name" : "sprachNr",
+      "pos" : 29,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Language Number"
+    },
+    {
+      "name" : "bezNr",
+      "pos" : 32,
+      "length" : 9,
+      "type" : "N",
+      "description" : "Description Number (->030)"},
+    {
+      "name" : "isoCode",
+      "pos" : 41,
+      "length" : 2,
+      "type" : "(C)",
+      "description" : "2-digit ISO 639-Code of the language"},
+    {
+      "name" : "codePage",
+      "pos" : 43,
+      "length" : 4,
+      "type" : "(N)",
+      "description" : "Number of the Windows-Codepage for this language"}
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "tableName": "Linkage atributes",
+  "tableNumber": 410,
+  "length": 88,
+  "contents": "Atributes (criteria) for the linkage",
+  "sorting": "vknZielArt,vknZielNr,genArtNr,artNr,lfdNr,sortNr",
+  "primaryKey": "vknZielArt,vknZielNr,genArtNr,artNr,lfdNr,sortNr",
+  "deltaKey": "vknZielArt,vknZielNr,genArtNr,artNr",
+  "className" : "LinkageAttributes",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->40)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 404"
+    },
+    {
+      "name": "genArtNr",
+      "pos": 29,
+      "length": 5,
+      "type": "N",
+      "description": "Unambiguous number of the generic article(->320)"
+    },
+    {
+      "name": "vknZielArt",
+      "pos": 34,
+      "length": 3,
+      "type": "N",
+      "description": "Type of the linkage target (PC,CV,engine,...)(KT 271)"
+    },
+    {
+      "name": "vknZielNr",
+      "pos": 37,
+      "length": 9,
+      "type": "N",
+      "description": "Number of the linkage target (kTypeNr,NtypeNr,MotNr,HerldNr,...)"
+    },
+    {
+      "name": "lfdNr",
+      "pos": 46,
+      "length": 9,
+      "type": "N",
+      "description": "Sequential number within the ArtNr-GenArtNr-VknZielNr- linkage"
+    },
+    {
+      "name": "sortNr",
+      "pos": 55,
+      "length": 3,
+      "type": "N",
+      "description": "Display sequence"
+    },
+    {
+      "name": "kritNr",
+      "pos": 58,
+      "length": 4,
+      "type": "N",
+      "description": "Criterion number(->50)"
+    },
+    {
+      "name": "kritWert",
+      "pos": 62,
+      "length": 20,
+      "type": "C",
+      "description": "Criterion value"
+    },
+    {
+      "name": "anzSofort",
+      "pos": 82,
+      "length": 1,
+      "type": "(N)",
+      "description": "Immediate display ='1',otherwise'0'"
+    },
+    {
+      "name": "lKZ",
+      "pos": 83,
+      "length": 3,
+      "type": "C",
+      "description": "Country code(->10 or 12)"
+    },
+    {
+      "name": "exclude",
+      "pos": 86,
+      "length": 1,
+      "type": "N",
+      "description": "'1' = Country code is an exclusion , '0' country code is an inclusion"
+    },
+    {
+      "name": "loschFlag",
+      "pos": 87,
+      "length": 1,
+      "type": "N",
+      "description": "1 = delet all data records for the Delta Key , otherwise = 0"
+    }
+  ]
+}

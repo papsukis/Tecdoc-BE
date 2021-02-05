@@ -1,0 +1,84 @@
+{
+  "tableName" : "Header",
+  "tableNumber" : 1,
+  "length" : 58,
+  "contents" : "Header stating version and date",
+  "deltaKey" : "dLNr",
+  "className" : "Header",
+  "attr" : [
+    {
+      "name" : "dLNr",
+      "pos" : 0,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Constant (->100)"},
+    {
+      "name" : "sA",
+      "pos" : 4,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 001"
+    },
+    {
+      "name" : "dataRelease",
+      "pos" : 7,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Version (Data Release) in the format XX.XX"
+    },
+    {
+      "name" : "datum",
+      "pos" : 11,
+      "length" : 8,
+      "type" : "N",
+      "description" : "Verion date in the format YYYYMMDD"},
+    {
+      "name" : "kZVoll",
+      "pos" : 19,
+      "length" : 1,
+      "type" : "N",
+      "description" : "'1' when complete delivery , otherwise '0'"},
+    {
+      "name" : "hernr",
+      "pos" : 20,
+      "length" : 6,
+      "type" : "N",
+      "description" : "Vehicle manufacturer Number"
+    },
+    {
+      "name" : "marke",
+      "pos" : 26,
+      "length" : 20,
+      "type" : "C",
+      "description" : "Brand (specified by TecDoc)"
+
+    },
+    {
+        "name" : "referenzdaten",
+        "pos" : 46,
+        "length" : 4,
+        "type" : "N",
+        "description" : "Reference data version in the format xx.xx"
+    },
+    {
+      "name" : "vorversion",
+      "pos" : 50,
+      "length" : 4,
+      "type" : "N",
+      "description" : "if a delta-delivery,the DataRelease to which the delta refers"
+    },
+    {
+      "name" : "format",
+      "pos" : 54,
+      "length" : 3,
+      "type" : "C",
+      "description" : "Constant '2.4'"},
+    {
+      "name" : "loschFlag",
+      "pos" : 57,
+      "length" : 1,
+      "type" : "N",
+      "description" : "1 = Delete all data records of the brand, otherwise '0'"}
+
+  ]
+}

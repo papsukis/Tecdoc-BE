@@ -1,0 +1,48 @@
+{
+  "tableName" : "Vehicle Country Restriction",
+  "tableNumber" : 122,
+  "length" : 42,
+  "contents" : "Inclusion/Exclusion of certain countries for a vehicle",
+  "sorting" : "kTypNr,lKZ",
+  "primaryKey" : "kTypNr,lKZ",
+  "className" : "VehicleCountryRestriction",
+  "attr" : [
+     {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name" : "dLNr",
+      "pos" : 22,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 26,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 122"
+    },
+    {
+      "name" : "kTypNr",
+      "pos" : 29,
+      "length" : 9,
+      "type" : "N",
+      "description" : "Unambiguous number of the vehicle type"},
+     {
+      "name" : "lKZ",
+      "pos" : 38,
+      "length" : 3,
+      "type" : "C",
+      "description" : "Country code (->10)"},
+      {
+      "name" : "exclude",
+      "pos" : 41,
+      "length" : 1,
+      "type" : "N",
+      "description" : "'1'=Country Code is an exclusion,'0' = Country code is an inclusion"}
+  ]
+}

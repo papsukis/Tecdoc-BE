@@ -1,0 +1,48 @@
+{
+  "tableName" : "Additional Vehicle Type Descriptions",
+  "tableNumber" : 144,
+  "length" : 56,
+  "contents" : "Additional information on all vehicle model series ",
+  "sorting" : "kTypNr",
+  "primaryKey" : "kTypNr",
+  "deltaKey" : "",
+  "className" : "AdditionalVehicleTypeDescriptions",
+  "attr" : [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name" : "dLNr",
+      "pos" : 22,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 26,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 144"},
+    {
+      "name" : "kTypNr",
+      "pos" : 29,
+      "length" : 9,
+      "type" : "N",
+      "description" : "Unanmbiguous number of the vehicle type"},
+      {
+        "name" : "lbezNr1",
+        "pos" : 38,
+        "length" : 9,
+        "type" : "N",
+        "description" : "Description number(->12) of the type description"},
+        {
+          "name" : "lbezNr2",
+          "pos" : 47,
+          "length" : 9,
+          "type" : "N",
+          "description" : "Description number(->12) of the Note"}
+  ]
+}

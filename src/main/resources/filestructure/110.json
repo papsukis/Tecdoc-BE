@@ -1,0 +1,60 @@
+{
+  "tableName" : "Vehicle Model Series",
+  "tableNumber" : 110,
+  "length" : 47,
+  "contents" : "Description of all vehicle model series",
+  "sorting" : "kModNr",
+  "primaryKey" : "kModNr",
+  "className" : "VehicleModelSeries",
+  "attr" : [
+    {
+      "name" : "dLNr",
+      "pos" : 0,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 4,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 110"
+    },
+     {
+      "name" : "kModNr",
+      "pos" : 7,
+      "length" : 5,
+      "type" : "N",
+      "description" : "Unambiguous number of the vehicle model series"},
+    {
+      "name" : "lBezNr",
+      "pos" : 12,
+      "length" : 9,
+      "type" : "N",
+      "description" : "Description Number(->012)"},
+     {
+      "name" : "herNr",
+      "pos" : 21,
+      "length" : 6,
+      "type" : "N",
+      "description" : "Manufacturer Number(->100)"},
+      {
+      "name" : "sortNr",
+      "pos" : 27,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Sorting key for the sorting within one manufacturer(kHerNr)"},
+      {
+      "name" : "bjvon",
+      "pos" : 30,
+      "length" : 6,
+      "type" : "(N)",
+      "description" : "Model year from YYYYMM"},
+      {
+      "name" : "bJBis",
+      "pos" : 36,
+      "length" : 6,
+      "type" : "(N)",
+      "description" : "Model year to YYYYMM"}
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "tableName": "Allocation of parts-list Coordinates to context sensitive graphics",
+  "tableNumber": 215,
+  "length": 51,
+  "contents": "Country restrictions for parts lists information",
+  "sorting": "artNr,lfdNr,bildNr,dokumentenArt,sprachNr",
+  "primaryKey": "artNr,lfdNr,bildNr,dokumentenArt,sprachNr",
+  "deltaKey": "artNr",
+  "className" : "AllocationOfPartsListCoordinatesToContextSensitiveGraphics",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->100)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 233"
+    },
+    {
+      "name": "lfdNr",
+      "pos": 29,
+      "length": 3,
+      "type": "N",
+      "description": "Sequential number from DT205"
+    },
+    {
+      "name": "bildNr",
+      "pos": 32,
+      "length": 9,
+      "type": "N",
+      "description": "Unambiguous Graphics Number (>= 100.000 * DatSupNo , <100.000 * (DatSupNo + 1) )"
+    },
+    {
+      "name": "dokumentenArt",
+      "pos": 41,
+      "length": 2,
+      "type": "N",
+      "description": "Document Type(->14)"
+    },
+    {
+      "name": "sprachNr",
+      "pos": 43,
+      "length": 3,
+      "type": "N",
+      "description": "Language Number (KT -> 20)"
+    },
+    {
+      "name": "koordinatenNr",
+      "pos": 46,
+      "length": 4,
+      "type": "N",
+      "description": "Coordinate Number"
+    },
+    {
+      "name": "loschFlag",
+      "pos": 50,
+      "length": 1,
+      "type": "N",
+      "description": "1= delet all data records for the Delta key , otherwise 0"
+    }
+  ]
+}

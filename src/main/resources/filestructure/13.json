@@ -1,0 +1,44 @@
+{
+  "tableName" : "Country Groups",
+  "tableNumber" : 13,
+  "length" : 35,
+  "contents" : "Allocation of countries to country groups",
+  "sorting" : "lKZGrp,lKZ",
+  "primaryKey" : "lKZGrp,lKZ",
+  "className" : "CountryGroups",
+
+  "attr" : [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name" : "dLNr",
+      "pos" : 22,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 26,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 012"
+    },
+    {
+      "name" : "lKZGrp",
+      "pos" : 29,
+      "length" : 3,
+      "type" : "C",
+      "description" : "Country Group Code(->010)"
+    },
+    {
+      "name" : "lKZ",
+      "pos" : 32,
+      "length" : 3,
+      "type" : "C",
+      "description" : "Country Code (->010)"}
+  ]
+}

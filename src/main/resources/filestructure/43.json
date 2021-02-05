@@ -1,0 +1,136 @@
+{
+  "tableName" : "Data Supplier Addresses",
+  "tableNumber" : 43,
+  "length" : 451,
+  "contents" : "Addresses of the data supplier",
+  "sorting" : "dLNr,adressart,lKZ",
+  "primaryKey" : "dLNr,adressart,lKZ",
+  "deltaKey" : "dLNr",
+  "className" : "DataSupplierAddresses",
+  "attr" : [
+    {
+      "name" : "dLNr",
+      "pos" : 0,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant (->40) ,must correspond with the data supplier number from DT 001"},
+    {
+      "name" : "sA",
+      "pos" : 4,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 043"
+    },
+    {
+      "name" : "adressart",
+      "pos" : 7,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Address type from KT 59 (->SA 052)"},
+      {
+      "name" : "lKZ",
+      "pos" : 10,
+      "length" : 3,
+      "type" : "C",
+      "description" : "Country Code (DT ->10)"},
+      {
+      "name" : "bez",
+      "pos" : 13,
+      "length" : 40,
+      "type" : "C",
+      "description" : "Description 1"},
+    {
+      "name" : "bez 2",
+      "pos" : 53,
+      "length" : 40,
+      "type" : "(C)",
+      "description" : "Description 2"
+    },
+    {
+      "name" : "strasse",
+      "pos" : 93,
+      "length" : 40,
+      "type" : "(C)",
+      "description" : "Street 1"},
+      {
+      "name" : "strasse2",
+      "pos" : 133,
+      "length" : 40,
+      "type" : "(C)",
+      "description" : "Street 2"},
+      {
+      "name" : "postfach",
+      "pos" : 173,
+      "length" : 10,
+      "type" : "(C)",
+      "description" : "P.O. Box"},
+      {
+      "name" : "pLZKZ",
+      "pos" : 183,
+      "length" : 3,
+      "type" : "(C)",
+      "description" : "Country code for postal code PLZ, i.e. D-22926 (->10)"},
+      {
+      "name" : "pLZOrt",
+      "pos" : 186,
+      "length" : 8,
+      "type" : "(C)",
+      "description" : "Postal code"},
+      {
+      "name" : "pLZPf",
+      "pos" : 194,
+      "length" : 8,
+      "type" : "(C)",
+      "description" : "Postal code P.O. Box"},
+              {
+      "name" : "pLZGr",
+      "pos" : 202,
+      "length" : 8,
+      "type" : "(C)",
+      "description" : "Postal code key customer"},
+              {
+      "name" : "ort",
+      "pos" : 210,
+      "length" : 40,
+      "type" : "(C)",
+      "description" : "City 1"},
+      {
+      "name" : "ort2",
+      "pos" : 250,
+      "length" : 40,
+      "type" : "(C)",
+      "description" : "City 2"},
+      {
+      "name" : "telefon",
+      "pos" : 290,
+      "length" : 20,
+      "type" : "(C)",
+      "description" : "Telephone"},
+      {
+      "name" : "fax",
+      "pos" : 310,
+      "length" : 20,
+      "type" : "(C)",
+      "description" : "Fax"},
+      {
+      "name" : "email",
+      "pos" : 330,
+      "length" : 60,
+      "type" : "(C)",
+      "description" : "Email Address"},
+      {
+      "name" : "web",
+      "pos" : 390,
+      "length" : 60,
+      "type" : "(C)",
+      "description" : "Web Site"},
+
+      {
+      "name" : "loschFlag",
+      "pos" : 450,
+      "length" : 1,
+      "type" : "N",
+      "description" : "1= delete all data records for the Delta key , otherwise = 0"
+      }
+  ]
+}

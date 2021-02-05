@@ -1,0 +1,119 @@
+{
+  "tableName": "Graphics / Documents",
+  "tableNumber": 231,
+  "length": 400,
+  "contents": "The allocation of graphics/documents to picture numbers",
+  "sorting": "bildNr,dokumentenArt,sprachNr",
+  "primaryKey": "bildNr,dokumentenArt,sprachNr",
+  "deltaKey": "bildNr,dokumentenArt,sprachNr",
+  "className" : "GraphicsDocuments",
+  "attr": [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->40)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 231"
+    },
+    {
+      "name": "bildNr",
+      "pos": 29,
+      "length": 9,
+      "type": "N",
+      "description": "Unambiguous picture number(>= 100.000 * DLNR , 100.000*(DLNR + 1))"
+    },
+    {
+      "name": "sprachNr",
+      "pos": 38,
+      "length": 3,
+      "type": "N",
+      "description": "Language number(KT ->20)"
+    },
+    {
+      "name": "bildname",
+      "pos": 41,
+      "length": 30,
+      "type": "(C)",
+      "description": "Graphic file number without extension"
+    },
+    {
+      "name": "bildType",
+      "pos": 71,
+      "length": 3,
+      "type": "N",
+      "description": "(KT->143) Article vehicle,etc"
+    },
+
+    {
+      "name": "bezNorm",
+      "pos": 74,
+      "length": 3,
+      "type": "N",
+      "description": "(KT->141) Standardised Graphic header"
+    },
+
+    {
+      "name": "breit",
+      "pos": 77,
+      "length": 4,
+      "type": "(N)",
+      "description": "Graphic width"
+    },
+
+    {
+      "name": "hoch",
+      "pos": 81,
+      "length": 4,
+      "type": "(N)",
+      "description": "Graphic height"
+    },
+    {
+      "name": "farben",
+      "pos": 85,
+      "length": 3,
+      "type": "(N)",
+      "description": "Colour quantity"
+    },
+    {
+      "name": "dokumentenArt",
+      "pos": 88,
+      "length": 2,
+      "type": "N",
+      "description": "-> DT 14"
+    },
+    {
+      "name": "bezNr",
+      "pos": 90,
+      "length": 9,
+      "type": "(C)",
+      "description": "Description-> SA 30"
+    },
+    {
+      "name": "loschFlag",
+      "pos": 99,
+      "length": 1,
+      "type": "N",
+      "description": "1= delet all data records for the Delta key , otherwise 0"
+    },
+    {
+      "name": "url",
+      "pos": 100,
+      "length": 300,
+      "type": "(C)",
+      "description": "Url to which the link is made. Only if DokumentenArt = URL"
+    }
+  ]
+}

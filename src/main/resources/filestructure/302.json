@@ -1,0 +1,53 @@
+{
+  "tableName": "Allocation of genArt to Search Structure",
+  "tableNumber": 302,
+  "length": 43,
+  "contents": "Allocation of generic articles to the tecdocSearch Structure",
+  "sorting": "nodeId,sortNr",
+  "primaryKey": "nodeId,genArtNr",
+  "deltaKey": "",
+  "className" : "AllocationOfGenArtToSearchStructure",
+  "attr": [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 302"
+    },
+    {
+      "name": "nodeId",
+      "pos": 29,
+      "length": 7,
+      "type": "N",
+      "description": "Unambiguous number of the search node"
+    },
+    {
+      "name": "sortNr",
+      "pos": 36,
+      "length": 2,
+      "type": "N",
+      "description": "sorting order within a search node"
+    },
+    {
+      "name": "genArtNr",
+      "pos": 38,
+      "length": 5,
+      "type": "N",
+      "description": "Unambiguous number of the generic article(->320)"
+    }
+  ]
+}

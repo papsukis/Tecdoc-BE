@@ -1,0 +1,37 @@
+{
+  "tableName" : "Allocation of type Mine Numbers to Vehicle Types",
+  "tableNumber" : 123,
+  "length" : 31,
+  "contents" : "Allocation of type Mine numbers to vehicle types",
+  "sorting" : "typMine,kTypNr",
+  "primaryKey" : "typMine,kTypNr",
+  "className" : "AllocationOfTypeMineNumbersToVehicleTypes",
+  "attr" : [
+    {
+      "name" : "dLNr",
+      "pos" : 0,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 4,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 123"
+    },
+    {
+      "name" : "typMine",
+      "pos" : 7,
+      "length" : 15,
+      "type" : "C",
+      "description" : "French Type Mine Number"},
+    {
+      "name" : "kTypNr",
+      "pos" : 22,
+      "length" : 9,
+      "type" : "N",
+      "description" : "vehicle type number(->120)"}
+
+  ]
+}

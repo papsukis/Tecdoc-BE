@@ -1,0 +1,75 @@
+{
+  "tableName": "Allocation of Graphics to Article Numbers",
+  "tableNumber": 232,
+  "length": 47,
+  "contents": "The allocation of graphics to article numbers",
+  "sorting": "artNr,sortNr",
+  "primaryKey": "artNr,sortNr",
+  "deltaKey": "artNr",
+  "className" : "AllocationOfGraphicsToArticleNumbers",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->100)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 232"
+    },
+    {
+      "name": "sortNr",
+      "pos": 29,
+      "length": 2,
+      "type": "N",
+      "description": "Sequential sortir number for graphics that belong to the same article, starting with 1 per article. Used to determine the order of display"
+    },
+    {
+      "name": "lKZ",
+      "pos": 31,
+      "length": 3,
+      "type": "(C)",
+      "description": "Country Code (->10 or 12)"
+    },
+    {
+      "name": "exclude",
+      "pos": 34,
+      "length": 1,
+      "type": "(N)",
+      "description": "'1' = Country code is an exclusion, '0' = country code is an inclusion"
+    },
+    {
+      "name": "bildNr",
+      "pos": 35,
+      "length": 5,
+      "type": "N",
+      "description": "Unambiguous Graphics Number(->231)"
+    },
+    {
+      "name": "dokumentenArt",
+      "pos": 44,
+      "length": 2,
+      "type": "N",
+      "description": "-> DT 14"
+    },
+    {
+      "name": "loschFlag",
+      "pos": 46,
+      "length": 1,
+      "type": "N",
+      "description": "1= delet all data records for the Delta key , otherwise 0"
+    }
+  ]
+}

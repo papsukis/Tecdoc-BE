@@ -1,0 +1,36 @@
+{
+  "tableName" : "Swiss Type Number Allocation to Vehicle Types",
+  "tableNumber" : 126,
+  "length" : 23,
+  "contents" : "Allocation of swiss type numbers to vehicle types",
+  "sorting" : "chTyp,ktypNr",
+  "primaryKey" : "chTyp,ktypNr",
+  "deltaKey" : "",
+  "className" : "SwissTypeNumberAllocationToVehicleTypes",
+  "attr" : [
+    {
+      "name" : "dLNr",
+      "pos" : 0,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 4,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 126"},
+    {
+      "name" : "chTyp",
+      "pos" : 7,
+      "length" : 7,
+      "type" : "C",
+      "description" : "Swiss type number"},
+    {
+      "name" : "ktypNr",
+      "pos" : 14,
+      "length" : 9,
+      "type" : "N",
+      "description" : "Vehicle type(->120)"}
+  ]
+}

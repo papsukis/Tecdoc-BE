@@ -1,0 +1,48 @@
+{
+  "tableName": "CV Producer-Ids Country Restrictions",
+  "tableNumber": 555,
+  "length": 16,
+  "contents": "Allocation of the chassis to CV primary and secondary types",
+  "sorting": "herlDNr,lKZ",
+  "primaryKey": "herlDNr,lKZ",
+  "deltaKey": "",
+  "className" : "CVProducerIdsCountryRestrictions",
+  "attr": [
+    {
+      "name": "dLNr",
+      "pos": 0,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant = 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 4,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 554"
+    },
+    {
+      "name": "herlDNr",
+      "pos": 7,
+      "length":5,
+      "type": "N",
+      "description": "Unambiguous number of the CV Producer-ID-Number"
+    },
+    {
+      "name": "lKZ",
+      "pos": 12,
+      "length": 3,
+      "type": "(N)",
+      "description": "Number of the CV Producer (->100)"
+    },
+    {
+      "name": "exclude",
+      "pos": 15,
+      "length": 1,
+      "type": "(N)",
+      "description": "'1' = Country code is an exclusion , '0' country code is an inclusion"
+    }
+
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "tableName": "Trade Numbers",
+  "tableNumber": 207,
+  "length": 75,
+  "contents": "Trade Numbers",
+  "sorting": "artNr,sort,lKZ",
+  "primaryKey": "artNr,gebrNr,lKZ",
+  "deltaKey": "artNr",
+  "className" : "TradeNumbers",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->100)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 207"
+    },
+    {
+      "name": "lKZ",
+      "pos": 29,
+      "length": 3,
+      "type": "(C)",
+      "description": "Country code (->10 or 12)"
+    },
+    {
+      "name": "gebrNr",
+      "pos": 32,
+      "length": 35,
+      "type": "C",
+      "description": "Trade number of the article (short code)"
+    },
+    {
+      "name": "exclude",
+      "pos": 67,
+      "length": 1,
+      "type": "(N)",
+      "description": "'1' = Country code is an exclusion, '0' = Country code is an inclusion"
+    },
+    {
+      "name": "anzSofort",
+      "pos": 68,
+      "length": 1,
+      "type": "(N)",
+      "description": "0= Trade number is only shown on the 2nd article page, 1 = Trade number is shown on the 1st article page"
+    },
+    {
+      "name": "sort",
+      "pos": 69,
+      "length": 5,
+      "type": "N",
+      "description": "Display sequence of ths record"
+    },
+    {
+      "name": "loschFlag",
+      "pos": 74,
+      "length": 1,
+      "type": "N",
+      "description": "1= delet all data records for the Delta key , otherwise 0"
+    }
+  ]
+}

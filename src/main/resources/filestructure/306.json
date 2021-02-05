@@ -1,0 +1,47 @@
+{
+  "tableName": "Allocation of Quick-Start icons to product areas",
+  "tableNumber": 306,
+  "length": 17,
+  "contents": "Description of the quick-start icons",
+  "sorting": "treeTypNr,qsId",
+  "primaryKey": "treeTypNr,qsId",
+  "deltaKey": "",
+  "className" : "AllocationOfQuickStartIconsToProductAreas",
+  "attr": [
+    {
+      "name": "dLNr",
+      "pos": 0,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 4,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 306"
+    },
+    {
+      "name": "treeTypNr",
+      "pos": 7,
+      "length": 3,
+      "type": "N",
+      "description": "Product area of the search node"
+    },
+    {
+      "name": "qsId",
+      "pos": 10,
+      "length": 4,
+      "type": "N",
+      "description": "Unambiguous number of the quick-start icon (->305)"
+    },
+    {
+      "name": "sortNr",
+      "pos": 14,
+      "length": 3,
+      "type": "N",
+      "description": "Quick-start icons sorting within the product area"
+    }
+  ]
+}

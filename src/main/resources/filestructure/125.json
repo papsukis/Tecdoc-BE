@@ -1,0 +1,74 @@
+{
+  "tableName" : "Engine Number Allocation to Vehicle Types",
+  "tableNumber" : 125,
+  "length" : 62,
+  "contents" : "Allocation of engine numbers to vehicle types",
+  "sorting" : "kTypNr,lfdNr",
+  "primaryKey" : "kTypNr,lfdNr",
+  "deltaKey" : "",
+  "className" : "EngineNumberAllocationtoVehicleTypes",
+  "attr" : [
+    {
+    "name" : "Reserviert",
+    "pos" : 0,
+    "length" : 22,
+    "type" : "C",
+    "description" : "Constantly blank"},
+    {
+      "name" : "dLNr",
+      "pos" : 22,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 26,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 125"},
+    {
+      "name" : "kTypNr",
+      "pos" : 29,
+      "length" : 9,
+      "type" : "N",
+      "description" : "Vehicle type(->120)"},
+    {
+      "name" : "lfdNr",
+      "pos" : 38,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Sequential number within the type"},
+    {
+      "name" : "motNr",
+      "pos" : 41,
+      "length" : 5,
+      "type" : "N",
+      "description" : "Engine number (->155)"},
+    {
+      "name" : "bjvon",
+      "pos" : 46,
+      "length" : 6,
+      "type" : "(N)",
+      "description" : "Model year from YYYYMM"}
+      ,
+    {
+      "name" : "bjbis",
+      "pos" : 52,
+      "length" : 6,
+      "type" : "(N)",
+      "description" : "Model year to YYYYMM"}
+      ,
+    {
+      "name" : "lKZ",
+      "pos" : 58,
+      "length" : 3,
+      "type" : "(C)",
+      "description" : "Country Code (->10)"},
+      {
+        "name" : "exclude",
+        "pos" : 61,
+        "length" : 1,
+        "type" : "(N)",
+        "description" : "'1' = Country Code is an exclusion, '0' = Country Code is an inclusion"}
+  ]
+}

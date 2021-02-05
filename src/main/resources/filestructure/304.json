@@ -1,0 +1,62 @@
+{
+  "tableName": "Allocation of Criteria to Search Structure",
+  "tableNumber": 304,
+  "length": 46,
+  "contents": "Allocation of criteria to combinations of search tree nodes and generica articles within the TecDoc search structure",
+  "sorting": "nodeId,genArtNr,sortNr",
+  "primaryKey": "nodeId,genArtNr,kritNr,kritWert",
+  "deltaKey": "",
+  "className" : "AllocationOfCriteriaToTheSearchStructure",
+  "attr": [
+    {
+      "name": "dLNr",
+      "pos": 0,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 4,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 304"
+    },
+    {
+      "name": "nodeId",
+      "pos": 7,
+      "length": 7,
+      "type": "N",
+      "description": "Unambiguous number of the search node(->301)"
+    },
+    {
+      "name": "genArtNr",
+      "pos": 14,
+      "length": 5,
+      "type": "N",
+      "description": "Unambiguous number of the generic article(->320)"
+    },
+    {
+      "name": "sortNr",
+      "pos": 36,
+      "length": 2,
+      "type": "N",
+      "description": "sorting order within a search node"
+    },
+    {
+      "name": "kritNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Unambiguous number of the criterion (DT ->50),must be of type 'k'"
+    },
+    {
+      "name": "kritWert",
+      "pos": 26,
+      "length": 20,
+      "type": "C",
+      "description": "Criterion Value"
+    }
+
+  ]
+}

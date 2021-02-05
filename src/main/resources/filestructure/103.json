@@ -1,0 +1,42 @@
+{
+  "tableName" : "Manufacturer-KBA Reference",
+  "tableNumber" : 103,
+  "length" : 39,
+  "contents" : "Allocation of KBA code to manufacturers",
+  "sorting" : "kBANr,herNr",
+  "primaryKey" : "kBANr,herNr",
+  "className" : "ManufacturerKBAReference",
+  "attr" : [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name" : "dLNr",
+      "pos" : 22,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 26,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 103"
+    },
+     {
+      "name" : "kBANr",
+      "pos" : 29,
+      "length" : 4,
+      "type" : "N",
+      "description" : "KBA Manufacturer Code"},
+    {
+      "name" : "herNr",
+      "pos" : 7,
+      "length" : 6,
+      "type" : "N",
+      "description" : "Manufacturer Number"}
+  ]
+}

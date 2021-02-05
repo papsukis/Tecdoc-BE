@@ -1,0 +1,48 @@
+{
+  "tableName" : "Drive Type Synonims",
+  "tableNumber" : 147,
+  "length" : 50,
+  "contents" : "Drive Types Synonyms ",
+  "sorting" : "antrArt,kTypNr",
+  "primaryKey" : "antrArt,kTypNr",
+  "deltaKey" : "",
+  "className" : "DriveTypeSynonyms",
+  "attr" : [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name" : "dLNr",
+      "pos" : 22,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 26,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 147"},
+    {
+      "name" : "antrArt",
+      "pos" : 29,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Drive Type(KT 82)"},
+      {
+        "name" : "kTypNr",
+        "pos" : 32,
+        "length" : 9,
+        "type" : "N",
+        "description" : "Unambiguous number of the vehicle type"},
+    {
+      "name" : "lbezNr",
+      "pos" : 41,
+      "length" : 9,
+      "type" : "N",
+      "description" : "Description Number(->12) of the synonym"}
+  ]
+}

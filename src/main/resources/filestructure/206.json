@@ -1,0 +1,93 @@
+{
+  "tableName": "Article Information",
+  "tableNumber": 206,
+  "length": 51,
+  "contents": "Information text for articles",
+  "sorting": "artNr,genArtNr,sortNr",
+  "primaryKey": "artNr,genArtNr,sortNr",
+  "deltaKey": "artNr",
+  "className" : "ArticleInformation",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->100)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 206"
+    },
+    {
+      "name" : "Reserviert",
+      "pos" : 29,
+      "length" : 5,
+      "type" : "C",
+      "description" : "Former GenArtNr"},
+    {
+      "name": "genArtNr",
+      "pos": 29,
+      "length": 5,
+      "type": "N",
+      "description": "Unambiguous number of the Generic Article number"
+    },
+    {
+      "name": "lKZ",
+      "pos": 34,
+      "length": 3,
+      "type": "(C)",
+      "description": "Country code (->10 or 12)"
+    },
+    {
+      "name": "sortNr",
+      "pos": 37,
+      "length": 2,
+      "type": "N",
+      "description": "Sorting for display"
+    },
+    {
+      "name": "infArt",
+      "pos": 39,
+      "length": 3,
+      "type": "N",
+      "description": "Information type (KT 72)"
+    },
+    {
+      "name": "anzSofort",
+      "pos": 42,
+      "length": 1,
+      "type": "N",
+      "description": "Immediate Display = 1 : Information is displayed on the 1st article page on the presentation medium and is repeated boldly on the 2nd page"
+    },
+    {
+      "name" : "TBSNr",
+      "pos" : 43,
+      "length" : 6,
+      "type" : "C",
+      "description" : "Text module Number"},
+      {
+        "name" : "exclude",
+        "pos" : 49,
+        "length" : 1,
+        "type" : "(N)",
+        "description" : "'1' = Country code is an exclusion , '0' country code is an inclusion"},
+        {
+          "name" : "loschFlag",
+          "pos" : 50,
+          "length" : 1,
+          "type" : "N",
+          "description" : "1= delet all data records for the Delta key , otherwise 0"}
+
+  ]
+}

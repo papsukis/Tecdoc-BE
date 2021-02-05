@@ -1,0 +1,68 @@
+{
+  "tableName": "Sorting of the linkage",
+  "tableNumber": 404,
+  "length": 56,
+  "contents": "Country Restriction of the linkage",
+  "sorting": "vknZielArt,vknZielNr,genArtNr,artNr,sortNr",
+  "primaryKey": "vknZielArt,vknZielNr,genArtNr,artNr",
+  "deltaKey": "vknZielArt,vknZielNr,genArtNr,artNr",
+  "className" : "SortingOfTheLinkage",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->40)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 404"
+    },
+    {
+      "name": "genArtNr",
+      "pos": 29,
+      "length": 5,
+      "type": "N",
+      "description": "Unambiguous number of the generic article(->320)"
+    },
+    {
+      "name": "vknZielArt",
+      "pos": 34,
+      "length": 3,
+      "type": "N",
+      "description": "Type of the linkage target (PC,CV,engine,...)(KT 271)"
+    },
+    {
+      "name": "vknZielNr",
+      "pos": 37,
+      "length": 9,
+      "type": "N",
+      "description": "Number of the linkage target (kTypeNr,NtypeNr,MotNr,HerldNr,...)"
+    },
+    {
+      "name": "sortNr",
+      "pos": 46,
+      "length": 9,
+      "type": "N",
+      "description": "Display sequence"
+    },
+    {
+      "name": "loschFlag",
+      "pos": 55,
+      "length": 1,
+      "type": "N",
+      "description": "1 = delet all data records for the Delta Key , otherwise = 0"
+    }
+  ]
+}

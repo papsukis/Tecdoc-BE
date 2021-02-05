@@ -1,0 +1,36 @@
+{
+  "tableName" : "Netherlands Type Number Allocation to Vehicle Types",
+  "tableNumber" : 127,
+  "length" : 22,
+  "contents" : "Allocation of Netherlands type numbers to vehicle types",
+  "sorting" : "nLTyp,ktypNr",
+  "primaryKey" : "nLTyp,ktypNr",
+  "deltaKey" : "",
+  "className" : "NetherlandsNumberPlateToVehicleTypeAllocation",
+  "attr" : [
+    {
+      "name" : "dLNr",
+      "pos" : 0,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 4,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 127"},
+    {
+      "name" : "nLTyp",
+      "pos" : 7,
+      "length" : 6,
+      "type" : "C",
+      "description" : "Netherlands type number"},
+    {
+      "name" : "ktypNr",
+      "pos" : 13,
+      "length" : 9,
+      "type" : "N",
+      "description" : "Vehicle type(->120)"}
+  ]
+}

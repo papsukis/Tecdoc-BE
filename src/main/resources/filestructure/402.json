@@ -1,0 +1,75 @@
+{
+  "tableName": "Linkages not to be displayed in certain countries",
+  "tableNumber": 402,
+  "length": 59,
+  "contents": "Linkages in DT400 that may not be displayed in certain countries",
+  "sorting": "vknZielArt,vknZielNr,genArtNr,artNr,lfdNr,lKZ",
+  "primaryKey": "vknZielArt,vknZielNr,genArtNr,artNr,lfdNr,lKZ",
+  "deltaKey": "vknZielArt,vknZielNr,genArtNr,artNr",
+  "className" : "LinkagesNotToBeDisplayedInCertainCountries",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->100)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 401"
+    },
+    {
+      "name": "genArtNr",
+      "pos": 29,
+      "length": 5,
+      "type": "N",
+      "description": "Unambiguous number of the generic article(->320)"
+    },
+    {
+      "name": "vknZielArt",
+      "pos": 34,
+      "length": 3,
+      "type": "N",
+      "description": "Type of the linkage target (PC,CV,engine,...)(KT 271)"
+    },
+    {
+      "name": "vknZielNr",
+      "pos": 37,
+      "length": 9,
+      "type": "N",
+      "description": "Number of the linkage target (kTypeNr,NtypeNr,MotNr,HerldNr,...)"
+    },
+    {
+      "name": "lfdNr",
+      "pos": 46,
+      "length": 9,
+      "type": "N",
+      "description": "Sequential number within the ArtNr-GenArtNr-vknZielNr linkage"
+    },
+    {
+      "name": "lKZ",
+      "pos": 55,
+      "length": 3,
+      "type": "(C)",
+      "description": "Country Code(->10 or 12)"
+    },
+    {
+      "name": "loschFlag",
+      "pos": 58,
+      "length": 1,
+      "type": "N",
+      "description": "1 = delet all data records for the Delta Key , otherwise = 0"
+    }
+  ]
+}

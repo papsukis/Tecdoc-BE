@@ -1,0 +1,117 @@
+{
+  "tableName": "Article price table",
+  "tableNumber": 201,
+  "length": 87,
+  "contents": "Article price data table",
+  "sorting": "artNr,lKZ,wKZ,prArt,pENr,mENr,datvon",
+  "primaryKey": "artNr,prArt,lKZ,wKZ,datvon,pENr,mENr",
+  "deltaKey": "artNr",
+  "className" : "PriceInformation",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->100)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 201"
+    },
+    {
+      "name": "preis",
+      "pos": 29,
+      "length": 10,
+      "type": "(N)",
+      "description": "Gross price with two decimal spaces or blank for price on demand"
+    },
+    {
+      "name": "pENr",
+      "pos": 39,
+      "length": 3,
+      "type": "N",
+      "description": "price unit (KT->70)"
+    },
+    {
+      "name": "mENr",
+      "pos": 42,
+      "length": 3,
+      "type": "C",
+      "description": "Quantity unit(KT->71)"
+    },
+    {
+      "name": "datvon",
+      "pos": 45,
+      "length": 8,
+      "type": "N",
+      "description": "Price valid from YYYYMMDD"
+    },
+    {
+      "name": "datbis",
+      "pos": 53,
+      "length": 8,
+      "type": "(N)",
+      "description": "Price valid to YYYYMMDD"
+    },
+    {
+      "name": "lKZ",
+      "pos": 61,
+      "length": 3,
+      "type": "C",
+      "description": "Country code for currency country(->10)"
+    },
+    {
+      "name": "prArt",
+      "pos": 64,
+      "length": 3,
+      "type": "N",
+      "description": "Price type(KT->74)"
+    },
+    {
+      "name": "Reserviert",
+      "pos": 67,
+      "length": 10,
+      "type": "(C)",
+      "description": "Constantly blank"
+    },
+    {
+      "name": "wKZ",
+      "pos": 77,
+      "length": 3,
+      "type": "C",
+      "description": "Currency Code"
+    },
+    {
+      "name": "rabattgruppe",
+      "pos": 80,
+      "length": 5,
+      "type": "(C)",
+      "description": "Discount group"
+    },
+    {
+      "name": "minderrabatt",
+      "pos": 85,
+      "length": 1,
+      "type": "(N)",
+      "description": "Discount"
+    },
+    {
+      "name": "loschFlag",
+      "pos": 86,
+      "length": 1,
+      "type": "N",
+      "description": "1=Delete all data records for the Delta key , otherwise 0"
+    }
+  ]
+}

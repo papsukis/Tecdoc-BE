@@ -1,0 +1,112 @@
+{
+  "tableName": "Generic Articles",
+  "tableNumber": 320,
+  "length": 41,
+  "contents": "Generic Articles",
+  "sorting": "genArtNr",
+  "primaryKey": "genArtNr",
+  "deltaKey": "",
+  "className" : "GenericArticles",
+  "attr": [
+    {
+      "name": "dLNr",
+      "pos": 0,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 4,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 320"
+    },
+    {
+      "name": "genArtNr",
+      "pos": 7,
+      "length": 5,
+      "type": "N",
+      "description": "Unambiguous number of the generic article"
+    },
+    {
+      "name": "nartNr",
+      "pos": 12,
+      "length": 5,
+      "type": "N",
+      "description": "Unambiguous number of the standardised article description (->323))"
+    },
+    {
+      "name": "bgNr",
+      "pos": 17,
+      "length": 4,
+      "type": "(N)",
+      "description": "Unambiguous number of the assembly group(->324)"
+    },
+    {
+      "name": "verWNr",
+      "pos": 21,
+      "length": 4,
+      "type": "(N)",
+      "description": "Unambiguous number of the usage (->325)"
+    },
+    {
+      "name": "bezNr",
+      "pos": 25,
+      "length": 9,
+      "type": "N",
+      "description": "Description number (->30) for descruotuib if the genArt"
+    },
+    {
+      "name": "oKPKW",
+      "pos": 34,
+      "length": 1,
+      "type": "N",
+      "description": "0: not allowed in PC linkage (->400). Otherwise 1."
+    },
+    {
+      "name": "oKNKW",
+      "pos": 35,
+      "length": 1,
+      "type": "N",
+      "description": "0: not allowed in CV linkage (->400). Otherwise 1."
+    },
+    {
+      "name": "oKMotor",
+      "pos": 36,
+      "length": 1,
+      "type": "N",
+      "description": "0: not allowed in engine linkage (->400). Otherwise 1."
+    },
+    {
+      "name": "oKUniversal",
+      "pos": 37,
+      "length": 1,
+      "type": "N",
+      "description": "0: is not a generic article. Otherwise 1."
+    },
+    {
+      "name": "oKFZGUnab",
+      "pos": 38,
+      "length": 1,
+      "type": "N",
+      "description": "0: is not allowed for vehicle independent search. Otherwise 1."
+    },
+    {
+      "name": "delet",
+      "pos": 39,
+      "length": 1,
+      "type": "N",
+      "description": "1: GenArt is earmarked for deletion. Otherwise 0."
+    },
+    {
+      "name": "oKAchse",
+      "pos": 40,
+      "length": 1,
+      "type": "N",
+      "description": "0: is not allowed in Axle linkage(->400). Otherwise 1."
+    }
+
+
+  ]
+}

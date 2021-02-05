@@ -1,0 +1,42 @@
+{
+  "tableName" : "Body Type Synonims",
+  "tableNumber" : 146,
+  "length" : 24,
+  "contents" : "Body Types Synonyms ",
+  "sorting" : "aufbauArt,kmodNr",
+  "primaryKey" : "aufbauArt,kmodNr",
+  "deltaKey" : "",
+  "className" : "BodyTypeSynonyms",
+  "attr" : [
+    {
+      "name" : "dLNr",
+      "pos" : 0,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 4,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 146"},
+    {
+      "name" : "aufbauArt",
+      "pos" : 7,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Body Type(KT 86)"},
+      {
+        "name" : "kmodNr",
+        "pos" : 10,
+        "length" : 5,
+        "type" : "N",
+        "description" : "Unambiguous number of the vehicle model series"},
+    {
+      "name" : "lbezNr",
+      "pos" : 15,
+      "length" : 9,
+      "type" : "N",
+      "description" : "Description Number(->12) of the synonym"}
+  ]
+}

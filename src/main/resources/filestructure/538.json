@@ -1,0 +1,53 @@
+{
+  "tableName": "Allocation of CV to CV ID Numbers",
+  "tableNumber": 538,
+  "length": 46,
+  "contents": "Allocation of engine numbers to CV primary and secondary types",
+  "sorting": "nTypNr,nTypSubNr,herlDnr",
+  "primaryKey": "nTypNr,nTypSubNr,herlDnr",
+  "deltaKey": "",
+  "className" : "AllocationOfCVToCVIDNumbers",
+  "attr": [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant = 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 538"
+    },
+    {
+      "name": "nTypNr",
+      "pos": 29,
+      "length":9,
+      "type": "N",
+      "description": "Unambiguous number of the CV primary types(->532)"
+    },
+    {
+      "name": "nTypSubNr",
+      "pos": 38,
+      "length": 3,
+      "type": "N",
+      "description": "Unambiguous number of the secondary type within a primary type(->535)"
+    },
+    {
+      "name": "herlDnr",
+      "pos": 41,
+      "length": 5,
+      "type": "N",
+      "description": "Manufacturer ID Number(->554)"
+    }
+  ]
+}

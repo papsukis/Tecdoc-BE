@@ -1,0 +1,36 @@
+{
+  "tableName" : "Austrian NatCodes",
+  "tableNumber" : 129,
+  "length" : 22,
+  "contents" : "Allocation of Austrian type numbers to vehicle types",
+  "sorting" : "natCode,ktypNr",
+  "primaryKey" : "natCode,ktypNr",
+  "deltaKey" : "",
+  "className" : "AustrianNatCodes",
+  "attr" : [
+    {
+      "name" : "dLNr",
+      "pos" : 0,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 4,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 129"},
+    {
+      "name" : "natCode",
+      "pos" : 7,
+      "length" : 6,
+      "type" : "C",
+      "description" : "Austrian type number"},
+    {
+      "name" : "ktypNr",
+      "pos" : 13,
+      "length" : 9,
+      "type" : "N",
+      "description" : "Vehicle type(->120)"}
+  ]
+}

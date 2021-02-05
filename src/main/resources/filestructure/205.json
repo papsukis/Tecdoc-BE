@@ -1,0 +1,68 @@
+{
+  "tableName": "Parts List",
+  "tableNumber": 205,
+  "length": 63,
+  "contents": "Part list information on articles",
+  "sorting": "artNr,lfdNr",
+  "primaryKey": "artNr,lfdNr",
+  "deltaKey": "artNr",
+  "className" : "PartsLists",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->40)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 205"
+    },
+    {
+      "name": "partGenArtNr",
+      "pos": 29,
+      "length": 5,
+      "type": "(C)",
+      "description": "Unambiguous number of the Part-Generic Article"
+    },
+    {
+      "name": "lfdNr",
+      "pos": 34,
+      "length": 3,
+      "type": "N",
+      "description": "Sequential number for sorting"
+    },
+    {
+      "name": "partNr",
+      "pos": 37,
+      "length": 22,
+      "type": "C",
+      "description": "Relevant Component part"
+    },
+    {
+      "name": "menge",
+      "pos": 59,
+      "length": 3,
+      "type": "N",
+      "description": "Quantity of component part"
+    },
+    {
+      "name": "loschFlag",
+      "pos": 62,
+      "length": 1,
+      "type": "N",
+      "description": "1=delet all data records for the Delta Key , otherwise =0"
+    }
+  ]
+}

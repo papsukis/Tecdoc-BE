@@ -1,0 +1,110 @@
+{
+  "tableName": "Search Information texts",
+  "tableNumber": 401,
+  "length": 72,
+  "contents": "Search menu dependent information texts",
+  "sorting": "vknZielArt,vknZielNr,genArtNr,artNr,lfdNr,sortNr",
+  "primaryKey": "vknZielArt,vknZielNr,genArtNr,artNr,lfdNr,sortNr",
+  "deltaKey": "vknZielArt,vknZielNr,genArtNr,artNr",
+  "className" : "SearchInformationTexts",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->100)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 401"
+    },
+    {
+      "name": "genArtNr",
+      "pos": 29,
+      "length": 5,
+      "type": "N",
+      "description": "Unambiguous number of the generic article(->320)"
+    },
+    {
+      "name": "vknZielArt",
+      "pos": 34,
+      "length": 3,
+      "type": "N",
+      "description": "Type of the linkage target (PC,CV,engine,...)(KT 271)"
+    },
+    {
+      "name": "vknZielNr",
+      "pos": 37,
+      "length": 9,
+      "type": "N",
+      "description": "Number of the linkage target (kTypeNr,NtypeNr,MotNr,HerldNr,...)"
+    },
+    {
+      "name": "lfdNr",
+      "pos": 46,
+      "length": 9,
+      "type": "N",
+      "description": "Sequential number within the ArtNr-GenArtNr-vknZielNr linkage"
+    },
+    {
+      "name": "sortNr",
+      "pos": 55,
+      "length": 2,
+      "type": "N",
+      "description": "Display Sequence"
+    },
+    {
+      "name": "lKZ",
+      "pos": 57,
+      "length": 3,
+      "type": "(C)",
+      "description": "Country Code(->10 or 12)"
+    },
+    {
+      "name": "infArt",
+      "pos": 60,
+      "length": 3,
+      "type": "N",
+      "description": "Information type(KT->072)"
+    },
+    {
+      "name": "anzSofort",
+      "pos": 63,
+      "length": 1,
+      "type": "N",
+      "description": "Immediate display =1 : Information is shown on the 1st article page of the presentation system and repeated in bold on the 2nd article page"
+    },
+    {
+      "name": "tBSNr",
+      "pos": 64,
+      "length": 6,
+      "type": "C",
+      "description": "Text module"
+    },
+    {
+      "name": "exclude",
+      "pos": 70,
+      "length": 1,
+      "type": "(N)",
+      "description": "'1' = Country code is an exclusion , '0' country code is an inclusion"
+    },
+    {
+      "name": "loschFlag",
+      "pos": 71,
+      "length": 1,
+      "type": "N",
+      "description": "1 = delet all data records for the Delta Key , otherwise = 0"
+    }
+  ]
+}

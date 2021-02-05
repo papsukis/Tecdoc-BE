@@ -1,0 +1,55 @@
+{
+  "tableName": "CV Producer-IDs",
+  "tableNumber": 554,
+  "length": 39,
+  "contents": "Allocation of the chassis to CV primary and secondary types",
+  "sorting": "herNr,herID",
+  "primaryKey": "herlDNr",
+  "deltaKey": "",
+  "className" : "CVProducerIDs",
+  "attr": [
+    {
+      "name": "dLNr",
+      "pos": 0,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant = 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 4,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 554"
+    },
+    {
+      "name": "herlDNr",
+      "pos": 7,
+      "length":5,
+      "type": "N",
+      "description": "Unambiguous number of the CV Producer-ID-Number"
+    },
+    {
+      "name": "herNr",
+      "pos": 12,
+      "length": 6,
+      "type": "N",
+      "description": "Number of the CV Producer (->100)"
+    },
+    {
+      "name": "herID",
+      "pos": 18,
+      "length": 20,
+      "type": "C",
+      "description": "CV Producer-ID."
+    },
+    {
+      "name": "delet",
+      "pos": 38,
+      "length":1,
+      "type": "N",
+      "description": "1: CV Producer-ID is proposed for deletion, otherwise 0"
+    }
+
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "tableName" : "Body Type",
+  "tableNumber" : 145,
+  "length" : 55,
+  "contents" : "Allocation of body types to vehicle types ",
+  "sorting" : "kTypNr,lKZ,sortNr",
+  "primaryKey" : "kTypNr,lKZ,muster",
+  "deltaKey" : "",
+  "className" : "BodyType",
+  "attr" : [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name" : "dLNr",
+      "pos" : 22,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 26,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 145"},
+    {
+      "name" : "kTypNr",
+      "pos" : 29,
+      "length" : 9,
+      "type" : "N",
+      "description" : "Unanmbiguous number of the vehicle type"},
+      {
+        "name" : "lKZ",
+        "pos" : 38,
+        "length" : 3,
+        "type" : "(C)",
+        "description" : "Country Code(->10)"},
+    {
+      "name" : "sortNr",
+      "pos" : 41,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Display sequence of the sample within one (Model Series,LKZ)-Group"},
+      {
+        "name" : "muster",
+        "pos" : 45,
+        "length" : 10,
+        "type" : "C",
+        "description" : "Sample"}
+  ]
+}

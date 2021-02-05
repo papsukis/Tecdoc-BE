@@ -1,0 +1,53 @@
+{
+  "tableName": "CV Driver Cab Country Restrictions",
+  "tableNumber": 542,
+  "length": 49,
+  "contents": "Inclusion of certain countries for a CV driver cab",
+  "sorting": "fHausNr,lKZ",
+  "primaryKey": "fHausNr,lKZ",
+  "deltaKey": "",
+  "className" : "CVDriverCabCountryRestrictions",
+  "attr": [
+    {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant = 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 542"
+    },
+    {
+      "name": "fHausNr",
+      "pos": 29,
+      "length":5,
+      "type": "N",
+      "description": "Unambiguous number of the driver cab(->541)"
+    },
+    {
+      "name": "lKZ",
+      "pos": 34,
+      "length": 3,
+      "type": "(C)",
+      "description": "Country code (->10)"
+    },
+    {
+      "name": "exclude",
+      "pos": 37,
+      "length": 1,
+      "type": "(N)",
+      "description": "'1' = Country code is an exclusion , '0' country code is an inclusion"
+    }
+  ]
+}

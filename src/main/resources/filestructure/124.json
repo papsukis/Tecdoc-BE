@@ -1,0 +1,132 @@
+{
+  "tableName" : "Vehicle Country Specifications",
+  "tableNumber" : 124,
+  "length" : 88,
+  "contents" : "Description of all country specific deviations of vehicle types",
+  "sorting" : "kTypNr,lKZ",
+  "primaryKey" : "kTypNr,lKZ",
+  "className" : "VehicleCountrySpecifications",
+  "attr" : [
+     {
+      "name" : "Reserviert",
+      "pos" : 0,
+      "length" : 22,
+      "type" : "C",
+      "description" : "Constantly blank"},
+    {
+      "name" : "dLNr",
+      "pos" : 22,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 26,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 124"
+    },
+    {
+      "name" : "kTypNr",
+      "pos" : 29,
+      "length" : 9,
+      "type" : "N",
+      "description" : "Unambiguous number of the vehicle type"},
+    {
+      "name" : "lKZ",
+      "pos" : 38,
+      "length" : 3,
+      "type" : "C",
+      "description" : "Country code(->10)"},
+    {
+      "name" : "bjvon",
+      "pos" : 41,
+      "length" : 6,
+      "type" : "(N)",
+      "description" : "Model year from YYYYMM"},
+    {
+      "name" : "bjbis",
+      "pos" : 47,
+      "length" : 6,
+      "type" : "(N)",
+      "description" : "Model year to(YYYYMMM)"},
+    {
+      "name" : "ccmSteuer",
+      "pos" : 53,
+      "length" : 5,
+      "type" : "(N)",
+      "description" : "Engine capacity in cc(taxation value)"},
+    {
+      "name" : "lit",
+      "pos" : 58,
+      "length" : 4,
+      "type" : "(N)",
+      "description" : "Engin capacity in litre (99,99)"},
+    {
+      "name" : "zyl",
+      "pos" : 62,
+      "length" : 2,
+      "type" : "(N)",
+      "description" : "Number of cylinders"},
+    {
+      "name" : "tueren",
+      "pos" : 64,
+      "length" : 1,
+      "type" : "(N)",
+      "description" : "Number of doors"},
+    {
+      "name" : "tanklnhalt",
+      "pos" : 65,
+      "length" : 4,
+      "type" : "(N)",
+      "description" : "Fuel tank capacity"},
+    {
+      "name" : "spannung",
+      "pos" : 69,
+      "length" : 2,
+      "type" : "(N)",
+      "description" : "Main current voltage"},
+    {
+      "name" : "aBS",
+      "pos" : 71,
+      "length" : 1,
+      "type" : "(N)",
+      "description" : "0=no,1=yes,2=optional,9=unknown"},
+    {
+      "name" : "aSR",
+      "pos" : 72,
+      "length" : 1,
+      "type" : "(N)",
+      "description" : "0=no,1=yes,2=optional,9=unknown"},
+    {
+      "name" : "krStoffArt",
+      "pos" : 73,
+      "length" : 3,
+      "type" : "(N)",
+      "description" : "Fuel type (KT 182)"},
+    {
+      "name" : "katArt",
+      "pos" : 76,
+      "length" : 3,
+      "type" : "(N)",
+      "description" : "Catalyst converter Type(KT 89)"},
+    {
+      "name" : "getrArt",
+      "pos" : 79,
+      "length" : 3,
+      "type" : "(N)",
+      "description" : "Transmission type (KT 85)"},
+    {
+      "name" : "bremsArt",
+      "pos" : 82,
+      "length" : 3,
+      "type" : "(N)",
+      "description" : "Brake type(KT 83)"},
+    {
+      "name" : "bremsSys",
+      "pos" : 85,
+      "length" : 3,
+      "type" : "(N)",
+      "description" : "Brake System(KT 84)"}
+  ]
+}

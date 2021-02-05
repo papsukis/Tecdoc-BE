@@ -1,0 +1,104 @@
+{
+  "tableName": "Linkage dependent graphics /Documents",
+  "tableNumber": 432,
+  "length": 73,
+  "contents": "Atributes (criteria) for the linkage",
+  "sorting": "vknZielArt,vknZielNr,genArtNr,artNr,lfdNr,sortNr",
+  "primaryKey": "vknZielArt,vknZielNr,genArtNr,artNr,lfdNr,sortNr",
+  "deltaKey": "vknZielArt,vknZielNr,genArtNr,artNr",
+  "className" : "LinkageDependentGraphicsDocuments",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->40)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 404"
+    },
+    {
+      "name": "genArtNr",
+      "pos": 29,
+      "length": 5,
+      "type": "N",
+      "description": "Unambiguous number of the generic article(->320)"
+    },
+    {
+      "name": "vknZielArt",
+      "pos": 34,
+      "length": 3,
+      "type": "N",
+      "description": "Type of the linkage target (PC,CV,engine,...)(KT 271)"
+    },
+    {
+      "name": "vknZielNr",
+      "pos": 37,
+      "length": 9,
+      "type": "N",
+      "description": "Number of the linkage target (kTypeNr,NtypeNr,MotNr,HerldNr,...)"
+    },
+    {
+      "name": "lfdNr",
+      "pos": 46,
+      "length": 9,
+      "type": "N",
+      "description": "Sequential number within the ArtNr-GenArtNr-VknZielNr- linkage"
+    },
+    {
+      "name": "lKZ",
+      "pos": 55,
+      "length": 3,
+      "type": "(C)",
+      "description": "Country code(->10 or 12)"
+    },
+    {
+      "name": "sortNr",
+      "pos": 58,
+      "length": 2,
+      "type": "N",
+      "description": "Sorting order"
+    },
+    {
+      "name": "bildNr",
+      "pos": 60,
+      "length": 9,
+      "type": "N",
+      "description": "Unambiguous bildNr(->231)"
+    },
+    {
+      "name": "dokumentenArt",
+      "pos": 69,
+      "length": 2,
+      "type": "N",
+      "description": "DT->14"
+    },
+
+    {
+      "name": "exclude",
+      "pos": 71,
+      "length": 1,
+      "type": "N",
+      "description": "'1' = Country code is an exclusion , '0' country code is an inclusion"
+    },
+    {
+      "name": "loschFlag",
+      "pos": 72,
+      "length": 1,
+      "type": "N",
+      "description": "1 = delet all data records for the Delta Key , otherwise = 0"
+    }
+  ]
+}

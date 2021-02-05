@@ -1,0 +1,105 @@
+{
+  "tableName": "Transmission",
+  "tableNumber": 544,
+  "length": 90,
+  "contents": "Description of all transmissions",
+  "sorting": "getrNr",
+  "primaryKey": "getrNr",
+  "deltaKey": "",
+  "className" : "Transmission",
+  "attr": [
+
+    {
+      "name": "dLNr",
+      "pos": 0,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant = 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 4,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 544"
+    },
+    {
+      "name": "getrNr",
+      "pos": 7,
+      "length":5,
+      "type": "N",
+      "description": "Unambiguous number of the transmission"
+    },
+    {
+      "name": "herNr",
+      "pos": 12,
+      "length": 6,
+      "type": "N",
+      "description": "Unambiguous number of the transmission manufacturer(->100)"
+    },
+    {
+      "name": "code",
+      "pos": 18,
+      "length": 30,
+      "type": "C",
+      "description": "Transmission code"
+    },
+    {
+      "name": "getrArt",
+      "pos": 48,
+      "length": 3,
+      "type": "(N)",
+      "description": "Transmission Type(KT->85)"
+    },
+    {
+      "name": "bjvon",
+      "pos": 51,
+      "length": 6,
+      "type": "(N)",
+      "description": "Model Year from (YYYYMM)"
+    },
+    {
+      "name": "bjbis",
+      "pos": 57,
+      "length": 6,
+      "type": "(N)",
+      "description": "Model Year to YYYYMM"
+    },
+    {
+      "name": "trmin",
+      "pos": 63,
+      "length": 5,
+      "type": "(N)",
+      "description": "Transmission Ratio Minimum"
+    },
+    {
+      "name": "trmax",
+      "pos": 68,
+      "length": 5,
+      "type": "(N)",
+      "description": "Transmission Ratio Maximum"
+    },
+    {
+      "name": "trinv",
+      "pos": 73,
+      "length": 5,
+      "type": "(N)",
+      "description": "Transmission Ratio Reverse"
+    },
+    {
+      "name": "ID",
+      "pos": 78,
+      "length": 10,
+      "type": "(C)",
+      "description": "Transmission ID"
+    },
+    {
+      "name": "gaenge",
+      "pos": 88,
+      "length": 2,
+      "type": "(N)",
+      "description": "Number of gearbox speeds"
+    }
+
+  ]
+}

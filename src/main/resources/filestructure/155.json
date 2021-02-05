@@ -1,0 +1,334 @@
+{
+  "tableName": "Engines",
+  "tableNumber": 155,
+  "length": 263,
+  "contents": "Description of all engine types ",
+  "sorting": "motNr",
+  "primaryKey": "motNr",
+  "deltaKey": "",
+  "className" : "Engines",
+  "attr": [
+    {
+      "name": "dLNr",
+      "pos": 0,
+      "length": 4,
+      "type": "N",
+      "description": "Data Supplier Number Constant = 9999"
+    },
+    {
+      "name": "sA",
+      "pos": 4,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 155"
+    },
+    {
+      "name": "herNr",
+      "pos": 7,
+      "length": 6,
+      "type": "N",
+      "description": "Engine Manufacturer Number"
+    },
+    {
+      "name": "motNr",
+      "pos": 13,
+      "length": 5,
+      "type": "N",
+      "description": "Unambiguous engine number"
+    },
+    {
+      "name": "mCode",
+      "pos": 18,
+      "length": 60,
+      "type": "C",
+      "description": "Engine Description"
+    },
+    {
+      "name": "bjvon",
+      "pos": 78,
+      "length": 6,
+      "type": "(N)",
+      "description": "Model year from YYYYMM"
+    },
+    {
+      "name": "bjbis",
+      "pos": 84,
+      "length": 6,
+      "type": "(N)",
+      "description": "Model year to YYYYMM"
+    },
+    {
+      "name": "kWvon",
+      "pos": 90,
+      "length": 4,
+      "type": "(N)",
+      "description": "Engine output in kW from"
+    },
+    {
+      "name": "kWbis",
+      "pos": 94,
+      "length": 4,
+      "type": "(N)",
+      "description": "Engine output in kW to"
+    },
+    {
+      "name": "pSvon",
+      "pos": 98,
+      "length": 4,
+      "type": "(N)",
+      "description": "Engine output in HP from"
+    },
+    {
+      "name": "pSbis",
+      "pos": 102,
+      "length": 4,
+      "type": "(N)",
+      "description": "Engine output in HP to"
+    },
+    {
+      "name": "ventile",
+      "pos": 106,
+      "length": 2,
+      "type": "(N)",
+      "description": "Number of valves"
+    },
+    {
+      "name": "zyl",
+      "pos": 108,
+      "length": 2,
+      "type": "(N)",
+      "description": "Number of cylinders"
+    },
+    {
+      "name": "verdichtV",
+      "pos": 110,
+      "length": 4,
+      "type": "(N)",
+      "description": "Compression *100"
+    },
+    {
+      "name": "verdichtB",
+      "pos": 114,
+      "length": 5,
+      "type": "(N)",
+      "description": "Compression to *100"
+    },
+    {
+      "name": "drehmV",
+      "pos": 119,
+      "length": 4,
+      "type": "(N)",
+      "description": "torque from"
+    },
+    {
+      "name": "drehmB",
+      "pos": 123,
+      "length": 5,
+      "type": "(N)",
+      "description": "Torque to"
+    },
+    {
+      "name": "ccmSteuerV",
+      "pos": 128,
+      "length": 5,
+      "type": "(N)",
+      "description": "Engine Capacity in cc (taxation) from"
+    },
+    {
+      "name": "ccmSteuerB",
+      "pos": 133,
+      "length": 5,
+      "type": "(N)",
+      "description": "Engine Capacity in cc (taxation) to"
+    },
+    {
+      "name": "ccmTechV",
+      "pos": 138,
+      "length": 5,
+      "type": "(N)",
+      "description": "Engine Capacity in cc (technical) from"
+    },
+    {
+      "name": "ccmTechB",
+      "pos": 143,
+      "length": 5,
+      "type": "(N)",
+      "description": "Engine Capacity in cc (technical) to"
+    },
+    {
+      "name": "litSteuerV",
+      "pos": 148,
+      "length": 4,
+      "type": "(N)",
+      "description": "Engine capacity in litre (taxation) from"
+    },
+    {
+      "name": "litSteuerB",
+      "pos": 152,
+      "length": 4,
+      "type": "(N)",
+      "description": "Engine capacity in litre (taxation) to"
+    },
+    {
+      "name": "litTechV",
+      "pos": 156,
+      "length": 4,
+      "type": "(N)",
+      "description": "Engine capacity in litre (technical) from"
+    },
+    {
+      "name": "litTechB",
+      "pos": 160,
+      "length": 4,
+      "type": "(N)",
+      "description": "Engine capacity in litre (technical) to"
+    },
+    {
+      "name": "motVerw",
+      "pos": 164,
+      "length": 3,
+      "type": "(N)",
+      "description": "Engine usage(->KT 98)"
+    },
+    {
+      "name": "motBauForm",
+      "pos": 167,
+      "length": 3,
+      "type": "(N)",
+      "description": "Engine usage(->KT 96)"
+    },
+    {
+      "name": "krStoffArt",
+      "pos": 170,
+      "length": 3,
+      "type": "(N)",
+      "description": "Fuel type(->KT 88)"
+    },
+    {
+      "name": "krStoffAuf",
+      "pos": 173,
+      "length": 3,
+      "type": "(N)",
+      "description": "Fuel mixture formation (->KT 97)"
+    },
+    {
+      "name": "motBeatm",
+      "pos": 176,
+      "length": 3,
+      "type": "(N)",
+      "description": "Engine aspiration (KT-> 99); charger"
+    },
+    {
+      "name": "uminKwV",
+      "pos": 179,
+      "length": 5,
+      "type": "(N)",
+      "description": "RPM kW from"
+    },
+    {
+      "name": "uminKwb",
+      "pos": 184,
+      "length": 5,
+      "type": "(N)",
+      "description": "RPM kW to"
+    },
+    {
+      "name": "uminDrehmV",
+      "pos": 189,
+      "length": 5,
+      "type": "(N)",
+      "description": "RPM torque from"
+    },
+    {
+      "name": "uminDrehmB",
+      "pos": 194,
+      "length": 5,
+      "type": "(N)",
+      "description": "RPM torque to"
+    },
+    {
+      "name": "kurbel",
+      "pos": 199,
+      "length": 2,
+      "type": "(N)",
+      "description": "Number of crankshaft bearings"
+    },
+    {
+      "name": "bohrung",
+      "pos": 201,
+      "length": 6,
+      "type": "(N)",
+      "description": "Bore *1000"
+    },
+    {
+      "name": "hub",
+      "pos": 207,
+      "length": 6,
+      "type": "(N)",
+      "description": "Stroke *1000"
+    },
+    {
+      "name": "motorart",
+      "pos": 213,
+      "length": 3,
+      "type": "(N)",
+      "description": "Engine Type(->KT 80)"
+    },
+    {
+      "name": "abgasnorm",
+      "pos": 216,
+      "length": 3,
+      "type": "(N)",
+      "description": "Exhaust norm (->KT 63)"
+    },
+    {
+      "name": "zylBauForm",
+      "pos": 219,
+      "length": 3,
+      "type": "(N)",
+      "description": "Cylinder design (->KT 79)"
+    },
+    {
+      "name": "motSteur",
+      "pos": 222,
+      "length": 3,
+      "type": "(N)",
+      "description": "Engine management (->KT 77)"
+    },
+    {
+      "name": "ventilSteur",
+      "pos": 225,
+      "length": 3,
+      "type": "(N)",
+      "description": "Valve control (->KT 78)"
+    },
+    {
+      "name": "kuehlArt",
+      "pos": 228,
+      "length": 3,
+      "type": "(N)",
+      "description": "Cooling type (->KT 76)"
+    },
+    {
+      "name": "vkBez",
+      "pos": 231,
+      "length": 30,
+      "type": "(C)",
+      "description": "Sales description"
+    },
+    {
+      "name": "exclude",
+      "pos": 261,
+      "length": 1,
+      "type": "(N)",
+      "description": "0=Inclusion , 1 = Exclusion of countries (->DT 156)"
+    },
+    {
+      "name": "delet",
+      "pos": 261,
+      "length": 1,
+      "type": "(N)",
+      "description": "0=Inclusion , 1 = Exclusion of countries (->DT 156)"
+    }
+  ]
+}

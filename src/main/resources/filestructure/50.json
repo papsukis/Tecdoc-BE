@@ -1,0 +1,140 @@
+{
+  "tableName" : "Criteria Table",
+  "tableNumber" : 50,
+  "length" : 59,
+  "contents" : "Description of all criteria",
+  "sorting" : "dLNr,kritNr",
+  "primaryKey" : "dLNr,kritNr",
+  "className" : "CriteriaTable",
+  "attr" : [
+    {
+      "name" : "dLNr",
+      "pos" : 0,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Data Supplier Number Constant = 9999"},
+    {
+      "name" : "sA",
+      "pos" : 4,
+      "length" : 3,
+      "type" : "N",
+      "description" : "Data Table Constant = 050"
+    },
+    {
+      "name" : "kritNr",
+      "pos" : 7,
+      "length" : 4,
+      "type" : "N",
+      "description" : "Criterion Number"},
+      {
+      "name" : "bezNr",
+      "pos" : 11,
+      "length" : 9,
+      "type" : "N",
+      "description" : "Description Number (DT ->030)"},
+      {
+      "name" : "typ",
+      "pos" : 20,
+      "length" : 1,
+      "type" : "C",
+      "description" : "Criterion Type {'A' = Alphanumerial , 'N' = Numerical , 'D' = Date , 'K' = key, 'V' without value}"},
+    {
+      "name" : "maxLen",
+      "pos" : 21,
+      "length" : 2,
+      "type" : "(N)",
+      "description" : "Maximum length of criterion value"
+    },
+    {
+      "name" : "okArtikel",
+      "pos" : 23,
+      "length" : 1,
+      "type" : "N",
+      "description" : "Criterion may be user for article (SA 210) (0 = No , 1 = Yes)"},
+      {
+      "name" : "tabNr",
+      "pos" : 24,
+      "length" : 3,
+      "type" : "(N)",
+      "description" : "Number of the Key Table for type 'K'"},
+      {
+      "name" : "oKNKW",
+      "pos" : 27,
+      "length" : 1,
+      "type" : "N",
+      "description" : "Criterion may be used for CV linkages (0 = No, 1 = Yes)"},
+      {
+      "name" : "oKPKW",
+      "pos" : 28,
+      "length" : 1,
+      "type" : "N",
+      "description" : "Criterion may be used for PC linkages (0 = No, 1 = Yes)"},
+      {
+      "name" : "oKMotor",
+      "pos" : 29,
+      "length" : 1,
+      "type" : "N",
+      "description" : "Criterion may be used for engines linkages (0 = No, 1 = Yes)"},
+      {
+      "name" : "oKFahrerhaus",
+      "pos" : 30,
+      "length" : 1,
+      "type" : "N",
+      "description" : "Criterion may be used for Driver Cab linkages (0 = No, 1 = Yes)"},
+              {
+      "name" : "stucklistenCriterion",
+      "pos" : 31,
+      "length" : 1,
+      "type" : "N",
+      "description" : "Criterion may be used as Parts List criterion (SA208)(0 = No, 1 = Yes)"},
+              {
+      "name" : "zubehorCriterion",
+      "pos" : 32,
+      "length" : 1,
+      "type" : "N",
+      "description" : "Criterion may be used as Accessory List criterion (DT 228)(0 = No, 1 = Yes)"},
+      {
+      "name" : "mehrfachVerwendung",
+      "pos" : 33,
+      "length" : 1,
+      "type" : "N",
+      "description" : "Criterion may be used more than once within a linkage(0 = No, 1 = Yes)"},
+      {
+      "name" : "bezNrAbk",
+      "pos" : 34,
+      "length" : 9,
+      "type" : "(N)",
+      "description" : "Description number for the abbreviation (-> 030)"},
+      {
+      "name" : "bezNrEinheit",
+      "pos" : 43,
+      "length" : 9,
+      "type" : "(N)",
+      "description" : "BezNr for the unit (->030)"},
+      {
+      "name" : "intervallCriterion",
+      "pos" : 52,
+      "length" : 1,
+      "type" : "N",
+      "description" : "Criterion is an interval criterion (0 = No, 1 = Yes)"},
+      {
+      "name" : "nachfolgeCriterion",
+      "pos" : 53,
+      "length" : 4,
+      "type" : "(N)",
+      "description" : "Criterion is succesor to ..."},
+      {
+      "name" : "deletion",
+      "pos" : 57,
+      "length" : 1,
+      "type" : "N",
+      "description" : "1 : Criterion is proposed for deletion, otherwise 0"},
+       {
+      "name" : "oKAchse",
+      "pos" : 58,
+      "length" : 1,
+      "type" : "N",
+      "description" : "Criterion may be used for Axle linkages (0 = No, 1 = Yes)"}
+
+  ]
+}

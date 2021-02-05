@@ -1,0 +1,75 @@
+{
+  "tableName": "Country-Specific Article-data",
+  "tableNumber": 212,
+  "length": 54,
+  "contents": "Country Specific Article data",
+  "sorting": "artNr,lKZ",
+  "primaryKey": "artNr,lKZ",
+  "deltaKey": "artNr",
+  "className" : "CountrySpecificArticleData",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->100)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 207"
+    },
+    {
+      "name": "lKZ",
+      "pos": 29,
+      "length": 3,
+      "type": "(C)",
+      "description": "Country Code (->10 or 12)"
+    },
+    {
+      "name": "vPE",
+      "pos": 32,
+      "length": 5,
+      "type": "(C)",
+      "description": "Packing unit (quantity per package)"
+    },
+    {
+      "name": "mengeProVPE",
+      "pos": 37,
+      "length": 5,
+      "type": "(N)",
+      "description": "Quantity / part per unit"
+    },
+    {
+      "name": "artStat",
+      "pos": 42,
+      "length": 3,
+      "type": "(N)",
+      "description": "Article Status(KT 73)"
+    },
+    {
+      "name": "statusDat",
+      "pos": 45,
+      "length": 8,
+      "type": "N",
+      "description": "Article status valid from YYYYMMDD"
+    },
+    {
+      "name": "loschFlag",
+      "pos": 53,
+      "length": 1,
+      "type": "N",
+      "description": "1= delet all data records for the Delta key , otherwise 0"
+    }
+  ]
+}

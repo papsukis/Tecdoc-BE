@@ -1,0 +1,89 @@
+{
+  "tableName": "Article table",
+  "tableNumber": 200,
+  "length": 53,
+  "contents":  "Main Article data table" ,
+  "sorting": "artNr",
+  "primaryKey": "artNr",
+  "deltaKey": "artNr",
+  "className" : "ArticleTable",
+  "attr": [
+    {
+      "name": "artNr",
+      "pos": 0,
+      "length": 22,
+      "type": "C",
+      "description": "Article Number in the data supplier format"
+    },
+    {
+      "name": "dLNr",
+      "pos": 22,
+      "length": 4,
+      "type": "N",
+      "description": "Data supplier Number constant (->40)"
+    },
+    {
+      "name": "sA",
+      "pos": 26,
+      "length": 3,
+      "type": "N",
+      "description": "Data Table Constant = 200"
+    },
+    {
+      "name": "bezNr",
+      "pos": 29,
+      "length": 9,
+      "type": "(N)",
+      "description": "Description text number in the language key table"
+    },
+    {
+      "name": "kZSB",
+      "pos": 38,
+      "length": 1,
+      "type": "(N)",
+      "description": "Self-service packing = 1, otherwise 0"
+    },
+    {
+      "name": "kZMat",
+      "pos": 39,
+      "length": 1,
+      "type": "(N)",
+      "description": "Mandatory material certification = 1, otherwise 0"
+    },
+    {
+      "name": "kZAT",
+      "pos": 40,
+      "length": 1,
+      "type": "(N)",
+      "description": "Manufactured part = 1, otherwise 0"
+    },
+    {
+      "name": "kZZub",
+      "pos": 41,
+      "length": 1,
+      "type": "(N)",
+      "description": "Accesory = 1 , otherwise 0"
+    },
+    {
+      "name": "losGr1",
+      "pos": 42,
+      "length": 5,
+      "type": "(N)",
+      "description": "Batch size 1(multiple of VPE)"
+    },
+    {
+      "name": "losGr2",
+      "pos": 47,
+      "length": 5,
+      "type": "(N)",
+      "description": "Batch size 1(multiple of LosGr1)"
+    },
+    {
+      "name": "loschFlag",
+      "pos": 52,
+      "length": 1,
+      "type": "N",
+      "description": "1 = delet all data records for the Delta key, otherwise 0"
+    }
+  ]
+}
