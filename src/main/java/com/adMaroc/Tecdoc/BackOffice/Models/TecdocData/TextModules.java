@@ -17,7 +17,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="text_modules_035")
+@Table(name="t_035_text_modules")
 public class TextModules {
 
     @EmbeddedId
@@ -28,14 +28,6 @@ public class TextModules {
     String text;
     long loschFlag;
 
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "textModules")
-    private List<SearchInformationTexts >searchInformationTexts;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "textModules")
-    private List<ArticleInformation> articleInformation;
     @MapsId("sprachNr")
     @ManyToOne
     @JoinColumn(name = "sprachNr",
@@ -100,21 +92,6 @@ public class TextModules {
         this.loschFlag = loschFlag;
     }
 
-    public List<SearchInformationTexts> getSearchInformationTexts() {
-        return searchInformationTexts;
-    }
-
-    public void setSearchInformationTexts(List<SearchInformationTexts> searchInformationTexts) {
-        this.searchInformationTexts = searchInformationTexts;
-    }
-
-    public List<ArticleInformation> getArticleInformation() {
-        return articleInformation;
-    }
-
-    public void setArticleInformation(List<ArticleInformation> articleInformation) {
-        this.articleInformation = articleInformation;
-    }
 
     public Language getLanguage() {
         return language;

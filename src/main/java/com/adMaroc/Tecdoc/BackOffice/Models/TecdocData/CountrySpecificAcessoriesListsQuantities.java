@@ -12,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="country_specific_accessories_lists_quantities_226")
+@Table(name="t_226_country_specific_accessories_lists_quantities")
 public class CountrySpecificAcessoriesListsQuantities {
 
     @Id

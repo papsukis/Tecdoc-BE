@@ -14,7 +14,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="country_restriction_of_the_linkage_403")
+@Table(name="t_403_country_restriction_of_the_linkage")
 public class CountryRestrictionOfTheLinkage {
 
     @EmbeddedId
@@ -23,6 +23,7 @@ public class CountryRestrictionOfTheLinkage {
     long sA;
     long exclude;
     long loschFlag;
+
     @MapsId("artNr")
     @ManyToOne
     @JoinColumn(name = "artNr",

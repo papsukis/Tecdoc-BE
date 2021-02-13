@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="body_type_synonyms_146")
+@Table(name="t_146_body_type_synonyms")
 public class BodyTypeSynonyms {
 
     @EmbeddedId
@@ -24,10 +24,13 @@ public class BodyTypeSynonyms {
     long sA;
     long lbezNr;
     long loschFlag;
+    String cle;
+    long tabNr;
+    long sprachNr;
     @MapsId("kModNr")
     @ManyToOne
-    @JoinColumn(name = "kmodnr",
-                referencedColumnName = "kmodnr")
+    @JoinColumn(name = "kModNr",
+                referencedColumnName = "kModNr")
     private VehicleModelSeries vehicleModelSeries;
     @MapsId("CountryAndLanguageDependentDescriptionsId")
     @ManyToOne
@@ -36,30 +39,10 @@ public class BodyTypeSynonyms {
                     name = "lbezNr",
                     referencedColumnName = "lbezNr"),
             @JoinColumn(
-                    name = "lKZ",
-                    referencedColumnName = "lKZ"),
-            @JoinColumn(
                     name = "sprachNr",
                     referencedColumnName = "sprachNr")})
     private CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions;
-    @MapsId("KeyTablesEntriesId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "tabNr",
-                    referencedColumnName = "tabNr"),
-            @JoinColumn(
-                    name = "cle",
-                    referencedColumnName = "cle")})
-    private KeyTablesEntries keyTablesEntries;
 
-    public BodyTypeSynonyms(Map<String,String> datas) {
-        this.id = new BodyTypeSynonymsId(Integer.valueOf(datas.get("AufbauArt")),Integer.valueOf(datas.get("KmodNr")));
-        this.dLNr = Integer.valueOf(datas.get("DLNr"));
-        this.sA = Integer.valueOf(datas.get("SA"));
-        this.lbezNr = Integer.valueOf(datas.get("LbezNr"));
-        this.loschFlag = 0;
-    }
 
     public BodyTypeSynonymsId getId() {
         return id;
@@ -117,11 +100,4 @@ public class BodyTypeSynonyms {
         this.countryAndLanguageDependentDescriptions = countryAndLanguageDependentDescriptions;
     }
 
-    public KeyTablesEntries getKeyTablesEntries() {
-        return keyTablesEntries;
-    }
-
-    public void setKeyTablesEntries(KeyTablesEntries keyTablesEntries) {
-        this.keyTablesEntries = keyTablesEntries;
-    }
 }

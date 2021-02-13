@@ -1,26 +1,27 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Data
 @Embeddable
 public class AllocationOfBodyTypesToModelSeriesId implements Serializable {
 
     @Column(name="kmodnr")
     long kmodNr;
-    @Column(name="lkz")
-    String lKZ;
+
     @Column(name="muster")
     String muster;
 
     public AllocationOfBodyTypesToModelSeriesId() {
     }
 
-    public AllocationOfBodyTypesToModelSeriesId(long kmodNr, String lKZ, String muster) {
+    public AllocationOfBodyTypesToModelSeriesId(long kmodNr, String muster) {
         this.kmodNr = kmodNr;
-        this.lKZ = lKZ;
         this.muster = muster;
     }
 
@@ -28,9 +29,6 @@ public class AllocationOfBodyTypesToModelSeriesId implements Serializable {
         this.kmodNr = kmodNr;
     }
 
-    public void setlKZ(String lKZ) {
-        this.lKZ = lKZ;
-    }
 
     public void setMuster(String muster) {
         this.muster = muster;
@@ -40,9 +38,6 @@ public class AllocationOfBodyTypesToModelSeriesId implements Serializable {
         return kmodNr;
     }
 
-    public String getlKZ() {
-        return lKZ;
-    }
 
     public String getMuster() {
         return muster;
@@ -54,13 +49,12 @@ public class AllocationOfBodyTypesToModelSeriesId implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         AllocationOfBodyTypesToModelSeriesId that = (AllocationOfBodyTypesToModelSeriesId) o;
         return getKmodNr() == that.getKmodNr() &&
-                Objects.equals(getlKZ(), that.getlKZ()) &&
                 Objects.equals(getMuster(), that.getMuster());
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(getKmodNr(), getlKZ(), getMuster());
+        return Objects.hash(getKmodNr(), getMuster());
     }
 }

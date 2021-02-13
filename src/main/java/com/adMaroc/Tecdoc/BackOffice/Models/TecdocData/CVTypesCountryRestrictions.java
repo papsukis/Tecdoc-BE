@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="cv_types_country_restrictions_533")
+@Table(name="t_533_cv_types_country_restrictions")
 public class CVTypesCountryRestrictions {
 
     @EmbeddedId
@@ -30,7 +30,11 @@ public class CVTypesCountryRestrictions {
     @JoinColumn(name = "lKZ",
                 referencedColumnName = "lKZ")
     private CountryTable countryTable;
-
+    @MapsId("nTypNr")
+    @ManyToOne
+    @JoinColumn(name = "ntypnr",
+            referencedColumnName = "ntypnr")
+    private CVTypes cvTypes;
 
     public CVTypesCountryRestrictions(Map<String,String> datas) {
         this.id = id;
@@ -86,5 +90,13 @@ public class CVTypesCountryRestrictions {
 
     public void setCountryTable(CountryTable countryTable) {
         this.countryTable = countryTable;
+    }
+
+    public CVTypes getCvTypes() {
+        return cvTypes;
+    }
+
+    public void setCvTypes(CVTypes cvTypes) {
+        this.cvTypes = cvTypes;
     }
 }

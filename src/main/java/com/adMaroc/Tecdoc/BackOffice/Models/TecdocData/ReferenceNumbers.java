@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="reference_numbers_203")
+@Table(name="t_203_reference_numbers")
 public class ReferenceNumbers {
 
     @EmbeddedId
@@ -33,11 +33,7 @@ public class ReferenceNumbers {
     @JoinColumn(name = "artNr",
                 referencedColumnName = "artNr")
     private ArticleTable articleTable;
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lKZ",
-                referencedColumnName = "lKZ")
-    private CountryTable countryTable;
+
     @MapsId("herNr")
     @ManyToOne
     @JoinColumn(name = "herNr",
@@ -45,19 +41,6 @@ public class ReferenceNumbers {
     private Manufacturer manufacturer;
 
 
-    public ReferenceNumbers(Map<String,String> datas) {
-        this.id=new ReferenceNumbersId(datas.get("ArtNr"),Integer.valueOf(datas.get("HerNr")),Integer.valueOf(datas.get("Sort")),datas.get("LKZ"));
-        this.dLNr=Integer.valueOf(datas.get("DLNr"));
-        this.sA=Integer.valueOf(datas.get("SA"));
-        this.referenzInfo=datas.get("ReferenzInfo");
-        this.refNr=datas.get("RefNr");
-        this.exclude=Integer.valueOf(datas.get("Exclude"));
-        this.additiv=Integer.valueOf(datas.get("Additiv"));
-        this.loschFlag=Integer.valueOf(datas.get("Lösch-Flag"));
-        this.articleTable=new ArticleTable();
-        this.countryTable=new CountryTable();
-       // this.manufacturer=new Manufacturer();
-    }
 
     public ReferenceNumbersId getId() {
         return id;
@@ -129,14 +112,6 @@ public class ReferenceNumbers {
 
     public void setArticleTable(ArticleTable articleTable) {
         this.articleTable = articleTable;
-    }
-
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
     }
 
     public Manufacturer getManufacturer() {

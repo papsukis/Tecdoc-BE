@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="search_information_texts_401")
+@Table(name="t_401_search_information_texts")
 public class SearchInformationTexts {
 
     @EmbeddedId
@@ -28,28 +28,16 @@ public class SearchInformationTexts {
     String tBSNr;
     long exclude;
     long loschFlag;
+    long sprachNr;
 
     @MapsId("artNr")
     @ManyToOne
     @JoinColumn(name = "artNr")
     private ArticleTable articleTable;
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lKZ")
-    private CountryTable countryTable;
     @MapsId("genArtNr")
     @ManyToOne
     @JoinColumn(name = "genArtNr")
     private GenericArticles genericArticles;
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "tabNr",
-                    referencedColumnName = "tabNr"),
-            @JoinColumn(
-                    name = "cle",
-                    referencedColumnName = "cle")})
-    private KeyTablesEntries keyTablesEntries;
     @MapsId("TextModulesId")
     @ManyToOne
     @JoinColumns({
@@ -64,17 +52,6 @@ public class SearchInformationTexts {
                     referencedColumnName = "lfdnr")})
     private TextModules textModules;
 
-    public SearchInformationTexts(Map<String,String> datas) {
-        this.id = id;
-        this.dLNr = dLNr;
-        this.sA = sA;
-        this.lKZ = lKZ;
-        this.infArt = infArt;
-        this.anzSofort = anzSofort;
-        this.tBSNr = tBSNr;
-        this.exclude = exclude;
-        this.loschFlag = loschFlag;
-    }
 
     public SearchInformationTextsId getId() {
         return id;
@@ -156,13 +133,6 @@ public class SearchInformationTexts {
         this.articleTable = articleTable;
     }
 
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
-    }
 
     public GenericArticles getGenericArticles() {
         return genericArticles;
@@ -172,13 +142,6 @@ public class SearchInformationTexts {
         this.genericArticles = genericArticles;
     }
 
-    public KeyTablesEntries getKeyTablesEntries() {
-        return keyTablesEntries;
-    }
-
-    public void setKeyTablesEntries(KeyTablesEntries keyTablesEntries) {
-        this.keyTablesEntries = keyTablesEntries;
-    }
 
     public TextModules getTextModules() {
         return textModules;

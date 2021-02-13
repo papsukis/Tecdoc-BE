@@ -14,19 +14,16 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="purpose_of_use_325")
+@Table(name="t_325_purpose_of_use")
 public class PurposeOfUse {
 
     @Id
-    long verwNr;
+    String verwNr;
     long dLNr;
     long sA;
-    long bezNr;
+    String bezNr;
     long loschFlag;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "purposeOfUse")
-    private List<GenericArticles> genericArticles;
+    long sprachNr;
     @MapsId("LanguageDescriptionsId")
     @ManyToOne
     @JoinColumns({
@@ -38,20 +35,29 @@ public class PurposeOfUse {
                     referencedColumnName = "sprachNr")})
     private LanguageDescriptions languageDescriptions;
 
-    public PurposeOfUse(Map<String,String> datas) {
-        this.verwNr = verwNr;
-        this.dLNr = dLNr;
-        this.sA = sA;
-        this.bezNr = bezNr;
-        this.loschFlag = loschFlag;
-    }
 
-    public long getVerwNr() {
+    public String getVerwNr() {
         return verwNr;
     }
 
-    public void setVerwNr(long verwNr) {
+    public void setVerwNr(String verwNr) {
         this.verwNr = verwNr;
+    }
+
+    public String getBezNr() {
+        return bezNr;
+    }
+
+    public void setBezNr(String bezNr) {
+        this.bezNr = bezNr;
+    }
+
+    public long getSprachNr() {
+        return sprachNr;
+    }
+
+    public void setSprachNr(long sprachNr) {
+        this.sprachNr = sprachNr;
     }
 
     public long getdLNr() {
@@ -70,13 +76,6 @@ public class PurposeOfUse {
         this.sA = sA;
     }
 
-    public long getBezNr() {
-        return bezNr;
-    }
-
-    public void setBezNr(long bezNr) {
-        this.bezNr = bezNr;
-    }
 
     public long getLoschFlag() {
         return loschFlag;
@@ -84,14 +83,6 @@ public class PurposeOfUse {
 
     public void setLoschFlag(long loschFlag) {
         this.loschFlag = loschFlag;
-    }
-
-    public List<GenericArticles> getGenericArticles() {
-        return genericArticles;
-    }
-
-    public void setGenericArticles(List<GenericArticles> genericArticles) {
-        this.genericArticles = genericArticles;
     }
 
     public LanguageDescriptions getLanguageDescriptions() {

@@ -36,7 +36,7 @@
       "name" : "bezNr",
       "pos" : 32,
       "length" : 9,
-      "type" : "N",
+      "type" : "C",
       "description" : "Key Table Number (DT ->030)"},
       {
       "name" : "tabTyp",

@@ -1,20 +1,23 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys;
 
+import lombok.ToString;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
+@ToString
 public class AccessoryListsCountryRestrictionsId implements Serializable {
 
-    @Column(name="artnr")
+    @Column(name="artNr")
     private String artNr;
     @Column(name="lfdnrzub")
     private long lfdNrZub;
     @Column(name="sortnr")
     private long sortNr;
-    @Column(name="lkz")
+    @Column(name="lKZ")
     private String lKZ;
 
     public AccessoryListsCountryRestrictionsId() {

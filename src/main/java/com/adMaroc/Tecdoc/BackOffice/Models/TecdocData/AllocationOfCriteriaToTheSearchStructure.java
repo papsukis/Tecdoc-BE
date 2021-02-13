@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="allocation_of_criteria_to_the_search_structure_304")
+@Table(name="t_304_allocation_of_criteria_to_the_search_structure")
 public class AllocationOfCriteriaToTheSearchStructure {
 
     @EmbeddedId

@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="allocation_of_genart_to_search_structure_302")
+@Table(name="t_302_allocation_of_genart_to_search_structure")
 public class AllocationOfGenArtToSearchStructure {
 
     @EmbeddedId

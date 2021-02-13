@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="drive_type_synonyms_147")
+@Table(name="t_147_drive_type_synonyms")
 public class DriveTypeSynonyms {
 
     @EmbeddedId
@@ -24,15 +24,20 @@ public class DriveTypeSynonyms {
     long sA;
     long lbezNr;
     long loschFlag;
+    long sprachNr;
+    @Column(name="cle")
+    String cle;
+    @Column(name="tabNr")
+    long tabNr;
+
+
     @MapsId("CountryAndLanguageDependentDescriptionsId")
     @ManyToOne
     @JoinColumns({
             @JoinColumn(
                     name = "lbezNr",
                     referencedColumnName = "lbezNr"),
-            @JoinColumn(
-                    name = "lKZ",
-                    referencedColumnName = "lKZ"),
+
             @JoinColumn(
                     name="sprachNr",
                     referencedColumnName = "sprachNr")})
@@ -42,15 +47,6 @@ public class DriveTypeSynonyms {
     @JoinColumn(name = "kTypNr",
                 referencedColumnName = "kTypNr")
     private VehicleTypes vehicleTypes;
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "tabNr",
-                    referencedColumnName = "tabNr"),
-            @JoinColumn(
-                    name = "cle",
-                    referencedColumnName = "cle")})
-    private KeyTablesEntries keyTablesEntries;
 
     public DriveTypeSynonyms(Map<String,String> datas) {
         this.id = new DriveTypeSynonymsId(Integer.valueOf(datas.get("AntrArt")),Integer.valueOf(datas.get("KTypNr")));
@@ -116,11 +112,4 @@ public class DriveTypeSynonyms {
         this.vehicleTypes = vehicleTypes;
     }
 
-    public KeyTablesEntries getKeyTablesEntries() {
-        return keyTablesEntries;
-    }
-
-    public void setKeyTablesEntries(KeyTablesEntries keyTablesEntries) {
-        this.keyTablesEntries = keyTablesEntries;
-    }
 }

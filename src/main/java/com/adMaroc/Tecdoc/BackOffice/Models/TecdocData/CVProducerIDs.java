@@ -14,7 +14,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="cv_producer_id_554")
+@Table(name="t_554_cv_producer_id")
 public class CVProducerIDs {
 
     @Id
@@ -25,18 +25,7 @@ public class CVProducerIDs {
     String herID;
     long delet;
 
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "cvProducerIDs")
-    private List<AllocationOfCVToCVIDNumbers> allocationOfCVToCVIDNumbers;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "cvProducerIDs")
-    private List<CountryRestrictionsForTheAllocationOfCVToIDNumbers> countryRestrictionsForTheAllocationOfCVToIDNumbers;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "cvProducerIDs")
-    private List<CVProducerIdsCountryRestrictions> cvProducerIdsCountryRestrictions;
+
 
     public CVProducerIDs(Map<String,String> datas) {
         this.herlDNr = herlDNr;
@@ -95,27 +84,5 @@ public class CVProducerIDs {
         this.delet = delet;
     }
 
-    public List<AllocationOfCVToCVIDNumbers> getAllocationOfCVToCVIDNumbers() {
-        return allocationOfCVToCVIDNumbers;
-    }
 
-    public void setAllocationOfCVToCVIDNumbers(List<AllocationOfCVToCVIDNumbers> allocationOfCVToCVIDNumbers) {
-        this.allocationOfCVToCVIDNumbers = allocationOfCVToCVIDNumbers;
-    }
-
-    public List<CountryRestrictionsForTheAllocationOfCVToIDNumbers> getCountryRestrictionsForTheAllocationOfCVToIDNumbers() {
-        return countryRestrictionsForTheAllocationOfCVToIDNumbers;
-    }
-
-    public void setCountryRestrictionsForTheAllocationOfCVToIDNumbers(List<CountryRestrictionsForTheAllocationOfCVToIDNumbers> countryRestrictionsForTheAllocationOfCVToIDNumbers) {
-        this.countryRestrictionsForTheAllocationOfCVToIDNumbers = countryRestrictionsForTheAllocationOfCVToIDNumbers;
-    }
-
-    public List<CVProducerIdsCountryRestrictions> getCvProducerIdsCountryRestrictions() {
-        return cvProducerIdsCountryRestrictions;
-    }
-
-    public void setCvProducerIdsCountryRestrictions(List<CVProducerIdsCountryRestrictions> cvProducerIdsCountryRestrictions) {
-        this.cvProducerIdsCountryRestrictions = cvProducerIdsCountryRestrictions;
-    }
 }

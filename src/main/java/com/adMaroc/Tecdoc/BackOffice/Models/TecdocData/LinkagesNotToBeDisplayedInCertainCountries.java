@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="linkages_not_to_be_displayed_in_certain_countries_402")
+@Table(name="t_402_linkages_not_to_be_displayed_in_certain_countries")
 public class LinkagesNotToBeDisplayedInCertainCountries {
 
 

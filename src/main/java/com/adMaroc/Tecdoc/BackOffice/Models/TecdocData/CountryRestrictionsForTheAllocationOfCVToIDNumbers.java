@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="country_restrictions_for_the_allocation_of_cv_to_id_numbers_539")
+@Table(name="t_539_country_restrictions_for_the_allocation_of_cv_to_id_numbers")
 public class CountryRestrictionsForTheAllocationOfCVToIDNumbers {
 
     @EmbeddedId
@@ -43,16 +43,7 @@ public class CountryRestrictionsForTheAllocationOfCVToIDNumbers {
     @JoinColumn(name = "lKZ",
                 referencedColumnName = "lKZ")
     private CountryTable countryTable;
-    @MapsId("CVSecondaryTypesId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "ntypnr",
-                    referencedColumnName = "ntypnr"),
-            @JoinColumn(
-                    name = "ntypsubnr",
-                    referencedColumnName = "ntypsubnr")})
-    private CVSecondaryTypes cvSecondaryTypes;
+
     @MapsId("nTypNr")
     @ManyToOne
     @JoinColumn(name = "ntypnr",
@@ -127,14 +118,6 @@ public class CountryRestrictionsForTheAllocationOfCVToIDNumbers {
 
     public void setCountryTable(CountryTable countryTable) {
         this.countryTable = countryTable;
-    }
-
-    public CVSecondaryTypes getCvSecondaryTypes() {
-        return cvSecondaryTypes;
-    }
-
-    public void setCvSecondaryTypes(CVSecondaryTypes cvSecondaryTypes) {
-        this.cvSecondaryTypes = cvSecondaryTypes;
     }
 
     public CVTypes getCvTypes() {

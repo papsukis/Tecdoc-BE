@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="cv_producer_ids_country_restrictions_555")
+@Table(name="t_555_cv_producer_ids_country_restrictions")
 public class CVProducerIdsCountryRestrictions {
 
     @EmbeddedId

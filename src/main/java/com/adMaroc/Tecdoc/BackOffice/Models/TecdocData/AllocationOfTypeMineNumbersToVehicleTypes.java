@@ -16,7 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="allocation_of_type_mine_numbers_to_vehicle_types_123")
+@Table(name="t_123_allocation_of_type_mine_numbers_to_vehicle_types")
 public class AllocationOfTypeMineNumbersToVehicleTypes {
 
   @EmbeddedId
@@ -24,18 +24,13 @@ public class AllocationOfTypeMineNumbersToVehicleTypes {
     long dLNr;
     long sA;
 
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "allocationOfTypeMineNumbersToVehicleTypes")
-    private List<VehicleTypes> vehicleTypes;
 
+    @MapsId("kTypNr")
+    @ManyToOne
+    @JoinColumn( name = "kTypNr",
+            referencedColumnName = "kTypNr")
+    private VehicleTypes vehicleTypes;
 
-
-    public AllocationOfTypeMineNumbersToVehicleTypes(Map<String,String> datas) {
-        this.id = new AllocationOfTypeMineNumbersToVehicleTypesId(datas.get("TypMine"),Integer.valueOf(datas.get("KTypNr")));
-        this.dLNr = Integer.valueOf(datas.get("DLNr"));
-        this.sA = Integer.valueOf(datas.get("SA"));
-    }
 
     public AllocationOfTypeMineNumbersToVehicleTypesId getId() {
         return id;
@@ -61,11 +56,4 @@ public class AllocationOfTypeMineNumbersToVehicleTypes {
         this.sA = sA;
     }
 
-    public List<VehicleTypes> getVehicleTypes() {
-        return vehicleTypes;
-    }
-
-    public void setVehicleTypes(List<VehicleTypes> vehicleTypes) {
-        this.vehicleTypes = vehicleTypes;
-    }
 }

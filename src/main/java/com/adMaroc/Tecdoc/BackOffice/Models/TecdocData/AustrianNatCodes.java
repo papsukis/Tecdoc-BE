@@ -16,7 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="austrian_natcodes_129")
+@Table(name="t_129_austrian_natcodes")
 public class AustrianNatCodes {
 
     @EmbeddedId
@@ -25,10 +25,11 @@ public class AustrianNatCodes {
     long sA;
 
 
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "austrianNatCodes")
-    private List<VehicleTypes> vehicleTypes;
+    @MapsId("kTypNr")
+    @ManyToOne
+    @JoinColumn( name = "kTypNr",
+            referencedColumnName = "kTypNr")
+    private VehicleTypes vehicleTypes;
 
 
     public AustrianNatCodes(Map<String,String> datas) {
@@ -61,11 +62,4 @@ public class AustrianNatCodes {
         this.sA = sA;
     }
 
-    public List<VehicleTypes> getVehicleTypes() {
-        return vehicleTypes;
-    }
-
-    public void setVehicleTypes(List<VehicleTypes> vehicleTypes) {
-        this.vehicleTypes = vehicleTypes;
-    }
 }

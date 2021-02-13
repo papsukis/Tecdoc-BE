@@ -16,7 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="allocation_of_qs_icons_to_product_areas_306")
+@Table(name="t_306_allocation_of_qs_icons_to_product_areas")
 public class AllocationOfQuickStartIconsToProductAreas {
 
     @EmbeddedId
@@ -30,17 +30,8 @@ public class AllocationOfQuickStartIconsToProductAreas {
     @JoinColumn(name = "qsId",
                 referencedColumnName = "qsId")
     private QuickStartIcons quickStartIcons;
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "allocationOfQuickStartIconsToProductAreas")
-    private List<TheAllocationOfQuickStartIconsToNodesLeavesWithinOneProductArea> allocationOfQuickStartIconsToNodesLeavesWithinOneProductAreas;
 
-    public AllocationOfQuickStartIconsToProductAreas(Map<String,String> datas) {
-        this.id = id;
-        this.dLNr = dLNr;
-        this.sA = sA;
-        this.sortNr = sortNr;
-    }
+
 
     public AllocationOfQuickStartIconsToProductAreasId getId() {
         return id;
@@ -82,11 +73,5 @@ public class AllocationOfQuickStartIconsToProductAreas {
         this.quickStartIcons = quickStartIcons;
     }
 
-    public List<TheAllocationOfQuickStartIconsToNodesLeavesWithinOneProductArea> getAllocationOfQuickStartIconsToNodesLeavesWithinOneProductAreas() {
-        return allocationOfQuickStartIconsToNodesLeavesWithinOneProductAreas;
-    }
 
-    public void setAllocationOfQuickStartIconsToNodesLeavesWithinOneProductAreas(List<TheAllocationOfQuickStartIconsToNodesLeavesWithinOneProductArea> allocationOfQuickStartIconsToNodesLeavesWithinOneProductAreas) {
-        this.allocationOfQuickStartIconsToNodesLeavesWithinOneProductAreas = allocationOfQuickStartIconsToNodesLeavesWithinOneProductAreas;
-    }
 }

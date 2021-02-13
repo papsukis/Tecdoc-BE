@@ -14,7 +14,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="data_supplier_logos_042")
+@Table(name="t_042_data_supplier_logos")
 public class DataSupplierLogos {
 
     @Id
@@ -24,14 +24,10 @@ public class DataSupplierLogos {
     long bildNr;
     long dokumentenArt;
     long loschFlag;
+    long sprachNr;
 
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lKZ",
-                referencedColumnName = "lKZ")
-    private CountryTable countryTable;
     @MapsId("GraphicsDocumentsId")
-    @ManyToOne
+    @ManyToMany
     @JoinColumns({
             @JoinColumn(
                     name = "bildNr",
@@ -42,21 +38,13 @@ public class DataSupplierLogos {
             @JoinColumn(
                     name = "sprachNr",
                     referencedColumnName = "sprachNr")})
-    private GraphicsDocuments graphicsDocuments;
+    private List<GraphicsDocuments> graphicsDocuments;
     @MapsId("dokumentenArt")
     @ManyToOne
     @JoinColumn(name = "dokumentenArt",
                 referencedColumnName = "dokumentenArt")
     private DocumentTypes documentTypes;
 
-    public DataSupplierLogos(Map<String,String> datas) {
-        this.lKZ = datas.get("LKZ");
-        this.dLNr = Integer.valueOf(datas.get("DLNr"));
-        this.sA = Integer.valueOf(datas.get("SA"));
-        this.bildNr = Integer.valueOf(datas.get("BildNr"));
-        this.dokumentenArt = Integer.valueOf(datas.get("DokumentenArt"));
-        this.loschFlag = 0;
-    }
 
     public String getlKZ() {
         return lKZ;
@@ -106,19 +94,11 @@ public class DataSupplierLogos {
         this.loschFlag = loschFlag;
     }
 
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
-    }
-
-    public GraphicsDocuments getGraphicsDocuments() {
+    public List<GraphicsDocuments> getGraphicsDocuments() {
         return graphicsDocuments;
     }
 
-    public void setGraphicsDocuments(GraphicsDocuments graphicsDocuments) {
+    public void setGraphicsDocuments(List<GraphicsDocuments> graphicsDocuments) {
         this.graphicsDocuments = graphicsDocuments;
     }
 

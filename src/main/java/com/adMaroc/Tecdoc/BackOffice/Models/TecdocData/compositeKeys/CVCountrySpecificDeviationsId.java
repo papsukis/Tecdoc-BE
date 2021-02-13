@@ -1,11 +1,14 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys;
 
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Data
 @Embeddable
 public class CVCountrySpecificDeviationsId implements Serializable {
 

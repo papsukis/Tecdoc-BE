@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="linkage_attributes_410")
+@Table(name="t_410_linkage_attributes")
 public class LinkageAttributes {
 
     @EmbeddedId
@@ -28,16 +28,13 @@ public class LinkageAttributes {
     String lKZ;
     long exclude;
     long loschFlag;
+    @Column(name = "dl_nr")
+    long dlnr;
     @MapsId("artNr")
     @ManyToOne
     @JoinColumn(name = "artNr",
             referencedColumnName = "artNr")
     private ArticleTable articleTable;
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lKZ",
-            referencedColumnName = "lKZ")
-    private CountryTable countryTable;
     @MapsId("genArtNr")
     @ManyToOne
     @JoinColumn(name = "genArtNr",
@@ -47,7 +44,7 @@ public class LinkageAttributes {
     @ManyToOne
     @JoinColumns({
             @JoinColumn(
-                    name = "dLNr",
+                    name = "dl_nr",
                     referencedColumnName = "dLNr"),
             @JoinColumn(
                     name = "kritNr",
@@ -147,20 +144,20 @@ public class LinkageAttributes {
         this.articleTable = articleTable;
     }
 
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
-    }
-
     public GenericArticles getGenericArticles() {
         return genericArticles;
     }
 
     public void setGenericArticles(GenericArticles genericArticles) {
         this.genericArticles = genericArticles;
+    }
+
+    public long getDlnr() {
+        return dlnr;
+    }
+
+    public void setDlnr(long dlnr) {
+        this.dlnr = dlnr;
     }
 
     public CriteriaTable getCriteriaTable() {

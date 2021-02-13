@@ -1,40 +1,44 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Data
 @Embeddable
 public class BodyTypeSynonymsId implements Serializable {
 
-    @Column(name="aufbauart")
+    @Column(name="aufbauArt")
     long aufbauArt;
-    @Column(name="kmodnr")
-    long kmodNr;
+    @Column(name="kModNr")
+    long kModNr;
 
     public BodyTypeSynonymsId() {
     }
 
     public BodyTypeSynonymsId(long aufbauArt, long kmodNr) {
         this.aufbauArt = aufbauArt;
-        this.kmodNr = kmodNr;
+        this.kModNr = kmodNr;
+    }
+
+
+    public long getAufbauArt() {
+        return aufbauArt;
     }
 
     public void setAufbauArt(long aufbauArt) {
         this.aufbauArt = aufbauArt;
     }
 
-    public void setKmodNr(long kmodNr) {
-        this.kmodNr = kmodNr;
+    public long getkModNr() {
+        return kModNr;
     }
 
-    public long getAufbauArt() {
-        return aufbauArt;
-    }
-
-    public long getKmodNr() {
-        return kmodNr;
+    public void setkModNr(long kModNr) {
+        this.kModNr = kModNr;
     }
 
     @Override
@@ -43,12 +47,12 @@ public class BodyTypeSynonymsId implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         BodyTypeSynonymsId that = (BodyTypeSynonymsId) o;
         return getAufbauArt() == that.getAufbauArt() &&
-                getKmodNr() == that.getKmodNr();
+                getkModNr() == that.getkModNr();
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(getAufbauArt(), getKmodNr());
+        return Objects.hash(getAufbauArt(), getkModNr());
     }
 }

@@ -1,16 +1,19 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Data
 @Embeddable
 public class AllocationOfDriverCabsToCVsId implements Serializable {
 
-    @Column(name="ntypnr")
+    @Column(name="nTypNr")
     long nTypNr;
-    @Column(name="nyypdubnr")
+    @Column(name="nTypSubNr")
     long nTypSubNr;
     @Column(name="lfdnr")
     long lfdNr;

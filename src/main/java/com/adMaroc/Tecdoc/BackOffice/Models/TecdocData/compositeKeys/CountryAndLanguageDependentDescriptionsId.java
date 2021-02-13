@@ -1,26 +1,26 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
+@Data
 public class CountryAndLanguageDependentDescriptionsId  implements Serializable {
 
-    @Column(name="lbeznr")
+    @Column(name="lBezNr")
     long lBezNr;
-    @Column(name="lkz")
-    String lKZ;
-    @Column(name="sprachnr")
+    @Column(name="sprachNr")
     long sprachNr;
 
     public CountryAndLanguageDependentDescriptionsId() {
     }
 
-    public CountryAndLanguageDependentDescriptionsId(long lBezNr, String lKZ, long sprachNr) {
+    public CountryAndLanguageDependentDescriptionsId(long lBezNr, long sprachNr) {
         this.lBezNr = lBezNr;
-        this.lKZ = lKZ;
         this.sprachNr = sprachNr;
     }
 
@@ -29,7 +29,6 @@ public class CountryAndLanguageDependentDescriptionsId  implements Serializable 
     }
 
     public void setlKZ(String lKZ) {
-        this.lKZ = lKZ;
     }
 
     public void setSprachNr(long sprachNr) {
@@ -40,9 +39,6 @@ public class CountryAndLanguageDependentDescriptionsId  implements Serializable 
         return lBezNr;
     }
 
-    public String getlKZ() {
-        return lKZ;
-    }
 
     public long getSprachNr() {
         return sprachNr;
@@ -54,13 +50,12 @@ public class CountryAndLanguageDependentDescriptionsId  implements Serializable 
         if (o == null || getClass() != o.getClass()) return false;
         CountryAndLanguageDependentDescriptionsId that = (CountryAndLanguageDependentDescriptionsId) o;
         return getlBezNr() == that.getlBezNr() &&
-                getSprachNr() == that.getSprachNr() &&
-                Objects.equals(getlKZ(), that.getlKZ());
+                getSprachNr() == that.getSprachNr();
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(getlBezNr(), getlKZ(), getSprachNr());
+        return Objects.hash(getlBezNr(), getSprachNr());
     }
 }

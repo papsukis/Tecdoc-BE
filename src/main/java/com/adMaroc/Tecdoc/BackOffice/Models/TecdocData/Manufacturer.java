@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="manufacturer_100")
+@Table(name="t_100_manufacturer")
 public class Manufacturer {
 
     @Id
@@ -31,16 +33,15 @@ public class Manufacturer {
     long getriebe;
     long transporter;
     long delet;
-
+    long sprachNr;
     @MapsId("CountryAndLanguageDependentDescriptionsId")
     @ManyToOne
+    @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumns({
             @JoinColumn(
                     name = "lBezNr",
                     referencedColumnName = "lBezNr"),
-            @JoinColumn(
-                    name = "lKZ",
-                    referencedColumnName = "lKZ"),
+
             @JoinColumn(
                     name = "sprachNr",
                     referencedColumnName = "sprachNr")})
@@ -50,26 +51,7 @@ public class Manufacturer {
     @JoinColumn(name = "dLNr",
             referencedColumnName = "dLNr")
     private Header header;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "manufacturer")
-    private List<ManufacturerKBAReference >manufacturerKBAReference;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "manufacturer")
-    private List<VehicleModelSeries> vehicleModelSeries;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "manufacturer")
-    private List<ReferenceNumbers> referenceNumbers;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "manufacturer")
-    private List<Transmission> transmissions;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "manufacturer")
-    private List<CVDriverCabs> cvDriverCabs;
+
 
 
     public Manufacturer(Map<String,String> datas) {
@@ -208,43 +190,11 @@ public class Manufacturer {
         this.header = header;
     }
 
-    public List<ManufacturerKBAReference> getManufacturerKBAReference() {
-        return manufacturerKBAReference;
+    public long getSprachNr() {
+        return sprachNr;
     }
 
-    public void setManufacturerKBAReference(List<ManufacturerKBAReference> manufacturerKBAReference) {
-        this.manufacturerKBAReference = manufacturerKBAReference;
-    }
-
-    public List<VehicleModelSeries> getVehicleModelSeries() {
-        return vehicleModelSeries;
-    }
-
-    public void setVehicleModelSeries(List<VehicleModelSeries> vehicleModelSeries) {
-        this.vehicleModelSeries = vehicleModelSeries;
-    }
-
-    public List<ReferenceNumbers> getReferenceNumbers() {
-        return referenceNumbers;
-    }
-
-    public void setReferenceNumbers(List<ReferenceNumbers> referenceNumbers) {
-        this.referenceNumbers = referenceNumbers;
-    }
-
-    public List<Transmission> getTransmissions() {
-        return transmissions;
-    }
-
-    public void setTransmissions(List<Transmission> transmissions) {
-        this.transmissions = transmissions;
-    }
-
-    public List<CVDriverCabs> getCvDriverCabs() {
-        return cvDriverCabs;
-    }
-
-    public void setCvDriverCabs(List<CVDriverCabs> cvDriverCabs) {
-        this.cvDriverCabs = cvDriverCabs;
+    public void setSprachNr(long sprachNr) {
+        this.sprachNr = sprachNr;
     }
 }

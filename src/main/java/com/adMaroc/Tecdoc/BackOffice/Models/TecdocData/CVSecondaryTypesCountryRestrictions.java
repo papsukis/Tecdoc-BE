@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="cv_secondary_types_country_restrictions_536")
+@Table(name="t_536_cv_secondary_types_country_restrictions")
 public class CVSecondaryTypesCountryRestrictions {
 
     @EmbeddedId
@@ -38,11 +38,7 @@ public class CVSecondaryTypesCountryRestrictions {
                     name = "ntypsubnr",
                     referencedColumnName = "ntypsubnr")})
     private CVSecondaryTypes cvSecondaryTypes;
-    @MapsId("nTypNr")
-    @ManyToOne
-    @JoinColumn(name = "ntypnr",
-                referencedColumnName = "ntypnr")
-    private CVTypes cvTypes;
+
 
     public CVSecondaryTypesCountryRestrictions(CVSecondaryTypesCountryRestrictionsId id, long dLNr, long sA, long exclude) {
         this.id = id;
@@ -99,11 +95,5 @@ public class CVSecondaryTypesCountryRestrictions {
         this.cvSecondaryTypes = cvSecondaryTypes;
     }
 
-    public CVTypes getCvTypes() {
-        return cvTypes;
-    }
 
-    public void setCvTypes(CVTypes cvTypes) {
-        this.cvTypes = cvTypes;
-    }
 }

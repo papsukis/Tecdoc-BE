@@ -1,12 +1,15 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Data
 @Embeddable
-public class DataSupplierAdressesId implements Serializable {
+public class DataSupplierAddressesId implements Serializable {
 
     @Column(name="dLnr")
     long dLNr;
@@ -15,10 +18,10 @@ public class DataSupplierAdressesId implements Serializable {
     @Column(name="lkz")
     String lKZ;
 
-    public DataSupplierAdressesId() {
+    public DataSupplierAddressesId() {
     }
 
-    public DataSupplierAdressesId(long dLNr, long adressart, String lKZ) {
+    public DataSupplierAddressesId(long dLNr, long adressart, String lKZ) {
         this.dLNr = dLNr;
         this.adressart = adressart;
         this.lKZ = lKZ;
@@ -52,7 +55,7 @@ public class DataSupplierAdressesId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DataSupplierAdressesId that = (DataSupplierAdressesId) o;
+        DataSupplierAddressesId that = (DataSupplierAddressesId) o;
         return getdLNr() == that.getdLNr() &&
                 getAdressart() == that.getAdressart() &&
                 Objects.equals(getlKZ(), that.getlKZ());

@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="context_sensitive_graphics_233")
+@Table(name="t_233_context_sensitive_graphics")
 public class ContextSensitiveGraphics {
 
     @EmbeddedId

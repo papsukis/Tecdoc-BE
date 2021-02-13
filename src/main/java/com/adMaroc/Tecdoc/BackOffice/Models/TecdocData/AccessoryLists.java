@@ -16,7 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="accessory_lists_222")
+@Table(name="t_222_accessory_lists")
 public class AccessoryLists {
 
     @EmbeddedId
@@ -27,9 +27,11 @@ public class AccessoryLists {
     long vKNValue;
     String zArtNr;
     long menge;
+    @Column(name = "zubGenArtNr")
     long zubGenArtNr;
-    long bezNr;
+    String bezNr;
     long loschFlag;
+    long sprachNr;
     @MapsId("artNr")
     @ManyToOne
     @JoinColumn(name = "artNr",
@@ -46,45 +48,12 @@ public class AccessoryLists {
                     referencedColumnName = "sprachNr")
     })
     private LanguageDescriptions languageDescriptions;
-    @MapsId("AccessoryListsCountryRestrictionsId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "artNr",
-                    referencedColumnName = "artNr"),
-            @JoinColumn(
-                    name = "lfdNrZub",
-                    referencedColumnName = "lfdNrZub"),
-            @JoinColumn(
-                    name = "sortnr",
-                    referencedColumnName = "sortNr"),
-            @JoinColumn(
-                    name = "lkz",
-                    referencedColumnName = "lKZ"),
-    })
-    private AccessoryListsCountryRestrictions accessoryListsCountryRestrictions;
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "accessoryLists")
-    private List<AccessoryListsCriteria> accessoryListsCriteria;
     @MapsId("genArtNr")
     @ManyToOne
-    @JoinColumn(name = "genArtNr",
+    @JoinColumn(name = "zubGenArtNr",
                 referencedColumnName = "genArtNr")
     private GenericArticles genericArticles;
 
-    public AccessoryLists(Map<String,String> datas) {
-        this.id = new AccessoryListsId(datas.get("ArtNr"),Integer.valueOf(datas.get("LfdNr")),Integer.valueOf(datas.get("SortNr")));
-        this.dLNr = Integer.valueOf(datas.get("DLNr"));
-        this.sA = Integer.valueOf(datas.get("SA"));;
-        this.vKNART = Integer.valueOf(datas.get("VKN_ART"));;
-        this.vKNValue = Integer.valueOf(datas.get("VKN_Value"));;
-        this.zArtNr = datas.get("ZArtNr");
-        this.menge = Integer.valueOf(datas.get("Menge"));;
-        this.zubGenArtNr = Integer.valueOf(datas.get("ZubGenArtNr"));;
-        this.bezNr = Integer.valueOf(datas.get("BezNr"));
-        this.loschFlag = 0;
-    }
 
     public AccessoryListsId getId() {
         return id;
@@ -150,11 +119,11 @@ public class AccessoryLists {
         this.zubGenArtNr = zubGenArtNr;
     }
 
-    public long getBezNr() {
+    public String getBezNr() {
         return bezNr;
     }
 
-    public void setBezNr(long bezNr) {
+    public void setBezNr(String bezNr) {
         this.bezNr = bezNr;
     }
 
@@ -182,21 +151,7 @@ public class AccessoryLists {
         this.languageDescriptions = languageDescriptions;
     }
 
-    public AccessoryListsCountryRestrictions getAccessoryListsCountryRestrictions() {
-        return accessoryListsCountryRestrictions;
-    }
 
-    public void setAccessoryListsCountryRestrictions(AccessoryListsCountryRestrictions accessoryListsCountryRestrictions) {
-        this.accessoryListsCountryRestrictions = accessoryListsCountryRestrictions;
-    }
-
-    public List<AccessoryListsCriteria> getAccessoryListsCriteria() {
-        return accessoryListsCriteria;
-    }
-
-    public void setAccessoryListsCriteria(List<AccessoryListsCriteria> accessoryListsCriteria) {
-        this.accessoryListsCriteria = accessoryListsCriteria;
-    }
 
     public GenericArticles getGenericArticles() {
         return genericArticles;

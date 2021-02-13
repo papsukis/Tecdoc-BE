@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="accesory_lists_criteria_228")
+@Table(name="t_228_accesory_lists_criteria")
 public class AccessoryListsCriteria {
 
     @EmbeddedId
@@ -35,18 +35,10 @@ public class AccessoryListsCriteria {
                     name = "lbezNr",
                     referencedColumnName = "lbezNr"),
             @JoinColumn(
-                    name = "lKZ",
-                    referencedColumnName = "lKZ"),
-            @JoinColumn(
                     name = "sprachNr",
                     referencedColumnName = "sprachNr")
     })
     private CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions;
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lkz",
-                referencedColumnName = "lKZ")
-    private CountryTable countryTable;
     @MapsId("AccessoryListsId")
     @ManyToOne
     @JoinColumns({
@@ -155,14 +147,6 @@ public class AccessoryListsCriteria {
 
     public void setCountryAndLanguageDependentDescriptions(CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions) {
         this.countryAndLanguageDependentDescriptions = countryAndLanguageDependentDescriptions;
-    }
-
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
     }
 
     public AccessoryLists getAccessoryLists() {

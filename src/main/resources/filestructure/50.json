@@ -30,7 +30,7 @@
       "name" : "bezNr",
       "pos" : 11,
       "length" : 9,
-      "type" : "N",
+      "type" : "C",
       "description" : "Description Number (DT ->030)"},
       {
       "name" : "typ",

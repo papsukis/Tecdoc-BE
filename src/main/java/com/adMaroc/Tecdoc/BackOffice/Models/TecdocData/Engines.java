@@ -14,7 +14,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="engines_155")
+@Table(name="t_155_engines")
 public class Engines {
 
     @Id
@@ -65,76 +65,7 @@ public class Engines {
     long exclude;
     long delet;
 
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "engines")
-    private List<EngineNumberAllocationtoVehicleTypes> engineNumberAllocationtoVehicleTypes;
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "engines")
-    private List<EngineCountryRestrictions> engineCountryRestrictions;
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "engines")
-    private List<CVTypesAndEngineAllocation> cvTypesAndEngineAllocations;
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "tabNr",
-                    referencedColumnName = "tabNr"),
-            @JoinColumn(
-                    name = "cle",
-                    referencedColumnName = "cle")})
-    private KeyTablesEntries keyTablesEntries;
 
-    public Engines(Map<String,String> datas) {
-        this.motNr = Integer.valueOf(datas.get("MotNr"));
-        this.dLNr = Integer.valueOf(datas.get("MotNr"));
-        this.sA = Integer.valueOf(datas.get("MotNr"));
-        this.herNr = Integer.valueOf(datas.get("HerNr"));
-        this.mCode = datas.get("MCode");
-        this.bjvon = Integer.valueOf(datas.get("BJvon"));
-        this.bjbis = Integer.valueOf(datas.get("BJvon"));
-        this.kWvon = Integer.valueOf(datas.get("kWvon"));
-        this.kWbis = Integer.valueOf(datas.get("kWvon"));
-        this.pSvon = Integer.valueOf(datas.get("PSvon"));
-        this.pSbis = Integer.valueOf(datas.get("PSbis"));
-        this.ventile = Integer.valueOf(datas.get("Ventile"));
-        this.zyl = Integer.valueOf(datas.get("Zyl"));
-        this.verdichtV = Integer.valueOf(datas.get("VerdichtV"));
-        this.verdichtB = Integer.valueOf(datas.get("VerdichtB"));
-        this.drehmV = Integer.valueOf(datas.get("DrehmV"));
-        this.drehmB = Integer.valueOf(datas.get("DrehmB"));
-        this.ccmSteuerV = Integer.valueOf(datas.get("ccmSteuerV"));
-        this.ccmSteuerB = Integer.valueOf(datas.get("ccmSteuerB"));
-        this.ccmTechV = Integer.valueOf(datas.get("ccmTechV"));
-        this.ccmTechB = Integer.valueOf(datas.get("ccmTechB"));
-        this.litSteuerV = Integer.valueOf(datas.get("LitSteuerV"));
-        this.litSteuerB = Integer.valueOf(datas.get("LitSteuerB"));
-        this.litTechV = Integer.valueOf(datas.get("LitTechV"));
-        this.litTechB = Integer.valueOf(datas.get("LitTechB"));
-        this.motVerw = Integer.valueOf(datas.get("MotVerw"));
-        this.motBauForm = Integer.valueOf(datas.get("MotBauForm"));
-        this.krStoffArt = Integer.valueOf(datas.get("KrStoffArt"));
-        this.krStoffAuf = Integer.valueOf(datas.get("KrStoffAuf"));
-        this.motBeatm = Integer.valueOf(datas.get("MotBeatm"));
-        this.uminKwV = Integer.valueOf(datas.get("UminKwV"));
-        this.uminKwb = Integer.valueOf(datas.get("UminKwB"));
-        this.uminDrehmV = Integer.valueOf(datas.get("UminDrehmV"));
-        this.uminDrehmB = Integer.valueOf(datas.get("UminDrehmB"));
-        this.kurbel = Integer.valueOf(datas.get("Kurbel"));
-        this.bohrung = Integer.valueOf(datas.get("Bohrung"));
-        this.hub = Integer.valueOf(datas.get("Hub"));
-        this.motorart = Integer.valueOf(datas.get("Motorart"));
-        this.abgasnorm = Integer.valueOf(datas.get("Abgasnorm"));
-        this.zylBauForm = Integer.valueOf(datas.get("ZylBauForm"));
-        this.motSteur = Integer.valueOf(datas.get("MotSteuer"));
-        this.ventilSteur = Integer.valueOf(datas.get("VentilSteuer"));
-        this.kuehlArt = Integer.valueOf(datas.get("KuehlArt"));
-        this.vkBez = datas.get("VkBez");
-        this.exclude = Integer.valueOf(datas.get("Exclude"));
-        this.delet = Integer.valueOf(datas.get("Delete"));
-    }
 
     public long getMotNr() {
         return motNr;
@@ -502,37 +433,5 @@ public class Engines {
 
     public void setDelet(long delet) {
         this.delet = delet;
-    }
-
-    public List<EngineNumberAllocationtoVehicleTypes> getEngineNumberAllocationtoVehicleTypes() {
-        return engineNumberAllocationtoVehicleTypes;
-    }
-
-    public void setEngineNumberAllocationtoVehicleTypes(List<EngineNumberAllocationtoVehicleTypes> engineNumberAllocationtoVehicleTypes) {
-        this.engineNumberAllocationtoVehicleTypes = engineNumberAllocationtoVehicleTypes;
-    }
-
-    public List<EngineCountryRestrictions> getEngineCountryRestrictions() {
-        return engineCountryRestrictions;
-    }
-
-    public void setEngineCountryRestrictions(List<EngineCountryRestrictions> engineCountryRestrictions) {
-        this.engineCountryRestrictions = engineCountryRestrictions;
-    }
-
-    public List<CVTypesAndEngineAllocation> getCvTypesAndEngineAllocations() {
-        return cvTypesAndEngineAllocations;
-    }
-
-    public void setCvTypesAndEngineAllocations(List<CVTypesAndEngineAllocation> cvTypesAndEngineAllocations) {
-        this.cvTypesAndEngineAllocations = cvTypesAndEngineAllocations;
-    }
-
-    public KeyTablesEntries getKeyTablesEntries() {
-        return keyTablesEntries;
-    }
-
-    public void setKeyTablesEntries(KeyTablesEntries keyTablesEntries) {
-        this.keyTablesEntries = keyTablesEntries;
     }
 }

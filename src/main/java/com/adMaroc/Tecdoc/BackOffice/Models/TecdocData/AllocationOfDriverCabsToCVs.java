@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="allocation_of_driver_cabs_to_cvs_543")
+@Table(name="t_543_allocation_of_driver_cabs_to_cvs")
 public class AllocationOfDriverCabsToCVs {
 
     @EmbeddedId
@@ -26,29 +26,14 @@ public class AllocationOfDriverCabsToCVs {
     long bjvon;
     long bjbis;
     String lKZ;
-
     long exclude;
     long loschFlag;
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lKZ",
-                referencedColumnName = "lKZ")
-    private CountryTable countryTable;
+
     @MapsId("fHausNr")
     @ManyToOne
     @JoinColumn(name = "fHausNr",
                 referencedColumnName = "fHausNr")
     private CVDriverCabs cvDriverCabs;
-    @MapsId("CVSecondaryTypesId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "nTypNr",
-                    referencedColumnName = "nTypNr"),
-            @JoinColumn(
-                    name = "nTypSubNr",
-                    referencedColumnName = "nTypSubNr")})
-    private CVSecondaryTypes cvSecondaryTypes;
     @MapsId("nTypNr")
     @ManyToOne
     @JoinColumn(name = "nTypNr",
@@ -56,17 +41,6 @@ public class AllocationOfDriverCabsToCVs {
     private CVTypes cvTypes;
 
 
-
-    public AllocationOfDriverCabsToCVs(Map<String,String> datas) {
-        this.id = id;
-        this.dLNr = dLNr;
-        this.sA = sA;
-        this.fHausNr = fHausNr;
-        this.bjvon = bjvon;
-        this.bjbis = bjbis;
-        this.exclude = exclude;
-        this.loschFlag = loschFlag;
-    }
 
     public String getlKZ() {
         return lKZ;
@@ -140,13 +114,6 @@ public class AllocationOfDriverCabsToCVs {
         this.loschFlag = loschFlag;
     }
 
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
-    }
 
     public CVDriverCabs getCvDriverCabs() {
         return cvDriverCabs;
@@ -154,14 +121,6 @@ public class AllocationOfDriverCabsToCVs {
 
     public void setCvDriverCabs(CVDriverCabs cvDriverCabs) {
         this.cvDriverCabs = cvDriverCabs;
-    }
-
-    public CVSecondaryTypes getCvSecondaryTypes() {
-        return cvSecondaryTypes;
-    }
-
-    public void setCvSecondaryTypes(CVSecondaryTypes cvSecondaryTypes) {
-        this.cvSecondaryTypes = cvSecondaryTypes;
     }
 
     public CVTypes getCvTypes() {

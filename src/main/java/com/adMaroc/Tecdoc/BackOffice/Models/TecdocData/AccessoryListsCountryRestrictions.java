@@ -16,7 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="accessory_lists_country_restrictions_225")
+@Table(name="t_225_accessory_lists_country_restrictions")
 public class AccessoryListsCountryRestrictions {
 
     @EmbeddedId
@@ -28,15 +28,23 @@ public class AccessoryListsCountryRestrictions {
     @JoinColumn(name = "artNr",
             referencedColumnName = "artNr")
     private ArticleTable articleTable;
+    @MapsId("AccessoryListsId")
+    @ManyToOne
+    @JoinColumns({
+                    @JoinColumn(name = "artNr",
+                            referencedColumnName = "artNr"),
+                    @JoinColumn(name = "lfdnr",
+                            referencedColumnName = "lfdnr"),
+                    @JoinColumn(name = "sortnr",
+                            referencedColumnName = "sortnr"),
+            })
+    private AccessoryLists accessoryLists;
     @MapsId("lKZ")
     @ManyToOne
     @JoinColumn(name = "lKZ",
             referencedColumnName = "lKZ")
     private CountryTable countryTable;
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "accessoryListsCountryRestrictions")
-    private List<AccessoryLists> accessoryLists;
+
 
     public AccessoryListsCountryRestrictions(Map<String,String> datas) {
         this.id = new AccessoryListsCountryRestrictionsId(datas.get("ArtNr"),Integer.valueOf(datas.get("LfdNrZub")),Integer.valueOf(datas.get("SortNr")),datas.get("LKZ"));
@@ -84,11 +92,4 @@ public class AccessoryListsCountryRestrictions {
         this.countryTable = countryTable;
     }
 
-    public List<AccessoryLists> getAccessoryLists() {
-        return accessoryLists;
-    }
-
-    public void setAccessoryLists(List<AccessoryLists> accessoryLists) {
-        this.accessoryLists = accessoryLists;
-    }
 }

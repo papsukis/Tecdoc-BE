@@ -4,7 +4,7 @@
   "length" : 55,
   "contents" : "Allocation of body types to vehicle types ",
   "sorting" : "kTypNr,lKZ,sortNr",
-  "primaryKey" : "kTypNr,lKZ,muster",
+  "primaryKey" : "kTypNr,muster",
   "deltaKey" : "",
   "className" : "BodyType",
   "attr" : [

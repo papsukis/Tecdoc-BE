@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="vehicle_country_restriction_122")
+@Table(name="t_122_vehicle_country_restriction")
 public class VehicleCountryRestriction {
 
     @EmbeddedId

@@ -32,14 +32,14 @@
       "name": "bgNr",
       "pos": 29,
       "length": 4,
-      "type": "N",
+      "type": "C",
       "description": "Unambiguous number of the assembly group"
     },
     {
       "name": "bezNr",
       "pos": 33,
       "length": 9,
-      "type": "N",
+      "type": "C",
       "description": "Description Number(->30)"
     }
   ]

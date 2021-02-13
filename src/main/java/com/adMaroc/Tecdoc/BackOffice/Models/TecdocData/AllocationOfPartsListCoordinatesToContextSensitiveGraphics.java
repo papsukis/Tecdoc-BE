@@ -16,7 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="allocation_of_pl_coordinates_to_csg_217")
+@Table(name="t_217_allocation_of_pl_coordinates_to_csg")
 public class AllocationOfPartsListCoordinatesToContextSensitiveGraphics {
 
     @EmbeddedId
@@ -31,10 +31,17 @@ public class AllocationOfPartsListCoordinatesToContextSensitiveGraphics {
     @JoinColumn(name = "artNr",
                 referencedColumnName = "artNr")
     private ArticleTable articleTable;
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "allocationOfPartsListCoordinatesToContextSensitiveGraphics")
-    private List<PartsLists> partsLists;
+    @MapsId("PartsListsId")
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(
+                    name = "artNr",
+                    referencedColumnName = "artNr"),
+            @JoinColumn(
+                    name = "lfdNr",
+                    referencedColumnName = "lfdNr")}
+            )
+    private PartsLists partsLists;
     @MapsId("sprachNr")
     @ManyToOne
     @JoinColumn(name = "sprachnr",
@@ -47,16 +54,14 @@ public class AllocationOfPartsListCoordinatesToContextSensitiveGraphics {
                     name = "bildnr",
                     referencedColumnName = "bildnr"),
             @JoinColumn(
-                    name = "dokumentenart",
-                    referencedColumnName = "dokumentenart"),
+                    name = "dokumentenArt",
+                    referencedColumnName = "dokumentenArt"),
             @JoinColumn(
                     name="sprachnr",
                     referencedColumnName = "sprachnr")})
     private GraphicsDocuments graphicsDocuments;
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "allocationOfPartsListCoordinatesToContextSensitiveGraphics")
-    private List<DocumentTypes> documentTypes;
+
+
 
     public AllocationOfPartsListCoordinatesToContextSensitiveGraphics(Map<String,String> datas) {
         this.id = id;
@@ -114,11 +119,11 @@ public class AllocationOfPartsListCoordinatesToContextSensitiveGraphics {
         this.articleTable = articleTable;
     }
 
-    public List<PartsLists> getPartsLists() {
+    public PartsLists getPartsLists() {
         return partsLists;
     }
 
-    public void setPartsLists(List<PartsLists> partsLists) {
+    public void setPartsLists(PartsLists partsLists) {
         this.partsLists = partsLists;
     }
 
@@ -136,13 +141,5 @@ public class AllocationOfPartsListCoordinatesToContextSensitiveGraphics {
 
     public void setGraphicsDocuments(GraphicsDocuments graphicsDocuments) {
         this.graphicsDocuments = graphicsDocuments;
-    }
-
-    public List<DocumentTypes> getDocumentTypes() {
-        return documentTypes;
-    }
-
-    public void setDocumentTypes(List<DocumentTypes> documentTypes) {
-        this.documentTypes = documentTypes;
     }
 }

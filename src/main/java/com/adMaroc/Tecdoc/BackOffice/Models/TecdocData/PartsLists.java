@@ -16,7 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="parts_lists_205")
+@Table(name="t_205_parts_lists")
 public class PartsLists {
 
     @EmbeddedId
@@ -27,59 +27,20 @@ public class PartsLists {
     String partNr;
     long menge;
     long loschFlag;
-
+    Long genArtNr;
     @MapsId("artNr")
     @ManyToOne
     @JoinColumn(name = "artNr",
                 referencedColumnName = "artNr")
     private ArticleTable articleTable;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "partsLists")
-    private List<PartsListsCountryRestrictions > partsListsCountryRestrictions;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "partsLists")
-    private List<CountrySpecificPartsListQuantities> countrySpecificPartsListQuantities;
-    @MapsId("AllocationOfPartsListCoordinatesToContextSensitiveGraphicsId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "artNr",
-                    referencedColumnName = "artNr"),
-            @JoinColumn(
-                    name = "lfdnr",
-                    referencedColumnName = "lfdnr"),
-            @JoinColumn(
-                    name = "bildNr",
-                    referencedColumnName = "bildNr"),
-            @JoinColumn(
-                    name = "dokementenArt",
-                    referencedColumnName = "dokementenArt"),
-            @JoinColumn(
-                    name = "sprachNr",
-                    referencedColumnName = "sprachNr")})
-    private AllocationOfPartsListCoordinatesToContextSensitiveGraphics allocationOfPartsListCoordinatesToContextSensitiveGraphics;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "partsLists")
-    private List<PartsListCritera> partsListCriteras;
+
+
     @MapsId("genArtNr")
     @ManyToOne
     @JoinColumn(name = "genArtNr",
                 referencedColumnName = "genArtNr")
     private GenericArticles genericArticles;
 
-
-    public PartsLists(Map<String,String> datas) {
-        this.id = new PartsListsId(datas.get("ArtNr"),Integer.valueOf(datas.get("LfdNr")));
-        this.dLNr = Integer.valueOf(datas.get("DLNr"));
-        this.sA = Integer.valueOf(datas.get("SA"));
-        this.partGenArtNr = Integer.valueOf(datas.get("PartGenArtNr"));
-        this.partNr = datas.get("PartNr");
-        this.menge = Integer.valueOf(datas.get("Menge"));
-        this.loschFlag = loschFlag;
-    }
 
     public PartsListsId getId() {
         return id;
@@ -145,37 +106,7 @@ public class PartsLists {
         this.articleTable = articleTable;
     }
 
-    public List<PartsListsCountryRestrictions> getPartsListsCountryRestrictions() {
-        return partsListsCountryRestrictions;
-    }
 
-    public void setPartsListsCountryRestrictions(List<PartsListsCountryRestrictions> partsListsCountryRestrictions) {
-        this.partsListsCountryRestrictions = partsListsCountryRestrictions;
-    }
-
-    public List<CountrySpecificPartsListQuantities> getCountrySpecificPartsListQuantities() {
-        return countrySpecificPartsListQuantities;
-    }
-
-    public void setCountrySpecificPartsListQuantities(List<CountrySpecificPartsListQuantities> countrySpecificPartsListQuantities) {
-        this.countrySpecificPartsListQuantities = countrySpecificPartsListQuantities;
-    }
-
-    public AllocationOfPartsListCoordinatesToContextSensitiveGraphics getAllocationOfPartsListCoordinatesToContextSensitiveGraphics() {
-        return allocationOfPartsListCoordinatesToContextSensitiveGraphics;
-    }
-
-    public void setAllocationOfPartsListCoordinatesToContextSensitiveGraphics(AllocationOfPartsListCoordinatesToContextSensitiveGraphics allocationOfPartsListCoordinatesToContextSensitiveGraphics) {
-        this.allocationOfPartsListCoordinatesToContextSensitiveGraphics = allocationOfPartsListCoordinatesToContextSensitiveGraphics;
-    }
-
-    public List<PartsListCritera> getPartsListCriteras() {
-        return partsListCriteras;
-    }
-
-    public void setPartsListCriteras(List<PartsListCritera> partsListCriteras) {
-        this.partsListCriteras = partsListCriteras;
-    }
 
     public GenericArticles getGenericArticles() {
         return genericArticles;

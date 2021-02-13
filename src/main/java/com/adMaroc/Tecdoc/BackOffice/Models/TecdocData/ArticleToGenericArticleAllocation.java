@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="article_to_generic_article_allocation_211")
+@Table(name="t_211_article_to_generic_article_allocation")
 public class ArticleToGenericArticleAllocation {
 
     @EmbeddedId

@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="country_groups_013")
+@Table(name="t_013_country_groups")
 public class CountryGroups {
 
     @EmbeddedId
@@ -23,6 +23,7 @@ public class CountryGroups {
     long dLNr;
     long sA;
     long loschFlag;
+
     @MapsId("lKZ")
     @ManyToOne
     @JoinColumn(name = "lKZ",

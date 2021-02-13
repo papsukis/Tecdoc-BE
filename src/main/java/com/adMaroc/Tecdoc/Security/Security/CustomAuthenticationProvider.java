@@ -2,20 +2,16 @@ package com.adMaroc.Tecdoc.Security.Security;
 
 import com.adMaroc.Tecdoc.Security.Exceptions.InternalServerException;
 import com.adMaroc.Tecdoc.Security.Exceptions.ResourceNotFoundException;
-import com.adMaroc.Tecdoc.Security.Models.Config;
+
 import com.adMaroc.Tecdoc.Security.Models.User;
 import com.adMaroc.Tecdoc.Security.Models.UserDetailsAdapter;
-import com.adMaroc.Tecdoc.Security.Models.UserLog;
-import com.adMaroc.Tecdoc.Security.Repository.ConfigurationRepository;
 import com.adMaroc.Tecdoc.Security.Repository.UserRepository;
 import com.adMaroc.Tecdoc.Security.Services.ConfigurationService;
-import com.adMaroc.Tecdoc.Security.Services.UserLogService;
-import com.sun.org.apache.xml.internal.security.algorithms.implementations.IntegrityHmac;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;

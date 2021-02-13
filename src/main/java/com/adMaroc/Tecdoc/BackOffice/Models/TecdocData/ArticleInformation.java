@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="article_information_206")
+@Table(name="t_206_article_information")
 public class ArticleInformation {
 
     @EmbeddedId
@@ -28,22 +28,13 @@ public class ArticleInformation {
     String TBSNr;
     long exclude;
     long loschFlag;
-
+    long sprachNr;
+    long lfdNr;
     @MapsId("artNr")
     @ManyToOne
     @JoinColumn(name = "artNr",
                 referencedColumnName = "artNr")
     private ArticleTable articleTable;
-    @MapsId("genArtNr")
-    @ManyToOne
-    @JoinColumn(name = "genArtNr",
-                referencedColumnName = "genArtNr")
-    private GenericArticles genericArticles;
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lKZ",
-                referencedColumnName = "lKZ")
-    private CountryTable countryTable;
     @MapsId("TextModulesId")
     @ManyToOne
     @JoinColumns({
@@ -57,28 +48,9 @@ public class ArticleInformation {
                     name = "lfdNr",
                     referencedColumnName = "lfdNr")})
     private TextModules textModules;
-    @MapsId("KeyTablesEntriesId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "tabNr",
-                    referencedColumnName = "tabNr"),
-            @JoinColumn(
-                    name = "cle",
-                    referencedColumnName = "cle")})
-    private KeyTablesEntries keyTablesEntries;
 
-    public ArticleInformation(Map<String,String> datas) {
-//        this.id = new ArticleInformationId(datas.get("ArtNr"),Integer.valueOf(datas.get("SortNr")));
-        this.dLNr = Integer.valueOf(datas.get("DLNr"));
-        this.sA = Integer.valueOf(datas.get("SA"));
-        this.lKZ = datas.get("LKZ");
-        this.infArt = Integer.valueOf(datas.get("InfArt"));
-        this.anzSofort = Integer.valueOf(datas.get("AnzSofort"));
-        this.TBSNr =datas.get("TBSNr");
-        this.exclude = Integer.valueOf(datas.get("Exclude"));
-        this.loschFlag = 0;
-    }
+
+
 
     public ArticleInformationId getId() {
         return id;
@@ -160,21 +132,6 @@ public class ArticleInformation {
         this.articleTable = articleTable;
     }
 
-    public GenericArticles getGenericArticles() {
-        return genericArticles;
-    }
-
-    public void setGenericArticles(GenericArticles genericArticles) {
-        this.genericArticles = genericArticles;
-    }
-
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
-    }
 
     public TextModules getTextModules() {
         return textModules;
@@ -184,11 +141,4 @@ public class ArticleInformation {
         this.textModules = textModules;
     }
 
-    public KeyTablesEntries getKeyTablesEntries() {
-        return keyTablesEntries;
-    }
-
-    public void setKeyTablesEntries(KeyTablesEntries keyTablesEntries) {
-        this.keyTablesEntries = keyTablesEntries;
-    }
 }

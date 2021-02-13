@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="mandatory_criteria_328")
+@Table(name="t_328_mandatory_criteria")
 public class MandatoryCriteria {
 
     @EmbeddedId
@@ -28,50 +28,24 @@ public class MandatoryCriteria {
     long only400;
     long exclude;
 
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lKZ",
-                referencedColumnName = "lKZ")
-    private CountryTable countryTable;
     @MapsId("genArtNr")
-    @ManyToOne
+    @ManyToOne(optional=true)
     @JoinColumn(name = "genArtNr",
-                referencedColumnName = "genArtNr")
+                referencedColumnName = "genArtNr",nullable = true)
     private GenericArticles genericArticles;
-    @MapsId("AllocationOfCriteriaValuesToGAMandatoryCriteriaId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "genArtNr",
-                    referencedColumnName = "genArtNr"),
-            @JoinColumn(
-                    name = "lfdnr",
-                    referencedColumnName = "lfdnr"),
-            @JoinColumn(
-                    name="kritWert",
-                    referencedColumnName = "kritWert")})
-    private AllocationOfCriteriaValuesToGAMandatoryCriteria allocationOfCriteriaValuesToGAMandatoryCriteria;
     @MapsId("CriteriaId")
-    @ManyToOne
+    @ManyToOne(optional=true)
     @JoinColumns({
             @JoinColumn(
                     name = "dLNr",
-                    referencedColumnName = "dLNr"),
+                    referencedColumnName = "dLNr",
+                    nullable = true),
             @JoinColumn(
                     name = "kritNr",
-                    referencedColumnName = "kritNr")})
+                    referencedColumnName = "kritNr",
+                    nullable = true)})
     private CriteriaTable criteriaTable;
 
-    public MandatoryCriteria(Map<String,String> datas) {
-        this.id = id;
-        this.dLNr = dLNr;
-        this.sA = sA;
-        this.lKZ = lKZ;
-        this.kritNr = kritNr;
-        this.only210 = only210;
-        this.only400 = only400;
-        this.exclude = exclude;
-    }
 
     public MandatoryCriteriaId getId() {
         return id;
@@ -137,14 +111,6 @@ public class MandatoryCriteria {
         this.exclude = exclude;
     }
 
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
-    }
-
     public GenericArticles getGenericArticles() {
         return genericArticles;
     }
@@ -153,13 +119,6 @@ public class MandatoryCriteria {
         this.genericArticles = genericArticles;
     }
 
-    public AllocationOfCriteriaValuesToGAMandatoryCriteria getAllocationOfCriteriaValuesToGAMandatoryCriteria() {
-        return allocationOfCriteriaValuesToGAMandatoryCriteria;
-    }
-
-    public void setAllocationOfCriteriaValuesToGAMandatoryCriteria(AllocationOfCriteriaValuesToGAMandatoryCriteria allocationOfCriteriaValuesToGAMandatoryCriteria) {
-        this.allocationOfCriteriaValuesToGAMandatoryCriteria = allocationOfCriteriaValuesToGAMandatoryCriteria;
-    }
 
     public CriteriaTable getCriteriaTable() {
         return criteriaTable;

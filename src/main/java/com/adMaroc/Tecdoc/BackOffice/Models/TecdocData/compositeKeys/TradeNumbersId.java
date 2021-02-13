@@ -1,24 +1,27 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Data
 @Embeddable
 public class TradeNumbersId implements Serializable {
 
     @Column(name="artnr")
     String artNr;
     @Column(name="gebrnr")
-    long gebrNr;
+    String gebrNr;
     @Column(name="lkz")
     String lKZ;
 
     public TradeNumbersId() {
     }
 
-    public TradeNumbersId(String artNr, long gebrNr, String lKZ) {
+    public TradeNumbersId(String artNr, String gebrNr, String lKZ) {
         this.artNr = artNr;
         this.gebrNr = gebrNr;
         this.lKZ = lKZ;
@@ -28,7 +31,7 @@ public class TradeNumbersId implements Serializable {
         this.artNr = artNr;
     }
 
-    public void setGebrNr(long gebrNr) {
+    public void setGebrNr(String gebrNr) {
         this.gebrNr = gebrNr;
     }
 
@@ -40,7 +43,7 @@ public class TradeNumbersId implements Serializable {
         return artNr;
     }
 
-    public long getGebrNr() {
+    public String getGebrNr() {
         return gebrNr;
     }
 

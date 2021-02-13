@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="axle_brake_size_163")
+@Table(name="t_163_axle_brake_size")
 public class AxleBrakeSize {
 
     @EmbeddedId
@@ -30,24 +30,7 @@ public class AxleBrakeSize {
     @JoinColumn(name = "atypnr",
                 referencedColumnName = "atypnr")
     private Axle axle;
-    @MapsId("KeyTablesEntriesId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "tabNr",
-                    referencedColumnName = "tabNr"),
-            @JoinColumn(
-                    name = "cle",
-                    referencedColumnName = "cle")})
-    private KeyTablesEntries keyTablesEntries;
 
-    public AxleBrakeSize(Map<String,String> datas) {
-        this.id = new AxleBrakeSizeId(Integer.valueOf(datas.get("AtypNr")),Integer.valueOf(datas.get("LfdNr")));
-        this.dLNr = Integer.valueOf(datas.get("DLNr"));
-        this.sA = Integer.valueOf(datas.get("SA"));
-        this.bremsengrobe = Integer.valueOf(datas.get("Bremsengröße"));
-        this.beeichnung =datas.get("Bezeichnung");
-    }
 
     public AxleBrakeSizeId getId() {
         return id;
@@ -97,11 +80,4 @@ public class AxleBrakeSize {
         this.axle = axle;
     }
 
-    public KeyTablesEntries getKeyTablesEntries() {
-        return keyTablesEntries;
-    }
-
-    public void setKeyTablesEntries(KeyTablesEntries keyTablesEntries) {
-        this.keyTablesEntries = keyTablesEntries;
-    }
 }

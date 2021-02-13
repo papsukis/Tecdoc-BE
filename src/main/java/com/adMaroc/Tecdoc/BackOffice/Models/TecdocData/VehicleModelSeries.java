@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="vehicle_model_series_110")
+@Table(name="t_110_vehicle_model_series")
 public class VehicleModelSeries {
 
     @Id
@@ -31,49 +33,26 @@ public class VehicleModelSeries {
     long achse;
     long delet;
     long transporter;
+    long sprachNr;
 
     @MapsId("herNr")
+    @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne
     @JoinColumn(name = "herNr",
                 referencedColumnName = "herNr")
     private Manufacturer manufacturer;
     @MapsId("CountryAndLanguageDependentDescriptionsId")
+    @NotFound(action = NotFoundAction.IGNORE)
     @ManyToOne
     @JoinColumns({
             @JoinColumn(
                     name = "lBezNr",
                     referencedColumnName = "lBezNr"),
             @JoinColumn(
-                    name = "lKZ",
-                    referencedColumnName = "lKZ"),
-            @JoinColumn(
                     name="sprachNr",
                     referencedColumnName = "sprachNr")})
     private CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "vehicleModelSeries")
-    private List<VehicleTypes > vehicleTypes;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "vehicleModelSeries")
-    private List<Axle >axle;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "vehicleModelSeries")
-    private List<AdditionalDescriptionsToVehicleModelSeries >additionalDescriptionsToVehicleModelSeries;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "vehicleModelSeries")
-    private List<AllocationOfBodyTypesToModelSeries> allocationOfBodyTypesToModelSeries;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "vehicleModelSeries")
-    private List<BodyTypeSynonyms> bodyTypeSynonyms;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "vehicleModelSeries")
-    private List<CVTypes> cvTypes;
+
 
 
     public VehicleModelSeries(Map<String,String> datas) {
@@ -212,51 +191,5 @@ public class VehicleModelSeries {
         this.countryAndLanguageDependentDescriptions = countryAndLanguageDependentDescriptions;
     }
 
-    public List<VehicleTypes> getVehicleTypes() {
-        return vehicleTypes;
-    }
 
-    public void setVehicleTypes(List<VehicleTypes> vehicleTypes) {
-        this.vehicleTypes = vehicleTypes;
-    }
-
-    public List<Axle> getAxle() {
-        return axle;
-    }
-
-    public void setAxle(List<Axle> axle) {
-        this.axle = axle;
-    }
-
-    public List<AdditionalDescriptionsToVehicleModelSeries> getAdditionalDescriptionsToVehicleModelSeries() {
-        return additionalDescriptionsToVehicleModelSeries;
-    }
-
-    public void setAdditionalDescriptionsToVehicleModelSeries(List<AdditionalDescriptionsToVehicleModelSeries> additionalDescriptionsToVehicleModelSeries) {
-        this.additionalDescriptionsToVehicleModelSeries = additionalDescriptionsToVehicleModelSeries;
-    }
-
-    public List<AllocationOfBodyTypesToModelSeries> getAllocationOfBodyTypesToModelSeries() {
-        return allocationOfBodyTypesToModelSeries;
-    }
-
-    public void setAllocationOfBodyTypesToModelSeries(List<AllocationOfBodyTypesToModelSeries> allocationOfBodyTypesToModelSeries) {
-        this.allocationOfBodyTypesToModelSeries = allocationOfBodyTypesToModelSeries;
-    }
-
-    public List<BodyTypeSynonyms> getBodyTypeSynonyms() {
-        return bodyTypeSynonyms;
-    }
-
-    public void setBodyTypeSynonyms(List<BodyTypeSynonyms> bodyTypeSynonyms) {
-        this.bodyTypeSynonyms = bodyTypeSynonyms;
-    }
-
-    public List<CVTypes> getCvTypes() {
-        return cvTypes;
-    }
-
-    public void setCvTypes(List<CVTypes> cvTypes) {
-        this.cvTypes = cvTypes;
-    }
 }

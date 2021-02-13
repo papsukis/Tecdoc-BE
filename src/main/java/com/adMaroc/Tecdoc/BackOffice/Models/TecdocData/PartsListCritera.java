@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="parts_lists_criteria_208")
+@Table(name="t_208_parts_lists_criteria")
 public class PartsListCritera {
 
     @EmbeddedId
@@ -31,11 +31,7 @@ public class PartsListCritera {
     @JoinColumn(name = "artNr",
                 referencedColumnName = "artNr")
     private ArticleTable articleTable;
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lKZ",
-                referencedColumnName = "lKZ")
-    private CountryTable countryTable;
+
     @MapsId("CriteriaId")
     @ManyToOne
     @JoinColumns({
@@ -57,15 +53,6 @@ public class PartsListCritera {
                     referencedColumnName = "lfdnr")})
     private PartsLists partsLists;
 
-    public PartsListCritera(Map<String,String> datas) {
-        this.id = new PartsListCriteraId(datas.get("ArtNr"),Integer.valueOf(datas.get("LfdNr1")),Integer.valueOf(datas.get("LfdNr")),Integer.valueOf(datas.get("SortNr")));
-        this.dLNr = Integer.valueOf(datas.get("DLNr"));
-        this.sA = Integer.valueOf(datas.get("SA"));
-        this.kritNr = Integer.valueOf(datas.get("KritNr"));
-        this.kritWert = datas.get("KritWert");
-        this.exclude = datas.get("Reserve");
-        this.loschFlag = 0;
-    }
 
     public PartsListCriteraId getId() {
         return id;
@@ -131,13 +118,6 @@ public class PartsListCritera {
         this.articleTable = articleTable;
     }
 
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
-    }
 
     public CriteriaTable getCriteriaTable() {
         return criteriaTable;

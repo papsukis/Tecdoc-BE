@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="types_voltages_540")
+@Table(name="t_540_types_voltages")
 public class CVTypesVoltages {
 
     @EmbeddedId
@@ -27,21 +27,6 @@ public class CVTypesVoltages {
     long exclude;
 
 
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lKZ",
-                referencedColumnName = "lKZ")
-    private CountryTable countryTable;
-    @MapsId("CVSecondaryTypesId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "ntypnr",
-                    referencedColumnName = "ntypnr"),
-            @JoinColumn(
-                    name = "ntypsubnr",
-                    referencedColumnName = "ntypsubnr")})
-    private CVSecondaryTypes cvSecondaryTypes;
     @MapsId("CVTypesId")
     @ManyToOne
     @JoinColumn(name = "ntypnr",
@@ -103,22 +88,6 @@ public class CVTypesVoltages {
 
     public void setExclude(long exclude) {
         this.exclude = exclude;
-    }
-
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
-    }
-
-    public CVSecondaryTypes getCvSecondaryTypes() {
-        return cvSecondaryTypes;
-    }
-
-    public void setCvSecondaryTypes(CVSecondaryTypes cvSecondaryTypes) {
-        this.cvSecondaryTypes = cvSecondaryTypes;
     }
 
     public CVTypes getCvTypes() {

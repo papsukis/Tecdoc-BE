@@ -13,20 +13,17 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="assembly_groups_324")
+@Table(name="t_324_assembly_groups")
 public class AssemblyGroups {
 
     @Id
-    long bgNr;
+    String bgNr;
     long dLNr;
     long sA;
-    long bezNr;
+    String bezNr;
     long loschFlag;
+    long sprachNr;
 
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "assemblyGroups")
-    private List<GenericArticles> genericArticles;
     @MapsId("LanguageDescriptionsId")
     @ManyToOne
     @JoinColumns({
@@ -39,20 +36,20 @@ public class AssemblyGroups {
     private LanguageDescriptions languageDescriptions;
 
 
-    public AssemblyGroups(long bgNr, long dLNr, long sA, long bezNr, long loschFlag) {
-        this.bgNr = bgNr;
-        this.dLNr = dLNr;
-        this.sA = sA;
-        this.bezNr = bezNr;
-        this.loschFlag = loschFlag;
-    }
-
-    public long getBgNr() {
+    public String getBgNr() {
         return bgNr;
     }
 
-    public void setBgNr(long bgNr) {
+    public void setBgNr(String bgNr) {
         this.bgNr = bgNr;
+    }
+
+    public long getSprachNr() {
+        return sprachNr;
+    }
+
+    public void setSprachNr(long sprachNr) {
+        this.sprachNr = sprachNr;
     }
 
     public long getdLNr() {
@@ -71,11 +68,11 @@ public class AssemblyGroups {
         this.sA = sA;
     }
 
-    public long getBezNr() {
+    public String getBezNr() {
         return bezNr;
     }
 
-    public void setBezNr(long bezNr) {
+    public void setBezNr(String bezNr) {
         this.bezNr = bezNr;
     }
 
@@ -85,14 +82,6 @@ public class AssemblyGroups {
 
     public void setLoschFlag(long loschFlag) {
         this.loschFlag = loschFlag;
-    }
-
-    public List<GenericArticles> getGenericArticles() {
-        return genericArticles;
-    }
-
-    public void setGenericArticles(List<GenericArticles> genericArticles) {
-        this.genericArticles = genericArticles;
     }
 
     public LanguageDescriptions getLanguageDescriptions() {

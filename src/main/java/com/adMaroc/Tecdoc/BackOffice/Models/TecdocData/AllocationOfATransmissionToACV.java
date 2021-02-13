@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="allocation_of_a_transmission_to_a_cv_546")
+@Table(name="t_546_allocation_of_a_transmission_to_a_cv")
 public class AllocationOfATransmissionToACV {
 
     @EmbeddedId
@@ -28,22 +28,6 @@ public class AllocationOfATransmissionToACV {
     String lKZ;
     long exclude;
 
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lkz",
-                referencedColumnName = "lKZ")
-    private CountryTable countryTable;
-    @MapsId("CVSecondaryTypesId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "ntypnr",
-                    referencedColumnName = "ntypnr"),
-            @JoinColumn(
-                    name = "ntypsubnr",
-                    referencedColumnName = "ntypsubnr")
-    })
-    private CVSecondaryTypes cvSecondaryTypes;
     @MapsId("nTypNr")
     @ManyToOne
     @JoinColumn(name = "ntypnr",
@@ -128,22 +112,6 @@ public class AllocationOfATransmissionToACV {
 
     public void setExclude(long exclude) {
         this.exclude = exclude;
-    }
-
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
-    }
-
-    public CVSecondaryTypes getCvSecondaryTypes() {
-        return cvSecondaryTypes;
-    }
-
-    public void setCvSecondaryTypes(CVSecondaryTypes cvSecondaryTypes) {
-        this.cvSecondaryTypes = cvSecondaryTypes;
     }
 
     public CVTypes getCvTypes() {

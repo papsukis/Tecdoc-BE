@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="cv_tyres_552")
+@Table(name="t_552_cv_tyres")
 public class CVTyres {
 
     @EmbeddedId
@@ -29,35 +29,12 @@ public class CVTyres {
     long loschFlag;
 
 
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lKZ",
-                referencedColumnName = "lKZ")
-    private CountryTable countryTable;
-    @MapsId("CVSecondaryTypesId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "ntypnr",
-                    referencedColumnName = "ntypnr"),
-            @JoinColumn(
-                    name = "ntypsubnr",
-                    referencedColumnName = "ntypsubnr")})
-    private CVSecondaryTypes cvSecondaryTypes;
     @MapsId("nTypNr")
     @ManyToOne
     @JoinColumn(name = "ntypnr",
                 referencedColumnName = "ntypnr")
     private CVTypes cvTypes;
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "tabNr",
-                    referencedColumnName = "tabNr"),
-            @JoinColumn(
-                    name = "cle",
-                    referencedColumnName = "cle")})
-    private KeyTablesEntries keyTablesEntries;
+
 
 
     public CVTyres(Map<String,String> datas) {
@@ -135,21 +112,6 @@ public class CVTyres {
         this.loschFlag = loschFlag;
     }
 
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
-    }
-
-    public CVSecondaryTypes getCvSecondaryTypes() {
-        return cvSecondaryTypes;
-    }
-
-    public void setCvSecondaryTypes(CVSecondaryTypes cvSecondaryTypes) {
-        this.cvSecondaryTypes = cvSecondaryTypes;
-    }
 
     public CVTypes getCvTypes() {
         return cvTypes;
@@ -159,11 +121,4 @@ public class CVTyres {
         this.cvTypes = cvTypes;
     }
 
-    public KeyTablesEntries getKeyTablesEntries() {
-        return keyTablesEntries;
-    }
-
-    public void setKeyTablesEntries(KeyTablesEntries keyTablesEntries) {
-        this.keyTablesEntries = keyTablesEntries;
-    }
 }

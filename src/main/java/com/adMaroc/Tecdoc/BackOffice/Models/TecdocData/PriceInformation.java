@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="price_information_201")
+@Table(name="t_201_price_information")
 public class PriceInformation {
 
     @EmbeddedId
@@ -33,31 +33,8 @@ public class PriceInformation {
     @JoinColumn(name = "artNr",
                 referencedColumnName = "artNr")
     private ArticleTable articleTable;
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lKZ",
-                referencedColumnName = "lKZ")
-    private CountryTable countryTable;
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "tabNr",
-                    referencedColumnName = "tabNr"),
-            @JoinColumn(
-                    name = "cle",
-                    referencedColumnName = "cle")})
-    private KeyTablesEntries keyTablesEntries;
 
-    public PriceInformation(Map<String,String> datas) {
-        this.id = new PriceInformationId(datas.get("ArtNr"),Integer.valueOf(datas.get("PrArt")),datas.get("LKZ"),datas.get("WKZ"),Integer.valueOf(datas.get("Datvon")),Integer.valueOf(datas.get("PENr")),datas.get("MENr"));
-        this.dLNr = Integer.valueOf(datas.get("DLNr"));
-        this.sA = Integer.valueOf(datas.get("SA"));
-        this.preis = Integer.valueOf(datas.get("Preis"));
-        this.datbis = Integer.valueOf(datas.get("Datbis"));
-        this.rabattgruppe = datas.get("Rabattgruppe");
-        this.minderrabatt = Integer.valueOf(datas.get("Minderrabatt"));
-        this.loschFlag = 0;
-    }
+
 
     public PriceInformationId getId() {
         return id;
@@ -131,19 +108,4 @@ public class PriceInformation {
         this.articleTable = articleTable;
     }
 
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
-    }
-
-    public KeyTablesEntries getKeyTablesEntries() {
-        return keyTablesEntries;
-    }
-
-    public void setKeyTablesEntries(KeyTablesEntries keyTablesEntries) {
-        this.keyTablesEntries = keyTablesEntries;
-    }
 }

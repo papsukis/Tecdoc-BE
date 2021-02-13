@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -15,11 +16,11 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="allocation_of_graphics_to_article_numbers_232")
+@Table(name="t_232_allocation_of_graphics_to_article_numbers")
 public class AllocationOfGraphicsToArticleNumbers {
 
-@EmbeddedId
-AllocationOfGraphicsToArticleNumbersId id;
+    @EmbeddedId
+    AllocationOfGraphicsToArticleNumbersId id;
     long dLNr;
     long sA;
     String lKZ;
@@ -32,13 +33,8 @@ AllocationOfGraphicsToArticleNumbersId id;
     @JoinColumn(name = "artNr",
                 referencedColumnName = "artNr")
     private ArticleTable articleTable;
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lKZ",
-                referencedColumnName = "lKZ")
-    private CountryTable countryTable;
     @MapsId("GraphicsDocumentsId")
-    @ManyToOne
+    @ManyToMany
     @JoinColumns({
             @JoinColumn(
                     name = "bildNr",
@@ -49,24 +45,13 @@ AllocationOfGraphicsToArticleNumbersId id;
             @JoinColumn(
                     name = "sprachNr",
                     referencedColumnName = "sprachNr")})
-    private GraphicsDocuments graphicsDocuments;
+    private List<GraphicsDocuments> graphicsDocuments;
     @MapsId("dokumentenArt")
     @ManyToOne
     @JoinColumn(name = "dokumentenArt",
                 referencedColumnName = "dokumentenArt")
     private DocumentTypes documentTypes;
 
-
-    public AllocationOfGraphicsToArticleNumbers(Map<String,String> datas) {
-        this.id = id;
-        this.dLNr = dLNr;
-        this.sA = sA;
-        this.lKZ = lKZ;
-        this.exclude = exclude;
-        this.bildNr = bildNr;
-        this.dokumentenArt = dokumentenArt;
-        this.loschFlag = loschFlag;
-    }
 
     public AllocationOfGraphicsToArticleNumbersId getId() {
         return id;
@@ -140,19 +125,11 @@ AllocationOfGraphicsToArticleNumbersId id;
         this.articleTable = articleTable;
     }
 
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
-    }
-
-    public GraphicsDocuments getGraphicsDocuments() {
+    public List<GraphicsDocuments> getGraphicsDocuments() {
         return graphicsDocuments;
     }
 
-    public void setGraphicsDocuments(GraphicsDocuments graphicsDocuments) {
+    public void setGraphicsDocuments(List<GraphicsDocuments> graphicsDocuments) {
         this.graphicsDocuments = graphicsDocuments;
     }
 

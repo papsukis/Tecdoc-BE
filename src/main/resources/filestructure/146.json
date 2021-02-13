@@ -3,8 +3,8 @@
   "tableNumber" : 146,
   "length" : 24,
   "contents" : "Body Types Synonyms ",
-  "sorting" : "aufbauArt,kmodNr",
-  "primaryKey" : "aufbauArt,kmodNr",
+  "sorting" : "aufbauArt,kModNr",
+  "primaryKey" : "aufbauArt,kModNr",
   "deltaKey" : "",
   "className" : "BodyTypeSynonyms",
   "attr" : [
@@ -27,7 +27,7 @@
       "type" : "N",
       "description" : "Body Type(KT 86)"},
       {
-        "name" : "kmodNr",
+        "name" : "kModNr",
         "pos" : 10,
         "length" : 5,
         "type" : "N",

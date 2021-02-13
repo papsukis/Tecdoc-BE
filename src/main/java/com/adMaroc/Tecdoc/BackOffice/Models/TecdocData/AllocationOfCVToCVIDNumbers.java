@@ -16,7 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="allocation_of_cv_to_id_numbers_538")
+@Table(name="t_538_allocation_of_cv_to_id_numbers")
 public class AllocationOfCVToCVIDNumbers {
 
 
@@ -25,16 +25,7 @@ public class AllocationOfCVToCVIDNumbers {
     long dLNr;
     long sA;
 
-    @MapsId("CVSecondaryTypesId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "ntypnr",
-                    referencedColumnName = "ntypnr"),
-            @JoinColumn(
-                    name = "ntypsubnr",
-                    referencedColumnName = "ntypsubnr")})
-    private CVSecondaryTypes cvSecondaryTypes;
+
     @MapsId("nTypNr")
     @ManyToOne
     @JoinColumn(name = "ntypnr",
@@ -45,10 +36,6 @@ public class AllocationOfCVToCVIDNumbers {
     @JoinColumn(name = "herldnr",
                 referencedColumnName = "herldnr")
     private CVProducerIDs cvProducerIDs;
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "allocationOfCVToCVIDNumbers")
-    private List<CountryRestrictionsForTheAllocationOfCVToIDNumbers> countryRestrictionsForTheAllocationOfCVToIDNumbers;
 
     public AllocationOfCVToCVIDNumbers(Map<String,String> datas) {
         this.id = id;
@@ -80,14 +67,6 @@ public class AllocationOfCVToCVIDNumbers {
         this.sA = sA;
     }
 
-    public CVSecondaryTypes getCvSecondaryTypes() {
-        return cvSecondaryTypes;
-    }
-
-    public void setCvSecondaryTypes(CVSecondaryTypes cvSecondaryTypes) {
-        this.cvSecondaryTypes = cvSecondaryTypes;
-    }
-
     public CVTypes getCvTypes() {
         return cvTypes;
     }
@@ -104,11 +83,4 @@ public class AllocationOfCVToCVIDNumbers {
         this.cvProducerIDs = cvProducerIDs;
     }
 
-    public List<CountryRestrictionsForTheAllocationOfCVToIDNumbers> getCountryRestrictionsForTheAllocationOfCVToIDNumbers() {
-        return countryRestrictionsForTheAllocationOfCVToIDNumbers;
-    }
-
-    public void setCountryRestrictionsForTheAllocationOfCVToIDNumbers(List<CountryRestrictionsForTheAllocationOfCVToIDNumbers> countryRestrictionsForTheAllocationOfCVToIDNumbers) {
-        this.countryRestrictionsForTheAllocationOfCVToIDNumbers = countryRestrictionsForTheAllocationOfCVToIDNumbers;
-    }
 }

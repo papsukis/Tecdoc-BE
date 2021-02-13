@@ -3,8 +3,8 @@
   "tableNumber" : 143,
   "length" : 29,
   "contents" : "Additional information on all vehicle model series ",
-  "sorting" : "kmodNr,lKZ,sortNr",
-  "primaryKey" : "kmodNr,lKZ,muster",
+  "sorting" : "kmodNr,sortNr",
+  "primaryKey" : "kmodNr,muster",
   "deltaKey" : "",
   "className" : "AllocationOfBodyTypesToModelSeries",
   "attr" : [

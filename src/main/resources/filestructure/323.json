@@ -32,14 +32,14 @@
       "name": "nartNr",
       "pos": 29,
       "length": 5,
-      "type": "N",
+      "type": "C",
       "description": "Unambiguous number of the standardised article description"
     },
     {
       "name": "bezNr",
       "pos": 34,
       "length": 9,
-      "type": "N",
+      "type": "C",
       "description": "Description Number(->30)"
     }
   ]

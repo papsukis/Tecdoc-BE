@@ -16,7 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="allocation_of_criteria_values_to_ga_mandatory_criteria_330")
+@Table(name="t_330_allocation_of_criteria_values_to_ga_mandatory_criteria")
 public class AllocationOfCriteriaValuesToGAMandatoryCriteria {
 
     @EmbeddedId
@@ -30,10 +30,17 @@ public class AllocationOfCriteriaValuesToGAMandatoryCriteria {
     @JoinColumn(name = "genArtNr",
                 referencedColumnName = "genArtNr")
     private GenericArticles genericArticles;
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "allocationOfCriteriaValuesToGAMandatoryCriteria")
-    private List<MandatoryCriteria> mandatoryCriteria;
+    @MapsId("MandatoryCriteriaId")
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(
+                    name = "genArtNr",
+                    referencedColumnName = "genArtNr"),
+            @JoinColumn(
+                    name = "lfdNr",
+                    referencedColumnName = "lfdNr")})
+    private MandatoryCriteria mandatoryCriteria;
+
 
     public AllocationOfCriteriaValuesToGAMandatoryCriteria(Map<String,String> datas) {
         this.id = id;
@@ -82,11 +89,4 @@ public class AllocationOfCriteriaValuesToGAMandatoryCriteria {
         this.genericArticles = genericArticles;
     }
 
-    public List<MandatoryCriteria> getMandatoryCriteria() {
-        return mandatoryCriteria;
-    }
-
-    public void setMandatoryCriteria(List<MandatoryCriteria> mandatoryCriteria) {
-        this.mandatoryCriteria = mandatoryCriteria;
-    }
 }

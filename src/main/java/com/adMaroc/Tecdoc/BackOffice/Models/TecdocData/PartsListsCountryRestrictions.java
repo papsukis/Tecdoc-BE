@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="parts_lists_country_restrictions_215")
+@Table(name="t_215_parts_lists_country_restrictions")
 public class PartsListsCountryRestrictions {
 
     @EmbeddedId
@@ -43,7 +43,7 @@ public class PartsListsCountryRestrictions {
                     referencedColumnName = "artNr"),
             @JoinColumn(
                     name = "lfdnr",
-                    referencedColumnName = "lfdnr")})
+                    referencedColumnName = "lfdNr")})
     private PartsLists partsLists;
 
 

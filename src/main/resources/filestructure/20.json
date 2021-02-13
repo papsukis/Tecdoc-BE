@@ -38,7 +38,7 @@
       "name" : "bezNr",
       "pos" : 32,
       "length" : 9,
-      "type" : "N",
+      "type" : "C",
       "description" : "Description Number (->030)"},
     {
       "name" : "isoCode",

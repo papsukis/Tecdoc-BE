@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="cv_driver_cabs_541")
+@Table(name="t_541_cv_driver_cabs")
 public class CVDriverCabs {
 
     @Id
@@ -32,43 +34,26 @@ public class CVDriverCabs {
     long height;
     long width;
     long delet;
+    long sprachNr;
 
     @MapsId("CountryAndLanguageDependentDescriptionsId")
-    @ManyToOne
+    @ManyToOne(optional = true)
+    @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumns({
             @JoinColumn(
                     name = "lbezNr",
-                    referencedColumnName = "lbezNr"),
-            @JoinColumn(
-                    name = "lKZ",
-                    referencedColumnName = "lKZ"),
+                    referencedColumnName = "lbezNr",nullable = true),
             @JoinColumn(
                     name = "sprachNr",
-                    referencedColumnName = "sprachNr")})
+                    referencedColumnName = "sprachNr",nullable = true)})
     private CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions;
-    @MapsId("KeyTablesEntriesId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "tabNr",
-                    referencedColumnName = "tabNr"),
-            @JoinColumn(
-                    name = "cle",
-                    referencedColumnName = "cle")})
-    private KeyTablesEntries keyTablesEntries;
+
     @MapsId("herNr")
     @ManyToOne
     @JoinColumn(name = "herNr",
-                referencedColumnName = "herNr")
+            referencedColumnName = "herNr")
     private Manufacturer manufacturer;
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "cvDriverCabs")
-    private List<CVDriverCabCountryRestrictions> cvDriverCabCountryRestrictions;
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "cvDriverCabs")
-    private List<AllocationOfDriverCabsToCVs> allocationOfDriverCabsToCVs;
+
 
 
 
@@ -208,13 +193,6 @@ public class CVDriverCabs {
         this.countryAndLanguageDependentDescriptions = countryAndLanguageDependentDescriptions;
     }
 
-    public KeyTablesEntries getKeyTablesEntries() {
-        return keyTablesEntries;
-    }
-
-    public void setKeyTablesEntries(KeyTablesEntries keyTablesEntries) {
-        this.keyTablesEntries = keyTablesEntries;
-    }
 
     public Manufacturer getManufacturer() {
         return manufacturer;
@@ -224,19 +202,5 @@ public class CVDriverCabs {
         this.manufacturer = manufacturer;
     }
 
-    public List<CVDriverCabCountryRestrictions> getCvDriverCabCountryRestrictions() {
-        return cvDriverCabCountryRestrictions;
-    }
 
-    public void setCvDriverCabCountryRestrictions(List<CVDriverCabCountryRestrictions> cvDriverCabCountryRestrictions) {
-        this.cvDriverCabCountryRestrictions = cvDriverCabCountryRestrictions;
-    }
-
-    public List<AllocationOfDriverCabsToCVs> getAllocationOfDriverCabsToCVs() {
-        return allocationOfDriverCabsToCVs;
-    }
-
-    public void setAllocationOfDriverCabsToCVs(List<AllocationOfDriverCabsToCVs> allocationOfDriverCabsToCVs) {
-        this.allocationOfDriverCabsToCVs = allocationOfDriverCabsToCVs;
-    }
 }

@@ -5,6 +5,7 @@ import com.adMaroc.Tecdoc.BackOffice.Models.FileStructure;
 import com.adMaroc.Tecdoc.Security.Exceptions.InternalServerException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.PropertyUtilsBean;
 import org.springframework.stereotype.Service;
 import org.apache.commons.beanutils.PropertyUtils;
 
@@ -40,11 +41,13 @@ public class Converter {
     public Object instantiate(FileStructure fileStructure,String line) throws Exception {
         // Load the class.
         Class<?> clazz = Class.forName("com.adMaroc.Tecdoc.BackOffice.Models.TecdocData."+fileStructure.getClassName());
-
+        Object id=null;
+        if(getPrimaryKeys(fileStructure).size()>1) {
+            id = (Class.forName("com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys." + fileStructure.getClassName() + "Id")).newInstance();
+        }
         Object obj = clazz.newInstance();
         for(Attributs at : fileStructure.getAttr()){
             if(isPrimaryKey(getPrimaryKeys(fileStructure),at.getName()) && getPrimaryKeys(fileStructure).size()>1){
-                Object id= Class.forName("com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys."+fileStructure.getClassName()+"Id").newInstance();
                 PropertyUtils.setProperty(id,at.getName(),convert(at.getType(),line.substring(at.getPos(),at.getPos()+at.getLength()),at.getName()));
                 PropertyUtils.setNestedProperty(obj,"id",id);
             }
@@ -52,7 +55,7 @@ public class Converter {
             PropertyUtils.setProperty(obj, at.getName(), convert(at.getType(),line.substring(at.getPos(),at.getPos()+at.getLength()),at.getName()));
             }
         }
-        log.info(obj.toString());
+//        log.info(obj.toString());
         return obj;
     }
 

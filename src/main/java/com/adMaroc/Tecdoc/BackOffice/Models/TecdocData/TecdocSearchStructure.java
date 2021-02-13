@@ -1,5 +1,6 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="tecdoc_search_structure_301")
+@Table(name="t_301_tecdoc_search_structure")
 public class TecdocSearchStructure {
 
 
@@ -24,10 +25,18 @@ public class TecdocSearchStructure {
     long nodeId;
     long treeTypNr;
     long stufe;
+    @Column(nullable = true,name="nodeParentId")
     long nodeParentId;
     long sortNr;
-    long bezNr;
+    String bezNr;
     long wertOk;
+    @Column(nullable = true)
+    long tabNr;
+    @Column(nullable = true)
+    String cle;
+    long sprachNr;
+
+
     @MapsId("LanguageDescriptionsId")
     @ManyToOne
     @JoinColumns({
@@ -38,27 +47,8 @@ public class TecdocSearchStructure {
                     name = "sprachNr",
                     referencedColumnName = "sprachNr")})
     private LanguageDescriptions languageDescriptions;
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "tabNr",
-                    referencedColumnName = "tabNr"),
-            @JoinColumn(
-                    name = "cle",
-                    referencedColumnName = "cle")})
-    private KeyTablesEntries keyTablesEntries;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "tecdocSearchStructure")
-    private List<AllocationOfGenArtToSearchStructure > allocationOfGenArtToSearchStructure;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "tecdocSearchStructure")
-    private List<TheAllocationOfQuickStartIconsToNodesLeavesWithinOneProductArea> theAllocationOfQuickStartIconsToNodesLeavesWithinOneProductAreas;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "tecdocSearchStructure")
-    private List<AllocationOfCriteriaToTheSearchStructure> allocationOfCriteriaToTheSearchStructures;
+
+
 
 
 
@@ -130,11 +120,11 @@ public class TecdocSearchStructure {
         this.sortNr = sortNr;
     }
 
-    public long getBezNr() {
+    public String getBezNr() {
         return bezNr;
     }
 
-    public void setBezNr(long bezNr) {
+    public void setBezNr(String bezNr) {
         this.bezNr = bezNr;
     }
 
@@ -154,35 +144,5 @@ public class TecdocSearchStructure {
         this.languageDescriptions = languageDescriptions;
     }
 
-    public KeyTablesEntries getKeyTablesEntries() {
-        return keyTablesEntries;
-    }
 
-    public void setKeyTablesEntries(KeyTablesEntries keyTablesEntries) {
-        this.keyTablesEntries = keyTablesEntries;
-    }
-
-    public List<AllocationOfGenArtToSearchStructure> getAllocationOfGenArtToSearchStructure() {
-        return allocationOfGenArtToSearchStructure;
-    }
-
-    public void setAllocationOfGenArtToSearchStructure(List<AllocationOfGenArtToSearchStructure> allocationOfGenArtToSearchStructure) {
-        this.allocationOfGenArtToSearchStructure = allocationOfGenArtToSearchStructure;
-    }
-
-    public List<TheAllocationOfQuickStartIconsToNodesLeavesWithinOneProductArea> getTheAllocationOfQuickStartIconsToNodesLeavesWithinOneProductAreas() {
-        return theAllocationOfQuickStartIconsToNodesLeavesWithinOneProductAreas;
-    }
-
-    public void setTheAllocationOfQuickStartIconsToNodesLeavesWithinOneProductAreas(List<TheAllocationOfQuickStartIconsToNodesLeavesWithinOneProductArea> theAllocationOfQuickStartIconsToNodesLeavesWithinOneProductAreas) {
-        this.theAllocationOfQuickStartIconsToNodesLeavesWithinOneProductAreas = theAllocationOfQuickStartIconsToNodesLeavesWithinOneProductAreas;
-    }
-
-    public List<AllocationOfCriteriaToTheSearchStructure> getAllocationOfCriteriaToTheSearchStructures() {
-        return allocationOfCriteriaToTheSearchStructures;
-    }
-
-    public void setAllocationOfCriteriaToTheSearchStructures(List<AllocationOfCriteriaToTheSearchStructure> allocationOfCriteriaToTheSearchStructures) {
-        this.allocationOfCriteriaToTheSearchStructures = allocationOfCriteriaToTheSearchStructures;
-    }
 }

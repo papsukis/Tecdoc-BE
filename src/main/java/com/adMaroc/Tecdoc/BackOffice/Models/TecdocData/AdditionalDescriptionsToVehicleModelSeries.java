@@ -13,31 +13,47 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="additional_descriptions_to_vehicle_model_series_140")
+@Table(name="t_140_additional_descriptions_to_vehicle_model_series")
 public class AdditionalDescriptionsToVehicleModelSeries {
 
     @Id
     long kModNr;
     long dLNr;
     long sA;
+
+    @Column(nullable = true,name="lbezNr1")
     long lbezNr1;
+    @Column(nullable = true,name="lbezNr2")
     long lbezNr2;
     long loschFlag;
+    @Column(nullable = true)
+    long sprachNr1;
+    @Column(nullable = true)
+    long sprachNr2;
 
     @MapsId("CountryAndLanguageDependentDescriptionsId")
-    @ManyToOne
+    @ManyToOne(optional = true,fetch = FetchType.LAZY,cascade = CascadeType.ALL,targetEntity = CountryAndLanguageDependentDescriptions.class)
     @JoinColumns({
             @JoinColumn(
-                    name = "lBezNr",
+                    name = "lbezNr1",
                     referencedColumnName = "lBezNr"),
+
             @JoinColumn(
-                    name = "lKZ",
-                    referencedColumnName = "lKZ"),
-            @JoinColumn(
-                    name = "sprachNr",
+                    name = "sprachNr1",
                     referencedColumnName = "sprachNr")
     })
-    private CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions;
+    private CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions1;
+    @MapsId("CountryAndLanguageDependentDescriptionsId")
+    @ManyToOne(optional = true,fetch = FetchType.LAZY,cascade = CascadeType.ALL,targetEntity = CountryAndLanguageDependentDescriptions.class)
+    @JoinColumns({
+            @JoinColumn(
+                    name = "lbezNr2",
+                    referencedColumnName = "lBezNr"),
+            @JoinColumn(
+                    name = "sprachNr2",
+                    referencedColumnName = "sprachNr")
+    })
+    private CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions2;
     @MapsId("kModNr")
     @ManyToOne
     @JoinColumn(name = "kModNr",
@@ -102,12 +118,36 @@ public class AdditionalDescriptionsToVehicleModelSeries {
         this.loschFlag = loschFlag;
     }
 
-    public CountryAndLanguageDependentDescriptions getCountryAndLanguageDependentDescriptions() {
-        return countryAndLanguageDependentDescriptions;
+    public long getSprachNr1() {
+        return sprachNr1;
     }
 
-    public void setCountryAndLanguageDependentDescriptions(CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions) {
-        this.countryAndLanguageDependentDescriptions = countryAndLanguageDependentDescriptions;
+    public void setSprachNr1(long sprachNr1) {
+        this.sprachNr1 = sprachNr1;
+    }
+
+    public long getSprachNr2() {
+        return sprachNr2;
+    }
+
+    public void setSprachNr2(long sprachNr2) {
+        this.sprachNr2 = sprachNr2;
+    }
+
+    public CountryAndLanguageDependentDescriptions getCountryAndLanguageDependentDescriptions1() {
+        return countryAndLanguageDependentDescriptions1;
+    }
+
+    public void setCountryAndLanguageDependentDescriptions1(CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions1) {
+        this.countryAndLanguageDependentDescriptions1 = countryAndLanguageDependentDescriptions1;
+    }
+
+    public CountryAndLanguageDependentDescriptions getCountryAndLanguageDependentDescriptions2() {
+        return countryAndLanguageDependentDescriptions2;
+    }
+
+    public void setCountryAndLanguageDependentDescriptions2(CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions2) {
+        this.countryAndLanguageDependentDescriptions2 = countryAndLanguageDependentDescriptions2;
     }
 
     public VehicleModelSeries getVehicleModelSeries() {

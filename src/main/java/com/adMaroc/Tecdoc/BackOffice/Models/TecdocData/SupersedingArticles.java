@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="superseding_articles_204")
+@Table(name="t_204_superseding_articles")
 public class SupersedingArticles {
 
     @EmbeddedId
@@ -26,11 +26,6 @@ public class SupersedingArticles {
     long sort;
     long loschFlag;
 
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lKZ",
-                referencedColumnName = "lKZ")
-    private CountryTable countryTable;
     @MapsId("artNr")
     @ManyToOne
     @JoinColumn(name = "artNr",
@@ -93,14 +88,6 @@ public class SupersedingArticles {
 
     public void setLoschFlag(long loschFlag) {
         this.loschFlag = loschFlag;
-    }
-
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
     }
 
     public ArticleTable getArticleTable() {

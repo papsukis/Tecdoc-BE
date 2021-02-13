@@ -67,7 +67,7 @@
       "name": "bezNr",
       "pos": 50,
       "length": 9,
-      "type": "N",
+      "type": "C",
       "description": "Number of the description text(->30)"
     },
     {

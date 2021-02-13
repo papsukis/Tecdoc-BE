@@ -14,18 +14,18 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="key_tables_051")
+@Table(name="t_051_key_tables")
 public class KeyTables {
 
     @Id
     long tabNr;
     long dLNr;
     long sA;
-    long bezNr;
+    String bezNr;
     String tabTyp;
     long delet;
     long loschFlag;
-
+    long sprachNr;
     @OneToMany(
             fetch=FetchType.LAZY,
             cascade=CascadeType.ALL,
@@ -42,15 +42,6 @@ public class KeyTables {
                     referencedColumnName = "sprachNr")})
     private LanguageDescriptions languageDescriptions;
 
-    public KeyTables(Map<String,String> datas) {
-        this.tabNr = Integer.valueOf(datas.get("TabNr"));
-        this.dLNr = Integer.valueOf(datas.get("DLNr"));
-        this.sA = Integer.valueOf(datas.get("SA"));
-        this.bezNr = Integer.valueOf(datas.get("BezNr"));
-        this.tabTyp = datas.get("TabTyp");
-        this.delet = Integer.valueOf(datas.get("Delete"));
-        this.loschFlag = 0;
-    }
 
     public long getTabNr() {
         return tabNr;
@@ -76,11 +67,11 @@ public class KeyTables {
         this.sA = sA;
     }
 
-    public long getBezNr() {
+    public String getBezNr() {
         return bezNr;
     }
 
-    public void setBezNr(long bezNr) {
+    public void setBezNr(String bezNr) {
         this.bezNr = bezNr;
     }
 

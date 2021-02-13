@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="trade_numbers_207")
+@Table(name="t_207_trade_numbers")
 public class TradeNumbers {
 
 @EmbeddedId
@@ -27,11 +27,6 @@ TradeNumbersId id;
     long sort;
     long loschFlag;
 
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lKZ",
-                referencedColumnName = "lKZ")
-    private CountryTable countryTable;
     @MapsId("artNr")
     @ManyToOne
     @JoinColumn(name = "artNr",
@@ -39,16 +34,6 @@ TradeNumbersId id;
     private ArticleTable articleTable;
 
 
-
-    public TradeNumbers(Map<String,String> datas) {
-        this.id = new TradeNumbersId(datas.get("ArtNr"),Integer.valueOf(datas.get("GebrNr")),datas.get("LKZ"));
-        this.dLNr = Integer.valueOf(datas.get("DLNr"));
-        this.sA = Integer.valueOf(datas.get("SA"));
-        this.exclude = Integer.valueOf(datas.get("Exclude"));
-        this.anzSofort = Integer.valueOf(datas.get("AnzSofort"));
-        this.sort = Integer.valueOf(datas.get("Sort"));
-        this.loschFlag = 0;
-    }
 
     public TradeNumbersId getId() {
         return id;
@@ -104,14 +89,6 @@ TradeNumbersId id;
 
     public void setLoschFlag(long loschFlag) {
         this.loschFlag = loschFlag;
-    }
-
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
     }
 
     public ArticleTable getArticleTable() {

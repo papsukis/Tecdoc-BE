@@ -15,22 +15,20 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="allocation_of_body_types_to_model_series_143")
+@Table(name="t_143_allocation_of_body_types_to_model_series")
 public class AllocationOfBodyTypesToModelSeries {
 
 
     @EmbeddedId
     AllocationOfBodyTypesToModelSeriesId id;
+    @Column(name="lkz",nullable = true)
+    String lKZ;
     long dLNr;
     long sA;
     long sortNr;
     long loschFlag;
 
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lkz",
-                referencedColumnName = "lkz")
-    private CountryTable countryTable;
+
     @MapsId("kModNr")
     @ManyToOne
     @JoinColumn(name = "kmodnr",
@@ -38,13 +36,6 @@ public class AllocationOfBodyTypesToModelSeries {
     private VehicleModelSeries vehicleModelSeries;
 
 
-    public AllocationOfBodyTypesToModelSeries(Map<String,String> datas) {
-        this.id = new AllocationOfBodyTypesToModelSeriesId(Integer.valueOf(datas.get("KmodNr")),datas.get("LKZ"),datas.get("Muster"));
-        this.dLNr = Integer.valueOf(datas.get("DLNr"));
-        this.sA = Integer.valueOf(datas.get("SA"));
-        this.sortNr = Integer.valueOf(datas.get("SortNr"));
-        this.loschFlag = 0;
-    }
 
     public AllocationOfBodyTypesToModelSeriesId getId() {
         return id;
@@ -86,16 +77,17 @@ public class AllocationOfBodyTypesToModelSeries {
         this.loschFlag = loschFlag;
     }
 
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
-    }
 
     public VehicleModelSeries getVehicleModelSeries() {
         return vehicleModelSeries;
+    }
+
+    public String getlKZ() {
+        return lKZ;
+    }
+
+    public void setlKZ(String lKZ) {
+        this.lKZ = lKZ;
     }
 
     public void setVehicleModelSeries(VehicleModelSeries vehicleModelSeries) {

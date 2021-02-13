@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="generic_article_synonyms_327")
+@Table(name="t_327_generic_article_synonyms")
 public class GenericArticleSynonyms {
 
     @EmbeddedId
@@ -23,6 +23,7 @@ public class GenericArticleSynonyms {
     long dLNr;
     long sA;
     String bez;
+
 
     @MapsId("genArtNr")
     @ManyToOne

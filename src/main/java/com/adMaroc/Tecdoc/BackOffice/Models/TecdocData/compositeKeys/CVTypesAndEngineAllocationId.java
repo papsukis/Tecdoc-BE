@@ -1,10 +1,13 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Data
 @Embeddable
 public class CVTypesAndEngineAllocationId implements Serializable {
 
@@ -24,28 +27,28 @@ public class CVTypesAndEngineAllocationId implements Serializable {
         this.lfdNr = lfdNr;
     }
 
-    public void setnTypNr(long nTypNr) {
-        this.nTypNr = nTypNr;
-    }
-
-    public void setnTypSubNr(long nTypSubNr) {
-        this.nTypSubNr = nTypSubNr;
-    }
-
-    public void setLfdNr(long lfdNr) {
-        this.lfdNr = lfdNr;
-    }
-
     public long getnTypNr() {
         return nTypNr;
+    }
+
+    public void setnTypNr(long nTypNr) {
+        this.nTypNr = nTypNr;
     }
 
     public long getnTypSubNr() {
         return nTypSubNr;
     }
 
+    public void setnTypSubNr(long nTypSubNr) {
+        this.nTypSubNr = nTypSubNr;
+    }
+
     public long getLfdNr() {
         return lfdNr;
+    }
+
+    public void setLfdNr(long lfdNr) {
+        this.lfdNr = lfdNr;
     }
 
     @Override

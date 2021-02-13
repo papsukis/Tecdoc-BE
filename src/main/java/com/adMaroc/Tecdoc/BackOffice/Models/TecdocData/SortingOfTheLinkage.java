@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="sorting_of_the_linkage_404")
+@Table(name="t_404_sorting_of_the_linkage")
 public class SortingOfTheLinkage {
 
     @EmbeddedId

@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="cv_chassis_553")
+@Table(name="t_553_cv_chassis")
 public class CVChassis {
 
     @EmbeddedId
@@ -26,21 +26,7 @@ public class CVChassis {
     String lKZ;
     long exclude;
 
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lKZ",
-                referencedColumnName = "lKZ")
-    private CountryTable countryTable;
-    @MapsId("CVSecondaryTypesId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "ntypnr",
-                    referencedColumnName = "ntypNr"),
-            @JoinColumn(
-                    name = "ntypsubnr",
-                    referencedColumnName = "ntypsubnr")})
-    private CVSecondaryTypes cvSecondaryTypes;
+
     @MapsId("nTypNr")
     @ManyToOne
     @JoinColumn(name = "ntypnr",
@@ -105,21 +91,6 @@ public class CVChassis {
         this.exclude = exclude;
     }
 
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
-    }
-
-    public CVSecondaryTypes getCvSecondaryTypes() {
-        return cvSecondaryTypes;
-    }
-
-    public void setCvSecondaryTypes(CVSecondaryTypes cvSecondaryTypes) {
-        this.cvSecondaryTypes = cvSecondaryTypes;
-    }
 
     public CVTypes getCvTypes() {
         return cvTypes;

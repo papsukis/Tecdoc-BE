@@ -16,17 +16,18 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="criteria_table_050")
+@Table(name="t_050_criteria_table")
 public class CriteriaTable {
 
 
     @EmbeddedId
     CriteriaTableId id;
     long sA;
-    long bezNr;
+    String bezNr;
     String typ;
     long maxLen;
     long okArtikel;
+    @Column(nullable = true)
     long tabNr;
     long oKNKW;
     long oKPKW;
@@ -37,10 +38,11 @@ public class CriteriaTable {
     long mehrfachVerwendung;
     long bezNrAbk;
     long bezNrEinheit;
-    long longervallCriterion;
+    long intervallCriterion;
     long nachfolgeCriterion;
     long deletion;
     long oKAchse;
+    long sprachNr;
     long loschFlag;
     @MapsId("LanguageDescriptionsId")
     @ManyToOne
@@ -52,73 +54,6 @@ public class CriteriaTable {
                     name = "sprachNr",
                     referencedColumnName = "sprachNr")})
     private LanguageDescriptions languageDescriptions;
-    @MapsId("KeyTablesEntriesId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "tabNr",
-                    referencedColumnName = "tabNr"),
-            @JoinColumn(
-                    name = "cle",
-                    referencedColumnName = "cle")})
-    private KeyTablesEntries keyTablesEntries;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "criteriaTable")
-    private List<LinkageAttributes> linkageAttributes;
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "criteriaTable")
-    private List<AccessoryListsCriteria> accessoryListsCriteria;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "criteriaTable")
-    private List<AllocationOfCriteriaToTheSearchStructure> allocationOfCriteriaToTheSearchStructures;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "criteriaTable")
-    private List<ArticleCriteria> articleCriteria;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "criteriaTable")
-    private List<ArticleLinkage> articleLinkages;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "criteriaTable")
-    private List<MandatoryCriteria> mandatoryCriteria;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "criteriaTable")
-    private List<PartsListCritera> partsListCriteras;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "criteriaTable")
-    private List<ProposedCriteria> proposedCriteria;
-
-
-    public CriteriaTable(Map<String,String> datas) {
-        this.id = new CriteriaTableId(Integer.valueOf(datas.get("DLNr")),Integer.valueOf(datas.get("KritNr")));
-        this.sA = Integer.valueOf(datas.get("SA"));
-        this.bezNr = Integer.valueOf(datas.get("BezNr"));
-        this.typ = datas.get("Typ");
-        this.maxLen = Integer.valueOf(datas.get("MaxLen"));
-        this.okArtikel = Integer.valueOf(datas.get("OK-Artikel"));
-        this.tabNr = Integer.valueOf(datas.get("TabNr"));
-        this.oKNKW = Integer.valueOf(datas.get("OK-NKW"));
-        this.oKPKW = Integer.valueOf(datas.get("OK-PKW"));
-        this.oKMotor = Integer.valueOf(datas.get("OK-Motor"));
-        this.oKFahrerhaus = Integer.valueOf(datas.get("OK-Fahrerhaus "));
-        this.stucklistenCriterion = Integer.valueOf(datas.get("Stücklisten-Criterion"));
-        this.zubehorCriterion = Integer.valueOf(datas.get("Zubehör-Criterion"));
-        this.mehrfachVerwendung = Integer.valueOf(datas.get("Mehrfachverwendung"));
-        this.bezNrAbk = Integer.valueOf(datas.get("BezNrAbk"));
-        this.bezNrEinheit = Integer.valueOf(datas.get("BezNrEinheit"));
-        this.longervallCriterion = Integer.valueOf(datas.get("IntervallCriterion"));
-        this.nachfolgeCriterion = Integer.valueOf(datas.get("Nachfolge-Criterion"));
-        this.deletion = Integer.valueOf(datas.get("Delete"));
-        this.oKAchse = Integer.valueOf(datas.get("OK-Achse"));
-        this.loschFlag = 0;
-    }
 
     public CriteriaTableId getId() {
         return id;
@@ -136,11 +71,11 @@ public class CriteriaTable {
         this.sA = sA;
     }
 
-    public long getBezNr() {
+    public String getBezNr() {
         return bezNr;
     }
 
-    public void setBezNr(long bezNr) {
+    public void setBezNr(String bezNr) {
         this.bezNr = bezNr;
     }
 
@@ -249,11 +184,11 @@ public class CriteriaTable {
     }
 
     public long getIntervallCriterion() {
-        return longervallCriterion;
+        return intervallCriterion;
     }
 
-    public void setIntervallCriterion(long longervallCriterion) {
-        this.longervallCriterion = longervallCriterion;
+    public void setIntervallCriterion(long intervallCriterion) {
+        this.intervallCriterion = intervallCriterion;
     }
 
     public long getNachfolgeCriterion() {
@@ -280,6 +215,14 @@ public class CriteriaTable {
         this.oKAchse = oKAchse;
     }
 
+    public long getSprachNr() {
+        return sprachNr;
+    }
+
+    public void setSprachNr(long sprachNr) {
+        this.sprachNr = sprachNr;
+    }
+
     public long getLoschFlag() {
         return loschFlag;
     }
@@ -294,77 +237,5 @@ public class CriteriaTable {
 
     public void setLanguageDescriptions(LanguageDescriptions languageDescriptions) {
         this.languageDescriptions = languageDescriptions;
-    }
-
-    public KeyTablesEntries getKeyTablesEntries() {
-        return keyTablesEntries;
-    }
-
-    public void setKeyTablesEntries(KeyTablesEntries keyTablesEntries) {
-        this.keyTablesEntries = keyTablesEntries;
-    }
-
-    public List<LinkageAttributes> getLinkageAttributes() {
-        return linkageAttributes;
-    }
-
-    public void setLinkageAttributes(List<LinkageAttributes> linkageAttributes) {
-        this.linkageAttributes = linkageAttributes;
-    }
-
-    public List<AccessoryListsCriteria> getAccessoryListsCriteria() {
-        return accessoryListsCriteria;
-    }
-
-    public void setAccessoryListsCriteria(List<AccessoryListsCriteria> accessoryListsCriteria) {
-        this.accessoryListsCriteria = accessoryListsCriteria;
-    }
-
-    public List<AllocationOfCriteriaToTheSearchStructure> getAllocationOfCriteriaToTheSearchStructures() {
-        return allocationOfCriteriaToTheSearchStructures;
-    }
-
-    public void setAllocationOfCriteriaToTheSearchStructures(List<AllocationOfCriteriaToTheSearchStructure> allocationOfCriteriaToTheSearchStructures) {
-        this.allocationOfCriteriaToTheSearchStructures = allocationOfCriteriaToTheSearchStructures;
-    }
-
-    public List<ArticleCriteria> getArticleCriteria() {
-        return articleCriteria;
-    }
-
-    public void setArticleCriteria(List<ArticleCriteria> articleCriteria) {
-        this.articleCriteria = articleCriteria;
-    }
-
-    public List<ArticleLinkage> getArticleLinkages() {
-        return articleLinkages;
-    }
-
-    public void setArticleLinkages(List<ArticleLinkage> articleLinkages) {
-        this.articleLinkages = articleLinkages;
-    }
-
-    public List<MandatoryCriteria> getMandatoryCriteria() {
-        return mandatoryCriteria;
-    }
-
-    public void setMandatoryCriteria(List<MandatoryCriteria> mandatoryCriteria) {
-        this.mandatoryCriteria = mandatoryCriteria;
-    }
-
-    public List<PartsListCritera> getPartsListCriteras() {
-        return partsListCriteras;
-    }
-
-    public void setPartsListCriteras(List<PartsListCritera> partsListCriteras) {
-        this.partsListCriteras = partsListCriteras;
-    }
-
-    public List<ProposedCriteria> getProposedCriteria() {
-        return proposedCriteria;
-    }
-
-    public void setProposedCriteria(List<ProposedCriteria> proposedCriteria) {
-        this.proposedCriteria = proposedCriteria;
     }
 }

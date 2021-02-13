@@ -15,32 +15,35 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="key_table_entries_052")
+@Table(name="t_052_key_table_entries")
 public class KeyTablesEntries {
 
     @EmbeddedId
     KeyTablesEntriesId id;
     long dLNr;
     long sA;
-    long bezNr;
+    String bezNr;
     long sortNr;
     long delet;
     long loschFlag;
+    long sprachNr;
     @MapsId("tabNr")
     @ManyToOne
     @JoinColumn(name = "tabNr",
                 referencedColumnName = "tabNr")
     private KeyTables keyTables;
-    @OneToMany(
+
+    @ManyToOne(
             fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<DataSupplierMainAddress >dataSupplierMainAddress;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<CriteriaTable >criteriaTable;
+            cascade=CascadeType.ALL)
+    @JoinColumns({
+            @JoinColumn(
+                    name = "dl_nr",
+                    referencedColumnName = "dLNr"),
+            @JoinColumn(
+                    name = "kritNr",
+                    referencedColumnName = "kritNr")})
+    private CriteriaTable criteriaTable;
     @MapsId("LanguageDescriptions")
     @ManyToOne
     @JoinColumns({
@@ -51,126 +54,8 @@ public class KeyTablesEntries {
                     name = "sprachNr",
                     referencedColumnName = "sprachNr")})
     private LanguageDescriptions languageDescriptions;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<VehicleTypes> vehicleTypes;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<DataSupplierAddresses> dataSupplierAddresses;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<BodyTypeSynonyms> bodyTypeSynonyms;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<DriveTypeSynonyms> driveTypeSynonyms;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<PriceInformation> priceInformations;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<Engines> engines;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<Axle> axles;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTableEntries")
-    private List<KBATypeAllocation> kbaTypeAllocations;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<VehicleCountrySpecifications> vehicleCountrySpecifications;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<ArticleInformation> articleInformations;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<AxleWheelbases> axleWheelbases;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<AxleBrakeSize> axleBrakeSizes;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<AllocationOfAxleTypesToCVTypes> allocationOfAxleTypesToCVTypes;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<CountrySpecificArticleData> countrySpecificArticleData;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<TecdocSearchStructure> tecdocSearchStructures;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<SearchInformationTexts> searchInformationTexts;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<CVTypes> cvTypes;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<CVDriverCabs> cvDriverCabs;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<CVWheelbase> cvWheelbases;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<CVSuspension> cvSuspensions;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<CVTyres> cvTyres;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "keyTablesEntries")
-    private List<Transmission> transmissions;
 
-    public KeyTablesEntries(Map<String,String> datas) {
-        this.id = new KeyTablesEntriesId(Integer.valueOf(datas.get("TabNr")),datas.get("Key"));
-        this.dLNr = Integer.valueOf(datas.get("DLNr"));
-        this.sA = Integer.valueOf(datas.get("SA"));
-        this.bezNr = Integer.valueOf(datas.get("BezNr"));
-        this.sortNr = Integer.valueOf(datas.get("SortNr"));
-        this.delet = Integer.valueOf(datas.get("Delete"));
-        this.loschFlag = 0;
-    }
+
 
     public KeyTablesEntriesId getId() {
         return id;
@@ -196,11 +81,11 @@ public class KeyTablesEntries {
         this.sA = sA;
     }
 
-    public long getBezNr() {
+    public String getBezNr() {
         return bezNr;
     }
 
-    public void setBezNr(long bezNr) {
+    public void setBezNr(String bezNr) {
         this.bezNr = bezNr;
     }
 
@@ -236,19 +121,19 @@ public class KeyTablesEntries {
         this.keyTables = keyTables;
     }
 
-    public List<DataSupplierMainAddress> getDataSupplierMainAddress() {
-        return dataSupplierMainAddress;
+    public long getSprachNr() {
+        return sprachNr;
     }
 
-    public void setDataSupplierMainAddress(List<DataSupplierMainAddress> dataSupplierMainAddress) {
-        this.dataSupplierMainAddress = dataSupplierMainAddress;
+    public void setSprachNr(long sprachNr) {
+        this.sprachNr = sprachNr;
     }
 
-    public List<CriteriaTable> getCriteriaTable() {
+    public CriteriaTable getCriteriaTable() {
         return criteriaTable;
     }
 
-    public void setCriteriaTable(List<CriteriaTable> criteriaTable) {
+    public void setCriteriaTable(CriteriaTable criteriaTable) {
         this.criteriaTable = criteriaTable;
     }
 
@@ -258,181 +143,5 @@ public class KeyTablesEntries {
 
     public void setLanguageDescriptions(LanguageDescriptions languageDescriptions) {
         this.languageDescriptions = languageDescriptions;
-    }
-
-    public List<VehicleTypes> getVehicleTypes() {
-        return vehicleTypes;
-    }
-
-    public void setVehicleTypes(List<VehicleTypes> vehicleTypes) {
-        this.vehicleTypes = vehicleTypes;
-    }
-
-    public List<DataSupplierAddresses> getDataSupplierAddresses() {
-        return dataSupplierAddresses;
-    }
-
-    public void setDataSupplierAddresses(List<DataSupplierAddresses> dataSupplierAddresses) {
-        this.dataSupplierAddresses = dataSupplierAddresses;
-    }
-
-    public List<BodyTypeSynonyms> getBodyTypeSynonyms() {
-        return bodyTypeSynonyms;
-    }
-
-    public void setBodyTypeSynonyms(List<BodyTypeSynonyms> bodyTypeSynonyms) {
-        this.bodyTypeSynonyms = bodyTypeSynonyms;
-    }
-
-    public List<DriveTypeSynonyms> getDriveTypeSynonyms() {
-        return driveTypeSynonyms;
-    }
-
-    public void setDriveTypeSynonyms(List<DriveTypeSynonyms> driveTypeSynonyms) {
-        this.driveTypeSynonyms = driveTypeSynonyms;
-    }
-
-    public List<PriceInformation> getPriceInformations() {
-        return priceInformations;
-    }
-
-    public void setPriceInformations(List<PriceInformation> priceInformations) {
-        this.priceInformations = priceInformations;
-    }
-
-    public List<Engines> getEngines() {
-        return engines;
-    }
-
-    public void setEngines(List<Engines> engines) {
-        this.engines = engines;
-    }
-
-    public List<Axle> getAxles() {
-        return axles;
-    }
-
-    public void setAxles(List<Axle> axles) {
-        this.axles = axles;
-    }
-
-    public List<KBATypeAllocation> getKbaTypeAllocations() {
-        return kbaTypeAllocations;
-    }
-
-    public void setKbaTypeAllocations(List<KBATypeAllocation> kbaTypeAllocations) {
-        this.kbaTypeAllocations = kbaTypeAllocations;
-    }
-
-    public List<VehicleCountrySpecifications> getVehicleCountrySpecifications() {
-        return vehicleCountrySpecifications;
-    }
-
-    public void setVehicleCountrySpecifications(List<VehicleCountrySpecifications> vehicleCountrySpecifications) {
-        this.vehicleCountrySpecifications = vehicleCountrySpecifications;
-    }
-
-    public List<ArticleInformation> getArticleInformations() {
-        return articleInformations;
-    }
-
-    public void setArticleInformations(List<ArticleInformation> articleInformations) {
-        this.articleInformations = articleInformations;
-    }
-
-    public List<AxleWheelbases> getAxleWheelbases() {
-        return axleWheelbases;
-    }
-
-    public void setAxleWheelbases(List<AxleWheelbases> axleWheelbases) {
-        this.axleWheelbases = axleWheelbases;
-    }
-
-    public List<AxleBrakeSize> getAxleBrakeSizes() {
-        return axleBrakeSizes;
-    }
-
-    public void setAxleBrakeSizes(List<AxleBrakeSize> axleBrakeSizes) {
-        this.axleBrakeSizes = axleBrakeSizes;
-    }
-
-    public List<AllocationOfAxleTypesToCVTypes> getAllocationOfAxleTypesToCVTypes() {
-        return allocationOfAxleTypesToCVTypes;
-    }
-
-    public void setAllocationOfAxleTypesToCVTypes(List<AllocationOfAxleTypesToCVTypes> allocationOfAxleTypesToCVTypes) {
-        this.allocationOfAxleTypesToCVTypes = allocationOfAxleTypesToCVTypes;
-    }
-
-    public List<CountrySpecificArticleData> getCountrySpecificArticleData() {
-        return countrySpecificArticleData;
-    }
-
-    public void setCountrySpecificArticleData(List<CountrySpecificArticleData> countrySpecificArticleData) {
-        this.countrySpecificArticleData = countrySpecificArticleData;
-    }
-
-    public List<TecdocSearchStructure> getTecdocSearchStructures() {
-        return tecdocSearchStructures;
-    }
-
-    public void setTecdocSearchStructures(List<TecdocSearchStructure> tecdocSearchStructures) {
-        this.tecdocSearchStructures = tecdocSearchStructures;
-    }
-
-    public List<SearchInformationTexts> getSearchInformationTexts() {
-        return searchInformationTexts;
-    }
-
-    public void setSearchInformationTexts(List<SearchInformationTexts> searchInformationTexts) {
-        this.searchInformationTexts = searchInformationTexts;
-    }
-
-    public List<CVTypes> getCvTypes() {
-        return cvTypes;
-    }
-
-    public void setCvTypes(List<CVTypes> cvTypes) {
-        this.cvTypes = cvTypes;
-    }
-
-    public List<CVDriverCabs> getCvDriverCabs() {
-        return cvDriverCabs;
-    }
-
-    public void setCvDriverCabs(List<CVDriverCabs> cvDriverCabs) {
-        this.cvDriverCabs = cvDriverCabs;
-    }
-
-    public List<CVWheelbase> getCvWheelbases() {
-        return cvWheelbases;
-    }
-
-    public void setCvWheelbases(List<CVWheelbase> cvWheelbases) {
-        this.cvWheelbases = cvWheelbases;
-    }
-
-    public List<CVSuspension> getCvSuspensions() {
-        return cvSuspensions;
-    }
-
-    public void setCvSuspensions(List<CVSuspension> cvSuspensions) {
-        this.cvSuspensions = cvSuspensions;
-    }
-
-    public List<CVTyres> getCvTyres() {
-        return cvTyres;
-    }
-
-    public void setCvTyres(List<CVTyres> cvTyres) {
-        this.cvTyres = cvTyres;
-    }
-
-    public List<Transmission> getTransmissions() {
-        return transmissions;
-    }
-
-    public void setTransmissions(List<Transmission> transmissions) {
-        this.transmissions = transmissions;
     }
 }

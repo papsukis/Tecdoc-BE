@@ -14,7 +14,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="axle_160")
+@Table(name="t_160_axle")
 public class Axle {
 
     @Id
@@ -39,61 +39,15 @@ public class Axle {
     long fahrhoheBis;
     long delet;
 
+
     @MapsId("kModNr")
     @ManyToOne
     @JoinColumn(name = "kmodNr",
                 referencedColumnName = "kmodNr")
     private VehicleModelSeries vehicleModelSeries;
-    @MapsId("KeyTablesEntriesId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "tabNr",
-                    referencedColumnName = "tabNr"),
-            @JoinColumn(
-                    name = "cle",
-                    referencedColumnName = "cle")})
-    private KeyTablesEntries keyTablesEntries;
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "axle")
-    private List<AllocationOfAxleTypesToCVTypes> allocationOfAxleTypesToCVTypes;
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "axle")
-    private List<AxleBrakeSize> axleBrakeSizes;
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "axle")
-    private List<AxleWheelbases> axleWheelbases;
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "axle")
-    private List<AxleBodyTypes> axleBodyTypes;
 
 
-    public Axle(Map<String,String> datas) {
-        this.aTypNr = Integer.valueOf(datas.get("AtypNr"));
-        this.dLNr = Integer.valueOf(datas.get("DLNr"));
-        this.sA = Integer.valueOf(datas.get("SA"));
-        this.bezeichnung = datas.get("Bezeichnung");
-        this.kmodNr = Integer.valueOf(datas.get("KmodNr"));
-        this.sortNr = Integer.valueOf(datas.get("SortNr"));
-        this.bjvon = Integer.valueOf(datas.get("Bjvon"));
-        this.bjbis = Integer.valueOf(datas.get("Bjbis"));
-        this.achsArt = Integer.valueOf(datas.get("AchsArt"));
-        this.ausfuhrung = Integer.valueOf(datas.get("Ausführung"));
-        this.bremsAusf = Integer.valueOf(datas.get("BremsAusf"));
-        this.achskorper = Integer.valueOf(datas.get("Achskörper"));
-        this.zulLastVon = Integer.valueOf(datas.get("ZulLastVon"));
-        this.zulLastBis = Integer.valueOf(datas.get("ZulLastBis"));
-        this.radBefestigung = Integer.valueOf(datas.get("RadBefestigung"));
-        this.spurweite = Integer.valueOf(datas.get("Spurweite"));
-        this.nabensystem = datas.get("Nabensystem");
-        this.fahrhoheVon = Integer.valueOf(datas.get("Fahrhöhe von"));
-        this.fahrhoheBis = Integer.valueOf(datas.get("Fahrhöhe bis"));
-        this.delet = Integer.valueOf(datas.get("Delete"));
-    }
+
 
     public long getaTypNr() {
         return aTypNr;
@@ -263,43 +217,4 @@ public class Axle {
         this.vehicleModelSeries = vehicleModelSeries;
     }
 
-    public KeyTablesEntries getKeyTablesEntries() {
-        return keyTablesEntries;
-    }
-
-    public void setKeyTablesEntries(KeyTablesEntries keyTablesEntries) {
-        this.keyTablesEntries = keyTablesEntries;
-    }
-
-    public List<AllocationOfAxleTypesToCVTypes> getAllocationOfAxleTypesToCVTypes() {
-        return allocationOfAxleTypesToCVTypes;
-    }
-
-    public void setAllocationOfAxleTypesToCVTypes(List<AllocationOfAxleTypesToCVTypes> allocationOfAxleTypesToCVTypes) {
-        this.allocationOfAxleTypesToCVTypes = allocationOfAxleTypesToCVTypes;
-    }
-
-    public List<AxleBrakeSize> getAxleBrakeSizes() {
-        return axleBrakeSizes;
-    }
-
-    public void setAxleBrakeSizes(List<AxleBrakeSize> axleBrakeSizes) {
-        this.axleBrakeSizes = axleBrakeSizes;
-    }
-
-    public List<AxleWheelbases> getAxleWheelbases() {
-        return axleWheelbases;
-    }
-
-    public void setAxleWheelbases(List<AxleWheelbases> axleWheelbases) {
-        this.axleWheelbases = axleWheelbases;
-    }
-
-    public List<AxleBodyTypes> getAxleBodyTypes() {
-        return axleBodyTypes;
-    }
-
-    public void setAxleBodyTypes(List<AxleBodyTypes> axleBodyTypes) {
-        this.axleBodyTypes = axleBodyTypes;
-    }
 }

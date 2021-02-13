@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="allocation_of_axle_types_to_cv_types_164")
+@Table(name="t_164_allocation_of_axle_types_to_cv_types_164")
 public class AllocationOfAxleTypesToCVTypes {
 
     @EmbeddedId
@@ -30,16 +30,7 @@ public class AllocationOfAxleTypesToCVTypes {
     long exclude;
     long loschFlag;
 
-    @MapsId("KeyTablesEntriesId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "tabNr",
-                    referencedColumnName = "tabNr"),
-            @JoinColumn(
-                    name = "cle",
-                    referencedColumnName = "cle")})
-    private KeyTablesEntries keyTablesEntries;
+
     @MapsId("nTypNr")
     @ManyToOne
     @JoinColumn(name = "ntypnr",
@@ -50,25 +41,9 @@ public class AllocationOfAxleTypesToCVTypes {
     @JoinColumn(name = "atypnr",
                 referencedColumnName = "atypnr")
     private Axle axle;
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lkz",
-                referencedColumnName = "lkz")
-    private CountryTable countryTable;
 
 
 
-    public AllocationOfAxleTypesToCVTypes(Map<String,String> datas) {
-        this.id = new AllocationOfAxleTypesToCVTypesId( Integer.valueOf(datas.get("NTypNr")), Integer.valueOf(datas.get("LfdNr")), Integer.valueOf(datas.get("AtypNr")));
-        this.dLNr =  Integer.valueOf(datas.get("DLNr"));
-        this.sA =  Integer.valueOf(datas.get("SA"));
-        this.sortNr =  Integer.valueOf(datas.get("SortNr"));
-        this.achsPos =  Integer.valueOf(datas.get("AchsPos"));
-        this.bjvon =  Integer.valueOf(datas.get("BJvon"));
-        this.bjbis =  Integer.valueOf(datas.get("BJbis"));
-        this.lKZ =  datas.get("LKZ");
-        this.exclude =  Integer.valueOf(datas.get("Exclude"));
-    }
 
     public AllocationOfAxleTypesToCVTypesId getId() {
         return id;
@@ -150,14 +125,6 @@ public class AllocationOfAxleTypesToCVTypes {
         this.loschFlag = loschFlag;
     }
 
-    public KeyTablesEntries getKeyTablesEntries() {
-        return keyTablesEntries;
-    }
-
-    public void setKeyTablesEntries(KeyTablesEntries keyTablesEntries) {
-        this.keyTablesEntries = keyTablesEntries;
-    }
-
     public CVTypes getCvTypes() {
         return cvTypes;
     }
@@ -174,11 +141,4 @@ public class AllocationOfAxleTypesToCVTypes {
         this.axle = axle;
     }
 
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
-    }
 }

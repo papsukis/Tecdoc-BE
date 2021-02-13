@@ -1,7 +1,7 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData;
 
 
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.DataSupplierAdressesId;
+import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.DataSupplierAddressesId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,18 +16,18 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="data_supplier_addresses_043")
+@Table(name="t_043_data_supplier_addresses")
 public class DataSupplierAddresses {
 
     @EmbeddedId
-    DataSupplierAdressesId id;
+    DataSupplierAddressesId id;
     long sA;
     String bez;
     String bez2;
     String strasse;
     String strasse2;
     String postfach;
-    String pLZLKZ;
+    String pLZKZ;
     String pLZOrt;
     String pLZPf;
     String pLZGr;
@@ -44,43 +44,13 @@ public class DataSupplierAddresses {
     @JoinColumn(name = "lKZ",
                 referencedColumnName = "lKZ")
     private CountryTable countryTable;
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "tabnr",
-                    referencedColumnName = "tabNr"),
-            @JoinColumn(
-                    name = "cle",
-                    referencedColumnName = "cle")})
-    private KeyTablesEntries keyTablesEntries;
 
 
-    public DataSupplierAddresses(Map<String,String> datas) {
-        this.id = new DataSupplierAdressesId(Integer.valueOf(datas.get("DLNr")),Integer.valueOf(datas.get("Adressart")),datas.get("LKZ"));
-        this.sA = Integer.valueOf(datas.get("SA"));;
-        this.bez = datas.get("Bez");
-        this.bez2 = datas.get("Bez2");
-        this.strasse = datas.get("strasse");
-        this.strasse2 = datas.get("Strasse2");
-        this.postfach = datas.get("Postfach");
-        this.pLZLKZ = datas.get("PLZLKZ");
-        this.pLZOrt = datas.get("PLZOrt");
-        this.pLZPf = datas.get("PLZPf");
-        this.pLZGr = datas.get("PLZGr");
-        this.ort = datas.get("Ort");
-        this.ort2 = datas.get("Ort2");
-        this.telefon = datas.get("Telefon");
-        this.fax = datas.get("Fax");
-        this.email = datas.get("Email");
-        this.web = datas.get("Web");
-        this.loschFlag = loschFlag;
-    }
-
-    public DataSupplierAdressesId getId() {
+    public DataSupplierAddressesId getId() {
         return id;
     }
 
-    public void setId(DataSupplierAdressesId id) {
+    public void setId(DataSupplierAddressesId id) {
         this.id = id;
     }
 
@@ -132,12 +102,12 @@ public class DataSupplierAddresses {
         this.postfach = postfach;
     }
 
-    public String getpLZLKZ() {
-        return pLZLKZ;
+    public String getpLZKZ() {
+        return pLZKZ;
     }
 
-    public void setpLZLKZ(String pLZLKZ) {
-        this.pLZLKZ = pLZLKZ;
+    public void setpLZKZ(String pLZKZ) {
+        this.pLZKZ = pLZKZ;
     }
 
     public String getpLZOrt() {
@@ -228,11 +198,4 @@ public class DataSupplierAddresses {
         this.countryTable = countryTable;
     }
 
-    public KeyTablesEntries getKeyTablesEntries() {
-        return keyTablesEntries;
-    }
-
-    public void setKeyTablesEntries(KeyTablesEntries keyTablesEntries) {
-        this.keyTablesEntries = keyTablesEntries;
-    }
 }

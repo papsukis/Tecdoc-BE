@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="proposed_criteria_329")
+@Table(name="t_329_Proposed_criteria")
 public class ProposedCriteria {
 
     @EmbeddedId
@@ -27,22 +27,8 @@ public class ProposedCriteria {
     long n210;
     long n400;
     long exclude;
-    @MapsId("CriteriaId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "artNr",
-                    referencedColumnName = "artNr"),
-            @JoinColumn(
-                    name = "sortNr",
-                    referencedColumnName = "sortNr")})
 
-    private ArticleCriteria articleCriteria;
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lKZ",
-                referencedColumnName = "lKZ")
-    private CountryTable countryTable;
+
     @MapsId(value="genArtNr")
     @ManyToOne
     @JoinColumn(name = "genArtNr",
@@ -58,36 +44,7 @@ public class ProposedCriteria {
                     name = "kritNr",
                     referencedColumnName = "kritNr")})
     private CriteriaTable criteriaTable;
-    @MapsId("ArticleLinkageId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "artNr",
-                    referencedColumnName = "artNr"),
-            @JoinColumn(
-                    name = "genArtNr",
-                    referencedColumnName = "genArtNr"),
-            @JoinColumn(
-                    name = "vknZielArt",
-                    referencedColumnName = "vknZielArt"),
-            @JoinColumn(
-                    name = "vknZielNr",
-                    referencedColumnName = "vknZielNr"),
-            @JoinColumn(
-                    name = "lfdnr",
-                    referencedColumnName = "lfdNr")})
-    private ArticleLinkage articleLinkage;
 
-    public ProposedCriteria(Map<String,String> datas) {
-        this.id = id;
-        this.dLNr = dLNr;
-        this.sA = sA;
-        this.lKZ = lKZ;
-        this.kritNr = kritNr;
-        this.n210 = n210;
-        this.n400 = n400;
-        this.exclude = exclude;
-    }
 
     public ProposedCriteriaId getId() {
         return id;
@@ -153,21 +110,6 @@ public class ProposedCriteria {
         this.exclude = exclude;
     }
 
-    public ArticleCriteria getArticleCriteria() {
-        return articleCriteria;
-    }
-
-    public void setArticleCriteria(ArticleCriteria articleCriteria) {
-        this.articleCriteria = articleCriteria;
-    }
-
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
-    }
 
     public GenericArticles getGenericArticles() {
         return genericArticles;
@@ -185,11 +127,5 @@ public class ProposedCriteria {
         this.criteriaTable = criteriaTable;
     }
 
-    public ArticleLinkage getArticleLinkage() {
-        return articleLinkage;
-    }
 
-    public void setArticleLinkage(ArticleLinkage articleLinkage) {
-        this.articleLinkage = articleLinkage;
-    }
 }

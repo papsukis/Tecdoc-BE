@@ -16,7 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="allocation_of_swedish_number_plates_to_vehicle_types_128")
+@Table(name="t_128_allocation_of_swedish_number_plates_to_vehicle_types")
 public class AllocationOfSwedishNumberPlatesToVehicleTypes {
 
     @EmbeddedId
@@ -24,17 +24,12 @@ public class AllocationOfSwedishNumberPlatesToVehicleTypes {
     long dLNr;
     long sA;
 
+    @MapsId("kTypNr")
+    @ManyToOne
+    @JoinColumn( name = "kTypNr",
+                    referencedColumnName = "kTypNr")
+    private VehicleTypes vehicleTypes;
 
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "allocationOfSwedishNumberPlatesToVehicleTypes")
-    private List<VehicleTypes> vehicleTypes;
-
-    public AllocationOfSwedishNumberPlatesToVehicleTypes(Map<String,String> datas) {
-        this.id = new AllocationOfSwedishNumberPlatesToVehicleTypesId(datas.get("STyp"),Integer.valueOf(datas.get("KTypNr")));
-        this.dLNr = Integer.valueOf(datas.get("DLNr"));
-        this.sA = Integer.valueOf(datas.get("SA"));
-    }
 
     public AllocationOfSwedishNumberPlatesToVehicleTypesId getId() {
         return id;
@@ -60,11 +55,4 @@ public class AllocationOfSwedishNumberPlatesToVehicleTypes {
         this.sA = sA;
     }
 
-    public List<VehicleTypes> getVehicleTypes() {
-        return vehicleTypes;
-    }
-
-    public void setVehicleTypes(List<VehicleTypes> vehicleTypes) {
-        this.vehicleTypes = vehicleTypes;
-    }
 }

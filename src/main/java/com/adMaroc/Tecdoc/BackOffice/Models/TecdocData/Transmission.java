@@ -14,7 +14,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="transmission_544")
+@Table(name="t_544_transmission")
 public class Transmission {
 
     @Id
@@ -32,45 +32,14 @@ public class Transmission {
     String ID;
     long gaenge;
 
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "tabNr",
-                    referencedColumnName = "tabNr"),
-            @JoinColumn(
-                    name = "cle",
-                    referencedColumnName = "cle")})
-    private KeyTablesEntries keyTablesEntries;
     @MapsId("herNr")
     @ManyToOne
     @JoinColumn(name = "herNr",
                 referencedColumnName = "herNr")
     private Manufacturer manufacturer;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "transmission")
-    private List<AllocationOfATransmissionToACV> allocationOfATransmissionToACVS;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "transmission")
-    private List<TransmissionCountryRestrictions> transmissionCountryRestrictions;
 
 
-    public Transmission(Map<String,String> datas) {
-        this.getrNr = getrNr;
-        this.dLNr = dLNr;
-        this.sA = sA;
-        this.herNr = herNr;
-        this.code = code;
-        this.getrArt = getrArt;
-        this.bjvon = bjvon;
-        this.bjbis = bjbis;
-        this.trmin = trmin;
-        this.trmax = trmax;
-        this.trinv = trinv;
-        this.ID = ID;
-        this.gaenge = gaenge;
-    }
+
 
     public long getGetrNr() {
         return getrNr;
@@ -176,14 +145,6 @@ public class Transmission {
         this.gaenge = gaenge;
     }
 
-    public KeyTablesEntries getKeyTablesEntries() {
-        return keyTablesEntries;
-    }
-
-    public void setKeyTablesEntries(KeyTablesEntries keyTablesEntries) {
-        this.keyTablesEntries = keyTablesEntries;
-    }
-
     public Manufacturer getManufacturer() {
         return manufacturer;
     }
@@ -192,19 +153,5 @@ public class Transmission {
         this.manufacturer = manufacturer;
     }
 
-    public List<AllocationOfATransmissionToACV> getAllocationOfATransmissionToACVS() {
-        return allocationOfATransmissionToACVS;
-    }
 
-    public void setAllocationOfATransmissionToACVS(List<AllocationOfATransmissionToACV> allocationOfATransmissionToACVS) {
-        this.allocationOfATransmissionToACVS = allocationOfATransmissionToACVS;
-    }
-
-    public List<TransmissionCountryRestrictions> getTransmissionCountryRestrictions() {
-        return transmissionCountryRestrictions;
-    }
-
-    public void setTransmissionCountryRestrictions(List<TransmissionCountryRestrictions> transmissionCountryRestrictions) {
-        this.transmissionCountryRestrictions = transmissionCountryRestrictions;
-    }
 }

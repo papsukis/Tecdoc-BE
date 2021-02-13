@@ -16,12 +16,11 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="article_country_restrictions_202")
+@Table(name="t_202_article_country_restrictions")
 public class ArticleCountryRestrictions {
 
 
-   @EmbeddedId
-   ArticleCountryRestrictionsId id;
+    @EmbeddedId ArticleCountryRestrictionsId id;
     long dLNr;
     long sA;
     long exclude;

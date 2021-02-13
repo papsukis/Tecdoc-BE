@@ -42,7 +42,7 @@
       "name" : "bezNr",
       "pos" : 35,
       "length" : 9,
-      "type" : "N",
+      "type" : "C",
       "description" : "Description Number (->030)"},
     {
       "name" : "sortNr",

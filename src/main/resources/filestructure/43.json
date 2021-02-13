@@ -40,7 +40,7 @@
       "type" : "C",
       "description" : "Description 1"},
     {
-      "name" : "bez 2",
+      "name" : "bez2",
       "pos" : 53,
       "length" : 40,
       "type" : "(C)",

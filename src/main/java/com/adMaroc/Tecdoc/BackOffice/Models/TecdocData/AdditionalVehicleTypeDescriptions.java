@@ -13,30 +13,44 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="additional_vehicle_type_descriptions_144")
+@Table(name="t_144_additional_vehicle_type_descriptions")
 public class AdditionalVehicleTypeDescriptions {
 
     @Id
     long kTypNr;
     long dLNr;
     long sA;
+    @Column(nullable = true,name="lBezNr1")
     long lbezNr1;
+    @Column(nullable = true,name="lBezNr2")
     long lbezNr2;
     long loschFlag;
-
+    @Column(nullable = true)
+    long sprachNr1;
+    @Column(nullable = true)
+    long sprachNr2;
     @MapsId("CountryAndLanguageDependentDescriptionsId")
     @ManyToOne
     @JoinColumns({
             @JoinColumn(
-                    name = "lBezNr",
+                    name = "lBezNr1",
                     referencedColumnName = "lBezNr"),
+
             @JoinColumn(
-                    name = "lKZ",
-                    referencedColumnName = "lKZ"),
-            @JoinColumn(
-                    name = "sprachNr",
+                    name = "sprachNr1",
                     referencedColumnName = "sprachNr")})
-    private CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions;
+    private CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions1;
+    @MapsId("CountryAndLanguageDependentDescriptionsId")
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(
+                    name = "lBezNr2",
+                    referencedColumnName = "lBezNr"),
+
+            @JoinColumn(
+                    name = "sprachNr2",
+                    referencedColumnName = "sprachNr")})
+    private CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions2;
     @MapsId("kTypNr")
     @ManyToOne
     @JoinColumn(name = "kTypNr",
@@ -100,13 +114,7 @@ public class AdditionalVehicleTypeDescriptions {
         this.loschFlag = loschFlag;
     }
 
-    public CountryAndLanguageDependentDescriptions getCountryAndLanguageDependentDescriptions() {
-        return countryAndLanguageDependentDescriptions;
-    }
 
-    public void setCountryAndLanguageDependentDescriptions(CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions) {
-        this.countryAndLanguageDependentDescriptions = countryAndLanguageDependentDescriptions;
-    }
 
     public VehicleTypes getVehicleTypes() {
         return vehicleTypes;

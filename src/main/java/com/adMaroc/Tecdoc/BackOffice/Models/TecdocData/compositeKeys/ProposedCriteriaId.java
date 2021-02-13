@@ -1,16 +1,19 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Data
 @Embeddable
 public class ProposedCriteriaId implements Serializable {
 
-    @Column(name="genartnr")
+    @Column(name="genArtNr")
     long genArtNr;
-    @Column(name="lfdnr")
+    @Column(name="lfdNr")
     long lfdNr;
 
     public ProposedCriteriaId() {

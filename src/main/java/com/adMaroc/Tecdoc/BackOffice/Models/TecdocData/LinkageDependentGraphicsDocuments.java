@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -15,7 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="linkage_dependent_graphics_documents_432")
+@Table(name="t_432_linkage_dependent_graphics_documents")
 public class LinkageDependentGraphicsDocuments {
 
     @EmbeddedId
@@ -47,11 +48,6 @@ public class LinkageDependentGraphicsDocuments {
                     name = "lfdnr",
                     referencedColumnName = "lfdnr")})
     private ArticleLinkage articleLinkage;
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lKZ",
-                referencedColumnName = "lKZ")
-    private CountryTable countryTable;
     @MapsId("dokumentenArt")
     @ManyToOne
     @JoinColumn(name = "dokumentenArt",
@@ -63,7 +59,7 @@ public class LinkageDependentGraphicsDocuments {
                 referencedColumnName = "genArtNr")
     private GenericArticles genericArticles;
     @MapsId("GraphicsDocumentsId")
-    @ManyToOne
+    @ManyToMany
     @JoinColumns({
             @JoinColumn(
                     name = "bildNr",
@@ -74,7 +70,7 @@ public class LinkageDependentGraphicsDocuments {
             @JoinColumn(
                     name="sprachNr",
                     referencedColumnName = "sprachNr")})
-    private GraphicsDocuments graphicsDocuments;
+    private List<GraphicsDocuments> graphicsDocuments;
     @MapsId("artNr")
     @ManyToOne
     @JoinColumn(name = "artNr",
@@ -164,14 +160,6 @@ public class LinkageDependentGraphicsDocuments {
         this.articleLinkage = articleLinkage;
     }
 
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
-    }
-
     public DocumentTypes getDocumentTypes() {
         return documentTypes;
     }
@@ -188,13 +176,6 @@ public class LinkageDependentGraphicsDocuments {
         this.genericArticles = genericArticles;
     }
 
-    public GraphicsDocuments getGraphicsDocuments() {
-        return graphicsDocuments;
-    }
-
-    public void setGraphicsDocuments(GraphicsDocuments graphicsDocuments) {
-        this.graphicsDocuments = graphicsDocuments;
-    }
 
     public ArticleTable getArticleTable() {
         return articleTable;

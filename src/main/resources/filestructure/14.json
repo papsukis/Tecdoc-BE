@@ -37,7 +37,7 @@
       "name" : "bezNr",
       "pos" : 31,
       "length" : 9,
-      "type" : "N",
+      "type" : "C",
       "description" : "Description Number (->030)"},
     {
       "name" : "extension",

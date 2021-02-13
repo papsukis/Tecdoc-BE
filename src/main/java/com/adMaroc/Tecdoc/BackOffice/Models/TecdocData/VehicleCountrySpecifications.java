@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="vehicle_country_specifications_124")
+@Table(name="t_124_vehicle_country_specifications")
 public class VehicleCountrySpecifications {
 
     @EmbeddedId
@@ -49,39 +49,7 @@ public class VehicleCountrySpecifications {
     @JoinColumn(name = "lKZ",
                 referencedColumnName = "lKZ")
     private CountryTable countryTable;
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "tabNr",
-                    referencedColumnName = "tabNr"),
-            @JoinColumn(
-                    name = "cle",
-                    referencedColumnName = "cle")})
-    private KeyTablesEntries keyTablesEntries;
 
-
-
-    public VehicleCountrySpecifications(Map<String,String> datas) {
-        this.id = new VehicleCountrySpecificationsId(Integer.valueOf(datas.get("KTypNr")),datas.get("LKZ"));
-        this.dLNr = Integer.valueOf(datas.get("DLNr"));
-        this.sA = Integer.valueOf(datas.get("SA"));
-        this.bjvon = Integer.valueOf(datas.get("Bjvon"));
-        this.bjbis = Integer.valueOf(datas.get("Bjbis"));
-        this.ccmSteuer = Integer.valueOf(datas.get("ccmSteuer"));
-        this.lit = Integer.valueOf(datas.get("Lit"));
-        this.zyl = Integer.valueOf(datas.get("Zyl"));
-        this.tueren = Integer.valueOf(datas.get("Tueren"));
-        this.tanklnhalt = Integer.valueOf(datas.get("TankInhalt"));
-        this.spannung = Integer.valueOf(datas.get("Spannung"));
-        this.aBS = Integer.valueOf(datas.get("ABS"));
-        this.aSR = Integer.valueOf(datas.get("ASR"));
-        this.krStoffArt = Integer.valueOf(datas.get("KrStoffArt"));
-        this.katArt = Integer.valueOf(datas.get("KatArt"));
-        this.getrArt = Integer.valueOf(datas.get("GetrArt"));
-        this.bremsArt = Integer.valueOf(datas.get("BremsArt"));
-        this.bremsSys = Integer.valueOf(datas.get("BremsSys"));
-        this.loschFlag = 0;
-    }
 
     public VehicleCountrySpecificationsId getId() {
         return id;
@@ -251,11 +219,4 @@ public class VehicleCountrySpecifications {
         this.countryTable = countryTable;
     }
 
-    public KeyTablesEntries getKeyTablesEntries() {
-        return keyTablesEntries;
-    }
-
-    public void setKeyTablesEntries(KeyTablesEntries keyTablesEntries) {
-        this.keyTablesEntries = keyTablesEntries;
-    }
 }

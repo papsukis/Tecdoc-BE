@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="cv_types_and_engines_allocation_537")
+@Table(name="t_537_cv_types_and_engines_allocation")
 public class  CVTypesAndEngineAllocation {
 
     @EmbeddedId
@@ -29,11 +29,7 @@ public class  CVTypesAndEngineAllocation {
     long exclude;
     long loschFlag;
 
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lkz",
-                referencedColumnName = "lkz")
-    private CountryTable countryTable;
+
     @MapsId("nTypNr")
     @ManyToOne
     @JoinColumn(name = "ntypnr",
@@ -44,16 +40,7 @@ public class  CVTypesAndEngineAllocation {
     @JoinColumn(name = "motNr",
                 referencedColumnName = "motNr")
     private Engines engines;
-    @MapsId("CVSecondaryTypesId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "ntypnr",
-                    referencedColumnName = "ntypnr"),
-            @JoinColumn(
-                    name = "ntypsubnr",
-                    referencedColumnName = "ntypsubnr")})
-    private CVSecondaryTypes cvSecondaryTypes;
+
 
 
     public CVTypesAndEngineAllocation(Map<String,String> datas) {
@@ -139,14 +126,6 @@ public class  CVTypesAndEngineAllocation {
         this.loschFlag = loschFlag;
     }
 
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
-    }
-
     public CVTypes getCvTypes() {
         return cvTypes;
     }
@@ -161,13 +140,5 @@ public class  CVTypesAndEngineAllocation {
 
     public void setEngines(Engines engines) {
         this.engines = engines;
-    }
-
-    public CVSecondaryTypes getCvSecondaryTypes() {
-        return cvSecondaryTypes;
-    }
-
-    public void setCvSecondaryTypes(CVSecondaryTypes cvSecondaryTypes) {
-        this.cvSecondaryTypes = cvSecondaryTypes;
     }
 }

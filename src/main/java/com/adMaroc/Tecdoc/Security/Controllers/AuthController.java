@@ -3,8 +3,10 @@ package com.adMaroc.Tecdoc.Security.Controllers;
 import com.adMaroc.Tecdoc.Security.Exceptions.BadRequestException;
 import com.adMaroc.Tecdoc.Security.Exceptions.EmailAlreadyExistsException;
 import com.adMaroc.Tecdoc.Security.Exceptions.UsernameAlreadyExistsException;
+import com.adMaroc.Tecdoc.Security.Models.Config;
 import com.adMaroc.Tecdoc.Security.Models.Role;
 import com.adMaroc.Tecdoc.Security.Models.User;
+import com.adMaroc.Tecdoc.Security.Repository.ConfigurationRepository;
 import com.adMaroc.Tecdoc.Security.Repository.RoleRepository;
 import com.adMaroc.Tecdoc.Security.Repository.UserRepository;
 import com.adMaroc.Tecdoc.Security.Services.TotpManager;
@@ -48,6 +50,8 @@ public class AuthController {
     UserRepository userRepository;
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    ConfigurationRepository config;
 
     @Autowired private UserService userService;
     @Autowired private TotpManager totpManager;
@@ -72,5 +76,26 @@ public class AuthController {
         userService.updatePassword(request.getPassword(),request.getUsername());
             return ResponseEntity.ok(true);
     }
+    @PostMapping(value = "/init", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> createUser() {
+//        log.info("creating user {}", payload.getUsername());
 
+        User user = User
+                .builder()
+                .username("admin")
+                .email("admin@admin.com")
+                .password("password")
+                .build();
+        Config config1=Config.builder().name("number_of_login").numberValue((long)5).build();
+        User saved;
+        try {
+            config1=config.save(config1);
+            saved = userService.registerUser(user);
+        } catch (UsernameAlreadyExistsException | EmailAlreadyExistsException e) {
+            throw new BadRequestException(e.getMessage());
+        }
+
+        return ResponseEntity
+                .ok(true);
+    }
 }

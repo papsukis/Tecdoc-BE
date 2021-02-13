@@ -16,7 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="cv_secondary_types_535")
+@Table(name="t_535_cv_secondary_types")
 public class CVSecondaryTypes {
 
     @EmbeddedId
@@ -34,50 +34,7 @@ public class CVSecondaryTypes {
     @JoinColumn(name = "ntypnr",
                 referencedColumnName = "ntypnr")
     private CVTypes cvTypes;
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "cvSecondaryTypes")
-    private List<CVSecondaryTypesCountryRestrictions> cvSecondaryTypesCountryRestrictions;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "cvSecondaryTypes")
-    private List<CVWheelbase> cvWheelbases;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "cvSecondaryTypes")
-    private List<CVSuspension> cvSuspensions;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "cvSecondaryTypes")
-    private List<CVTyres> cvTyres;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "cvSecondaryTypes")
-    private List<CVChassis> cvChasses;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "cvSecondaryTypes")
-    private List<AllocationOfDriverCabsToCVs> driverCabsToCVs;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "cvSecondaryTypes")
-    private List<CVTypesVoltages> cvTypesVoltages;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "cvSecondaryTypes")
-    private List<CountryRestrictionsForTheAllocationOfCVToIDNumbers> countryRestrictionsForTheAllocationOfCVToIDNumbers;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "cvSecondaryTypes")
-    private List<AllocationOfCVToCVIDNumbers> allocationOfCVToCVIDNumbers;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "cvSecondaryTypes")
-    private List<CVTypesAndEngineAllocation> cvTypesAndEngineAllocations;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "cvSecondaryTypes")
-    private List<AllocationOfATransmissionToACV> transmissionToACVS;
+
 
     public CVSecondaryTypes(Map<String,String> datas) {
         this.id = id;
@@ -162,91 +119,5 @@ public class CVSecondaryTypes {
         this.cvTypes = cvTypes;
     }
 
-    public List<CVSecondaryTypesCountryRestrictions> getCvSecondaryTypesCountryRestrictions() {
-        return cvSecondaryTypesCountryRestrictions;
-    }
 
-    public void setCvSecondaryTypesCountryRestrictions(List<CVSecondaryTypesCountryRestrictions> cvSecondaryTypesCountryRestrictions) {
-        this.cvSecondaryTypesCountryRestrictions = cvSecondaryTypesCountryRestrictions;
-    }
-
-    public List<CVWheelbase> getCvWheelbases() {
-        return cvWheelbases;
-    }
-
-    public void setCvWheelbases(List<CVWheelbase> cvWheelbases) {
-        this.cvWheelbases = cvWheelbases;
-    }
-
-    public List<CVSuspension> getCvSuspensions() {
-        return cvSuspensions;
-    }
-
-    public void setCvSuspensions(List<CVSuspension> cvSuspensions) {
-        this.cvSuspensions = cvSuspensions;
-    }
-
-    public List<CVTyres> getCvTyres() {
-        return cvTyres;
-    }
-
-    public void setCvTyres(List<CVTyres> cvTyres) {
-        this.cvTyres = cvTyres;
-    }
-
-    public List<CVChassis> getCvChasses() {
-        return cvChasses;
-    }
-
-    public void setCvChasses(List<CVChassis> cvChasses) {
-        this.cvChasses = cvChasses;
-    }
-
-    public List<AllocationOfDriverCabsToCVs> getDriverCabsToCVs() {
-        return driverCabsToCVs;
-    }
-
-    public void setDriverCabsToCVs(List<AllocationOfDriverCabsToCVs> driverCabsToCVs) {
-        this.driverCabsToCVs = driverCabsToCVs;
-    }
-
-    public List<CVTypesVoltages> getCvTypesVoltages() {
-        return cvTypesVoltages;
-    }
-
-    public void setCvTypesVoltages(List<CVTypesVoltages> cvTypesVoltages) {
-        this.cvTypesVoltages = cvTypesVoltages;
-    }
-
-    public List<CountryRestrictionsForTheAllocationOfCVToIDNumbers> getCountryRestrictionsForTheAllocationOfCVToIDNumbers() {
-        return countryRestrictionsForTheAllocationOfCVToIDNumbers;
-    }
-
-    public void setCountryRestrictionsForTheAllocationOfCVToIDNumbers(List<CountryRestrictionsForTheAllocationOfCVToIDNumbers> countryRestrictionsForTheAllocationOfCVToIDNumbers) {
-        this.countryRestrictionsForTheAllocationOfCVToIDNumbers = countryRestrictionsForTheAllocationOfCVToIDNumbers;
-    }
-
-    public List<AllocationOfCVToCVIDNumbers> getAllocationOfCVToCVIDNumbers() {
-        return allocationOfCVToCVIDNumbers;
-    }
-
-    public void setAllocationOfCVToCVIDNumbers(List<AllocationOfCVToCVIDNumbers> allocationOfCVToCVIDNumbers) {
-        this.allocationOfCVToCVIDNumbers = allocationOfCVToCVIDNumbers;
-    }
-
-    public List<CVTypesAndEngineAllocation> getCvTypesAndEngineAllocations() {
-        return cvTypesAndEngineAllocations;
-    }
-
-    public void setCvTypesAndEngineAllocations(List<CVTypesAndEngineAllocation> cvTypesAndEngineAllocations) {
-        this.cvTypesAndEngineAllocations = cvTypesAndEngineAllocations;
-    }
-
-    public List<AllocationOfATransmissionToACV> getTransmissionToACVS() {
-        return transmissionToACVS;
-    }
-
-    public void setTransmissionToACVS(List<AllocationOfATransmissionToACV> transmissionToACVS) {
-        this.transmissionToACVS = transmissionToACVS;
-    }
 }

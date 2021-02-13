@@ -264,7 +264,6 @@ public class FtpClient {
         file.setFullPath(path);
         file.setFileName(fileName);
         file.setLines(ipList);
-        log.info("filename : " + fileName.substring(0,3));
         file.setTable(Integer.parseInt(fileName.substring(0,3)));
         return file;
     }

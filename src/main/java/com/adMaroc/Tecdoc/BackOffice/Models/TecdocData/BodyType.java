@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="body_type_145")
+@Table(name="t_145_body_type")
 public class BodyType {
 
     @EmbeddedId
@@ -24,12 +24,8 @@ public class BodyType {
     long sA;
     long sortNr;
     long loschFlag;
+    String lKZ;
 
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lKZ",
-                referencedColumnName = "lKZ")
-    private CountryTable countryTable;
     @MapsId("kTypNr")
     @ManyToOne
     @JoinColumn(name = "kTypNr",
@@ -37,13 +33,6 @@ public class BodyType {
     private VehicleTypes vehicleTypes;
 
 
-    public BodyType(Map<String,String> datas) {
-        this.id = new BodyTypeId(Integer.valueOf(datas.get("KTypNr")),datas.get("LKZ"),datas.get("Muster"));
-        this.dLNr = Integer.valueOf(datas.get("DLNr"));
-        this.sA = Integer.valueOf(datas.get("SA"));
-        this.sortNr = Integer.valueOf(datas.get("SortNr"));
-        this.loschFlag = 0;
-    }
 
     public BodyTypeId getId() {
         return id;
@@ -51,6 +40,14 @@ public class BodyType {
 
     public void setId(BodyTypeId id) {
         this.id = id;
+    }
+
+    public String getlKZ() {
+        return lKZ;
+    }
+
+    public void setlKZ(String lKZ) {
+        this.lKZ = lKZ;
     }
 
     public long getdLNr() {
@@ -85,13 +82,6 @@ public class BodyType {
         this.loschFlag = loschFlag;
     }
 
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
-    }
 
     public VehicleTypes getVehicleTypes() {
         return vehicleTypes;

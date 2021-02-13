@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="country_specific_article_data_212")
+@Table(name="t_212_country_specific_article_data")
 public class CountrySpecificArticleData {
 
     @EmbeddedId
@@ -28,26 +28,11 @@ public class CountrySpecificArticleData {
     long statusDat;
     long loschFlag;
 
-    @MapsId("KeyTablesEntriesId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "tabNr",
-                    referencedColumnName = "tabNr"),
-            @JoinColumn(
-                    name = "cle",
-                    referencedColumnName = "cle")})
-    private KeyTablesEntries keyTablesEntries;
     @MapsId("artNr")
     @ManyToOne
     @JoinColumn(name = "artNr",
                 referencedColumnName = "artNr")
     private ArticleTable articleTable;
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lKZ",
-                referencedColumnName = "lKZ")
-    private CountryTable countryTable;
 
 
 
@@ -126,13 +111,6 @@ public class CountrySpecificArticleData {
         this.loschFlag = loschFlag;
     }
 
-    public KeyTablesEntries getKeyTablesEntries() {
-        return keyTablesEntries;
-    }
-
-    public void setKeyTablesEntries(KeyTablesEntries keyTablesEntries) {
-        this.keyTablesEntries = keyTablesEntries;
-    }
 
     public ArticleTable getArticleTable() {
         return articleTable;
@@ -142,11 +120,4 @@ public class CountrySpecificArticleData {
         this.articleTable = articleTable;
     }
 
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
-    }
 }

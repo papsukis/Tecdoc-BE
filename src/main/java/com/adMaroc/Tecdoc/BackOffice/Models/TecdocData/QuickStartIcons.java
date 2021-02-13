@@ -14,7 +14,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="quick_start_icons_305")
+@Table(name="t_305_quick_start_icons")
 public class QuickStartIcons {
 
 
@@ -22,8 +22,9 @@ public class QuickStartIcons {
     long sA;
     @Id
     long qsId;
-    long bezNr;
+    String bezNr;
     String bildName;
+    long sprachNr;
 
     @MapsId("LanguageDescriptionsId")
     @ManyToOne
@@ -35,22 +36,7 @@ public class QuickStartIcons {
                     name = "sprachNr",
                     referencedColumnName = "sprachNr")})
     private LanguageDescriptions languageDescriptions;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "quickStartIcons")
-    private List<AllocationOfQuickStartIconsToProductAreas> allocationOfQuickStartIconsToProductAreas;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "quickStartIcons")
-    private List<TheAllocationOfQuickStartIconsToNodesLeavesWithinOneProductArea> allocationOfQuickStartIconsToNodesLeavesWithinOneProductAreas;
 
-    public QuickStartIcons(Map<String,String> datas) {
-        this.dLNr = dLNr;
-        this.sA = sA;
-        this.qsId = qsId;
-        this.bezNr = bezNr;
-        this.bildName = bildName;
-    }
 
     public long getdLNr() {
         return dLNr;
@@ -76,11 +62,11 @@ public class QuickStartIcons {
         this.qsId = qsId;
     }
 
-    public long getBezNr() {
+    public String getBezNr() {
         return bezNr;
     }
 
-    public void setBezNr(long bezNr) {
+    public void setBezNr(String bezNr) {
         this.bezNr = bezNr;
     }
 
@@ -100,19 +86,5 @@ public class QuickStartIcons {
         this.languageDescriptions = languageDescriptions;
     }
 
-    public List<AllocationOfQuickStartIconsToProductAreas> getAllocationOfQuickStartIconsToProductAreas() {
-        return allocationOfQuickStartIconsToProductAreas;
-    }
 
-    public void setAllocationOfQuickStartIconsToProductAreas(List<AllocationOfQuickStartIconsToProductAreas> allocationOfQuickStartIconsToProductAreas) {
-        this.allocationOfQuickStartIconsToProductAreas = allocationOfQuickStartIconsToProductAreas;
-    }
-
-    public List<TheAllocationOfQuickStartIconsToNodesLeavesWithinOneProductArea> getAllocationOfQuickStartIconsToNodesLeavesWithinOneProductAreas() {
-        return allocationOfQuickStartIconsToNodesLeavesWithinOneProductAreas;
-    }
-
-    public void setAllocationOfQuickStartIconsToNodesLeavesWithinOneProductAreas(List<TheAllocationOfQuickStartIconsToNodesLeavesWithinOneProductArea> allocationOfQuickStartIconsToNodesLeavesWithinOneProductAreas) {
-        this.allocationOfQuickStartIconsToNodesLeavesWithinOneProductAreas = allocationOfQuickStartIconsToNodesLeavesWithinOneProductAreas;
-    }
 }

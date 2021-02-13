@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="engine_number_allocation_to_vehicle_types_125")
+@Table(name="t_125_engine_number_allocation_to_vehicle_types")
 public class EngineNumberAllocationtoVehicleTypes {
 
 
@@ -38,23 +38,9 @@ public class EngineNumberAllocationtoVehicleTypes {
     @JoinColumn(name = "motNr",
                 referencedColumnName = "motNr")
     private Engines engines;
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lKZ",
-                referencedColumnName = "lKZ")
-    private CountryTable countryTable;
 
 
-    public EngineNumberAllocationtoVehicleTypes(Map<String,String> datas) {
-        this.id = new EngineNumberAllocationtoVehicleTypesId(Integer.valueOf(datas.get("KTypNr")),Integer.valueOf(datas.get("LfdNr")));
-        this.dLNr = Integer.valueOf(datas.get("DLNr"));
-        this.sA = Integer.valueOf(datas.get("SA"));
-        this.motNr = Integer.valueOf(datas.get("MotNr"));
-        this.bjvon = Integer.valueOf(datas.get("Bjvon"));
-        this.bjbis = Integer.valueOf(datas.get("Bjbis"));
-        this.lKZ=datas.get("LKZ");
-        this.exclude = Integer.valueOf(datas.get("Exclude"));
-    }
+
 
     public EngineNumberAllocationtoVehicleTypesId getId() {
         return id;
@@ -136,11 +122,4 @@ public class EngineNumberAllocationtoVehicleTypes {
         this.engines = engines;
     }
 
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
-    }
 }

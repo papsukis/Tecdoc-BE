@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="manufacturer_kba_reference_103")
+@Table(name="t_103_manufacturer_kba_reference")
 public class ManufacturerKBAReference {
 
     @EmbeddedId

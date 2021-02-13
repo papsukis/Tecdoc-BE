@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.util.Map;
@@ -15,7 +17,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="kba_type_allocation_121")
+@Table(name="t_121_kba_type_allocation")
 public class KBATypeAllocation {
 
     @EmbeddedId
@@ -29,32 +31,15 @@ public class KBATypeAllocation {
     String statTyp;
     long loschFlag;
 
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "tabNr",
-                    referencedColumnName = "tabNr"),
-            @JoinColumn(
-                    name = "cle",
-                    referencedColumnName = "cle")})
-    private KeyTablesEntries keyTableEntries;
+
     @MapsId("kTypNr")
+    @NotFound( action = NotFoundAction.IGNORE)
     @ManyToOne
     @JoinColumn(name = "kTypNr",
                 referencedColumnName = "kTypNr")
     private VehicleTypes vehicleTypes;
 
 
-    public KBATypeAllocation(Map<String,String> datas) {
-        this.id = new KBATypeAllocationId(datas.get("KBANr"),Integer.valueOf(datas.get("KTypNr")));
-        this.dLNr = Integer.valueOf(datas.get("DLNr"));
-        this.sA = Integer.valueOf(datas.get("SA"));
-        this.aufbauArt = Integer.valueOf(datas.get("AufbauArt"));
-        this.aBENr = datas.get("ABENr");
-        this.aBEvon = Integer.valueOf(datas.get("ABEvon"));
-        this.statHer = (datas.get("StatHer"));
-        this.statTyp = (datas.get("StatTyp"));
-    }
 
     public KBATypeAllocationId getId() {
         return id;
@@ -126,14 +111,6 @@ public class KBATypeAllocation {
 
     public void setLoschFlag(long loschFlag) {
         this.loschFlag = loschFlag;
-    }
-
-    public KeyTablesEntries getKeyTableEntries() {
-        return keyTableEntries;
-    }
-
-    public void setKeyTableEntries(KeyTablesEntries keyTableEntries) {
-        this.keyTableEntries = keyTableEntries;
     }
 
     public VehicleTypes getVehicleTypes() {

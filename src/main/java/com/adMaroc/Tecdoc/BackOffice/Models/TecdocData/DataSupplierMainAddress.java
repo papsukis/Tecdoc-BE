@@ -16,11 +16,11 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="data_supplier_main_address_040")
+@Table(name="t_040_data_supplier_main_address")
 public class DataSupplierMainAddress {
 
-@EmbeddedId
-DataSupplierMainAddressId id;
+    @EmbeddedId
+    DataSupplierMainAddressId id;
     long sA;
     String lKZ;
     String bez;

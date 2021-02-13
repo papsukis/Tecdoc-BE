@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="article_criteria_210")
+@Table(name="t_210_article_criteria")
 public class ArticleCriteria {
 
     @EmbeddedId
@@ -28,37 +28,20 @@ public class ArticleCriteria {
     long anzSofort;
     long exclude;
     long loschFlag;
+    @Column(name="dl_nr")
+    long dlnr;
+
     @MapsId("artNr")
     @ManyToOne
     @JoinColumn(name = "artNr",
                 referencedColumnName = "artNr")
     private ArticleTable articleTable;
-    @MapsId("genArtNr")
-    @ManyToOne
-    @JoinColumn(name = "genArtNr",
-                referencedColumnName = "genArtNr")
-    private GenericArticles genericArticles;
-    @MapsId("ProposedCriteriaId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "genArtNr",
-                    referencedColumnName = "genArtNr"),
-            @JoinColumn(
-                    name = "lfdNr",
-                    referencedColumnName = "lfdNr")})
-    private ProposedCriteria proposedCriteria;
-    @MapsId("lKZ")
-    @ManyToOne
-    @JoinColumn(name = "lKZ",
-                referencedColumnName = "lKZ")
-    private CountryTable countryTable;
     @MapsId("CriteriaId")
     @ManyToOne
     @JoinColumns({
             @JoinColumn(
-                    name = "dLNr",
-                    referencedColumnName = "dLNr"),
+                    name = "dl_nr",
+                    referencedColumnName = "dlnr"),
             @JoinColumn(
                     name = "kritNr",
                     referencedColumnName = "kritNr")})
@@ -98,6 +81,14 @@ public class ArticleCriteria {
 
     public void setdLNr(long dLNr) {
         this.dLNr = dLNr;
+    }
+
+    public long getDlnr() {
+        return dlnr;
+    }
+
+    public void setDlnr(long dlnr) {
+        this.dlnr = dlnr;
     }
 
     public long getsA() {
@@ -154,30 +145,6 @@ public class ArticleCriteria {
 
     public void setArticleTable(ArticleTable articleTable) {
         this.articleTable = articleTable;
-    }
-
-    public GenericArticles getGenericArticles() {
-        return genericArticles;
-    }
-
-    public void setGenericArticles(GenericArticles genericArticles) {
-        this.genericArticles = genericArticles;
-    }
-
-    public ProposedCriteria getProposedCriteria() {
-        return proposedCriteria;
-    }
-
-    public void setProposedCriteria(ProposedCriteria proposedCriteria) {
-        this.proposedCriteria = proposedCriteria;
-    }
-
-    public CountryTable getCountryTable() {
-        return countryTable;
-    }
-
-    public void setCountryTable(CountryTable countryTable) {
-        this.countryTable = countryTable;
     }
 
     public CriteriaTable getCriteriaTable() {

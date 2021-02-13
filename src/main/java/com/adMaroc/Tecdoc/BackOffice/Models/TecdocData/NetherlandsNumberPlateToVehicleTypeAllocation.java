@@ -16,19 +16,20 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="netherlands_number_plate_to_vehicle_type_allocation_127")
+@Table(name="t_127_netherlands_number_plate_to_vehicle_type_allocation")
 public class NetherlandsNumberPlateToVehicleTypeAllocation {
 
-@EmbeddedId
-NetherlandsNumberPlateToVehicleTypeAllocationId id;
+    @EmbeddedId
+    NetherlandsNumberPlateToVehicleTypeAllocationId id;
     long dLNr;
     long sA;
 
 
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "netherlandsNumberPlateToVehicleTypeAllocation")
-    private List<VehicleTypes> vehicleTypes;
+    @MapsId("kTypNr")
+    @ManyToOne
+    @JoinColumn( name = "kTypNr",
+            referencedColumnName = "kTypNr")
+    private VehicleTypes vehicleTypes;
 
 
     public NetherlandsNumberPlateToVehicleTypeAllocation(Map<String,String> datas) {
@@ -61,11 +62,5 @@ NetherlandsNumberPlateToVehicleTypeAllocationId id;
         this.sA = sA;
     }
 
-    public List<VehicleTypes> getVehicleTypes() {
-        return vehicleTypes;
-    }
 
-    public void setVehicleTypes(List<VehicleTypes> vehicleTypes) {
-        this.vehicleTypes = vehicleTypes;
-    }
 }

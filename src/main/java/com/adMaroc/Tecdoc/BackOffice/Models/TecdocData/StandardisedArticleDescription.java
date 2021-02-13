@@ -14,19 +14,16 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="standardised_article_description_323")
+@Table(name="t_323_standardised_article_description")
 public class StandardisedArticleDescription {
 
     @Id
-    long nartNr;
+    String nartNr;
     long dLNr;
     long sA;
-    long bezNr;
+    String bezNr;
+    long sprachNr;
 
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "standardisedArticleDescription")
-    private List<GenericArticles> genericArticles;
     @MapsId("LanguageDescriptionsId")
     @ManyToOne
     @JoinColumns({
@@ -39,20 +36,6 @@ public class StandardisedArticleDescription {
     private LanguageDescriptions languageDescriptions;
 
 
-    public StandardisedArticleDescription(Map<String,String> datas) {
-        this.nartNr = nartNr;
-        this.dLNr = dLNr;
-        this.sA = sA;
-        this.bezNr = bezNr;
-    }
-
-    public long getNartNr() {
-        return nartNr;
-    }
-
-    public void setNartNr(long nartNr) {
-        this.nartNr = nartNr;
-    }
 
     public long getdLNr() {
         return dLNr;
@@ -70,21 +53,14 @@ public class StandardisedArticleDescription {
         this.sA = sA;
     }
 
-    public long getBezNr() {
+    public String getBezNr() {
         return bezNr;
     }
 
-    public void setBezNr(long bezNr) {
+    public void setBezNr(String bezNr) {
         this.bezNr = bezNr;
     }
 
-    public List<GenericArticles> getGenericArticles() {
-        return genericArticles;
-    }
-
-    public void setGenericArticles(List<GenericArticles> genericArticles) {
-        this.genericArticles = genericArticles;
-    }
 
     public LanguageDescriptions getLanguageDescriptions() {
         return languageDescriptions;

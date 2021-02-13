@@ -39,7 +39,7 @@
       "name" : "bezNr",
       "pos" : 29,
       "length" : 9,
-      "type" : "N",
+      "type" : "C",
       "description" : "Description Number "},
     {
       "name" : "bez",

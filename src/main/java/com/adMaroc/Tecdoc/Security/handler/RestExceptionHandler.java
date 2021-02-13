@@ -40,6 +40,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
     }
+
     @ExceptionHandler(value = AlreadyLoggedException.class)
     public ResponseEntity<Object> handleAlreadyLogged(
             AlreadyLoggedException ex) {

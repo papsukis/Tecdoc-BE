@@ -15,7 +15,7 @@ import java.util.Map;
 @Builder
 @Entity
 
-@Table(name="header_001")
+@Table(name="t_001_header")
 public class Header {
 
     @Id
@@ -30,26 +30,8 @@ public class Header {
     private long vorversion;
     private String format;
     private long loschFlag;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "header")
-    private List<Manufacturer> manufacturer;
 
 
-    public Header(Map<String,String> datas) {
-        this.dLNr = dLNr;
-        this.sA = sA;
-        this.dataRelease = dataRelease;
-        this.datum = datum;
-        this.kZVoll = kZVoll;
-        this.hernr = hernr;
-        this.marke = marke;
-        this.referenzdaten = referenzdaten;
-        this.vorversion = vorversion;
-        this.format = format;
-        this.loschFlag = loschFlag;
-    }
 
     public long getdLNr() {
         return dLNr;
@@ -139,11 +121,5 @@ public class Header {
         this.loschFlag = loschFlag;
     }
 
-    public List<Manufacturer> getManufacturer() {
-        return manufacturer;
-    }
 
-    public void setManufacturer(List<Manufacturer> manufacturer) {
-        this.manufacturer = manufacturer;
-    }
 }

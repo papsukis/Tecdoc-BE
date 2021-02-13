@@ -1,5 +1,7 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
@@ -8,7 +10,7 @@ import java.util.Objects;
 @Embeddable
 public class KeyTablesEntriesId implements Serializable {
 
-    @Column(name="tabnr")
+    @Column(name="tabNr")
     long tabNr;
     @Column(name ="cle",nullable = false)
     String key;
@@ -21,16 +23,16 @@ public class KeyTablesEntriesId implements Serializable {
         this.key = key;
     }
 
+    public long getTabNr() {
+        return tabNr;
+    }
+
     public void setTabNr(long tabNr) {
         this.tabNr = tabNr;
     }
 
     public void setKey(String key) {
         this.key = key;
-    }
-
-    public long getTabNr() {
-        return tabNr;
     }
 
     public String getKey() {

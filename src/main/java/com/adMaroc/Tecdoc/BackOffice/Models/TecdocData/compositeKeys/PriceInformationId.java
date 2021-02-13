@@ -1,19 +1,22 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Index;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Data
 @Embeddable
 public class PriceInformationId implements Serializable{
 
-    @Column(name="artnr",length = 100 )
+    @Column(name="artNr",length = 100 )
     String artNr;
     @Column(name="prart",length = 100)
     long prArt;
-    @Column(name="lkz",length = 100)
+    @Column(name="lKZ",length = 100)
     String lKZ;
     @Column(name="wkz",length = 100)
     String wKZ;

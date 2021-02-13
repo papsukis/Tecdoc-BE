@@ -16,7 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="graphics_documents_231")
+@Table(name="t_231_graphics_documents")
 public class GraphicsDocuments {
 
     @EmbeddedId
@@ -33,16 +33,7 @@ public class GraphicsDocuments {
     long loschFlag;
     String url;
 
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "graphicsDocuments")
-    private List<DataSupplierLogos> dataSupplierLogos;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "graphicsDocuments")
-    private List<AllocationOfPartsListCoordinatesToContextSensitiveGraphics >allocationOfPartsListCoordinatesToContextSensitiveGraphics;
+
     @MapsId("sprachNr")
     @ManyToOne
     @JoinColumn(name = "sprachNr",
@@ -63,30 +54,7 @@ public class GraphicsDocuments {
     @JoinColumn(name = "dokumentenArt",
                 referencedColumnName = "dokumentenArt")
     private DocumentTypes documentTypes;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "graphicsDocuments")
-    private List<AllocationOfGraphicsToArticleNumbers> allocationOfGraphicsToArticleNumbers;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "graphicsDocuments")
-    private List<ContextSensitiveGraphics> contextSensitiveGraphics;
-    @OneToMany(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "graphicsDocuments")
-    private List<LinkageDependentGraphicsDocuments> linkageDependentGraphicsDocuments;
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "tabNr",
-                    referencedColumnName = "tabNr"),
-            @JoinColumn(
-                    name = "cle",
-                    referencedColumnName = "cle")})
-    private KeyTablesEntries keyTablesEntries;
+
 
     public GraphicsDocuments(Map<String,String> datas) {
         this.id = id;
@@ -198,22 +166,6 @@ public class GraphicsDocuments {
         this.url = url;
     }
 
-    public List<DataSupplierLogos> getDataSupplierLogos() {
-        return dataSupplierLogos;
-    }
-
-    public void setDataSupplierLogos(List<DataSupplierLogos> dataSupplierLogos) {
-        this.dataSupplierLogos = dataSupplierLogos;
-    }
-
-    public List<AllocationOfPartsListCoordinatesToContextSensitiveGraphics> getAllocationOfPartsListCoordinatesToContextSensitiveGraphics() {
-        return allocationOfPartsListCoordinatesToContextSensitiveGraphics;
-    }
-
-    public void setAllocationOfPartsListCoordinatesToContextSensitiveGraphics(List<AllocationOfPartsListCoordinatesToContextSensitiveGraphics> allocationOfPartsListCoordinatesToContextSensitiveGraphics) {
-        this.allocationOfPartsListCoordinatesToContextSensitiveGraphics = allocationOfPartsListCoordinatesToContextSensitiveGraphics;
-    }
-
     public Language getLanguage() {
         return language;
     }
@@ -236,37 +188,5 @@ public class GraphicsDocuments {
 
     public void setDocumentTypes(DocumentTypes documentTypes) {
         this.documentTypes = documentTypes;
-    }
-
-    public List<AllocationOfGraphicsToArticleNumbers> getAllocationOfGraphicsToArticleNumbers() {
-        return allocationOfGraphicsToArticleNumbers;
-    }
-
-    public void setAllocationOfGraphicsToArticleNumbers(List<AllocationOfGraphicsToArticleNumbers> allocationOfGraphicsToArticleNumbers) {
-        this.allocationOfGraphicsToArticleNumbers = allocationOfGraphicsToArticleNumbers;
-    }
-
-    public List<ContextSensitiveGraphics> getContextSensitiveGraphics() {
-        return contextSensitiveGraphics;
-    }
-
-    public void setContextSensitiveGraphics(List<ContextSensitiveGraphics> contextSensitiveGraphics) {
-        this.contextSensitiveGraphics = contextSensitiveGraphics;
-    }
-
-    public List<LinkageDependentGraphicsDocuments> getLinkageDependentGraphicsDocuments() {
-        return linkageDependentGraphicsDocuments;
-    }
-
-    public void setLinkageDependentGraphicsDocuments(List<LinkageDependentGraphicsDocuments> linkageDependentGraphicsDocuments) {
-        this.linkageDependentGraphicsDocuments = linkageDependentGraphicsDocuments;
-    }
-
-    public KeyTablesEntries getKeyTablesEntries() {
-        return keyTablesEntries;
-    }
-
-    public void setKeyTablesEntries(KeyTablesEntries keyTablesEntries) {
-        this.keyTablesEntries = keyTablesEntries;
     }
 }

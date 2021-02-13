@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="the_allocation_of_qs_icons_to_nodes_within_one_product_area_307")
+@Table(name="t_307_allocation_of_qs_icons_to_nodes_within_one_product_area")
 public class TheAllocationOfQuickStartIconsToNodesLeavesWithinOneProductArea {
 
     @EmbeddedId

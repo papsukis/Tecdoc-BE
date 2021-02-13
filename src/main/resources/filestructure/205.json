@@ -33,7 +33,7 @@
       "name": "partGenArtNr",
       "pos": 29,
       "length": 5,
-      "type": "(C)",
+      "type": "N",
       "description": "Unambiguous number of the Part-Generic Article"
     },
     {

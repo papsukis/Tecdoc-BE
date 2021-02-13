@@ -1,20 +1,23 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Data
 @Embeddable
 public class AllocationOfPartsListCoordinatesToContextSensitiveGraphicsId implements Serializable {
 
     @Column(name="artnr")
     String artNr;
-    @Column(name="lfdnr")
+    @Column(name="lfdNr")
     long lfdNr;
     @Column(name="bildnr")
     long bildNr;
-    @Column(name="dokementenArt")
+    @Column(name="dokumentenArt")
     long dokumentenArt;
     @Column(name="sprachNr")
     long sprachNr;

@@ -13,7 +13,10 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -94,32 +97,59 @@ public class FtpService {
     public FileDto UnCompressFiles(UnCompressAndSaveRequest list) throws IOException {
             FileDto files= new FileDto();
             List<String> f = new ArrayList<>();
-            ftp.uncompressFile(list.getFileName(),list.getFullPath());
+            List<Integer> fi = new ArrayList<>();
             String folderName = ftp.splitFileName(list.getFileName());
+
+            ftp.uncompressFile(list.getFileName(),list.getFullPath());
+
             files.setPath(folderName);
             f=ftp.listFiles(list.getFullPath()+ folderName);
-            for(int i = 0 ;i<f.size();i++){
-                if(f.get(i).contains(".csv"))
-                f.remove(i);
-            }
+
+            f=f.stream()
+                    .filter(file -> !file.contains("115") && (file.contains(folderName) || file.contains(".dat")))
+                    .collect(Collectors.toList());
+            f=sortListByList(f);
+            log.info(f.toString());
             files.setFiles(f);
-//      System.out.println(jsonReader.readFile("filestructure/1.json").toString());
         return files;
     }
 
+    public List<String> sortListByList(List<String> listToSort) throws IOException {
+        List<String> listWithOrder=jsonReader.readFileOrder();
+        List<String> tmp = new ArrayList<>();
+
+        for(String order : listWithOrder){
+            for(String unordered : listToSort){
+                if(unordered.startsWith(order))
+                    tmp.add(unordered);
+            }
+        }
+
+        return tmp;
+
+    }
     public FtpFile getData(String path , String folderName) throws IOException {
         return ftp.getData(path,folderName);
     }
 
-    public void createEntities(FtpFile file) throws Exception {
-        List<Object> entities = new ArrayList<>();
-        for(String line : file.getLines()){
-            entities.add(converter.instantiate(
-                    jsonReader.readFile(String.valueOf(file.getTable())),line
-            ));
-        }
+    public EntityWrapper createEntities(FtpFile file) throws Exception {
+        String table =String.valueOf(file.getTable());
+        EntityWrapper wrapper= new EntityWrapper();
+         wrapper.setEntities(file.getLines().stream()
+                .map(line ->
+                {
+                    try {
+                        return converter.instantiate(
+                                 jsonReader.readFile(table),
+                                 line);
+                    } catch (Exception e) {
+                        throw new InternalServerException(e.getMessage());
+                    }
 
+                }).collect(Collectors.toList()));
 
+        wrapper.setTableNumber(file.getTable());
+        return wrapper;
     }
 
 }

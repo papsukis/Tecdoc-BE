@@ -33,28 +33,28 @@
       "name": "nartNr",
       "pos": 12,
       "length": 5,
-      "type": "N",
+      "type": "C",
       "description": "Unambiguous number of the standardised article description (->323))"
     },
     {
       "name": "bgNr",
       "pos": 17,
       "length": 4,
-      "type": "(N)",
+      "type": "(C)",
       "description": "Unambiguous number of the assembly group(->324)"
     },
     {
       "name": "verWNr",
       "pos": 21,
       "length": 4,
-      "type": "(N)",
+      "type": "(C)",
       "description": "Unambiguous number of the usage (->325)"
     },
     {
       "name": "bezNr",
       "pos": 25,
       "length": 9,
-      "type": "N",
+      "type": "C",
       "description": "Description number (->30) for descruotuib if the genArt"
     },
     {

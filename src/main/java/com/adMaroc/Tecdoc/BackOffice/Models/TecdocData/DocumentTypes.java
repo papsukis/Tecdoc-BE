@@ -14,20 +14,25 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="document_types_014")
+@Table(name="t_014_document_types")
 public class DocumentTypes {
     @Id
     long dokumentenArt;
     long dLNr;
     long sA;
     //Description Number (->030)
-    long bezNr;
+    String bezNr;
     String extension;
+    @Column(nullable = true)
+    long sprachNr;
+    @Column(nullable = true)
+    String artNr;
+    @Column(nullable = true)
+    long bildNr;
+    @Column(nullable = true)
+    long lfdNr;
 
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "documentTypes")
-    private List<DataSupplierLogos >dataSupplierLogos;
+
     @MapsId("LanguageDescriptionsId")
     @ManyToOne
     @JoinColumns({
@@ -43,7 +48,7 @@ public class DocumentTypes {
     @JoinColumns({
             @JoinColumn(
                     name = "artNr",
-                    referencedColumnName = "artNr"),
+                    referencedColumnName = "artNr",nullable = true),
             @JoinColumn(
                     name = "lfdNr",
                     referencedColumnName = "lfdNr"),
@@ -51,38 +56,15 @@ public class DocumentTypes {
                     name = "bildNr",
                     referencedColumnName = "bildNr"),
             @JoinColumn(
-                    name = "dokementenArt",
-                    referencedColumnName = "dokementenArt"),
+                    name = "dokumentenArt",
+                    referencedColumnName = "dokumentenArt"),
             @JoinColumn(
                     name = "sprachNr",
                     referencedColumnName = "sprachNr")})
     private AllocationOfPartsListCoordinatesToContextSensitiveGraphics allocationOfPartsListCoordinatesToContextSensitiveGraphics;
-    @OneToMany(fetch=FetchType.LAZY,
-               cascade=CascadeType.ALL,
-               mappedBy = "documentTypes")
-    private List<LinkageDependentGraphicsDocuments >linkageDependentGraphicsDocuments;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "documentTypes")
-    private List<GraphicsDocuments >graphicsDocuments;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "documentTypes")
-    private List<ContextSensitiveGraphics >contextSensitiveGraphics;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "documentTypes")
-    private List<AllocationOfGraphicsToArticleNumbers >allocationOfGraphicsToArticleNumbers;
 
 
 
-    public DocumentTypes(Map<String,String> datas) {
-        this.dokumentenArt = Integer.valueOf(datas.get("DokumentenArt"));
-        this.dLNr = Integer.valueOf(datas.get("DLNr"));
-        this.sA = Integer.valueOf(datas.get("SA"));
-        this.bezNr = Integer.valueOf(datas.get("BezNr"));
-        this.extension = datas.get("Extension");
-    }
 
     public long getDokumentenArt() {
         return dokumentenArt;
@@ -108,11 +90,11 @@ public class DocumentTypes {
         this.sA = sA;
     }
 
-    public long getBezNr() {
+    public String getBezNr() {
         return bezNr;
     }
 
-    public void setBezNr(long bezNr) {
+    public void setBezNr(String bezNr) {
         this.bezNr = bezNr;
     }
 
@@ -124,13 +106,7 @@ public class DocumentTypes {
         this.extension = extension;
     }
 
-    public List<DataSupplierLogos> getDataSupplierLogos() {
-        return dataSupplierLogos;
-    }
 
-    public void setDataSupplierLogos(List<DataSupplierLogos> dataSupplierLogos) {
-        this.dataSupplierLogos = dataSupplierLogos;
-    }
 
     public LanguageDescriptions getLanguageDescriptions() {
         return languageDescriptions;
@@ -148,35 +124,5 @@ public class DocumentTypes {
         this.allocationOfPartsListCoordinatesToContextSensitiveGraphics = allocationOfPartsListCoordinatesToContextSensitiveGraphics;
     }
 
-    public List<LinkageDependentGraphicsDocuments> getLinkageDependentGraphicsDocuments() {
-        return linkageDependentGraphicsDocuments;
-    }
 
-    public void setLinkageDependentGraphicsDocuments(List<LinkageDependentGraphicsDocuments> linkageDependentGraphicsDocuments) {
-        this.linkageDependentGraphicsDocuments = linkageDependentGraphicsDocuments;
-    }
-
-    public List<GraphicsDocuments> getGraphicsDocuments() {
-        return graphicsDocuments;
-    }
-
-    public void setGraphicsDocuments(List<GraphicsDocuments> graphicsDocuments) {
-        this.graphicsDocuments = graphicsDocuments;
-    }
-
-    public List<ContextSensitiveGraphics> getContextSensitiveGraphics() {
-        return contextSensitiveGraphics;
-    }
-
-    public void setContextSensitiveGraphics(List<ContextSensitiveGraphics> contextSensitiveGraphics) {
-        this.contextSensitiveGraphics = contextSensitiveGraphics;
-    }
-
-    public List<AllocationOfGraphicsToArticleNumbers> getAllocationOfGraphicsToArticleNumbers() {
-        return allocationOfGraphicsToArticleNumbers;
-    }
-
-    public void setAllocationOfGraphicsToArticleNumbers(List<AllocationOfGraphicsToArticleNumbers> allocationOfGraphicsToArticleNumbers) {
-        this.allocationOfGraphicsToArticleNumbers = allocationOfGraphicsToArticleNumbers;
-    }
 }

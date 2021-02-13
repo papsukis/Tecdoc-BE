@@ -34,7 +34,7 @@
       "description" : "KBA Manufacturer Code"},
     {
       "name" : "herNr",
-      "pos" : 7,
+      "pos" : 33,
       "length" : 6,
       "type" : "N",
       "description" : "Manufacturer Number"}

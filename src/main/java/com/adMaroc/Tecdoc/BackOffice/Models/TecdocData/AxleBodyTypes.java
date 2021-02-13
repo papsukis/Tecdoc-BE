@@ -15,7 +15,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="axle_body_types_161")
+@Table(name="t_161_axle_body_types")
 public class AxleBodyTypes {
 
     @EmbeddedId
