@@ -132,6 +132,14 @@ public class ArticleTable {
         this.loschFlag = loschFlag;
     }
 
+    public long getSprachNr() {
+        return sprachNr;
+    }
+
+    public void setSprachNr(long sprachNr) {
+        this.sprachNr = sprachNr;
+    }
+
     public LanguageDescriptions getLanguageDescriptions() {
         return languageDescriptions;
     }

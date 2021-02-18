@@ -13,5 +13,7 @@ public class EntityWrapper {
 
     List<Object> entities;
     int tableNumber;
+    FileStructure fileStructure;
+    String fileName;
 
 }

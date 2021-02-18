@@ -39,32 +39,16 @@ public class FtpController {
     public ResponseEntity<?> unCompressAndSave(@RequestBody UnCompressAndSaveRequest req) throws Exception {
         return ResponseEntity.ok(ftp.UnCompressFiles(req));
     }
-    @PostMapping("/saveFiles")
-    public ResponseEntity<?> saveFiles(@RequestBody FileToGetDataDTO fileDto) throws IOException {
-        try {
-            tecdocDataService.save(ftp.createEntities(ftp.getData(fileDto.getFullpath()+"/"+fileDto.getFileName(),fileDto.getFileName())));
-            } catch (Exception e) {
-             throw new InternalServerException(e.getMessage());
-            }
-        return ResponseEntity.ok(true);
-//
-//        return ResponseEntity.ok(
-//                unorderedFiles.stream()
-//                                        .map(file-> {
-//
-//                                        }).map(
-//                                                entity->{
-//                                                    try {
-//                                                        return (entity);
-//                                                    } catch (IOException e) {
-//                                                        throw new InternalServerException(e.getMessage());
-//                                                    } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-//                                                        throw new InternalServerException(e.getMessage());
-//                                                    }
-//                                                }
-//                ).collect(Collectors.toList()));
+    @PostMapping("/getData")
+    public ResponseEntity<?> getData(@RequestBody FileToGetDataDTO fileDto) throws IOException {
+        return ResponseEntity.ok(ftp.getData(fileDto.getFullpath()+"/"+fileDto.getFileName(),fileDto.getFileName()));
+
     }
-    @PostMapping("updateDirectory")
+    @PostMapping("/saveLines")
+    public ResponseEntity<?> saveLines( @RequestBody LinesToSave lines) throws Exception {
+        return ResponseEntity.ok(tecdocDataService.save(ftp.createEntities(lines)));
+    }
+    @PostMapping("/updateDirectory")
     public ResponseEntity<?> updateDirectory() throws IOException {
         return ResponseEntity.ok(ftp.updateDirectory());
     }

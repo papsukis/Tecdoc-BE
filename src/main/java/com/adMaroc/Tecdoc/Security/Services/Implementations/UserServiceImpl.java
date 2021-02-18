@@ -43,7 +43,6 @@ public class UserServiceImpl implements UserService {
                 .authenticate(new UsernamePasswordAuthenticationToken(username, password));
 
         User user = userRepository.findByUsername(username).get();
-        log.info("login");
         return user;
     }
     @Override
@@ -134,18 +133,15 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public List<User> findAll() {
-        log.info("retrieving all users");
         return userRepository.findAll();
     }
 
     @Override
     public Optional<User> findByUsername(String username) {
-        log.info("retrieving user {}", username);
         return userRepository.findByUsername(username);
     }
     @Override
     public Optional<User> findById(Long id) {
-        log.info("retrieving user {}", id);
         return userRepository.findById(id);
     }
 }

@@ -28,8 +28,7 @@ public class LinkageAttributes {
     String lKZ;
     long exclude;
     long loschFlag;
-    @Column(name = "dl_nr")
-    long dlnr;
+
     @MapsId("artNr")
     @ManyToOne
     @JoinColumn(name = "artNr",
@@ -40,17 +39,7 @@ public class LinkageAttributes {
     @JoinColumn(name = "genArtNr",
             referencedColumnName = "genArtNr")
     private GenericArticles genericArticles;
-    @MapsId("CriteriaId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "dl_nr",
-                    referencedColumnName = "dLNr"),
-            @JoinColumn(
-                    name = "kritNr",
-                    referencedColumnName = "kritNr")
-    })
-    private CriteriaTable criteriaTable;
+
 
     public LinkageAttributes(Map<String,String> datas) {
         this.id = id;
@@ -152,19 +141,4 @@ public class LinkageAttributes {
         this.genericArticles = genericArticles;
     }
 
-    public long getDlnr() {
-        return dlnr;
-    }
-
-    public void setDlnr(long dlnr) {
-        this.dlnr = dlnr;
-    }
-
-    public CriteriaTable getCriteriaTable() {
-        return criteriaTable;
-    }
-
-    public void setCriteriaTable(CriteriaTable criteriaTable) {
-        this.criteriaTable = criteriaTable;
-    }
 }

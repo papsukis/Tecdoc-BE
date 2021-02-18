@@ -27,18 +27,8 @@ public class AccessoryListsCriteria {
     String kritWert;
     long exclude;
     long loschFlag;
-
-    @MapsId("CountryAndLanguageDependentDescriptionsId")
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "lbezNr",
-                    referencedColumnName = "lbezNr"),
-            @JoinColumn(
-                    name = "sprachNr",
-                    referencedColumnName = "sprachNr")
-    })
-    private CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions;
+    @Column(name="dl_nr")
+    long dlnr;
     @MapsId("AccessoryListsId")
     @ManyToOne
     @JoinColumns({
@@ -46,10 +36,10 @@ public class AccessoryListsCriteria {
                     name = "artnr",
                     referencedColumnName = "artNr"),
             @JoinColumn(
-                    name = "lfdnr",
+                    name = "lfdnr1",
                     referencedColumnName = "lfdNr"),
             @JoinColumn(
-                    name = "sortnr",
+                    name = "sortnr1",
                     referencedColumnName = "sortNr")
     })
     private AccessoryLists accessoryLists;
@@ -57,8 +47,8 @@ public class AccessoryListsCriteria {
     @ManyToOne
     @JoinColumns({
             @JoinColumn(
-                    name = "dLNr",
-                    referencedColumnName = "dLNr"),
+                    name = "dl_nr",
+                    referencedColumnName = "dlnr"),
             @JoinColumn(
                     name = "kritNr",
                     referencedColumnName = "kritNr")
@@ -105,6 +95,14 @@ public class AccessoryListsCriteria {
         return lKZ;
     }
 
+    public long getDlnr() {
+        return dlnr;
+    }
+
+    public void setDlnr(long dlnr) {
+        this.dlnr = dlnr;
+    }
+
     public void setlKZ(String lKZ) {
         this.lKZ = lKZ;
     }
@@ -139,14 +137,6 @@ public class AccessoryListsCriteria {
 
     public void setLoschFlag(long loschFlag) {
         this.loschFlag = loschFlag;
-    }
-
-    public CountryAndLanguageDependentDescriptions getCountryAndLanguageDependentDescriptions() {
-        return countryAndLanguageDependentDescriptions;
-    }
-
-    public void setCountryAndLanguageDependentDescriptions(CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions) {
-        this.countryAndLanguageDependentDescriptions = countryAndLanguageDependentDescriptions;
     }
 
     public AccessoryLists getAccessoryLists() {

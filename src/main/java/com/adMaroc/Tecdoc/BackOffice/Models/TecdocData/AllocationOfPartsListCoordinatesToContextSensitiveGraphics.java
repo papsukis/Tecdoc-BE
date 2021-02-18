@@ -25,7 +25,6 @@ public class AllocationOfPartsListCoordinatesToContextSensitiveGraphics {
     long sA;
     long koordinatenNr;
     long loschFlag;
-
     @MapsId("artNr")
     @ManyToOne
     @JoinColumn(name = "artNr",
@@ -135,11 +134,4 @@ public class AllocationOfPartsListCoordinatesToContextSensitiveGraphics {
         this.language = language;
     }
 
-    public GraphicsDocuments getGraphicsDocuments() {
-        return graphicsDocuments;
-    }
-
-    public void setGraphicsDocuments(GraphicsDocuments graphicsDocuments) {
-        this.graphicsDocuments = graphicsDocuments;
-    }
 }

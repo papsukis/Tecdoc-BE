@@ -42,10 +42,12 @@ public class Converter {
         // Load the class.
         Class<?> clazz = Class.forName("com.adMaroc.Tecdoc.BackOffice.Models.TecdocData."+fileStructure.getClassName());
         Object id=null;
-        if(getPrimaryKeys(fileStructure).size()>1) {
+        Object obj = clazz.newInstance();
+        if(line.length()>=fileStructure.getLength())
+       { if(getPrimaryKeys(fileStructure).size()>1) {
             id = (Class.forName("com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys." + fileStructure.getClassName() + "Id")).newInstance();
         }
-        Object obj = clazz.newInstance();
+
         for(Attributs at : fileStructure.getAttr()){
             if(isPrimaryKey(getPrimaryKeys(fileStructure),at.getName()) && getPrimaryKeys(fileStructure).size()>1){
                 PropertyUtils.setProperty(id,at.getName(),convert(at.getType(),line.substring(at.getPos(),at.getPos()+at.getLength()),at.getName()));
@@ -55,6 +57,9 @@ public class Converter {
             PropertyUtils.setProperty(obj, at.getName(), convert(at.getType(),line.substring(at.getPos(),at.getPos()+at.getLength()),at.getName()));
             }
         }
+       }
+        else
+            return null;
 //        log.info(obj.toString());
         return obj;
     }

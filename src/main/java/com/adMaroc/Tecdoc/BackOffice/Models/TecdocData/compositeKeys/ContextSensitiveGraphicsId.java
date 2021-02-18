@@ -14,18 +14,18 @@ public class ContextSensitiveGraphicsId implements Serializable {
     long bildNr;
     @Column(name="dokumentenart")
     long dokumentenArt;
-    @Column(name="koordlongennr")
-    long koordlongenNr;
+    @Column(name="koordintenNr")
+    long koordintenNr;
     @Column(name="lfdnr")
     long lfdNr;
 
     public ContextSensitiveGraphicsId() {
     }
 
-    public ContextSensitiveGraphicsId(long bildNr, long dokumentenArt, long koordlongenNr, long lfdNr) {
+    public ContextSensitiveGraphicsId(long bildNr, long dokumentenArt, long koordintenNr, long lfdNr) {
         this.bildNr = bildNr;
         this.dokumentenArt = dokumentenArt;
-        this.koordlongenNr = koordlongenNr;
+        this.koordintenNr = koordintenNr;
         this.lfdNr = lfdNr;
     }
 
@@ -37,8 +37,12 @@ public class ContextSensitiveGraphicsId implements Serializable {
         this.dokumentenArt = dokumentenArt;
     }
 
-    public void setKoordlongenNr(long koordlongenNr) {
-        this.koordlongenNr = koordlongenNr;
+    public long getKoordintenNr() {
+        return koordintenNr;
+    }
+
+    public void setKoordintenNr(long koordintenNr) {
+        this.koordintenNr = koordintenNr;
     }
 
     public void setLfdNr(long lfdNr) {
@@ -53,9 +57,6 @@ public class ContextSensitiveGraphicsId implements Serializable {
         return dokumentenArt;
     }
 
-    public long getKoordlongenNr() {
-        return koordlongenNr;
-    }
 
     public long getLfdNr() {
         return lfdNr;
@@ -68,13 +69,13 @@ public class ContextSensitiveGraphicsId implements Serializable {
         ContextSensitiveGraphicsId that = (ContextSensitiveGraphicsId) o;
         return getBildNr() == that.getBildNr() &&
                 getDokumentenArt() == that.getDokumentenArt() &&
-                getKoordlongenNr() == that.getKoordlongenNr() &&
+                getKoordintenNr() == that.getKoordintenNr() &&
                 getLfdNr() == that.getLfdNr();
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(getBildNr(), getDokumentenArt(), getKoordlongenNr(), getLfdNr());
+        return Objects.hash(getBildNr(), getDokumentenArt(), getKoordintenNr(), getLfdNr());
     }
 }

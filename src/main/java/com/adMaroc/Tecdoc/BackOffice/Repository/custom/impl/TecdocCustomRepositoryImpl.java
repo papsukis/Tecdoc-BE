@@ -1,6 +1,7 @@
 package com.adMaroc.Tecdoc.BackOffice.Repository.custom.impl;
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.*;
+import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.AccessoryListsId;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.QCountryAndLanguageDependentDescriptionsId;
 import com.adMaroc.Tecdoc.BackOffice.Repository.custom.TecdocCustomRepository;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -41,17 +42,27 @@ public class TecdocCustomRepositoryImpl implements TecdocCustomRepository {
 
     }
     @Override
-    public TextModules findTextModulesByTBSNr(String tBSNr){
+    public List<TextModules> findTextModulesByTBSNr(String tBSNr){
         JPAQueryFactory query = new JPAQueryFactory(em);
 
         QTextModules textModules=QTextModules.textModules;
 
-        JPAQuery<TextModules> jpaQuery=query.selectFrom(textModules).where(textModules.id.tBSNr.eq(tBSNr).and(textModules.id.sprachNr.eq((long) 6)));
+        JPAQuery<TextModules> jpaQuery=query.selectFrom(textModules).where(textModules.id.tBSNr.eq(tBSNr));
+
+        return jpaQuery.fetch();
+
+    }
+    @Override
+    public TextModules findTextModulesByTBSNrandSprachNr(String tBSNr){
+        JPAQueryFactory query = new JPAQueryFactory(em);
+
+        QTextModules textModules=QTextModules.textModules;
+
+        JPAQuery<TextModules> jpaQuery=query.selectFrom(textModules).where(textModules.id.tBSNr.eq(tBSNr).and(textModules.id.sprachNr.eq((long)6)));
 
         return jpaQuery.fetchFirst();
 
     }
-
     @Override
     public TecdocSearchStructure findTecdocSearchStructureByNodeId(long nodeId){
         JPAQueryFactory query = new JPAQueryFactory(em);
@@ -149,18 +160,39 @@ public class TecdocCustomRepositoryImpl implements TecdocCustomRepository {
 
         return jpaQuery.fetch();
     }
-//    @Override
-//    public GraphicsDocuments findGraphicDocumentsByBildNrAndDokumentenArtAnd(long bildNr, long dokumentenArt){
-//        JPAQueryFactory query = new JPAQueryFactory(em);
-//        QGraphicsDocuments graphicsDocuments=QGraphicsDocuments.graphicsDocuments;
-//
-//        JPAQuery<GraphicsDocuments> jpaQuery=query
-//                .selectFrom(graphicsDocuments)
-//                .where(graphicsDocuments.id.bildNr.eq(bildNr)
-//                        .and(graphicsDocuments.id.dokumentenArt.eq(dokumentenArt)));
-//
-//        return jpaQuery.fetch();
-//    }
+    @Override
+    public GraphicsDocuments findOneGraphicDocumentsByBildNrAndDokumentenArtAndSprachNr(long bildNr, long dokumentenArt,long sprachNr){
+        JPAQueryFactory query = new JPAQueryFactory(em);
+        QGraphicsDocuments graphicsDocuments=QGraphicsDocuments.graphicsDocuments;
+
+        JPAQuery<GraphicsDocuments> jpaQuery=query
+                .selectFrom(graphicsDocuments)
+                .where(graphicsDocuments.id.bildNr.eq(bildNr)
+                        .and(graphicsDocuments.id.dokumentenArt.eq(dokumentenArt))
+                        .and(graphicsDocuments.id.sprachNr.eq(sprachNr)));
+
+        return jpaQuery.fetchOne();
+    }
+    @Override
+    public PartsLists findPartLitsByArtNrAndLfdnr(String artNr,long lfdnr){
+        JPAQueryFactory query = new JPAQueryFactory(em);
+        QPartsLists partsLists=QPartsLists.partsLists;
+        JPAQuery<PartsLists> jpaQuery=query.selectFrom(partsLists).where(partsLists.id.artNr.eq(artNr).and(partsLists.id.lfdNr.eq(lfdnr)));
+
+        return jpaQuery.fetchOne();
+    }
+    @Override
+    public AccessoryLists findAccessoryLists(AccessoryListsId id){
+        JPAQueryFactory query = new JPAQueryFactory(em);
+        QAccessoryLists accessoryLists=QAccessoryLists.accessoryLists;
+        JPAQuery<AccessoryLists> jpaQuery=query.selectFrom(accessoryLists)
+                .where(accessoryLists.id.artNr.eq(id.getArtNr())
+                        .and(accessoryLists.id.sortNr.eq(id.getSortNr())
+                                .and((accessoryLists.id.lfdNr.eq(id.getLfdNr())))
+                        ));
+
+        return jpaQuery.fetchOne();
+    }
     @Override
     public GenericArticles findGenericArticlesByGenArtNr(long genArtNr){
         JPAQueryFactory query = new JPAQueryFactory(em);

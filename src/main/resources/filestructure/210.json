@@ -1,7 +1,7 @@
 {
   "tableName": "Article Criteria",
   "tableNumber": 210,
-  "length": 69,
+  "length": 67,
   "contents": "Criteria for component parts in a parts list",
   "sorting": "artNr,sortNr",
   "primaryKey": "artNr,sortNr",

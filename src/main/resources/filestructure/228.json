@@ -81,7 +81,7 @@
     },
     {
       "name": "loschFlag",
-      "pos": 82,
+      "pos": 66,
       "length": 1,
       "type": "N",
       "description": "1= delet all data records for the Delta key , otherwise 0"

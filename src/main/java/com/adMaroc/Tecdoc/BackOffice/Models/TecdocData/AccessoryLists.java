@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.util.List;
@@ -34,6 +36,7 @@ public class AccessoryLists {
     long sprachNr;
     @MapsId("artNr")
     @ManyToOne
+    @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name = "artNr",
                 referencedColumnName = "artNr")
     private ArticleTable articleTable;
@@ -50,6 +53,7 @@ public class AccessoryLists {
     private LanguageDescriptions languageDescriptions;
     @MapsId("genArtNr")
     @ManyToOne
+    @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name = "zubGenArtNr",
                 referencedColumnName = "genArtNr")
     private GenericArticles genericArticles;

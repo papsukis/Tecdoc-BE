@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -28,7 +29,6 @@ public class SearchInformationTexts {
     String tBSNr;
     long exclude;
     long loschFlag;
-    long sprachNr;
 
     @MapsId("artNr")
     @ManyToOne
@@ -39,18 +39,15 @@ public class SearchInformationTexts {
     @JoinColumn(name = "genArtNr")
     private GenericArticles genericArticles;
     @MapsId("TextModulesId")
-    @ManyToOne
+    @ManyToMany
     @JoinColumns({
             @JoinColumn(
                     name = "tBSNr",
                     referencedColumnName = "tBSNr"),
-            @JoinColumn(
-                    name = "sprachNr",
-                    referencedColumnName = "sprachNr"),
-            @JoinColumn(
+                       @JoinColumn(
                     name="lfdnr",
                     referencedColumnName = "lfdnr")})
-    private TextModules textModules;
+    private List<TextModules> textModules;
 
 
     public SearchInformationTextsId getId() {
@@ -142,12 +139,11 @@ public class SearchInformationTexts {
         this.genericArticles = genericArticles;
     }
 
-
-    public TextModules getTextModules() {
+    public List<TextModules> getTextModules() {
         return textModules;
     }
 
-    public void setTextModules(TextModules textModules) {
+    public void setTextModules(List<TextModules> textModules) {
         this.textModules = textModules;
     }
 }

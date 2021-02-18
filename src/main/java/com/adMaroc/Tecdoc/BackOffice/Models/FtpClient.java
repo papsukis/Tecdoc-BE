@@ -1,22 +1,32 @@
 package com.adMaroc.Tecdoc.BackOffice.Models;
 
 
+import com.adMaroc.Tecdoc.BackOffice.Utils.JsonReader;
+import com.adMaroc.Tecdoc.Security.Models.Config;
+import com.adMaroc.Tecdoc.Security.Repository.ConfigurationRepository;
+import com.google.common.io.ByteSource;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.sevenzipjbinding.SevenZip;
+import net.sf.sevenzipjbinding.impl.RandomAccessFileInStream;
 import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry;
 import org.apache.commons.compress.archivers.sevenz.SevenZFile;
+import org.apache.commons.compress.archivers.sevenz.SevenZOutputFile;
+import org.apache.commons.compress.utils.SeekableInMemoryByteChannel;
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +41,6 @@ public class FtpClient {
     private String user;
     private String password;
     private FTPClient ftp;
-
     public FtpClient(String ipAddress,int port, String userName, String password){
         this.server=ipAddress;
         this.port=port;
@@ -120,34 +129,61 @@ public class FtpClient {
         return file;
     }
 
-    public void uncompressFile(String file, String path) throws IOException {
-
+    public void uncompressFile(String file, String path,long sizelimit) throws IOException {
         log.info("Uncompressing file {} in {}",file,path);
+
         ByteArrayOutputStream fos = new ByteArrayOutputStream();
         ftp.retrieveFile(file,fos);
         InputStream fi=new ByteArrayInputStream(fos.toByteArray());
+
+
         String d=splitFileName(file);
         ftp.makeDirectory(d);
 
+
         SevenZFile zis = new SevenZFile(convertInputStreamToFile(fi));
         SevenZArchiveEntry entry;
-
         while ((entry= zis.getNextEntry())  != null){
             if (entry.isDirectory()){
                 continue;
             }
-            File curfile = new File(entry.getName());
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            byte[] content = new byte[(int) entry.getSize()];
-            zis.read(content, 0, content.length);
-            out.write(content);
-            InputStream is=new ByteArrayInputStream(out.toByteArray());
-            putFileToPath(is,d+"/"+entry.getName());
 
-            out.close();
+            File curfile = new File(entry.getName());
+
+            if(entry.getSize()<sizelimit){
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                byte[] content =new byte[(int) entry.getSize()];
+                while(zis.read(content) > 0){
+                    out.write(content);
+                }
+                InputStream is=new ByteArrayInputStream(out.toByteArray());
+                putFileToPath(is,d+"/"+entry.getName());
+                out.close();
+                is.close();
+
+            }
+            else{
+                int j=1;
+                int chunk= (int) (entry.getSize()/8);
+                byte[] content =new byte[chunk];
+                int read=0;
+                List<ByteArrayOutputStream> tmp= new ArrayList<>();
+                while((read=zis.read(content,0,chunk)) > 1){
+                    ByteArrayOutputStream out = new ByteArrayOutputStream();
+                    out.write(content);
+                    InputStream is=new ByteArrayInputStream(out.toByteArray());
+                    putFileToPath(is,d+"/"+entry.getName()+"("+j+")");
+                    j++;
+                    out.close();
+                    is.close();
+                }
+
+            }
+//
         }
 
     }
+
 
 
     public String splitFileName(String name){
@@ -177,60 +213,7 @@ public class FtpClient {
             e.printStackTrace();
         }
     }
-//
-//    public Tree<String> listDirectory(Node<String> parent,Node<String> current, int level) throws IOException {
-//
-//        String dirToList = parent.getData();
-//        if (!current.getData().equals("")) {
-//            dirToList += "/" + current.getData();
-//        }
-//        List<Node<String>> childrenNodes=new ArrayList<>();
-//        if(!parent.isRoot())
-//            parent.addChild(current);
-//        current.setParent(parent);
-//       List<String> subFiles = listDirectories(dirToList);
-//        if (subFiles != null) {
-//            for (String aFile : subFiles) {
-//                Node<String> tmp=new Node<String>(aFile);
-//                tmp.setParent(parent);
-//                childrenNodes.add(tmp);
-//                String currentFileName=aFile;
-//                String currentPath=dirToList+"/"+currentFileName;
-//                if (currentFileName.equals(".")
-//                        || currentFileName.equals("..")) {
-//                    continue;
-//                }
-//
-//                listDirectory(current, tmp, level + 1);
-//            }
-//        }
-//        if(parent.isRoot())
-//        parent.setChildren(childrenNodes);
-//        return hierarchy;
-//    }
-//
-//
-//    public void updateHierarchy(String directory)
-//    {
-//        hierarchy.addNode(new Node<>(directory));
-//    }
-//
-//    public void updateHierarchy(String directory,String parent)
-//    {
-//        Node<String> n=hierarchy.getNode(parent);
-//
-//        Node<String> d=new Node<>(directory);
-//        d.setParent(n);
-//        n.addChild(d);
-//
-//    }
-//
-//    public void changeDirectoryName(String name,String directory) throws IOException {
-//        ftp.rename(directory,name);
-//        Node<String> n=hierarchy.getNode(FilenameUtils.getName(directory));
-//
-//        n.setData(FilenameUtils.getName(name));
-//    }
+
 
     public void deleteDirectory(String path) throws IOException {
         ftp.removeDirectory(path);
@@ -247,7 +230,7 @@ public class FtpClient {
 
     }
 
-    public FtpFile getData(String path,String fileName) throws IOException {
+    public FtpFile getData(String path,String fileName,long batchSize) throws IOException {
         FtpFile file = new FtpFile();
         log.info(path);
         List<String> ipList = new ArrayList<>();
@@ -261,14 +244,51 @@ public class FtpClient {
             }
             reader.close();
         }
+
+        fos.close();
+        fi.close();
+        if(fileName.contains("(") && fileName.contains(")") && !fileName.contains("(1)"))
+            ipList.set(0,fixLines(path, ipList.get(0)));
+        if(fileName.contains("(") && fileName.contains(")"))
+        ipList.remove(ipList.size()-1);
+
         file.setFullPath(path);
         file.setFileName(fileName);
-        file.setLines(ipList);
+        file.setLines(chopped(ipList,(int)batchSize));
         file.setTable(Integer.parseInt(fileName.substring(0,3)));
+        file.setMaxRows(ipList.size());
+
         return file;
     }
-
-
+    private String fixLines(String path,String lineToFix) throws IOException {
+        String subFile =path.substring(path.length()-2,path.length()-1);
+        String previousFilePath = path.replace("("+subFile+")","("+String.valueOf(Integer.valueOf(subFile)-1)+")");
+        String lineFixed="";
+        ByteArrayOutputStream fos = new ByteArrayOutputStream();
+        ftp.retrieveFile(previousFilePath,fos);
+        InputStream fi=new ByteArrayInputStream(fos.toByteArray());
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(fi, StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lineFixed = line;
+            }
+            reader.close();
+        }
+//        log.info("lineTofix : {}",lineFixed+lineToFix);
+        fos.close();
+        fi.close();
+        return lineFixed+lineToFix;
+    }
+    static <T> List<List<T>> chopped(List<T> list, final int L) {
+        List<List<T>> parts = new ArrayList<List<T>>();
+        final int N = list.size();
+        for (int i = 0; i < N; i += L) {
+            parts.add(new ArrayList<T>(
+                    list.subList(i, Math.min(N, i + L)))
+            );
+        }
+        return parts;
+    }
 
 }
 

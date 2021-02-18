@@ -87,9 +87,16 @@ public class AuthController {
                 .password("password")
                 .build();
         Config config1=Config.builder().name("number_of_login").numberValue((long)5).build();
+        Config config2=Config.builder().name("file_size_limit").numberValue((long)262144000).build();
+        Config config3=Config.builder().name("batchSize").numberValue((long)50000).build();
+
         User saved;
         try {
             config1=config.save(config1);
+            config2=config.save(config2);
+            config3=config.save(config3);
+
+
             saved = userService.registerUser(user);
         } catch (UsernameAlreadyExistsException | EmailAlreadyExistsException e) {
             throw new BadRequestException(e.getMessage());

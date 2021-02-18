@@ -2,11 +2,14 @@ package com.adMaroc.Tecdoc.BackOffice.Services;
 
 import com.adMaroc.Tecdoc.BackOffice.DTO.FileDto;
 import com.adMaroc.Tecdoc.BackOffice.DTO.FtpDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.LinesToSave;
 import com.adMaroc.Tecdoc.BackOffice.DTO.UnCompressAndSaveRequest;
 import com.adMaroc.Tecdoc.BackOffice.Models.*;
 import com.adMaroc.Tecdoc.BackOffice.Utils.Converter;
 import com.adMaroc.Tecdoc.BackOffice.Utils.JsonReader;
 import com.adMaroc.Tecdoc.Security.Exceptions.InternalServerException;
+import com.adMaroc.Tecdoc.Security.Models.Config;
+import com.adMaroc.Tecdoc.Security.Repository.ConfigurationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,9 @@ public class FtpService {
     JsonReader jsonReader;
     @Autowired
     Converter converter;
+    @Autowired
+    ConfigurationRepository configRepository;
+
     public Directory connect(String ipAddress,int port, String userName, String password) throws IOException {
 
         ftp=new FtpClient(ipAddress,port,userName,password);
@@ -99,8 +105,8 @@ public class FtpService {
             List<String> f = new ArrayList<>();
             List<Integer> fi = new ArrayList<>();
             String folderName = ftp.splitFileName(list.getFileName());
-
-            ftp.uncompressFile(list.getFileName(),list.getFullPath());
+            Config tmp= configRepository.getConfig("file_size_limit");
+            ftp.uncompressFile(list.getFileName(),list.getFullPath(),tmp.getNumberValue());
 
             files.setPath(folderName);
             f=ftp.listFiles(list.getFullPath()+ folderName);
@@ -129,26 +135,33 @@ public class FtpService {
 
     }
     public FtpFile getData(String path , String folderName) throws IOException {
-        return ftp.getData(path,folderName);
+        Config tmp= configRepository.getConfig("batchSize");
+        FtpFile file = ftp.getData(path,folderName,tmp.getNumberValue());
+        file.setTableName(jsonReader.readFile(String.valueOf(file.getTable())).getTableName());
+        return file;
     }
 
-    public EntityWrapper createEntities(FtpFile file) throws Exception {
-        String table =String.valueOf(file.getTable());
+    public EntityWrapper createEntities(LinesToSave lines) throws Exception {
+        String table =String.valueOf(lines.getTable());
         EntityWrapper wrapper= new EntityWrapper();
-         wrapper.setEntities(file.getLines().stream()
+        FileStructure fs=jsonReader.readFile(table);
+        wrapper.setFileStructure(fs);
+         wrapper.setEntities(
+                 lines.getLines().stream()
                 .map(line ->
                 {
                     try {
                         return converter.instantiate(
-                                 jsonReader.readFile(table),
+                                 fs,
                                  line);
                     } catch (Exception e) {
                         throw new InternalServerException(e.getMessage());
                     }
 
-                }).collect(Collectors.toList()));
-
-        wrapper.setTableNumber(file.getTable());
+                }).filter(x-> x!=null).collect(Collectors.toList()));
+        log.info("entities created for table : {} , {} rows",table,wrapper.getEntities().size());
+        wrapper.setTableNumber(lines.getTable());
+        wrapper.setFileName(lines.getFileName());
         return wrapper;
     }
 
