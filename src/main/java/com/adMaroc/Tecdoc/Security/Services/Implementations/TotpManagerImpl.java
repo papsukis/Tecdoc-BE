@@ -1,5 +1,6 @@
 package com.adMaroc.Tecdoc.Security.Services.Implementations;
 
+import com.adMaroc.Tecdoc.Security.Exceptions.InternalServerException;
 import com.adMaroc.Tecdoc.Security.Services.TotpManager;
 import dev.samstevens.totp.code.*;
 import dev.samstevens.totp.exceptions.QrGenerationException;
@@ -8,12 +9,18 @@ import dev.samstevens.totp.qr.QrGenerator;
 import dev.samstevens.totp.qr.ZxingPngQrGenerator;
 import dev.samstevens.totp.secret.DefaultSecretGenerator;
 import dev.samstevens.totp.secret.SecretGenerator;
+import dev.samstevens.totp.time.NtpTimeProvider;
 import dev.samstevens.totp.time.SystemTimeProvider;
 import dev.samstevens.totp.time.TimeProvider;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.net.UnknownHostException;
+import java.util.Date;
 
 import static dev.samstevens.totp.util.Utils.getDataUriForImage;
 
+@Slf4j
 @Service
 public class TotpManagerImpl implements TotpManager {
 
@@ -31,7 +38,7 @@ public class TotpManagerImpl implements TotpManager {
                 .issuer("AdMaroc")
                 .algorithm(HashingAlgorithm.SHA1)
                 .digits(6)
-                .period(30)
+                .period(300)
                 .build();
 
         QrGenerator generator = new ZxingPngQrGenerator();
@@ -48,9 +55,17 @@ public class TotpManagerImpl implements TotpManager {
     }
 
     public boolean verifyCode(String code, String secret) {
-        TimeProvider timeProvider = new SystemTimeProvider();
+        TimeProvider timeProvider = null;
+        try {
+            timeProvider = new NtpTimeProvider("ma.pool.ntp.org");
+        } catch (UnknownHostException e) {
+            throw new InternalServerException(e.getMessage());
+        }
+        ;
         CodeGenerator codeGenerator = new DefaultCodeGenerator();
-        CodeVerifier verifier = new DefaultCodeVerifier(codeGenerator, timeProvider);
+        DefaultCodeVerifier  verifier = new DefaultCodeVerifier(codeGenerator, timeProvider);
+        verifier.setAllowedTimePeriodDiscrepancy(5);
+        log.info(new Date(System.currentTimeMillis()).toString());
         return verifier.isValidCode(secret, code);
     }
 }

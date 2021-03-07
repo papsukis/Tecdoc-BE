@@ -1,5 +1,7 @@
 package com.adMaroc.Tecdoc.Security.Services.Implementations;
 
+import com.adMaroc.Tecdoc.BackOffice.DTO.FilterDTO;
+import com.adMaroc.Tecdoc.Security.Models.Privilege;
 import com.adMaroc.Tecdoc.Security.Models.Role;
 import com.adMaroc.Tecdoc.Security.Models.User;
 import com.adMaroc.Tecdoc.Security.Repository.RoleRepository;
@@ -23,7 +25,10 @@ public class RoleServiceImpl implements RoleService {
         log.info("Retrieving all roles");
         return roleRepository.findAll();
     }
-
+    @Override
+    public List<Role> search(List<FilterDTO<Privilege>> filterDTOS){
+        return roleRepository.search(filterDTOS);
+    }
     @Override
     public User addToUser(User user, Role role) {
         return null;

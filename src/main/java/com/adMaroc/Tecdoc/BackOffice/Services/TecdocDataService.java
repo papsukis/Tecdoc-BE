@@ -28,7 +28,7 @@ public class TecdocDataService {
 
     public SaveLogDTO save(EntityWrapper wrapper) throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException {
         log.info("saving table number : {}",wrapper.getTableNumber());
-        final int batchSize = 50;
+        final int batchSize = 20000;
 
         SaveLogDTO logs=new SaveLogDTO();
         logs.setTableNumber(wrapper.getFileStructure().getTableNumber());
@@ -721,7 +721,7 @@ return batch.stream().map(e -> (GraphicsDocuments)  setRelationships(e,wrapper.g
                 case 232:
                     chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
                                                 
-return batch.stream().map(e -> (AllocationOfGraphicsToArticleNumbers)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
+                        return batch.stream().map(e -> (AllocationOfGraphicsToArticleNumbers)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
 
                     })
                             .peek(batch->{
@@ -1231,7 +1231,7 @@ return batch.stream().map(e -> (CVSuspension)  setRelationships(e,wrapper.getTab
                 case 552:
                     chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
                                                 
-return batch.stream().map(e -> (CVTyres)  setRelationships(e,wrapper.getTableNumber())).filter(Objects::nonNull).collect(Collectors.toList());
+return batch.stream().map(e -> (CVTyres)  setRelationships(e,wrapper.getTableNumber())).filter(Objects::nonNull).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
 
                     })
                             .peek(batch->{
@@ -1244,7 +1244,7 @@ return batch.stream().map(e -> (CVTyres)  setRelationships(e,wrapper.getTableNum
                 case 553:
                     chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
                                                 
-return batch.stream().map(e -> (CVChassis)  setRelationships(e,wrapper.getTableNumber())).filter(Objects::nonNull).collect(Collectors.toList());
+return batch.stream().map(e -> (CVChassis)  setRelationships(e,wrapper.getTableNumber())).filter(Objects::nonNull).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
 
                     })
                             .peek(batch->{
@@ -1257,7 +1257,7 @@ return batch.stream().map(e -> (CVChassis)  setRelationships(e,wrapper.getTableN
                 case 554:
                     chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
                                                 
-return batch.stream().map(e -> (CVProducerIDs)  setRelationships(e,wrapper.getTableNumber())).filter(Objects::nonNull).collect(Collectors.toList());
+                        return batch.stream().map(e -> (CVProducerIDs)  setRelationships(e,wrapper.getTableNumber())).filter(Objects::nonNull).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
                     })
                             .peek(batch->{
                         
@@ -1361,7 +1361,7 @@ return batch.stream().map(e -> (CVProducerIdsCountryRestrictions)  setRelationsh
                     break;
                 case 42:
                     tmp=entity;
-                    ((DataSupplierLogos)tmp).setSprachNr(6);
+                    ((DataSupplierLogos)tmp).setSprachNr(255);
                     ((DataSupplierLogos) tmp)
                             .setDocumentTypes(
                                     tecdocDataService.tecdocCustomRepository.findDocumentTypesByDokumentenArt(
@@ -1930,10 +1930,9 @@ return batch.stream().map(e -> (CVProducerIdsCountryRestrictions)  setRelationsh
                             );
                     ((AllocationOfPartsListCoordinatesToContextSensitiveGraphics) tmp)
                             .setGraphicsDocuments(
-                                    tecdocDataService.tecdocCustomRepository.findOneGraphicDocumentsByBildNrAndDokumentenArtAndSprachNr(
+                                    tecdocDataService.tecdocCustomRepository.findGraphicDocumentsByBildNrAndDokumentenArt(
                                                     ((AllocationOfPartsListCoordinatesToContextSensitiveGraphics) tmp).getId().getBildNr(),
-                                                    ((AllocationOfPartsListCoordinatesToContextSensitiveGraphics) tmp).getId().getDokumentenArt(),
-                                                    ((AllocationOfPartsListCoordinatesToContextSensitiveGraphics) tmp).getId().getSprachNr()
+                                                    ((AllocationOfPartsListCoordinatesToContextSensitiveGraphics) tmp).getId().getDokumentenArt()
                                             )
 
                             );
@@ -2044,7 +2043,9 @@ return batch.stream().map(e -> (CVProducerIdsCountryRestrictions)  setRelationsh
                             )
                     );
 
-
+                if(((AllocationOfGraphicsToArticleNumbers) tmp).getGraphicsDocuments()==null)
+                    return null;
+                    ((AllocationOfGraphicsToArticleNumbers) tmp).setSprachNr(255);
                 return tmp;
                 case 233:
                 tmp=entity;
@@ -2054,11 +2055,13 @@ return batch.stream().map(e -> (CVProducerIdsCountryRestrictions)  setRelationsh
                                             ((ContextSensitiveGraphics) tmp).getId().getDokumentenArt()
                                     )
                             );
-//                    ((ContextSensitiveGraphics) tmp).setGraphicsDocuments(
-//                            tecdocDataService.tecdocCustomRepository.findGraphicDocumentsByBildNrAndDokumentenArt(
-//                                    tmp.get
-//                            )
-//                    );
+                    ((ContextSensitiveGraphics) tmp).setGraphicsDocuments(
+                            tecdocDataService.tecdocCustomRepository.findGraphicDocumentsByBildNrAndDokumentenArt(
+                                            ((ContextSensitiveGraphics) tmp).getId().getBildNr(),
+                                            ((ContextSensitiveGraphics) tmp).getId().getDokumentenArt()
+                            )
+                    );
+                    ((ContextSensitiveGraphics) tmp).setSprachNr(255);
                 return entity;
 
                 case 301:
@@ -2410,6 +2413,8 @@ return batch.stream().map(e -> (CVProducerIdsCountryRestrictions)  setRelationsh
                                                 ((LinkageDependentGraphicsDocuments) tmp).getDokumentenArt()
                                         )
                                 );
+                    ((LinkageDependentGraphicsDocuments) tmp).setSprachNr(255);
+
                 return tmp;
 
                 case 532:

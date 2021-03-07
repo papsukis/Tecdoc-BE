@@ -1,6 +1,8 @@
 package com.adMaroc.Tecdoc.Security.Services;
 
 
+import com.adMaroc.Tecdoc.BackOffice.DTO.FilterDTO;
+import com.adMaroc.Tecdoc.Security.Models.Role;
 import com.adMaroc.Tecdoc.Security.Models.User;
 
 import java.util.List;
@@ -23,4 +25,6 @@ public interface UserService {
     Optional<User> findByUsername(String name);
 
     Optional<User> findById(Long id);
+
+    List<User> search(List<FilterDTO<Role>> filterDTOS);
 }

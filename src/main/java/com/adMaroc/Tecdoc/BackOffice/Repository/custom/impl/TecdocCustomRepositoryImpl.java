@@ -149,16 +149,17 @@ public class TecdocCustomRepositoryImpl implements TecdocCustomRepository {
         return jpaQuery.fetchOne();
     }
     @Override
-    public List<GraphicsDocuments> findGraphicDocumentsByBildNrAndDokumentenArt(long bildNr, long dokumentenArt){
+    public GraphicsDocuments findGraphicDocumentsByBildNrAndDokumentenArt(long bildNr, long dokumentenArt){
         JPAQueryFactory query = new JPAQueryFactory(em);
         QGraphicsDocuments graphicsDocuments=QGraphicsDocuments.graphicsDocuments;
 
         JPAQuery<GraphicsDocuments> jpaQuery=query
                 .selectFrom(graphicsDocuments)
                 .where(graphicsDocuments.id.bildNr.eq(bildNr)
-                        .and(graphicsDocuments.id.dokumentenArt.eq(dokumentenArt)));
+                        .and(graphicsDocuments.id.dokumentenArt.eq(dokumentenArt))
+                        .and(graphicsDocuments.id.sprachNr.eq((long)255)));
 
-        return jpaQuery.fetch();
+        return jpaQuery.fetchOne();
     }
     @Override
     public GraphicsDocuments findOneGraphicDocumentsByBildNrAndDokumentenArtAndSprachNr(long bildNr, long dokumentenArt,long sprachNr){

@@ -1,7 +1,8 @@
-package com.adMaroc.Tecdoc.Security.Repository;
+package com.adMaroc.Tecdoc.Security.Repository.Impl;
 
 import com.adMaroc.Tecdoc.Security.Models.Config;
 import com.adMaroc.Tecdoc.Security.Models.QConfig;
+import com.adMaroc.Tecdoc.Security.Repository.CustomConfigRepository;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 

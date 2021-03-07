@@ -1,7 +1,9 @@
 package com.adMaroc.Tecdoc.Security.Services.Implementations;
 
 
+import com.adMaroc.Tecdoc.BackOffice.DTO.FilterDTO;
 import com.adMaroc.Tecdoc.Security.Exceptions.*;
+import com.adMaroc.Tecdoc.Security.Models.Role;
 import com.adMaroc.Tecdoc.Security.Models.User;
 import com.adMaroc.Tecdoc.Security.Models.UserDetailsAdapter;
 import com.adMaroc.Tecdoc.Security.Models.UserLog;
@@ -74,7 +76,9 @@ public class UserServiceImpl implements UserService {
         Long now = System.currentTimeMillis();
         user.setLastLogged(new Date(now));
 
-        UserLog userLog = new UserLog(user.getUsername(),user.getLastLogged(),context.getRemoteAddr());
+        UserLog userLog = new UserLog(user.getUsername(),user.getLastLogged(),context.getRemoteAddr(),"login");
+//                new UserLog(user.getUsername(),user.getLastLogged(),context.getRemoteAddr(),"login");
+
 
         userLogService.saveUserLog(userLog);
 
@@ -143,5 +147,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
+    }
+    @Override
+    public List<User> search(List<FilterDTO<Role>> filterDTOS){
+        return userRepository.search(filterDTOS);
     }
 }

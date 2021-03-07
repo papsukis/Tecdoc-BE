@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserLogRepository extends JpaRepository<UserLog,Long> {
+public interface UserLogRepository extends JpaRepository<UserLog,Long>,CustomUserLogRepository {
 
     List<UserLog> findByUsername(String username);
 }

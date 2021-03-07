@@ -1,5 +1,6 @@
 package com.adMaroc.Tecdoc.Security.Services.Implementations;
 
+import com.adMaroc.Tecdoc.BackOffice.DTO.FilterDTO;
 import com.adMaroc.Tecdoc.Security.Exceptions.ResourceNotFoundException;
 import com.adMaroc.Tecdoc.Security.Models.UserLog;
 import com.adMaroc.Tecdoc.Security.Repository.UserLogRepository;
@@ -23,7 +24,10 @@ public class UserLogServiceImpl implements UserLogService {
     public List<UserLog> findByUsername(String username) throws ResourceNotFoundException{
         return userLogRepository.findByUsername(username);
     }
-
+    @Override
+    public List<UserLog> search(List<FilterDTO> filterDTOS){
+        return userLogRepository.search(filterDTOS);
+    }
     @Override
     public void saveUserLog(UserLog userLog){
         userLogRepository.save(userLog);

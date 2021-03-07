@@ -27,7 +27,7 @@ public class DataSupplierLogos {
     long sprachNr;
 
     @MapsId("GraphicsDocumentsId")
-    @ManyToMany
+    @ManyToOne
     @JoinColumns({
             @JoinColumn(
                     name = "bildNr",
@@ -38,7 +38,7 @@ public class DataSupplierLogos {
             @JoinColumn(
                     name = "sprachNr",
                     referencedColumnName = "sprachNr")})
-    private List<GraphicsDocuments> graphicsDocuments;
+    private GraphicsDocuments graphicsDocuments;
     @MapsId("dokumentenArt")
     @ManyToOne
     @JoinColumn(name = "dokumentenArt",
@@ -94,13 +94,6 @@ public class DataSupplierLogos {
         this.loschFlag = loschFlag;
     }
 
-    public List<GraphicsDocuments> getGraphicsDocuments() {
-        return graphicsDocuments;
-    }
-
-    public void setGraphicsDocuments(List<GraphicsDocuments> graphicsDocuments) {
-        this.graphicsDocuments = graphicsDocuments;
-    }
 
     public DocumentTypes getDocumentTypes() {
         return documentTypes;

@@ -5,17 +5,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SaveLogDTO {
+public class LogDTO {
 
-    private String tableName;
-    private long tableNumber;
+    private List<SaveLogDTO> logs;
+    private long totalRows;
     private Date startTime;
     private Date endTime;
-    private long maxRows;
-    private long savedRows;
-    private String fileName;
+    private long manufacturerCode;
+    private String manufacturerName;
 }

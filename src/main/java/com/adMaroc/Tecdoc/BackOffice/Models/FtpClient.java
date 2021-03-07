@@ -2,6 +2,7 @@ package com.adMaroc.Tecdoc.BackOffice.Models;
 
 
 import com.adMaroc.Tecdoc.BackOffice.Utils.JsonReader;
+import com.adMaroc.Tecdoc.Security.Exceptions.InternalServerException;
 import com.adMaroc.Tecdoc.Security.Models.Config;
 import com.adMaroc.Tecdoc.Security.Repository.ConfigurationRepository;
 import com.google.common.io.ByteSource;
@@ -64,7 +65,16 @@ public class FtpClient {
         }
 
         log.info("Attempting authentification : user {} password : {}",user,password);
-        ftp.login(user, password);
+        try {
+            ftp.login(user, password);
+            if(!FTPReply.isPositiveCompletion(ftp.getReplyCode()))
+                {
+                    ftp.disconnect();
+                    throw new InternalServerException("Could not conect to server");
+                }
+        }catch (Exception e){
+
+        }
 
         ftp.setFileType(FTP.BINARY_FILE_TYPE);
 
@@ -133,12 +143,14 @@ public class FtpClient {
         log.info("Uncompressing file {} in {}",file,path);
 
         ByteArrayOutputStream fos = new ByteArrayOutputStream();
-        ftp.retrieveFile(file,fos);
+        String directoryPath = path.equals("/") ? "" : path + "/";
+        String directoryName=splitFileName(file);
+        String fullpath=directoryPath +directoryName;
+        ftp.retrieveFile(directoryPath +file,fos);
         InputStream fi=new ByteArrayInputStream(fos.toByteArray());
 
 
-        String d=splitFileName(file);
-        ftp.makeDirectory(d);
+        ftp.makeDirectory(fullpath);
 
 
         SevenZFile zis = new SevenZFile(convertInputStreamToFile(fi));
@@ -157,14 +169,14 @@ public class FtpClient {
                     out.write(content);
                 }
                 InputStream is=new ByteArrayInputStream(out.toByteArray());
-                putFileToPath(is,d+"/"+entry.getName());
+                putFileToPath(is,fullpath+"/"+entry.getName());
                 out.close();
                 is.close();
-
+            log.info("finished uncompressing");
             }
             else{
                 int j=1;
-                int chunk= (int) (entry.getSize()/8);
+                int chunk= (int) (sizelimit/2);
                 byte[] content =new byte[chunk];
                 int read=0;
                 List<ByteArrayOutputStream> tmp= new ArrayList<>();
@@ -172,7 +184,7 @@ public class FtpClient {
                     ByteArrayOutputStream out = new ByteArrayOutputStream();
                     out.write(content);
                     InputStream is=new ByteArrayInputStream(out.toByteArray());
-                    putFileToPath(is,d+"/"+entry.getName()+"("+j+")");
+                    putFileToPath(is,fullpath+"/"+entry.getName()+"("+j+")");
                     j++;
                     out.close();
                     is.close();
@@ -205,6 +217,14 @@ public class FtpClient {
 
     }
 
+    public void createDirectory(String path){
+
+        try {
+            ftp.makeDirectory(path);
+        } catch (IOException e) {
+            throw new InternalServerException(e.getMessage());
+        }
+    }
     public void changeDirectory(String path){
 
         try {
@@ -274,7 +294,6 @@ public class FtpClient {
             }
             reader.close();
         }
-//        log.info("lineTofix : {}",lineFixed+lineToFix);
         fos.close();
         fi.close();
         return lineFixed+lineToFix;

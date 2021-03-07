@@ -27,6 +27,7 @@ public class LinkageDependentGraphicsDocuments {
     long bildNr;
     long dokumentenArt;
     long exclude;
+    long sprachNr;
     long loschFlag;
 
     @MapsId("ArticleLinkageId")
@@ -59,7 +60,7 @@ public class LinkageDependentGraphicsDocuments {
                 referencedColumnName = "genArtNr")
     private GenericArticles genericArticles;
     @MapsId("GraphicsDocumentsId")
-    @ManyToMany
+    @ManyToOne
     @JoinColumns({
             @JoinColumn(
                     name = "bildNr",
@@ -70,7 +71,7 @@ public class LinkageDependentGraphicsDocuments {
             @JoinColumn(
                     name="sprachNr",
                     referencedColumnName = "sprachNr")})
-    private List<GraphicsDocuments> graphicsDocuments;
+    private GraphicsDocuments graphicsDocuments;
     @MapsId("artNr")
     @ManyToOne
     @JoinColumn(name = "artNr",

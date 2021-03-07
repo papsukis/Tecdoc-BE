@@ -28,13 +28,14 @@ public class AllocationOfGraphicsToArticleNumbers {
     long bildNr;
     long dokumentenArt;
     long loschFlag;
+    long sprachNr;
     @MapsId("artNr")
     @ManyToOne
     @JoinColumn(name = "artNr",
                 referencedColumnName = "artNr")
     private ArticleTable articleTable;
     @MapsId("GraphicsDocumentsId")
-    @ManyToMany
+    @ManyToOne
     @JoinColumns({
             @JoinColumn(
                     name = "bildNr",
@@ -45,7 +46,7 @@ public class AllocationOfGraphicsToArticleNumbers {
             @JoinColumn(
                     name = "sprachNr",
                     referencedColumnName = "sprachNr")})
-    private List<GraphicsDocuments> graphicsDocuments;
+    private GraphicsDocuments graphicsDocuments;
     @MapsId("dokumentenArt")
     @ManyToOne
     @JoinColumn(name = "dokumentenArt",
@@ -123,14 +124,6 @@ public class AllocationOfGraphicsToArticleNumbers {
 
     public void setArticleTable(ArticleTable articleTable) {
         this.articleTable = articleTable;
-    }
-
-    public List<GraphicsDocuments> getGraphicsDocuments() {
-        return graphicsDocuments;
-    }
-
-    public void setGraphicsDocuments(List<GraphicsDocuments> graphicsDocuments) {
-        this.graphicsDocuments = graphicsDocuments;
     }
 
     public DocumentTypes getDocumentTypes() {

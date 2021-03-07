@@ -76,6 +76,10 @@ public class User {
     @Column(nullable = true)
     private long numberOfLogins;
 
+    @JsonIgnore
+    private String currentJwt;
+
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(	name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),

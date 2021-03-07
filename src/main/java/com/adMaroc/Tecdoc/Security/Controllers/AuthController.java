@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@CrossOrigin
+@CrossOrigin(value="*")
 @Slf4j
 @RequestMapping("api/auth")
 public class AuthController {
@@ -58,6 +58,7 @@ public class AuthController {
 
         @PostMapping("/signin")
         public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+            log.info("login");
             User user = userService.loginUser(loginRequest.getUsername(), loginRequest.getPassword());
             return ResponseEntity.ok(new LoginResponse(
                     totpManager.getUriForImage(user.getSecret(),user.getUsername())));

@@ -3,12 +3,11 @@ package com.adMaroc.Tecdoc.BackOffice.Repository.custom;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.*;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.AccessoryListsId;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Component
-public interface TecdocCustomRepository {
+public abstract interface TecdocCustomRepository  {
 
     VehicleTypes findVehicleTypesByKtypnr(Long kTypNr);
 
@@ -35,7 +34,7 @@ public interface TecdocCustomRepository {
 
     DocumentTypes findDocumentTypesByDokumentenArt(long dokumentenArt);
 
-    List<GraphicsDocuments> findGraphicDocumentsByBildNrAndDokumentenArt(long bildNr, long dokumentenArt);
+    GraphicsDocuments findGraphicDocumentsByBildNrAndDokumentenArt(long bildNr, long dokumentenArt);
 
 
     GraphicsDocuments findOneGraphicDocumentsByBildNrAndDokumentenArtAndSprachNr(long bildNr, long dokumentenArt, long sprachNr);

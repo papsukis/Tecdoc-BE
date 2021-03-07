@@ -1,5 +1,6 @@
 package com.adMaroc.Tecdoc.Security.Controllers;
 
+import com.adMaroc.Tecdoc.BackOffice.DTO.FilterDTO;
 import com.adMaroc.Tecdoc.Security.Exceptions.BadRequestException;
 import com.adMaroc.Tecdoc.Security.Exceptions.EmailAlreadyExistsException;
 import com.adMaroc.Tecdoc.Security.Exceptions.UsernameAlreadyExistsException;
@@ -13,10 +14,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RequestMapping("/user")
 @Slf4j
 public class UserController {
@@ -25,14 +30,19 @@ public class UserController {
     @Autowired
     private UserLogService userLogService;
 
+    @PreAuthorize("hasAuthority('ALL') or hasAuthority('USER_ACCESS')")
     @GetMapping("/findAll")
-    private ResponseEntity<?> findAllUsers(){
+    public ResponseEntity<?> findAllUsers(){
+        log.info("find all");
         return ResponseEntity.ok(userService.findAll());
     }
-    @PostMapping("/save")
-    private ResponseEntity<?> saveRole(@RequestBody User user){
-        return ResponseEntity.ok(userService.registerUser(user));
+    @PreAuthorize("hasAuthority('ALL') or hasAuthority('USER_ACCESS')")
+    @PostMapping("/search")
+    public ResponseEntity<?> search(@RequestBody List<FilterDTO<Role>> filters){
+        log.info(filters.toString());
+        return ResponseEntity.ok(userService.search(filters));
     }
+    @PreAuthorize("hasAuthority('CREATE_USERS') or hasAuthority('ALL')")
     @PostMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createUser( @RequestBody SignupRequest payload) {
         log.info("creating user {}", payload.getUsername());
@@ -54,6 +64,7 @@ public class UserController {
         return ResponseEntity
                 .ok(true);
     }
+    @PreAuthorize("hasAuthority('UPDATE_USERS') or hasAuthority('ALL')")
     @PostMapping(value = "/save", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> saveUser( @RequestBody User user) {
         log.info("updating user {}", user.getUsername());
@@ -61,7 +72,7 @@ public class UserController {
         User saved;
         System.out.println(user.toString());
         try {
-            if((Long)user.getId() == null)
+            if((Long)user.getId() == null || (Long)user.getId() ==0)
             saved = userService.registerUser(user);
             else
                 saved=userService.updateUser(user);

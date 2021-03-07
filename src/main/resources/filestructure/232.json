@@ -53,7 +53,7 @@
     {
       "name": "bildNr",
       "pos": 35,
-      "length": 5,
+      "length": 9,
       "type": "N",
       "description": "Unambiguous Graphics Number(->231)"
     },
