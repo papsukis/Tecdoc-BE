@@ -54,21 +54,6 @@ public class Manufacturer {
 
 
 
-    public Manufacturer(Map<String,String> datas) {
-        this.herNr =Integer.valueOf(datas.get("HerNr"));
-        this.dLNr = Integer.valueOf(datas.get("DLNr"));
-        this.sA = Integer.valueOf(datas.get("SA"));
-        this.hKZ = datas.get("HKZ");
-        this.lBezNr = Integer.valueOf(datas.get("LBezNr"));
-        this.pKW = Integer.valueOf(datas.get("PKW"));
-        this.nKW = Integer.valueOf(datas.get("NKW"));
-        this.vGL = Integer.valueOf(datas.get("VGL"));
-        this.achse = Integer.valueOf(datas.get("Achse"));
-        this.motor = Integer.valueOf(datas.get("Motor"));
-        this.getriebe = Integer.valueOf(datas.get("Getriebe"));
-        this.transporter = Integer.valueOf(datas.get("Transporter"));
-        this.delet = Integer.valueOf(datas.get("Delete"));
-    }
 
     public long getHerNr() {
         return herNr;

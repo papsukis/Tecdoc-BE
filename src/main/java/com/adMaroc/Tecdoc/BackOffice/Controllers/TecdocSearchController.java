@@ -1,9 +1,15 @@
 package com.adMaroc.Tecdoc.BackOffice.Controllers;
 
+import com.adMaroc.Tecdoc.BackOffice.DTO.SearchDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.SearchStructureTree;
+import com.adMaroc.Tecdoc.BackOffice.Services.TecdocDataGetService;
+import com.adMaroc.Tecdoc.BackOffice.Services.TecdocDataSearchService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -11,6 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/search")
 public class TecdocSearchController {
 
+    @Autowired
+    TecdocDataSearchService tecdocService;
 
-
+    @PostMapping("referenceNr")
+    public ResponseEntity<?> findByReferenceNumber(@RequestBody SearchDTO searchDTO){
+        return ResponseEntity.ok(tecdocService.findByReferenceNumber(searchDTO.getReferenceNumber()));
+    }
 }

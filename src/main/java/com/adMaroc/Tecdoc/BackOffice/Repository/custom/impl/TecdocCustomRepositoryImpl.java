@@ -1,23 +1,47 @@
 package com.adMaroc.Tecdoc.BackOffice.Repository.custom.impl;
 
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.KeyTableDTO;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.*;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.AccessoryListsId;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.QCountryAndLanguageDependentDescriptionsId;
 import com.adMaroc.Tecdoc.BackOffice.Repository.custom.TecdocCustomRepository;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 public class TecdocCustomRepositoryImpl implements TecdocCustomRepository {
 
     @PersistenceContext
     private EntityManager em;
+    JPAQueryFactory query ;
+    @Override
+    public KeyTableDTO getKeyTableValue(long tabNr, String key){
+        query = new JPAQueryFactory(em);
 
+        QKeyTablesEntries keyTablesEntries=QKeyTablesEntries.keyTablesEntries;
+
+        JPAQuery<KeyTablesEntries> jpaQuery=query.selectFrom(keyTablesEntries).where(keyTablesEntries.id.tabNr.eq(tabNr).and(keyTablesEntries.id.key.contains(key)));
+
+        return new KeyTableDTO(jpaQuery.fetchOne());
+    }
+    @Override
+    public List<KeyTableDTO> getKeyTables(long tabNr){
+        query = new JPAQueryFactory(em);
+
+        QKeyTablesEntries keyTablesEntries=QKeyTablesEntries.keyTablesEntries;
+
+        JPAQuery<KeyTablesEntries> jpaQuery=query.selectFrom(keyTablesEntries).where(keyTablesEntries.id.tabNr.eq(tabNr));
+
+        return jpaQuery.fetch().stream().map(KeyTableDTO::new).collect(Collectors.toList());
+    }
     @Override
     public VehicleTypes findVehicleTypesByKtypnr(Long kTypNr){
         JPAQueryFactory query = new JPAQueryFactory(em);
@@ -105,6 +129,25 @@ public class TecdocCustomRepositoryImpl implements TecdocCustomRepository {
         JPAQuery<CVTypes> jpaQuery = query.selectFrom(cvTypes).where(cvTypes.nTypNr.eq(nTypNr));
 
         return jpaQuery.fetchOne();
+    }
+    @Override
+    public LanguageDescriptions findanguageDescriptionsByLbeznr(Long lBezNr){
+        JPAQueryFactory query = new JPAQueryFactory(em);
+
+        QLanguageDescriptions languageDescriptions=QLanguageDescriptions.languageDescriptions;
+
+        JPAQuery<LanguageDescriptions> jpaQuery=query.selectFrom(languageDescriptions).where(languageDescriptions.id.bezNr.eq(convertBezNrToString(lBezNr,9)).and(languageDescriptions.id.sprachNr.eq((long)6)));
+
+        return jpaQuery.fetchOne();
+
+    }
+    private String convertBezNrToString(long bezNr,int length){
+        String tmp=String.valueOf(bezNr);
+        int j=length-tmp.length();
+        for(int i=0;i<j;i++)
+               tmp="0"+tmp;
+
+        return tmp;
     }
     @Override
     public CountryAndLanguageDependentDescriptions findCountryAndLanguageDependentDescriptionsByLbeznr(Long lBezNr){

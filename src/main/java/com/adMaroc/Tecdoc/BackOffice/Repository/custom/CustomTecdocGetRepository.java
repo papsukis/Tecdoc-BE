@@ -10,7 +10,4 @@ import java.util.List;
 public interface CustomTecdocGetRepository {
     List<SearchStructureDTO> getAllSearchStructure();
 
-    KeyTableDTO getKeyTableValue(long tabNr, String key);
-
-    List<KeyTableDTO> getKeyTables(long tabNr);
 }

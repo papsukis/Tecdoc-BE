@@ -586,13 +586,14 @@ return batch.stream().map(e -> (ArticleInformation)  setRelationships(e,wrapper.
                 case 207:
                     chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
                                                 
-return batch.stream().map(e -> (TradeNumbers)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
+                            return batch.stream().map(e -> (TradeNumbers)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
 
                     })
-                            .peek(batch->{
-                        
-                        tecdocDataService.tradeNumbersRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
+//                            .peek(batch->{
+//
+//                        tecdocDataService.tradeNumbersRepository.saveAll(batch);
+//                    })
+                            .collect(Collectors.toList());
 
                     break;
                 case 208:
@@ -1793,16 +1794,9 @@ return batch.stream().map(e -> (CVProducerIdsCountryRestrictions)  setRelationsh
                                             ((TradeNumbers) tmp).getId().getArtNr()
                                     )
                             );
-
-
-                    TradeNumbersId gebrNr=((TradeNumbers) tmp).getId();
-                    if(gebrNr.getGebrNr().endsWith("М"))
-                    {
-                        gebrNr.setGebrNr(gebrNr.getGebrNr().substring(0,gebrNr.getGebrNr().length()-1));
-                    }
-
-                    ((TradeNumbers) tmp).setId(gebrNr);
-                    return entity;
+                    log.info(tmp.toString());
+                    tecdocDataService.tradeNumbersRepository.save((TradeNumbers)tmp);
+                    return tmp;
 
                 case 208:
                     tmp=entity;

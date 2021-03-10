@@ -1,5 +1,6 @@
 package com.adMaroc.Tecdoc.BackOffice.Repository.custom;
 
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.KeyTableDTO;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.*;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.AccessoryListsId;
 import org.springframework.stereotype.Component;
@@ -8,6 +9,10 @@ import java.util.List;
 
 @Component
 public abstract interface TecdocCustomRepository  {
+
+    KeyTableDTO getKeyTableValue(long tabNr, String key);
+
+    List<KeyTableDTO> getKeyTables(long tabNr);
 
     VehicleTypes findVehicleTypesByKtypnr(Long kTypNr);
 
@@ -25,6 +30,8 @@ public abstract interface TecdocCustomRepository  {
     Manufacturer findManufacturerByHernr(long hernr);
 
     CVTypes findCVTypesByNTypNr(long nTypNr);
+
+    LanguageDescriptions findanguageDescriptionsByLbeznr(Long lBezNr);
 
     CountryAndLanguageDependentDescriptions findCountryAndLanguageDependentDescriptionsByLbeznr(Long lBezNr);
 

@@ -44,6 +44,7 @@ public class ArticleTable {
     private LanguageDescriptions languageDescriptions;
 
 
+
     public String getArtNr() {
         return artNr;
     }

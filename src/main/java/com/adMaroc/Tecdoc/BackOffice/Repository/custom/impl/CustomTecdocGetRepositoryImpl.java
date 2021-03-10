@@ -7,9 +7,11 @@ import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.QKeyTablesEntries;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.QTecdocSearchStructure;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.TecdocSearchStructure;
 import com.adMaroc.Tecdoc.BackOffice.Repository.custom.CustomTecdocGetRepository;
+import com.adMaroc.Tecdoc.BackOffice.Repository.custom.TecdocCustomRepository;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -26,7 +28,8 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
     private EntityManager em;
 
     JPAQueryFactory query ;
-
+    @Autowired
+    TecdocCustomRepository tecdocRepository;
 
     @Override
     public List<SearchStructureDTO> getAllSearchStructure(){
@@ -41,14 +44,14 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
 
         List<TecdocSearchStructure> childrenList=jpaQuery.fetch();
 
-        List<KeyTableDTO> keytables = getKeyTables(999);
+        List<KeyTableDTO> keytables = tecdocRepository.getKeyTables(999);
 
         return parentlist.stream()
                 .map(parent->
                         {
                             return new SearchStructureDTO(
                                     parent,
-                                   getKeyTableFromList(
+                                    getKeyTableFromList(
                                            String.valueOf(parent.getTreeTypNr()), keytables
                                            )
                             );
@@ -60,7 +63,7 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
 
     private SearchStructureDTO setHierarchy(SearchStructureDTO structureDTO,List<TecdocSearchStructure> childrenList){
         SearchStructureDTO tmp=structureDTO;
-        List<KeyTableDTO> keytables = getKeyTables(999);
+        List<KeyTableDTO> keytables = tecdocRepository.getKeyTables(999);
         List<SearchStructureDTO> sub = new ArrayList<>();
         for(TecdocSearchStructure children : childrenList ){
             if(structureDTO.getNodeId()==children.getNodeParentId()){
@@ -87,24 +90,6 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
         }
         return tmp;
     }
-    @Override
-    public KeyTableDTO getKeyTableValue(long tabNr, String key){
-        query = new JPAQueryFactory(em);
 
-        QKeyTablesEntries keyTablesEntries=QKeyTablesEntries.keyTablesEntries;
 
-        JPAQuery<KeyTablesEntries> jpaQuery=query.selectFrom(keyTablesEntries).where(keyTablesEntries.id.tabNr.eq(tabNr).and(keyTablesEntries.id.key.contains(key)));
-
-        return new KeyTableDTO(jpaQuery.fetchOne());
-    }
-    @Override
-    public List<KeyTableDTO> getKeyTables(long tabNr){
-        query = new JPAQueryFactory(em);
-
-        QKeyTablesEntries keyTablesEntries=QKeyTablesEntries.keyTablesEntries;
-
-        JPAQuery<KeyTablesEntries> jpaQuery=query.selectFrom(keyTablesEntries).where(keyTablesEntries.id.tabNr.eq(tabNr));
-
-        return jpaQuery.fetch().stream().map(KeyTableDTO::new).collect(Collectors.toList());
-    }
 }
