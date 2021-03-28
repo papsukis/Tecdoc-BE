@@ -40,7 +40,7 @@ public class DataSupplierAddresses {
     long loschFlag;
 
     @MapsId("lKZ")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "lKZ",
                 referencedColumnName = "lKZ")
     private CountryTable countryTable;

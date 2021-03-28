@@ -1,5 +1,7 @@
 package com.adMaroc.Tecdoc.BackOffice.Utils;
 
+import com.adMaroc.Tecdoc.BackOffice.Models.Brand;
+import com.adMaroc.Tecdoc.BackOffice.Models.BrandList;
 import com.adMaroc.Tecdoc.BackOffice.Models.FileStructure;
 import com.adMaroc.Tecdoc.Security.Exceptions.InternalServerException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -55,5 +57,25 @@ public class JsonReader {
 
         }
     }
+
+    public BrandList getBrandName(){
+        ClassLoader classLoader = getClass().getClassLoader();
+
+        try (InputStream inputStream = classLoader.getResourceAsStream("utils/brand.json")) {
+
+            String result = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+            ObjectMapper mapper = new ObjectMapper();
+            BrandList someClassObj = mapper.readValue(result, new TypeReference<BrandList>() {
+            });
+
+            return someClassObj;
+
+
+        } catch (IOException e) {
+            throw new InternalServerException(e.getMessage());
+        }
+
+    }
+
 
 }

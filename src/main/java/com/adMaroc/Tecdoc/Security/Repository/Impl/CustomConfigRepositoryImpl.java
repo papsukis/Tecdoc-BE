@@ -8,7 +8,9 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
+@Transactional
 public class CustomConfigRepositoryImpl implements CustomConfigRepository {
 
     @PersistenceContext

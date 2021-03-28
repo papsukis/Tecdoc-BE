@@ -26,7 +26,7 @@ public class AxleBrakeSize {
     String beeichnung;
 
     @MapsId("aTypNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "atypnr",
                 referencedColumnName = "atypnr")
     private Axle axle;

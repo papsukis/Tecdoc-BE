@@ -31,12 +31,12 @@ public class  CVTypesAndEngineAllocation {
 
 
     @MapsId("nTypNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "ntypnr",
                 referencedColumnName = "ntypnr")
     private CVTypes cvTypes;
     @MapsId("motNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "motNr",
                 referencedColumnName = "motNr")
     private Engines engines;

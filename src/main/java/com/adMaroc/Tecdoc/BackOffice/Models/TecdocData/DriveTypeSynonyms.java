@@ -2,6 +2,7 @@ package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData;
 
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.DriveTypeSynonymsId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,14 +26,11 @@ public class DriveTypeSynonyms {
     long lbezNr;
     long loschFlag;
     long sprachNr;
-    @Column(name="cle")
-    String cle;
-    @Column(name="tabNr")
-    long tabNr;
+
 
 
     @MapsId("CountryAndLanguageDependentDescriptionsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "lbezNr",
@@ -42,8 +40,9 @@ public class DriveTypeSynonyms {
                     name="sprachNr",
                     referencedColumnName = "sprachNr")})
     private CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions;
+    @JsonIgnore
     @MapsId("kTypNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "kTypNr",
                 referencedColumnName = "kTypNr")
     private VehicleTypes vehicleTypes;

@@ -30,7 +30,7 @@ public class CVSuspension {
 
 
     @MapsId("nTypNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "ntypnr",
                 referencedColumnName = "ntypnr")
     private CVTypes cvTypes;

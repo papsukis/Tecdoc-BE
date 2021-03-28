@@ -5,6 +5,7 @@ import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.*;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.AccessoryListsId;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.QCountryAndLanguageDependentDescriptionsId;
 import com.adMaroc.Tecdoc.BackOffice.Repository.custom.TecdocCustomRepository;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -12,11 +13,13 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Component
+@Transactional
 public class TecdocCustomRepositoryImpl implements TecdocCustomRepository {
 
     @PersistenceContext
@@ -28,9 +31,19 @@ public class TecdocCustomRepositoryImpl implements TecdocCustomRepository {
 
         QKeyTablesEntries keyTablesEntries=QKeyTablesEntries.keyTablesEntries;
 
-        JPAQuery<KeyTablesEntries> jpaQuery=query.selectFrom(keyTablesEntries).where(keyTablesEntries.id.tabNr.eq(tabNr).and(keyTablesEntries.id.key.contains(key)));
+        JPAQuery<KeyTableDTO> jpaQuery=query.select(Projections.constructor(KeyTableDTO.class,keyTablesEntries)).from(keyTablesEntries).where(keyTablesEntries.id.tabNr.eq(tabNr).and(keyTablesEntries.id.key.eq(key)));
 
-        return new KeyTableDTO(jpaQuery.fetchOne());
+        return jpaQuery.fetchOne();
+    }
+    @Override
+    public KeyTableDTO getKeyTableValue(KeyTableDTO keyTable){
+        query = new JPAQueryFactory(em);
+
+        QKeyTablesEntries keyTablesEntries=QKeyTablesEntries.keyTablesEntries;
+
+        JPAQuery<KeyTablesEntries> jpaQuery=query.selectFrom(keyTablesEntries).where(keyTablesEntries.id.tabNr.eq(keyTable.getTabNr()).and(keyTablesEntries.id.key.contains(keyTable.getKey())));
+
+        return new KeyTableDTO(jpaQuery.fetchFirst());
     }
     @Override
     public List<KeyTableDTO> getKeyTables(long tabNr){
@@ -136,16 +149,16 @@ public class TecdocCustomRepositoryImpl implements TecdocCustomRepository {
 
         QLanguageDescriptions languageDescriptions=QLanguageDescriptions.languageDescriptions;
 
-        JPAQuery<LanguageDescriptions> jpaQuery=query.selectFrom(languageDescriptions).where(languageDescriptions.id.bezNr.eq(convertBezNrToString(lBezNr,9)).and(languageDescriptions.id.sprachNr.eq((long)6)));
+        JPAQuery<LanguageDescriptions> jpaQuery=query.selectFrom(languageDescriptions).where(languageDescriptions.id.bezNr.contains(convertBezNrToString(lBezNr,9)).and(languageDescriptions.id.sprachNr.eq((long)6)));
 
         return jpaQuery.fetchOne();
 
     }
     private String convertBezNrToString(long bezNr,int length){
-        String tmp=String.valueOf(bezNr);
-        int j=length-tmp.length();
-        for(int i=0;i<j;i++)
-               tmp="0"+tmp;
+            String tmp=String.valueOf(bezNr);
+//        int j=length-tmp.length();
+            for(int i=tmp.length();i<length;i++)
+                tmp="0"+tmp;
 
         return tmp;
     }

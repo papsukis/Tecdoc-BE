@@ -34,7 +34,7 @@ public class DocumentTypes {
 
 
     @MapsId("LanguageDescriptionsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "bezNr",
@@ -44,7 +44,7 @@ public class DocumentTypes {
                     referencedColumnName = "sprachNr")})
     private LanguageDescriptions languageDescriptions;
     @MapsId("AllocationOfPartsListCoordinatesToContextSensitiveGraphicsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "artNr",

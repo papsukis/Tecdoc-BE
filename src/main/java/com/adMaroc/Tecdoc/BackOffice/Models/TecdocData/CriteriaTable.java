@@ -45,7 +45,7 @@ public class CriteriaTable {
     long sprachNr;
     long loschFlag;
     @MapsId("LanguageDescriptionsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "bezNr",

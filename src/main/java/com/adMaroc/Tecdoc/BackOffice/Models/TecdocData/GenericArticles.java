@@ -39,7 +39,7 @@ public class GenericArticles {
     long sprachNr;
 
     @MapsId("LanguageDescriptionsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "bezNr",
@@ -50,19 +50,19 @@ public class GenericArticles {
     private LanguageDescriptions languageDescriptions;
 
     @MapsId("nartNr")
-    @ManyToOne(optional = true)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "nartNr",
                 referencedColumnName = "nartNr",
                 nullable = true)
     private StandardisedArticleDescription standardisedArticleDescription;
     @MapsId("bgNr")
-    @ManyToOne(optional = true)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "bgNr",
                 referencedColumnName = "bgNr",
                 nullable = true)
     private AssemblyGroups assemblyGroups;
     @MapsId("verwNr")
-    @ManyToOne(optional = true)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "verWNr",
                 referencedColumnName = "verWNr",
                 nullable = true)

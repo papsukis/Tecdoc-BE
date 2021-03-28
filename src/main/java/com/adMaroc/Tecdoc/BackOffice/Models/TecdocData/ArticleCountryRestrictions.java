@@ -26,12 +26,12 @@ public class ArticleCountryRestrictions {
     long exclude;
     long loschFlag;
     @MapsId("lKZ")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "lKZ",
                 referencedColumnName = "lKZ")
     private CountryTable countryTable;
     @MapsId("artNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "artNr",
                 referencedColumnName = "artNr")
     private ArticleTable articleTable;

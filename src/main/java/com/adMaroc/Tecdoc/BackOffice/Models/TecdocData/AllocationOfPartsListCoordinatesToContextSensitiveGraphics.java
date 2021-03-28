@@ -26,12 +26,12 @@ public class AllocationOfPartsListCoordinatesToContextSensitiveGraphics {
     long koordinatenNr;
     long loschFlag;
     @MapsId("artNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "artNr",
                 referencedColumnName = "artNr")
     private ArticleTable articleTable;
     @MapsId("PartsListsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "artNr",
@@ -42,12 +42,12 @@ public class AllocationOfPartsListCoordinatesToContextSensitiveGraphics {
             )
     private PartsLists partsLists;
     @MapsId("sprachNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "sprachnr",
                 referencedColumnName = "sprachnr")
     private Language language;
     @MapsId("GraphicsDocumentsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "bildnr",

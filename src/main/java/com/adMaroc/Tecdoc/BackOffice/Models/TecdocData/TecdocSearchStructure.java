@@ -38,7 +38,7 @@ public class TecdocSearchStructure {
 
 
     @MapsId("LanguageDescriptionsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "bezNr",

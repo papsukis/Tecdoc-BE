@@ -10,7 +10,9 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
+@Transactional
 public class CustomFtpSaveLogRepositoryImpl implements CustomFtpSaveLogRepository {
 
     @PersistenceContext

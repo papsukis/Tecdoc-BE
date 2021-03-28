@@ -32,12 +32,12 @@ public class ArticleCriteria {
     long dlnr;
 
     @MapsId("artNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "artNr",
                 referencedColumnName = "artNr")
     private ArticleTable articleTable;
     @MapsId("CriteriaId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "dl_nr",

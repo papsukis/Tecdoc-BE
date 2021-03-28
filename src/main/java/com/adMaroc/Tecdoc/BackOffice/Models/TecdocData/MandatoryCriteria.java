@@ -29,12 +29,12 @@ public class MandatoryCriteria {
     long exclude;
 
     @MapsId("genArtNr")
-    @ManyToOne(optional=true)
+    @ManyToOne(optional=true,fetch = FetchType.LAZY)
     @JoinColumn(name = "genArtNr",
                 referencedColumnName = "genArtNr",nullable = true)
     private GenericArticles genericArticles;
     @MapsId("CriteriaId")
-    @ManyToOne(optional=true)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "dLNr",

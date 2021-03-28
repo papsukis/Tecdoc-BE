@@ -24,12 +24,12 @@ public class EngineCountryRestrictions {
     long sA;
     long loschFlag;
     @MapsId("lKZ")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "lKZ",
                 referencedColumnName = "lKZ")
     private CountryTable countryTable;
     @MapsId("motNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "motNr",
                 referencedColumnName = "motNr")
     private Engines engines;

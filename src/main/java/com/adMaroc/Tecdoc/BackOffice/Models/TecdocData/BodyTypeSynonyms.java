@@ -24,16 +24,14 @@ public class BodyTypeSynonyms {
     long sA;
     long lbezNr;
     long loschFlag;
-    String cle;
-    long tabNr;
     long sprachNr;
     @MapsId("kModNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "kModNr",
                 referencedColumnName = "kModNr")
     private VehicleModelSeries vehicleModelSeries;
     @MapsId("CountryAndLanguageDependentDescriptionsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "lbezNr",

@@ -29,25 +29,15 @@ public class SearchInformationTexts {
     String tBSNr;
     long exclude;
     long loschFlag;
-
     @MapsId("artNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "artNr")
     private ArticleTable articleTable;
     @MapsId("genArtNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "genArtNr")
     private GenericArticles genericArticles;
-    @MapsId("TextModulesId")
-    @ManyToMany
-    @JoinColumns({
-            @JoinColumn(
-                    name = "tBSNr",
-                    referencedColumnName = "tBSNr"),
-                       @JoinColumn(
-                    name="lfdnr",
-                    referencedColumnName = "lfdnr")})
-    private List<TextModules> textModules;
+
 
 
     public SearchInformationTextsId getId() {
@@ -137,13 +127,5 @@ public class SearchInformationTexts {
 
     public void setGenericArticles(GenericArticles genericArticles) {
         this.genericArticles = genericArticles;
-    }
-
-    public List<TextModules> getTextModules() {
-        return textModules;
-    }
-
-    public void setTextModules(List<TextModules> textModules) {
-        this.textModules = textModules;
     }
 }

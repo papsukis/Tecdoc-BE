@@ -27,12 +27,12 @@ public class AllocationOfCVToCVIDNumbers {
 
 
     @MapsId("nTypNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "ntypnr",
                 referencedColumnName = "ntypnr")
     private CVTypes cvTypes;
     @MapsId("herlDNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "herldnr",
                 referencedColumnName = "herldnr")
     private CVProducerIDs cvProducerIDs;

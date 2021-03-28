@@ -25,7 +25,7 @@ public class AxleWheelbases {
     String achsPos;
     long radstand;
     @MapsId("aTypNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "atypnr",
                 referencedColumnName = "atypnr")
     private Axle axle;

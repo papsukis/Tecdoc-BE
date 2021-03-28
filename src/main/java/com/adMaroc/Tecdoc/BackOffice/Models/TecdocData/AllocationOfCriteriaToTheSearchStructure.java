@@ -24,12 +24,12 @@ public class AllocationOfCriteriaToTheSearchStructure {
     long sA;
     long sortNr;
     @MapsId("nodeId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "nodeId",
                 referencedColumnName = "nodeId")
     private TecdocSearchStructure tecdocSearchStructure;
     @MapsId("CriteriaId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "dLNr",
@@ -40,7 +40,7 @@ public class AllocationOfCriteriaToTheSearchStructure {
                    )})
     private CriteriaTable criteriaTable;
     @MapsId("genArtNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "genArtNr",
                 referencedColumnName = "genArtNr")
     private GenericArticles genericArticles;

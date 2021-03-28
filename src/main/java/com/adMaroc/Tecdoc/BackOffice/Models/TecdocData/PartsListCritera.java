@@ -24,16 +24,16 @@ public class PartsListCritera {
     long sA;
     long kritNr;
     String kritWert;
-    String exclude;
+    long exclude;
     long loschFlag;
     @MapsId("artNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "artNr",
                 referencedColumnName = "artNr")
     private ArticleTable articleTable;
 
     @MapsId("CriteriaId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "dLNr",
@@ -43,7 +43,7 @@ public class PartsListCritera {
                     referencedColumnName = "kritNr")})
     private CriteriaTable criteriaTable;
     @MapsId("PartsListsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "artNr",
@@ -94,11 +94,11 @@ public class PartsListCritera {
         this.kritWert = kritWert;
     }
 
-    public String getExclude() {
+    public long getExclude() {
         return exclude;
     }
 
-    public void setExclude(String exclude) {
+    public void setExclude(long exclude) {
         this.exclude = exclude;
     }
 

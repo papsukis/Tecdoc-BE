@@ -24,12 +24,12 @@ public class CVSecondaryTypesCountryRestrictions {
     long exclude;
 
     @MapsId("lKZ")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "lKZ",
                 referencedColumnName = "lKZ")
     private CountryTable countryTable;
     @MapsId("CVSecondaryTypesId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "ntypnr",

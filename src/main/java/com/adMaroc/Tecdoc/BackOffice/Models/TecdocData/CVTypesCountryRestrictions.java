@@ -26,12 +26,12 @@ public class CVTypesCountryRestrictions {
     long loschFlag;
 
     @MapsId("lKZ")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "lKZ",
                 referencedColumnName = "lKZ")
     private CountryTable countryTable;
     @MapsId("nTypNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "ntypnr",
             referencedColumnName = "ntypnr")
     private CVTypes cvTypes;

@@ -40,12 +40,12 @@ public class VehicleCountrySpecifications {
     long loschFlag;
 
     @MapsId("kTypNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "kTypNr",
                 referencedColumnName = "kTypNr")
     private VehicleTypes vehicleTypes;
     @MapsId("lKZ")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "lKZ",
                 referencedColumnName = "lKZ")
     private CountryTable countryTable;

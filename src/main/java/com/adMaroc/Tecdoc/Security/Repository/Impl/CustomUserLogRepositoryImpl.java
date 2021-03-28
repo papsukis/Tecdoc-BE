@@ -9,8 +9,9 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
-
+@Transactional
 public class CustomUserLogRepositoryImpl implements CustomUserLogRepository {
     @PersistenceContext
     private EntityManager em;

@@ -5,12 +5,15 @@ import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.*;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.AccessoryListsId;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.List;
-
+@Transactional
 @Component
 public abstract interface TecdocCustomRepository  {
 
     KeyTableDTO getKeyTableValue(long tabNr, String key);
+
+    KeyTableDTO getKeyTableValue(KeyTableDTO keyTable);
 
     List<KeyTableDTO> getKeyTables(long tabNr);
 

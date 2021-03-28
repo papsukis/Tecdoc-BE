@@ -31,12 +31,12 @@ public class ArticleInformation {
     long sprachNr;
     long lfdNr;
     @MapsId("artNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "artNr",
                 referencedColumnName = "artNr")
     private ArticleTable articleTable;
     @MapsId("TextModulesId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "tBSNr",

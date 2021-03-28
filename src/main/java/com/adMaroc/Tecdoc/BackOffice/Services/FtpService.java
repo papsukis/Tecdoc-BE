@@ -1,9 +1,11 @@
 package com.adMaroc.Tecdoc.BackOffice.Services;
 
+import com.adMaroc.Tecdoc.BackOffice.Configurations.FilesConfig;
 import com.adMaroc.Tecdoc.BackOffice.DTO.*;
 import com.adMaroc.Tecdoc.BackOffice.Models.*;
 import com.adMaroc.Tecdoc.BackOffice.Utils.Converter;
 import com.adMaroc.Tecdoc.BackOffice.Utils.JsonReader;
+import com.adMaroc.Tecdoc.BackOffice.Utils.OpenMultipartArchive7z;
 import com.adMaroc.Tecdoc.Security.Exceptions.InternalServerException;
 import com.adMaroc.Tecdoc.Security.Models.Config;
 import com.adMaroc.Tecdoc.Security.Repository.ConfigurationRepository;
@@ -34,6 +36,8 @@ public class FtpService {
     Converter converter;
     @Autowired
     ConfigurationRepository configRepository;
+    @Autowired
+    private FilesConfig files;
     public void close() throws IOException {
         this.ftp.close();
     }
@@ -139,11 +143,12 @@ public class FtpService {
             FileDto files= new FileDto();
             List<String> f = new ArrayList<>();
             List<Integer> fi = new ArrayList<>();
-            String folderName = ftp.splitFileName(list.getFileName());
+            String folderName = list.getFileName().contains("REFERENCE_DATA")?"REFERENCE_DATA":ftp.splitFileName(list.getFileName());
             Config tmp= configRepository.getConfig("file_size_limit");
-//            ftp.uncompressFile(list.getFileName(),list.getFullPath(),tmp.getNumberValue());
-//
-//            uncompressPictures(list.getFileName(),tmp.getNumberValue());
+
+            ftp.uncompressFile(list.getFileName(),list.getFullPath(),tmp.getNumberValue());
+
+            uncompressPictures(list.getFileName(),tmp.getNumberValue());
 
             files.setPath(folderName);
             f=ftp.listFiles(list.getFullPath()+ folderName);
@@ -158,12 +163,19 @@ public class FtpService {
     }
 
     private void uncompressPictures(String fileName,long sizelimit) throws IOException {
+
         for(String file: ftp.listFiles("/PIC_FILES")){
-            if(file.startsWith(ftp.splitFileName(fileName)) && file.contains("PIC")){
+            if(file.startsWith(fileName.substring(0,4)) && file.contains("PIC") && file.endsWith(".7z")){
                 log.info("uncompressing {}",file);
                 ftp.uncompressFile(file,"/PIC_FILES",sizelimit);
             }
+            if(file.startsWith(fileName.substring(0,4)) && file.contains("PIC") && file.endsWith(".7z.001") ){
+                log.info("uncompressing {}",file);
+                ftp.uncompressMultiPartImages(file,files.getImgFullPath());
+            }
         }
+
+//&& file.substring(file.length()-7,file.length()-4).contains("7z")
     }
     public List<String> sortListByList(List<String> listToSort) throws IOException {
         List<String> listWithOrder=jsonReader.readFileOrder();

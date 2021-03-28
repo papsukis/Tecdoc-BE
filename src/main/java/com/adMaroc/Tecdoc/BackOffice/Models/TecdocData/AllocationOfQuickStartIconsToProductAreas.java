@@ -26,7 +26,7 @@ public class AllocationOfQuickStartIconsToProductAreas {
     long sortNr;
 
     @MapsId("qsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "qsId",
                 referencedColumnName = "qsId")
     private QuickStartIcons quickStartIcons;

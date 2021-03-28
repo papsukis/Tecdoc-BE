@@ -27,7 +27,7 @@ public class QuickStartIcons {
     long sprachNr;
 
     @MapsId("LanguageDescriptionsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "bezNr",

@@ -2,6 +2,7 @@ package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData;
 
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.ReferenceNumbersId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,20 +28,32 @@ public class ReferenceNumbers {
     long additiv;
     String referenzInfo;
     long loschFlag;
-
+    @JsonIgnore
     @MapsId("artNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "artNr",
                 referencedColumnName = "artNr")
     private ArticleTable articleTable;
-
+    @JsonIgnore
     @MapsId("herNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "herNr",
                 referencedColumnName = "herNr")
     private Manufacturer manufacturer;
 
-
+    @Override
+    public String toString() {
+        return "ReferenceNumbers{" +
+                "id=" + id +
+                ", dLNr=" + dLNr +
+                ", sA=" + sA +
+                ", refNr='" + refNr + '\'' +
+                ", exclude=" + exclude +
+                ", additiv=" + additiv +
+                ", referenzInfo='" + referenzInfo + '\'' +
+                ", loschFlag=" + loschFlag +
+                '}';
+    }
 
     public ReferenceNumbersId getId() {
         return id;

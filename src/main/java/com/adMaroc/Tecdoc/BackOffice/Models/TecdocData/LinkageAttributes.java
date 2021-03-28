@@ -30,12 +30,12 @@ public class LinkageAttributes {
     long loschFlag;
 
     @MapsId("artNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "artNr",
             referencedColumnName = "artNr")
     private ArticleTable articleTable;
     @MapsId("genArtNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "genArtNr",
             referencedColumnName = "genArtNr")
     private GenericArticles genericArticles;

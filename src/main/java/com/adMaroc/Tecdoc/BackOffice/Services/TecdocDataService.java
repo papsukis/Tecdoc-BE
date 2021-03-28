@@ -42,1240 +42,1048 @@ public class TecdocDataService {
 
             switch (wrapper.getTableNumber()) {
                 case 1:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                        
-                        return batch.stream().map(e -> (Header) setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                            
-                            tecdocDataService.headerRepository.saveAll(batch);
-                            }).collect(Collectors.toList());
+
+                    wrapper.getEntities().stream()
+                            .map(e -> (Header) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                                tecdocDataService.headerRepository.save(e);
+                            })
+                            .collect(Collectors.toList());
+//                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
+//
+//                        return batch.stream().map(e -> (Header) setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
+//                    })
+//                            .peek(batch->{
+//
+//                            tecdocDataService.headerRepository.saveAll(batch);
+//                            }).collect(Collectors.toList());
 
                     break;
                 case 10:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (CountryTable) e).map(e->(CountryTable)setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.countryTableRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.countryTableRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (CountryTable) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                                tecdocDataService.countryTableRepository.save(e);
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 12:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (CountryAndLanguageDependentDescriptions) setRelationships(e,wrapper.getTableNumber()))
-                                .filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.countryAndLanguageDependentDescriptionsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.countryAndLanguageDependentDescriptionsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (CountryAndLanguageDependentDescriptions) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList())
+                    );
                     break;
                 case 13:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (CountryGroups) setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.countryGroupsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.countryGroupsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (CountryGroups) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 14:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (DocumentTypes) setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.documentTypesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.documentTypesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (DocumentTypes) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 20:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (Language) setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.languageRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.languageRepository.saveAll(
+                        wrapper.getEntities().stream()
+                            .map(e -> (Language) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                                                })
+                            .collect(Collectors.toList()));
                     break;
                 case 30:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-                        return batch.stream().map(e -> (LanguageDescriptions) setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).map(e->(LanguageDescriptions)setRelationships(e,wrapper.getTableNumber())).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.languageDescriptionsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.languageDescriptionsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (LanguageDescriptions) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 35:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (TextModules) setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.textModulesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
+                    tecdocDataService.textModulesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (TextModules) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                                })
+                            .collect(Collectors.toList()));
 
                     break;
                 case 40:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (DataSupplierMainAddress) setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.dataSupplierMainAddressRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.dataSupplierMainAddressRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (DataSupplierMainAddress) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 42:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (DataSupplierLogos) setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.dataSupplierLogosRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.dataSupplierLogosRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (DataSupplierLogos) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 43:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (DataSupplierAddresses) setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.dataSupplierAddressesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.dataSupplierAddressesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (DataSupplierAddresses) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 50:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (CriteriaTable)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.criteriaTableRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.criteriaTableRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (CriteriaTable) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 51:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (KeyTables)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.keyTablesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.keyTablesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (KeyTables) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 52:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (KeyTablesEntries)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.keyTablesEntriesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.keyTablesEntriesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (KeyTablesEntries) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 100:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (Manufacturer)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.manufacturerRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.manufacturerRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (Manufacturer) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 103:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (ManufacturerKBAReference)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.manufacturerKBAReferenceRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.manufacturerKBAReferenceRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (ManufacturerKBAReference) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 110:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (VehicleModelSeries)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.vehicleModelSeriesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.vehicleModelSeriesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (VehicleModelSeries) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 120:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (VehicleTypes)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.vehicleTypesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.vehicleTypesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (VehicleTypes) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 121:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (KBATypeAllocation)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.kbaTypeAllocationRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.kbaTypeAllocationRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (KBATypeAllocation) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 122:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (VehicleCountryRestriction)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.vehicleCountryRestrictionRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.vehicleCountryRestrictionRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (VehicleCountryRestriction) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 123:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (AllocationOfTypeMineNumbersToVehicleTypes)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.allocationOfTypeMineNumbersToVehicleTypesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.allocationOfTypeMineNumbersToVehicleTypesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (AllocationOfTypeMineNumbersToVehicleTypes) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 124:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (VehicleCountrySpecifications)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.vehicleCountrySpecificationsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.vehicleCountrySpecificationsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (VehicleCountrySpecifications) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 125:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (EngineNumberAllocationtoVehicleTypes)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.engineNumberAllocationtoVehicleTypesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.engineNumberAllocationtoVehicleTypesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (EngineNumberAllocationtoVehicleTypes) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 126:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (SwissTypeNumberAllocationToVehicleTypes)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.swissTypeNumberAllocationToVehicleTypesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.swissTypeNumberAllocationToVehicleTypesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (SwissTypeNumberAllocationToVehicleTypes) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 127:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (NetherlandsNumberPlateToVehicleTypeAllocation)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.netherlandsNumberPlateToVehicleTypeAllocationRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.netherlandsNumberPlateToVehicleTypeAllocationRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (NetherlandsNumberPlateToVehicleTypeAllocation) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 128:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (AllocationOfSwedishNumberPlatesToVehicleTypes)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.allocationOfSwedishNumberPlatesToVehicleTypesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.allocationOfSwedishNumberPlatesToVehicleTypesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (AllocationOfSwedishNumberPlatesToVehicleTypes) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 129:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (AustrianNatCodes)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.austrianNatCodesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.austrianNatCodesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (AustrianNatCodes) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 140:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (AdditionalDescriptionsToVehicleModelSeries)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.additionalDescriptionsToVehicleModelSeriesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.additionalDescriptionsToVehicleModelSeriesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (AdditionalDescriptionsToVehicleModelSeries) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 143:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (AllocationOfBodyTypesToModelSeries)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.allocationOfBodyTypesToModelSeriesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.allocationOfBodyTypesToModelSeriesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (AllocationOfBodyTypesToModelSeries) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 144:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (AdditionalVehicleTypeDescriptions)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.additionalVehicleTypeDescriptionsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.additionalVehicleTypeDescriptionsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (AdditionalVehicleTypeDescriptions) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 145:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (BodyType)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.bodyTypeRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.bodyTypeRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (BodyType) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 146:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (BodyTypeSynonyms)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.bodyTypeSynonymsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.bodyTypeSynonymsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (BodyTypeSynonyms) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 147:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (DriveTypeSynonyms)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.driveTypeSynonymsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.driveTypeSynonymsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (DriveTypeSynonyms) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 155:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (Engines)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.enginesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.enginesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (Engines) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 156:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (EngineCountryRestrictions)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.engineCountryRestrictionsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.engineCountryRestrictionsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (EngineCountryRestrictions) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 160:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (Axle)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.axleRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.axleRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (Axle) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 161:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (AxleBodyTypes)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.axleBodyTypesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.axleBodyTypesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (AxleBodyTypes) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 162:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (AxleWheelbases)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.axleWheelbasesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.axleWheelbasesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (AxleWheelbases) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 163:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (AxleBrakeSize)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.axleBrakeSizeRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.axleBrakeSizeRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (AxleBrakeSize) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 164:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (AllocationOfAxleTypesToCVTypes)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.allocationOfAxleTypesToCVTypesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.allocationOfAxleTypesToCVTypesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (AllocationOfAxleTypesToCVTypes) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 200:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (ArticleTable)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.articleTableRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.articleTableRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (ArticleTable) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 201:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (PriceInformation)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.priceInformationRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.priceInformationRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (PriceInformation) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 202:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (ArticleCountryRestrictions)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.articleCountryRestrictionsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.articleCountryRestrictionsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (ArticleCountryRestrictions) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 203:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (ReferenceNumbers)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.referenceNumbersRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.referenceNumbersRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (ReferenceNumbers) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 204:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (SupersedingArticles)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.supersedingArticlesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.supersedingArticlesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (SupersedingArticles) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 205:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (PartsLists)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.partsListsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.partsListsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (PartsLists) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 206:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (ArticleInformation)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.articleInformationRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.articleInformationRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (ArticleInformation) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 207:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-                            return batch.stream().map(e -> (TradeNumbers)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-//                            .peek(batch->{
-//
-//                        tecdocDataService.tradeNumbersRepository.saveAll(batch);
-//                    })
-                            .collect(Collectors.toList());
-
+                    tecdocDataService.tradeNumbersRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (TradeNumbers) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 208:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (PartsListCritera)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.partsListCriteraRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.partsListCriteraRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (PartsListCritera) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 209:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (EAN)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.eanRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.eanRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (EAN) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 210:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (ArticleCriteria)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.articleCriteriaRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.articleCriteriaRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (ArticleCriteria) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 211:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (ArticleToGenericArticleAllocation)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.articleToGenericArticleAllocationRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.articleToGenericArticleAllocationRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (ArticleToGenericArticleAllocation) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 212:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (CountrySpecificArticleData)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.countrySpecificArticleDataRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.countrySpecificArticleDataRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (CountrySpecificArticleData) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 215:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (PartsListsCountryRestrictions)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.partsListsCountryRestrictionsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.partsListsCountryRestrictionsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (PartsListsCountryRestrictions) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 217:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (AllocationOfPartsListCoordinatesToContextSensitiveGraphics)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.allocationOfPartsListCoordinatesToContextSensitiveGraphicsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.allocationOfPartsListCoordinatesToContextSensitiveGraphicsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (AllocationOfPartsListCoordinatesToContextSensitiveGraphics) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 222:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (AccessoryLists)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.accessoryListsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
+                    tecdocDataService.accessoryListsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (AccessoryLists) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
 
                     break;
                 case 228:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (AccessoryListsCriteria)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.accessoryListsCriteriaRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.accessoryListsCriteriaRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (AccessoryListsCriteria) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 231:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (GraphicsDocuments)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.graphicsDocumentsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.graphicsDocumentsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (GraphicsDocuments) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 232:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-                        return batch.stream().map(e -> (AllocationOfGraphicsToArticleNumbers)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.allocationOfGraphicsToArticleNumbersRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.allocationOfGraphicsToArticleNumbersRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (AllocationOfGraphicsToArticleNumbers) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 233:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (ContextSensitiveGraphics)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.contextSensitiveGraphicsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.contextSensitiveGraphicsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (ContextSensitiveGraphics) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 301:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (TecdocSearchStructure)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.tecdocSearchStructureRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.tecdocSearchStructureRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (TecdocSearchStructure) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 302:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (AllocationOfGenArtToSearchStructure)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.allocationOfGenArtToSearchStructureRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.allocationOfGenArtToSearchStructureRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (AllocationOfGenArtToSearchStructure) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 304:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (AllocationOfCriteriaToTheSearchStructure)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.allocationOfCriteriaToTheSearchStructureRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.allocationOfCriteriaToTheSearchStructureRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (AllocationOfCriteriaToTheSearchStructure) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 305:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (QuickStartIcons)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.quickStartIconsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.quickStartIconsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (QuickStartIcons) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 306:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (AllocationOfQuickStartIconsToProductAreas)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.allocationOfQuickStartIconsToProductAreasRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.allocationOfQuickStartIconsToProductAreasRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (AllocationOfQuickStartIconsToProductAreas) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 307:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (TheAllocationOfQuickStartIconsToNodesLeavesWithinOneProductArea)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.theAllocationOfQuickStartIconsToNodesLeavesWithinOneProductAreaRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.theAllocationOfQuickStartIconsToNodesLeavesWithinOneProductAreaRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (TheAllocationOfQuickStartIconsToNodesLeavesWithinOneProductArea) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 320:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (GenericArticles)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.genericArticlesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.genericArticlesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (GenericArticles) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 323:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (StandardisedArticleDescription)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.standardisedArticleDescriptionRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.standardisedArticleDescriptionRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (StandardisedArticleDescription) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 324:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (AssemblyGroups)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.assemblyGroupsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.assemblyGroupsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (AssemblyGroups) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 325:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (PurposeOfUse)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.purposeOfUseRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.purposeOfUseRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (PurposeOfUse) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 327:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (GenericArticleSynonyms)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.genericArticleSynonymsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.genericArticleSynonymsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (GenericArticleSynonyms) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 328:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (MandatoryCriteria)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.mandatoryCriteriaRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.mandatoryCriteriaRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (MandatoryCriteria) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 329:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (ProposedCriteria)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.proposedCriteriaRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.proposedCriteriaRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (ProposedCriteria) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 330:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (AllocationOfCriteriaValuesToGAMandatoryCriteria)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.allocationOfCriteriaValuesToGAMandatoryCriteriaRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.allocationOfCriteriaValuesToGAMandatoryCriteriaRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (AllocationOfCriteriaValuesToGAMandatoryCriteria) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 400:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->
-                    {
-                                               
-return batch.stream().map(e -> (ArticleLinkage)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    }).peek(batch->{
-                        
-                        tecdocDataService.articleLinkageRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.articleLinkageRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (ArticleLinkage) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 401:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-                        return batch.stream().map(e -> (SearchInformationTexts)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.searchInformationTextsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.searchInformationTextsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (SearchInformationTexts) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 402:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (LinkagesNotToBeDisplayedInCertainCountries)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.linkagesNotToBeDisplayedInCertainCountriesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.linkagesNotToBeDisplayedInCertainCountriesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (LinkagesNotToBeDisplayedInCertainCountries) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 403:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (CountryRestrictionOfTheLinkage)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.countryRestrictionOfTheLinkageRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.countryRestrictionOfTheLinkageRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (CountryRestrictionOfTheLinkage) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 404:
-                    chopped(wrapper.getEntities(),batchSize).stream()
-                            .map(batch->
-                                    {                        
-return batch.stream().map(e -> (SortingOfTheLinkage)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());})
-                            .peek(batch->{
-                        
-                        tecdocDataService.sortingOfTheLinkageRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.sortingOfTheLinkageRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (SortingOfTheLinkage) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 410:
-
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                    
-return batch.stream().map(e -> (LinkageAttributes)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.linkageAttributesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.linkageAttributesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (LinkageAttributes) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 432:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (LinkageDependentGraphicsDocuments)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.linkageDependentGraphicsDocumentsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.linkageDependentGraphicsDocumentsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (LinkageDependentGraphicsDocuments) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 532:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (CVTypes)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.cvTypesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.cvTypesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (CVTypes) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 533:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (CVTypesCountryRestrictions)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.cvTypesCountryRestrictionsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.cvTypesCountryRestrictionsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (CVTypesCountryRestrictions) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 534:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (CVCountrySpecificDeviations)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.cvCountrySpecificDeviationsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.cvCountrySpecificDeviationsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (CVCountrySpecificDeviations) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 535:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (CVSecondaryTypes)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.cvSecondaryTypesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.cvSecondaryTypesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (CVSecondaryTypes) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 536:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (CVSecondaryTypesCountryRestrictions)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.cvSecondaryTypesCountryRestrictionsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.cvSecondaryTypesCountryRestrictionsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (CVSecondaryTypesCountryRestrictions) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 537:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (CVTypesAndEngineAllocation)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.cvTypesAndEngineAllocationRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.cvTypesAndEngineAllocationRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (CVTypesAndEngineAllocation) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 538:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (AllocationOfCVToCVIDNumbers)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.allocationOfCVToCVIDNumbersRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.allocationOfCVToCVIDNumbersRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (AllocationOfCVToCVIDNumbers) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 539:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (CountryRestrictionsForTheAllocationOfCVToIDNumbers)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.countryRestrictionsForTheAllocationOfCVToIDNumbersRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.countryRestrictionsForTheAllocationOfCVToIDNumbersRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (CountryRestrictionsForTheAllocationOfCVToIDNumbers) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 540:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (CVTypesVoltages)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.cvTypesVoltagesRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.cvTypesVoltagesRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (CVTypesVoltages) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 541:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (CVDriverCabs)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.cvDriverCabsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.cvDriverCabsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (CVDriverCabs) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 542:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (CVDriverCabCountryRestrictions)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.cvDriverCabCountryRestrictionsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.cvDriverCabCountryRestrictionsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (CVDriverCabCountryRestrictions) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 543:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (AllocationOfDriverCabsToCVs)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.allocationOfDriverCabsToCVsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.allocationOfDriverCabsToCVsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (AllocationOfDriverCabsToCVs) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 544:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (Transmission)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.transmissionRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.transmissionRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (Transmission) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 545:
-                   chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (TransmissionCountryRestrictions)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.transmissionCountryRestrictionsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.transmissionCountryRestrictionsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (TransmissionCountryRestrictions) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 546:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (AllocationOfATransmissionToACV)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.allocationOfATransmissionToACVRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.allocationOfATransmissionToACVRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (AllocationOfATransmissionToACV) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 550:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (CVWheelbase)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.cvWheelbaseRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.cvWheelbaseRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (CVWheelbase) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 551:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (CVSuspension)  setRelationships(e,wrapper.getTableNumber())).filter(x->x!=null).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.cvSuspensionRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
+                    tecdocDataService.cvSuspensionRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (CVSuspension) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
 
                     break;
                 case 552:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (CVTyres)  setRelationships(e,wrapper.getTableNumber())).filter(Objects::nonNull).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.cvTyresRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.cvTyresRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (CVTyres) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 553:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (CVChassis)  setRelationships(e,wrapper.getTableNumber())).filter(Objects::nonNull).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.cvChassisRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.cvChassisRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (CVChassis) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 554:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-                        return batch.stream().map(e -> (CVProducerIDs)  setRelationships(e,wrapper.getTableNumber())).filter(Objects::nonNull).peek(e-> savedRows.getAndIncrement()).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.cvProducerIDsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
-
-
+                    tecdocDataService.cvProducerIDsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (CVProducerIDs) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
                     break;
                 case 555:
-                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
-                                                
-return batch.stream().map(e -> (CVProducerIdsCountryRestrictions)  setRelationships(e,wrapper.getTableNumber())).filter(Objects::nonNull).collect(Collectors.toList());
-                    })
-                            .peek(batch->{
-                        
-                        tecdocDataService.cvProducerIdsCountryRestrictionsRepository.saveAll(batch);
-                    }).collect(Collectors.toList());
+                    tecdocDataService.cvProducerIdsCountryRestrictionsRepository.saveAll(
+                    wrapper.getEntities().stream()
+                            .map(e -> (CVProducerIdsCountryRestrictions) setRelationships(e,wrapper.getTableNumber()))
+                            .filter(x->x!=null)
+                            .peek(e-> {
+                                savedRows.getAndIncrement();
+                            })
+                            .collect(Collectors.toList()));
+
+//                    chopped(wrapper.getEntities(),batchSize).stream().map(batch->{
+//
+//return batch.stream().map(e -> (CVProducerIdsCountryRestrictions)  setRelationships(e,wrapper.getTableNumber())).filter(Objects::nonNull).collect(Collectors.toList());
+//                    })
+//                            .peek(batch->{
+//
+//                        tecdocDataService.cvProducerIdsCountryRestrictionsRepository.saveAll(batch);
+//                    }).collect(Collectors.toList());
 
                     break;
             }
@@ -1328,15 +1136,16 @@ return batch.stream().map(e -> (CVProducerIdsCountryRestrictions)  setRelationsh
                             );
                     break;
                 case 14:
-                    ((DocumentTypes) entity)
+                    tmp=entity;
+                    ((DocumentTypes) tmp)
                             .setLanguageDescriptions(
                                     tecdocDataService.languageDescriptionsRepository.getOne(
                                             new LanguageDescriptionsId(((DocumentTypes) entity).getBezNr(), 6)
                                     )
 
                             );
-                    ((DocumentTypes) entity).setSprachNr(6);
-                    return entity;
+                    ((DocumentTypes) tmp).setSprachNr(6);
+                    return tmp;
                 case 20:
                     return entity;
                 case 30:
@@ -1351,11 +1160,13 @@ return batch.stream().map(e -> (CVProducerIdsCountryRestrictions)  setRelationsh
                     return tmp;
                 case 35:
                     tmp=entity;
-                    ((TextModules)tmp)
+                    ((TextModules) tmp)
                             .setLanguage(
-                                    tecdocDataService.languageRepository.getOne(((TextModules) tmp).getId().getSprachNr())
-                            );
-                return tmp;
+                                    tecdocDataService.languageRepository
+                                            .findById(
+                                                    ((TextModules) tmp).getId().getSprachNr())
+                                            .orElse(null));
+                    return tmp;
                 case 40:
 //                    tecdocDataService.dataSupplierMainAddressRepository.saveAll(
 //                            wrapper.getEntities().stream().map(e -> (DataSupplierMainAddress) e).collect(Collectors.toList()));
@@ -1378,7 +1189,6 @@ return batch.stream().map(e -> (CVProducerIdsCountryRestrictions)  setRelationsh
                     return tmp;
                 case 43:
                     tmp=entity;
-
                     ((DataSupplierAddresses)tmp)
                             .setCountryTable(
                                     tecdocDataService.countryTableRepository.findById(
@@ -1607,7 +1417,6 @@ return batch.stream().map(e -> (CVProducerIdsCountryRestrictions)  setRelationsh
                     ((BodyTypeSynonyms)tmp).setCountryAndLanguageDependentDescriptions(c);
                     ((BodyTypeSynonyms)tmp).setLbezNr(((BodyTypeSynonyms) tmp).getCountryAndLanguageDependentDescriptions().getId().getlBezNr());
                     ((BodyTypeSynonyms) tmp).setSprachNr(6);
-                    ((BodyTypeSynonyms) tmp).setTabNr(86);
                     return tmp;
                 case 147:
                     tmp=entity;
@@ -1617,8 +1426,6 @@ return batch.stream().map(e -> (CVProducerIdsCountryRestrictions)  setRelationsh
                             )
                     );
                     ((DriveTypeSynonyms)tmp).setSprachNr(6);
-                    ((DriveTypeSynonyms) tmp).setTabNr(82);
-                    ((DriveTypeSynonyms) tmp).setCle(getCle(((DriveTypeSynonyms) tmp).getId().getAntrArt()));
                 return tmp;
                 case 155:
                     tmp=entity;
@@ -1663,9 +1470,15 @@ return batch.stream().map(e -> (CVProducerIdsCountryRestrictions)  setRelationsh
                     );
                 return tmp;
                 case 162:
-//                    tecdocDataService.axleWheelbasesRepository.saveAll(
-//                            wrapper.getEntities().stream().map(e -> (AxleWheelbases) e).collect(Collectors.toList()));
-                    break;
+                    tmp=entity;
+                    ((AxleWheelbases)tmp)
+                            .setAxle(
+                                    tecdocDataService.axleRepository.getOne(
+                                            ((AxleWheelbases) tmp).getId().getAtypNr()
+                                    )
+                            );
+                    return entity;
+
                 case 163:
                     tmp=entity;
                     ((AxleBrakeSize)tmp)
@@ -1794,8 +1607,11 @@ return batch.stream().map(e -> (CVProducerIdsCountryRestrictions)  setRelationsh
                                             ((TradeNumbers) tmp).getId().getArtNr()
                                     )
                             );
-                    log.info(tmp.toString());
-                    tecdocDataService.tradeNumbersRepository.save((TradeNumbers)tmp);
+                    TradeNumbersId id=((TradeNumbers)tmp).getId();
+                    id.setlKZ(String.valueOf(
+                            ((TradeNumbers)tmp).getSort()
+                    ));
+                    ((TradeNumbers)tmp).setId(id);
                     return tmp;
 
                 case 208:
@@ -2289,12 +2105,12 @@ return batch.stream().map(e -> (CVProducerIdsCountryRestrictions)  setRelationsh
                                             ((SearchInformationTexts) tmp).getId().getGenArtNr()
                                     )
                             );
-                    ((SearchInformationTexts) tmp)
-                            .setTextModules(
-                                    tecdocDataService.tecdocCustomRepository.findTextModulesByTBSNr(
-                                            ((SearchInformationTexts) tmp).gettBSNr()
-                                    )
-                            );
+//                    ((SearchInformationTexts) tmp)
+//                            .setTextModules(
+//                                    tecdocDataService.tecdocCustomRepository.findTextModulesByTBSNr(
+//                                            ((SearchInformationTexts) tmp).gettBSNr()
+//                                    )
+//                            );
 
                     return tmp;
                 case 402:

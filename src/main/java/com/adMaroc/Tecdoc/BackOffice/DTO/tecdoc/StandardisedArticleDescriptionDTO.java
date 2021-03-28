@@ -4,16 +4,17 @@ import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.StandardisedArticleDescri
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.junit.runner.Description;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class StandardisedArticleDescriptionDTO {
     String nartNr;
-    String value;
+    DescriptionDTO value;
 
     public StandardisedArticleDescriptionDTO(StandardisedArticleDescription description) {
         nartNr=description.getNartNr();
-        value=description.getLanguageDescriptions().getBez();
+        value=new DescriptionDTO(description.getLanguageDescriptions());
     }
 }

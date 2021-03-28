@@ -1,5 +1,6 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -54,8 +55,7 @@ public class VehicleTypes {
 
 
     @MapsId("CountryAndLanguageDescriptionsId")
-    @NotFound(action = NotFoundAction.IGNORE)
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = true,fetch = FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "lbezNr",
@@ -65,14 +65,66 @@ public class VehicleTypes {
                     referencedColumnName = "sprachNr")
     })
     private CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions;
+    @JsonIgnore
     @MapsId("kModNr")
-    @NotFound(action = NotFoundAction.IGNORE)
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "kModNr",
                 referencedColumnName = "kModNr")
     private VehicleModelSeries vehicleModelSeries;
 
+    @OneToMany(fetch=FetchType.LAZY,
+            cascade=CascadeType.ALL,
+            mappedBy = "vehicleTypes")
+    private List<AdditionalVehicleTypeDescriptions> additionalVehicleTypeDescriptions;
+    @OneToMany(fetch=FetchType.LAZY,
+            cascade=CascadeType.ALL,
+            mappedBy = "vehicleTypes")
+    private List<BodyType> bodyTypes;
+    @OneToMany(fetch=FetchType.LAZY,
+            cascade=CascadeType.ALL,
+            mappedBy = "vehicleTypes")
+    private List<DriveTypeSynonyms> driveTypeSynonyms;
+    @OneToMany(fetch=FetchType.LAZY,
+            cascade=CascadeType.ALL,
+            mappedBy = "vehicleTypes")
+    private List<KBATypeAllocation> kbaTypeAllocations;
 
+    @Override
+    public String toString() {
+        return "VehicleTypes{" +
+                "kTypNr=" + kTypNr +
+                ", dLNr=" + dLNr +
+                ", sA=" + sA +
+                ", lbezNr=" + lbezNr +
+                ", kModNr=" + kModNr +
+                ", sortNr=" + sortNr +
+                ", bjvon=" + bjvon +
+                ", bjbis=" + bjbis +
+                ", kW=" + kW +
+                ", pS=" + pS +
+                ", ccmSteuer=" + ccmSteuer +
+                ", ccmTech=" + ccmTech +
+                ", lit=" + lit +
+                ", zyl=" + zyl +
+                ", tueren=" + tueren +
+                ", tanklnhalt=" + tanklnhalt +
+                ", spannung=" + spannung +
+                ", aBS=" + aBS +
+                ", aSR=" + aSR +
+                ", motArt=" + motArt +
+                ", kraftstoffaufBereitungspriNzip=" + kraftstoffaufBereitungspriNzip +
+                ", antrArt=" + antrArt +
+                ", bremsArt=" + bremsArt +
+                ", bremsSys=" + bremsSys +
+                ", ventileBrennraum=" + ventileBrennraum +
+                ", krStoffArt=" + krStoffArt +
+                ", katArt=" + katArt +
+                ", getrArt=" + getrArt +
+                ", aufbauArt=" + aufbauArt +
+                ", delet=" + delet +
+                ", sprachNr=" + sprachNr +
+                '}';
+    }
 
     public long getkTypNr() {
         return kTypNr;

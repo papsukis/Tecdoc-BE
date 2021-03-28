@@ -30,7 +30,7 @@ public class CVWheelbase {
 
 
     @MapsId("nTypNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "nTypNr",
                 referencedColumnName = "nTypNr")
     private CVTypes cvTypes;

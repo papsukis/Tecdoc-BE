@@ -25,12 +25,12 @@ public class CVDriverCabCountryRestrictions {
     long exclude;
 
     @MapsId("lKZ")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "lKZ",
                 referencedColumnName = "lKZ")
     private CountryTable countryTable;
     @MapsId("fHausNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "fHausNr",
                 referencedColumnName = "fHausNr")
     private CVDriverCabs cvDriverCabs;

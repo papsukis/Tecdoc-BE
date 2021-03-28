@@ -24,12 +24,12 @@ public class AccessoryListsCountryRestrictions {
     private long dLNr;
     private long sA;
     @MapsId("artNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "artNr",
             referencedColumnName = "artNr")
     private ArticleTable articleTable;
     @MapsId("AccessoryListsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
                     @JoinColumn(name = "artNr",
                             referencedColumnName = "artNr"),
@@ -40,7 +40,7 @@ public class AccessoryListsCountryRestrictions {
             })
     private AccessoryLists accessoryLists;
     @MapsId("lKZ")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "lKZ",
             referencedColumnName = "lKZ")
     private CountryTable countryTable;

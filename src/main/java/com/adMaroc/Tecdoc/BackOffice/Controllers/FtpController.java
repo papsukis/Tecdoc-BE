@@ -41,7 +41,7 @@ public class FtpController {
     @PreAuthorize("hasAuthority('FTP_UNCOMPRESS') or hasAuthority('ALL')")
     @PostMapping("/uncompress")
     public ResponseEntity<?> unCompressAndSave(@RequestBody UnCompressAndSaveRequest req , HttpServletRequest request) throws Exception {
-        log.info(request.getParameter("ftp-port"));
+
         ftp.connect(request.getHeader("ftp-ip"),Integer.valueOf(request.getHeader("ftp-port")),request.getHeader("ftp-username"),request.getHeader("ftp-password"));
         FileDto tmp =ftp.UnCompressFiles(req);
         ftp.close();
@@ -54,7 +54,7 @@ public class FtpController {
         FtpFile tmp =ftp.getData(fileDto.getFullpath()+"/"+fileDto.getFileName(),fileDto.getFileName());
         ftp.close();
         return ResponseEntity.ok(tmp);
-
+//            return ResponseEntity.ok(true);
     }
     @PreAuthorize("hasAuthority('FTP_SAVE') or hasAuthority('ALL')")
     @PostMapping("/saveLines")
@@ -63,6 +63,7 @@ public class FtpController {
         SaveLogDTO tmp =
                 tecdocDataService.save(t);
         return ResponseEntity.ok(tmp);
+//        return ResponseEntity.ok(true);
     }
 
     @PostMapping("/saveLog")

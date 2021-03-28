@@ -35,13 +35,12 @@ public class AccessoryLists {
     long loschFlag;
     long sprachNr;
     @MapsId("artNr")
-    @ManyToOne
-    @NotFound(action = NotFoundAction.IGNORE)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "artNr",
                 referencedColumnName = "artNr")
     private ArticleTable articleTable;
     @MapsId("LanguageDescriptionsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "bezNr",
@@ -52,8 +51,7 @@ public class AccessoryLists {
     })
     private LanguageDescriptions languageDescriptions;
     @MapsId("genArtNr")
-    @ManyToOne
-    @NotFound(action = NotFoundAction.IGNORE)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "zubGenArtNr",
                 referencedColumnName = "genArtNr")
     private GenericArticles genericArticles;

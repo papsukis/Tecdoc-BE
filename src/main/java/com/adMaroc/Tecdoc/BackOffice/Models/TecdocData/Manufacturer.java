@@ -1,5 +1,6 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,8 +36,7 @@ public class Manufacturer {
     long delet;
     long sprachNr;
     @MapsId("CountryAndLanguageDependentDescriptionsId")
-    @ManyToOne
-    @NotFound(action = NotFoundAction.IGNORE)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "lBezNr",
@@ -47,13 +47,46 @@ public class Manufacturer {
                     referencedColumnName = "sprachNr")})
     private CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescription;
     @MapsId("dLNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "dLNr",
             referencedColumnName = "dLNr")
     private Header header;
 
+    @OneToMany(fetch=FetchType.LAZY,
+            cascade=CascadeType.ALL,
+            mappedBy = "manufacturer")
+    private List<ManufacturerKBAReference >manufacturerKBAReference;
+    @OneToMany(fetch=FetchType.LAZY,
+            cascade=CascadeType.ALL,
+            mappedBy = "manufacturer")
+    private List<VehicleModelSeries> vehicleModelSeries;
+
+    @OneToMany(fetch=FetchType.LAZY,
+            cascade=CascadeType.ALL,
+            mappedBy = "manufacturer")
+    private List<CVDriverCabs> cvDriverCabs;
 
 
+    @Override
+    public String toString() {
+        return "Manufacturer{" +
+                "herNr=" + herNr +
+                ", dLNr=" + dLNr +
+                ", sA=" + sA +
+                ", hKZ='" + hKZ + '\'' +
+                ", lBezNr=" + lBezNr +
+                ", pKW=" + pKW +
+                ", nKW=" + nKW +
+                ", vGL=" + vGL +
+                ", achse=" + achse +
+                ", motor=" + motor +
+                ", getriebe=" + getriebe +
+                ", transporter=" + transporter +
+                ", delet=" + delet +
+                ", sprachNr=" + sprachNr +
+                ", vehicleModelSeries=" + vehicleModelSeries +
+                '}';
+    }
 
     public long getHerNr() {
         return herNr;

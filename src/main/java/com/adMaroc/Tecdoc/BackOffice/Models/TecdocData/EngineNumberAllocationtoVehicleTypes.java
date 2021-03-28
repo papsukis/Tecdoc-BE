@@ -29,12 +29,12 @@ public class EngineNumberAllocationtoVehicleTypes {
     long exclude;
     String lKZ;
     @MapsId("kTypNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "kTypNr",
                 referencedColumnName = "kTypNr")
     private VehicleTypes vehicleTypes;
     @MapsId("motNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "motNr",
                 referencedColumnName = "motNr")
     private Engines engines;

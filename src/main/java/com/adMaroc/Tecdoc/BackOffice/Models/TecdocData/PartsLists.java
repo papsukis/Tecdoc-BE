@@ -31,16 +31,14 @@ public class PartsLists {
     long loschFlag;
     Long genArtNr;
     @MapsId("artNr")
-    @ManyToOne
-    @NotFound(action = NotFoundAction.IGNORE)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "artNr",
                 referencedColumnName = "artNr")
     private ArticleTable articleTable;
 
 
     @MapsId("genArtNr")
-    @ManyToOne
-    @NotFound(action = NotFoundAction.IGNORE)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "genArtNr",
                 referencedColumnName = "genArtNr")
     private GenericArticles genericArticles;

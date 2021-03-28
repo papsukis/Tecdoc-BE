@@ -30,12 +30,12 @@ public class ProposedCriteria {
 
 
     @MapsId(value="genArtNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "genArtNr",
                 referencedColumnName = "genArtNr")
     private GenericArticles genericArticles;
     @MapsId("CriteriaId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "dLNr",

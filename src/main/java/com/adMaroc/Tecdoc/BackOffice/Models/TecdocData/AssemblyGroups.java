@@ -25,7 +25,7 @@ public class AssemblyGroups {
     long sprachNr;
 
     @MapsId("LanguageDescriptionsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "bezNr",

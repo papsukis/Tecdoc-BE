@@ -37,14 +37,12 @@ public class GraphicsDocuments {
 
 
     @MapsId("sprachNr")
-    @ManyToOne
-    @NotFound(action = NotFoundAction.IGNORE)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "sprachNr",
                 referencedColumnName = "sprachNr")
     private Language language;
     @MapsId("LanguageDescriptions")
-    @ManyToOne
-    @NotFound(action = NotFoundAction.IGNORE)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "bezNr",
@@ -54,8 +52,7 @@ public class GraphicsDocuments {
                     referencedColumnName = "sprachNr")})
     private LanguageDescriptions languageDescriptions;
     @MapsId("dokumentenArt")
-    @ManyToOne
-    @NotFound(action = NotFoundAction.IGNORE)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "dokumentenArt",
                 referencedColumnName = "dokumentenArt")
     private DocumentTypes documentTypes;

@@ -28,7 +28,7 @@ public class LanguageDescriptions {
 
 
     @MapsId("sprachNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "sprachNr",
                 referencedColumnName = "sprachNr")
     private Language language;

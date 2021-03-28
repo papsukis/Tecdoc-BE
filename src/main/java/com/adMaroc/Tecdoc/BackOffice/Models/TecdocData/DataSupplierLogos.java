@@ -27,7 +27,7 @@ public class DataSupplierLogos {
     long sprachNr;
 
     @MapsId("GraphicsDocumentsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "bildNr",
@@ -40,7 +40,7 @@ public class DataSupplierLogos {
                     referencedColumnName = "sprachNr")})
     private GraphicsDocuments graphicsDocuments;
     @MapsId("dokumentenArt")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "dokumentenArt",
                 referencedColumnName = "dokumentenArt")
     private DocumentTypes documentTypes;

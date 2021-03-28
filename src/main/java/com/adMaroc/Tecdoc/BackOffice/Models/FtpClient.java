@@ -2,6 +2,7 @@ package com.adMaroc.Tecdoc.BackOffice.Models;
 
 
 import com.adMaroc.Tecdoc.BackOffice.Utils.JsonReader;
+import com.adMaroc.Tecdoc.BackOffice.Utils.OpenMultipartArchive7z;
 import com.adMaroc.Tecdoc.Security.Exceptions.InternalServerException;
 import com.adMaroc.Tecdoc.Security.Models.Config;
 import com.adMaroc.Tecdoc.Security.Repository.ConfigurationRepository;
@@ -10,8 +11,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.sevenzipjbinding.SevenZip;
+import net.sf.sevenzipjbinding.*;
 import net.sf.sevenzipjbinding.impl.RandomAccessFileInStream;
+import net.sf.sevenzipjbinding.impl.VolumedArchiveInStream;
 import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry;
 import org.apache.commons.compress.archivers.sevenz.SevenZFile;
 import org.apache.commons.compress.archivers.sevenz.SevenZOutputFile;
@@ -42,6 +44,7 @@ public class FtpClient {
     private String user;
     private String password;
     private FTPClient ftp;
+
     public FtpClient(String ipAddress,int port, String userName, String password){
         this.server=ipAddress;
         this.port=port;
@@ -138,19 +141,34 @@ public class FtpClient {
 
         return file;
     }
+    public void uncompressMultiPartImages(String multipart,String fullpath) throws IOException {
+
+        String directoryPath = "PIC_FILES/";
+
+        String imgPath="/PIC_FILES/"+multipart.substring(0,4);
+
+        boolean b = ftp.makeDirectory(imgPath);
+
+        OpenMultipartArchive7z.extract(fullpath+multipart,fullpath+multipart.substring(0,4));
+    }
 
     public void uncompressFile(String file, String path,long sizelimit) throws IOException {
         log.info("Uncompressing file {} in {}",file,path);
 
         ByteArrayOutputStream fos = new ByteArrayOutputStream();
+
         String directoryPath = path.equals("/") ? "" : path + "/";
-        String directoryName=splitFileName(file);
-        String fullpath=directoryPath +directoryName;
+        String directoryName=file.contains("REFERENCE_DATA")?"REFERENCE_DATA":splitFileName(file).substring(0,4);
+        String fullpath=(directoryPath +directoryName);
+        String imgPath="/PIC_FILES/"+directoryName;
+
         ftp.retrieveFile(directoryPath +file,fos);
         InputStream fi=new ByteArrayInputStream(fos.toByteArray());
+        fos.close();
 
 
         ftp.makeDirectory(fullpath);
+        ftp.makeDirectory(imgPath);
 
 
         SevenZFile zis = new SevenZFile(convertInputStreamToFile(fi));
@@ -169,10 +187,13 @@ public class FtpClient {
                     out.write(content);
                 }
                 InputStream is=new ByteArrayInputStream(out.toByteArray());
-                putFileToPath(is,fullpath+"/"+entry.getName());
+                if(isImage(entry.getName()))
+                    putFileToPath(is,imgPath+"/"+entry.getName());
+                else
+                    putFileToPath(is,fullpath+"/"+entry.getName());
                 out.close();
                 is.close();
-            log.info("finished uncompressing");
+
             }
             else{
                 int j=1;
@@ -188,15 +209,22 @@ public class FtpClient {
                     j++;
                     out.close();
                     is.close();
+
                 }
-
             }
-//
         }
-
+        zis.close();
     }
 
-
+    private boolean isImage(String fileName){
+        if(fileName.toLowerCase().endsWith(".bmp") ||
+                fileName.toLowerCase().endsWith(".jpg") ||
+                fileName.toLowerCase().endsWith(".png") ||
+                fileName.toLowerCase().endsWith(".gif")
+        )
+            return true;
+        return false;
+    }
 
     public String splitFileName(String name){
         return StringUtils.delete(name,".7z");
@@ -308,6 +336,7 @@ public class FtpClient {
         }
         return parts;
     }
+
 
 }
 

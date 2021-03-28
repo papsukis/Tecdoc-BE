@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PurposeOfUseDTO {
     String verwNr;
-    String value;
+    DescriptionDTO value;
 
     public PurposeOfUseDTO(PurposeOfUse purposeOfUse) {
         verwNr=purposeOfUse.getVerwNr();
-        value=purposeOfUse.getLanguageDescriptions().getBez();
+        value=new DescriptionDTO(purposeOfUse.getLanguageDescriptions());
     }
 }

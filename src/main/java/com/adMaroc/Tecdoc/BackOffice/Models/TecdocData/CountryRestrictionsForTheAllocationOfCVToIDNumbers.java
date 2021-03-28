@@ -26,7 +26,7 @@ public class CountryRestrictionsForTheAllocationOfCVToIDNumbers {
     long loschFlag;
 
     @MapsId("AllocationOfCVToCVIDNumbersId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "ntypnr",
@@ -39,18 +39,18 @@ public class CountryRestrictionsForTheAllocationOfCVToIDNumbers {
                     referencedColumnName = "herldnr")})
     private AllocationOfCVToCVIDNumbers allocationOfCVToCVIDNumbers;
     @MapsId("lKZ")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "lKZ",
                 referencedColumnName = "lKZ")
     private CountryTable countryTable;
 
     @MapsId("nTypNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "ntypnr",
                 referencedColumnName = "ntypnr")
     private CVTypes cvTypes;
     @MapsId("herlDNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "herldnr",
                 referencedColumnName = "herldnr")
     private CVProducerIDs cvProducerIDs;

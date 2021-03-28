@@ -32,12 +32,12 @@ public class AllocationOfAxleTypesToCVTypes {
 
 
     @MapsId("nTypNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "ntypnr",
                 referencedColumnName = "ntypnr")
     private CVTypes cvTypes;
     @MapsId("aTypNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "atypnr",
                 referencedColumnName = "atypnr")
     private Axle axle;

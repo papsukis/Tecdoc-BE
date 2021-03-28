@@ -35,7 +35,7 @@ public class CountryTable {
 
 
     @MapsId("LanguageDescriptionsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({@JoinColumn(name = "bezNr",referencedColumnName = "bezNr"),@JoinColumn(name = "sprachNr",referencedColumnName = "sprachNr",nullable = true)})
     private LanguageDescriptions languageDescriptions;
 

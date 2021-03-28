@@ -1,5 +1,6 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,7 +31,7 @@ public class AdditionalVehicleTypeDescriptions {
     @Column(nullable = true)
     long sprachNr2;
     @MapsId("CountryAndLanguageDependentDescriptionsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "lBezNr1",
@@ -41,7 +42,7 @@ public class AdditionalVehicleTypeDescriptions {
                     referencedColumnName = "sprachNr")})
     private CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions1;
     @MapsId("CountryAndLanguageDependentDescriptionsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "lBezNr2",
@@ -51,8 +52,9 @@ public class AdditionalVehicleTypeDescriptions {
                     name = "sprachNr2",
                     referencedColumnName = "sprachNr")})
     private CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions2;
+    @JsonIgnore
     @MapsId("kTypNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "kTypNr",
                 referencedColumnName = "kTypNr")
     private VehicleTypes vehicleTypes;

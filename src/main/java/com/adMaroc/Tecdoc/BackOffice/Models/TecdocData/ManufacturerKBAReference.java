@@ -2,6 +2,7 @@ package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData;
 
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.ManufacturerKBAReferenceId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,12 +24,21 @@ public class ManufacturerKBAReference {
     long dLNr;
     long sA;
 
+    @JsonIgnore
     @MapsId("herNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "herNr",
                 referencedColumnName = "herNr")
     private Manufacturer manufacturer;
 
+    @Override
+    public String toString() {
+        return "ManufacturerKBAReference{" +
+                "id=" + id +
+                ", dLNr=" + dLNr +
+                ", sA=" + sA +
+                '}';
+    }
 
     public ManufacturerKBAReference(Map<String,String> datas) {
         this.id = new ManufacturerKBAReferenceId(Integer.valueOf(datas.get("kBANr")),Integer.valueOf(datas.get("HerNr")));

@@ -30,12 +30,12 @@ public class AllocationOfDriverCabsToCVs {
     long loschFlag;
 
     @MapsId("fHausNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "fHausNr",
                 referencedColumnName = "fHausNr")
     private CVDriverCabs cvDriverCabs;
     @MapsId("nTypNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "nTypNr",
                 referencedColumnName = "nTypNr")
     private CVTypes cvTypes;

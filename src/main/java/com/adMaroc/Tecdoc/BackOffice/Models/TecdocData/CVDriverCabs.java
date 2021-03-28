@@ -37,8 +37,7 @@ public class CVDriverCabs {
     long sprachNr;
 
     @MapsId("CountryAndLanguageDependentDescriptionsId")
-    @ManyToOne(optional = true)
-    @NotFound(action = NotFoundAction.IGNORE)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "lbezNr",

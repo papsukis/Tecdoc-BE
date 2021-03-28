@@ -41,7 +41,7 @@ public class Axle {
 
 
     @MapsId("kModNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "kmodNr",
                 referencedColumnName = "kmodNr")
     private VehicleModelSeries vehicleModelSeries;

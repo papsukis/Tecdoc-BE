@@ -1,23 +1,34 @@
 package com.adMaroc.Tecdoc.BackOffice.Services;
 
 
+import com.adMaroc.Tecdoc.BackOffice.DTO.ManufacturerList;
+import com.adMaroc.Tecdoc.BackOffice.DTO.SearchDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.SearchStructureTree;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.ArticleCDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.ManufacturerCDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehicleTypeCDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehiculeModelSeriesCDTO;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.CriteriaTable;
+import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.Manufacturer;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.TecdocSearchStructure;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.LanguageDescriptionsId;
+import com.adMaroc.Tecdoc.BackOffice.Repository.custom.CustomTecdocSearchRepository;
 import com.adMaroc.Tecdoc.BackOffice.Repository.custom.TecdocCustomRepository;
 import com.adMaroc.Tecdoc.BackOffice.Repository.custom.CustomTecdocGetRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@Transactional
 public class TecdocDataGetService {
     @Autowired
     CustomTecdocGetRepository tecdocGetRepository;
@@ -25,6 +36,10 @@ public class TecdocDataGetService {
     TecdocCustomRepository tecdocCustomRepository;
     @Autowired
     WrapperTecdocDataService tecdocService;
+    @Autowired
+    TecdocBuilder tecdocBuilder;
+    @Autowired
+    CustomTecdocSearchRepository tecdocSearchRepository;
 
     public List<SearchStructureTree> getAllSearchStructures(){
         List<SearchStructureTree> tree= new ArrayList<>();
@@ -36,10 +51,9 @@ public class TecdocDataGetService {
         for(KeyTableDTO keytable : keyTableDTOS){
            tree.add(new SearchStructureTree(keytable));
         }
-
         for(SearchStructureDTO node: nodes){
             for(SearchStructureTree tree1:tree){
-               if(tree1.getProductSection().getKey() == node.getTreeType().getKey()){
+               if(tree1.getProductSection().getKey().contains(node.getTreeType().getKey())){
                    tree1.getTree().add(node);
                }
            }
@@ -48,50 +62,49 @@ public class TecdocDataGetService {
         return tree;
     }
 
-    public List<ManufacturerDTO> findAllManufacturers(){
-        return tecdocService.manufacturerRepository.findAll().stream()
-                .map(manufacturer->{manufacturer.setCountryAndLanguageDependentDescription(
-                        tecdocCustomRepository.findCountryAndLanguageDependentDescriptionsByLbeznr(manufacturer.getlBezNr())
-                                                                                            );
-                    return manufacturer;
-                })
-                .map(ManufacturerDTO::new)
-                .collect(Collectors.toList());
+
+
+    public List<GenericArticleDTO> test(SearchDTO searchDTO){
+        return tecdocService.genericArticlesRepository.findAll().stream().map(GenericArticleDTO::new).map(tecdocBuilder::buildGenericArticle).collect(Collectors.toList());
+    }
+
+    public List<ManufacturerList> findAllManufacturers(){
+        return tecdocGetRepository.findManufacturers().stream().map(tecdocBuilder::buildManufacturerList).collect(Collectors.toList());
     }
     public List<GenericArticleDTO> findAllGenericArticle(){
         return tecdocService.genericArticlesRepository.findAll().stream().map(GenericArticleDTO::new).collect(Collectors.toList());
     }
-    public List<CriteriaDTO> findAllCriteria(){
-        List<CriteriaTable> tmp = tecdocService.criteriaTableRepository.findAll();
-        List<CriteriaDTO> list=tmp.stream().map(CriteriaDTO::new).collect(Collectors.toList());
-
-        List<CriteriaDTO> parent=list.stream().filter(criteriaTable -> criteriaTable.getParentCriterion()==null).collect(Collectors.toList());;
-        List<CriteriaDTO> children=list.stream().filter(criteriaTable -> criteriaTable.getParentCriterion()!=null).collect(Collectors.toList());;
-        return parent.stream().map(criteriaDTO -> {return buildCriterion(criteriaDTO);}).map(criteria->setCriteriaHierarchy(criteria,children)).collect(Collectors.toList());
-    }
-    public CriteriaDTO buildCriterion(CriteriaDTO criteriaDTO){
-        if(criteriaDTO.getType().contains("K")){
-            criteriaDTO.setKeyTable(
-                    new KeyTableDTO(
-                            tecdocService.keyTablesRepository.findById(criteriaDTO.getKeyTable().getTabNr()).get()
-                    )
-            );
-        }
-        if(criteriaDTO.getAbreviationId()!=0)
-            criteriaDTO.setAbreviation(
-                    tecdocCustomRepository.findanguageDescriptionsByLbeznr(
-                                criteriaDTO.getAbreviationId()
-                        ).getBez()
-            );
-        if(criteriaDTO.getUnitId()!=0)
-            criteriaDTO.setUnit(
-                    tecdocCustomRepository.findanguageDescriptionsByLbeznr(
-                            criteriaDTO.getUnitId()
-                    ).getBez()
-            );
-
-        return criteriaDTO;
-    }
+//    public List<CriteriaDTO> findAllCriteria(){
+//        List<CriteriaTable> tmp = tecdocService.criteriaTableRepository.findAll();
+//        List<CriteriaDTO> list=tmp.stream().map(CriteriaDTO::new).collect(Collectors.toList());
+//
+//        List<CriteriaDTO> parent=list.stream().filter(criteriaTable -> criteriaTable.getParentCriterion()==null).collect(Collectors.toList());;
+//        List<CriteriaDTO> children=list.stream().filter(criteriaTable -> criteriaTable.getParentCriterion()!=null).collect(Collectors.toList());;
+//        return parent.stream().map(criteriaDTO -> {return buildCriterion(criteriaDTO);}).map(criteria->setCriteriaHierarchy(criteria,children)).collect(Collectors.toList());
+//    }
+//    public CriteriaDTO buildCriterion(CriteriaDTO criteriaDTO){
+//        if(criteriaDTO.getType().contains("K")){
+//            criteriaDTO.setKeyTable(
+//                    new KeyTableDTO(
+//                            tecdocService.keyTablesRepository.findById(criteriaDTO.getKeyTable().getTabNr()).get()
+//                    )
+//            );
+//        }
+//        if(criteriaDTO.getAbreviation().getBezNr()=="0")
+//            criteriaDTO.setAbreviation(
+//                    tecdocCustomRepository.findanguageDescriptionsByLbeznr(
+//                                criteriaDTO.getAbreviationId()
+//                        ).getBez()
+//            );
+//        if(criteriaDTO.getUnitId()!=0)
+//            criteriaDTO.setUnit(
+//                    tecdocCustomRepository.findanguageDescriptionsByLbeznr(
+//                            criteriaDTO.getUnitId()
+//                    ).getBez()
+//            );
+//
+//        return criteriaDTO;
+//    }
     private CriteriaDTO setCriteriaHierarchy(CriteriaDTO criteria,List<CriteriaDTO> childrenList){
         CriteriaDTO tmp=criteria;
         List<CriteriaDTO> sub = new ArrayList<>();
@@ -107,10 +120,20 @@ public class TecdocDataGetService {
         tmp.setCriterionChildren(sub);
         return tmp;
     }
-    public List<VehicleModelSerieDTO> findAllVehicleModelSeries(){
-        return tecdocService.vehicleModelSeriesRepository.findAll().stream().map(VehicleModelSerieDTO::new).collect(Collectors.toList());
+    public List<VehiculeModelSeriesCDTO> findAllVehicleModelSeries(){
+        return tecdocService.vehicleModelSeriesRepository.findAll().stream().map(VehiculeModelSeriesCDTO::new).collect(Collectors.toList());
     }
-    public List<VehicleTypeDTO> findAllVehicleTypes(){
-        return tecdocService.vehicleTypesRepository.findAll().stream().map(VehicleTypeDTO::new).collect(Collectors.toList());
+    public List<VehicleModelSerieDTO> findVehicleModelSerieByHernr(SearchDTO search){
+        log.info(search.toString());
+        return tecdocGetRepository.findVehicleModelSerieByHernr(Long.valueOf(search.getHerNr()));
+    }
+    public List<VehicleTypeCDTO> findAllVehicleTypes(){
+        int i=0;
+        return tecdocService.vehicleTypesRepository.findAll().stream().map(VehicleTypeCDTO::new).collect(Collectors.toList()).subList(0,100);
+    }
+
+    public List<ArticleImageDTO> findAllArticles(List<Long> dlnr) {
+        log.info("loading articles");
+        return tecdocGetRepository.getAllArticles(dlnr);
     }
 }

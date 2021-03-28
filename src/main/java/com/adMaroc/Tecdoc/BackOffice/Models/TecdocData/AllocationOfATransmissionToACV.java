@@ -29,12 +29,12 @@ public class AllocationOfATransmissionToACV {
     long exclude;
 
     @MapsId("nTypNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "ntypnr",
                 referencedColumnName = "ntypnr")
     private CVTypes cvTypes;
     @MapsId("getrNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "getrNr",
                 referencedColumnName = "getrNr")
     private Transmission transmission;

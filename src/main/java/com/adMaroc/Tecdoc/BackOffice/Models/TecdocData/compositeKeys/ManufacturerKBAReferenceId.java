@@ -50,6 +50,14 @@ public class ManufacturerKBAReferenceId implements Serializable{
     }
 
     @Override
+    public String toString() {
+        return "ManufacturerKBAReferenceId{" +
+                "kBANr=" + kBANr +
+                ", herNr=" + herNr +
+                '}';
+    }
+
+    @Override
     public int hashCode() {
 
         return Objects.hash(getkBANr(), getHerNr());

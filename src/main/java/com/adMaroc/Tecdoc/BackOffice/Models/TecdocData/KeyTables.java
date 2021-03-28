@@ -32,7 +32,7 @@ public class KeyTables {
             mappedBy = "keyTables")
     private List<KeyTablesEntries >keyTablesEntries;
     @MapsId("LanguageDescriptionsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "bezNr",
@@ -41,6 +41,8 @@ public class KeyTables {
                     name = "sprachNr",
                     referencedColumnName = "sprachNr")})
     private LanguageDescriptions languageDescriptions;
+
+
 
 
     public long getTabNr() {

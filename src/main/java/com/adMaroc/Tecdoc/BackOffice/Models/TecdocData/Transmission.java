@@ -33,7 +33,7 @@ public class Transmission {
     long gaenge;
 
     @MapsId("herNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "herNr",
                 referencedColumnName = "herNr")
     private Manufacturer manufacturer;

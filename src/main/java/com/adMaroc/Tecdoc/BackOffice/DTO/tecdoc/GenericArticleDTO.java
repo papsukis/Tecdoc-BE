@@ -1,16 +1,20 @@
 package com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc;
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.GenericArticles;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class GenericArticleDTO {
     long genArtNr;
-    String description;
+    DescriptionDTO description;
     boolean personalCarLinkage;
     boolean commercialVehicleLinkage;
     boolean axleLinkage;
@@ -20,10 +24,13 @@ public class GenericArticleDTO {
     StandardisedArticleDescriptionDTO standardisedArticleDescription;
     PurposeOfUseDTO purposeOfUse;
     AssemblyGroupsDTO assemblyGroups;
+    List<MandatoryCriteriaDTO> mandatoryCriteria= new ArrayList<>();
+    List<ProposedCriteriaDTO> proposedCriteria= new ArrayList<>();
 
+    @QueryProjection
     public GenericArticleDTO(GenericArticles genericArticle) {
         genArtNr=genericArticle.getGenArtNr();
-        description=genericArticle.getLanguageDescriptions().getBez();
+        description=new DescriptionDTO(genericArticle.getLanguageDescriptions());
         personalCarLinkage=genericArticle.getoKPKW()==1;
         commercialVehicleLinkage=genericArticle.getoKNKW()==1;
         axleLinkage=genericArticle.getoKAchse()==1;

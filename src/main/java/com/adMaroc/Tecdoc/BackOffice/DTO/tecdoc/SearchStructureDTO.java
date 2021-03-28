@@ -20,6 +20,10 @@ public class SearchStructureDTO {
     private String description;
     private List<SearchStructureDTO> subSearchStructure;
     private long nodeParentId;
+    private List<GenericArticleDTO> genericArticle = new ArrayList<>();
+    private List<CriteriaDTO> criterias = new ArrayList<>();
+    private List<TecdocImages> images = new ArrayList<>();
+
 
     public SearchStructureDTO(TecdocSearchStructure searchStructure,KeyTableDTO treeType) {
         nodeId=searchStructure.getNodeId();

@@ -28,7 +28,7 @@ public class CVTypesVoltages {
 
 
     @MapsId("CVTypesId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "ntypnr",
                 referencedColumnName = "ntypnr")
     private CVTypes cvTypes;

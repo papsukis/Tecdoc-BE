@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.util.List;
@@ -30,12 +32,12 @@ public class AllocationOfGraphicsToArticleNumbers {
     long loschFlag;
     long sprachNr;
     @MapsId("artNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "artNr",
                 referencedColumnName = "artNr")
     private ArticleTable articleTable;
     @MapsId("GraphicsDocumentsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "bildNr",
@@ -48,7 +50,7 @@ public class AllocationOfGraphicsToArticleNumbers {
                     referencedColumnName = "sprachNr")})
     private GraphicsDocuments graphicsDocuments;
     @MapsId("dokumentenArt")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "dokumentenArt",
                 referencedColumnName = "dokumentenArt")
     private DocumentTypes documentTypes;

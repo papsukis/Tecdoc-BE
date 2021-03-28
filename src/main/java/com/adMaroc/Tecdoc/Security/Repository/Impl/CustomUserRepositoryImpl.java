@@ -13,9 +13,10 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-
+@Transactional
 public class CustomUserRepositoryImpl extends UserBooleanExpressions implements CustomUserRepository {
 
     @PersistenceContext

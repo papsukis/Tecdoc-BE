@@ -25,12 +25,12 @@ public class TransmissionCountryRestrictions {
     long exclude;
     long loschFlag;
     @MapsId("lKZ")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "lKZ",
                 referencedColumnName = "lKZ")
     private CountryTable countryTable;
     @MapsId("getrNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "getrNr",
                 referencedColumnName = "getrNr")
     private Transmission transmission;

@@ -55,11 +55,24 @@ public class AdditionalDescriptionsToVehicleModelSeries {
     })
     private CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions2;
     @MapsId("kModNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "kModNr",
                 referencedColumnName = "kModNr")
     private VehicleModelSeries vehicleModelSeries;
 
+    @Override
+    public String toString() {
+        return "AdditionalDescriptionsToVehicleModelSeries{" +
+                "kModNr=" + kModNr +
+                ", dLNr=" + dLNr +
+                ", sA=" + sA +
+                ", lbezNr1=" + lbezNr1 +
+                ", lbezNr2=" + lbezNr2 +
+                ", loschFlag=" + loschFlag +
+                ", sprachNr1=" + sprachNr1 +
+                ", sprachNr2=" + sprachNr2 +
+                '}';
+    }
 
     public AdditionalDescriptionsToVehicleModelSeries(Map<String,String> datas) {
         this.kModNr = Integer.valueOf(datas.get("KModNr"));

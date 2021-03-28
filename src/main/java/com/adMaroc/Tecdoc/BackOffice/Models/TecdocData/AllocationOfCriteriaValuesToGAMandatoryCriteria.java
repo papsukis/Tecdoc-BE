@@ -26,12 +26,12 @@ public class AllocationOfCriteriaValuesToGAMandatoryCriteria {
     long sortNr;
 
     @MapsId("genArtNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "genArtNr",
                 referencedColumnName = "genArtNr")
     private GenericArticles genericArticles;
     @MapsId("MandatoryCriteriaId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "genArtNr",

@@ -26,12 +26,12 @@ public class GenericArticleSynonyms {
 
 
     @MapsId("genArtNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "genArtNr",
                 referencedColumnName = "genArtNr")
     private GenericArticles genericArticles;
     @MapsId("sprachNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "sprachNr",
                 referencedColumnName = "sprachNr")
     private Language language;

@@ -28,7 +28,7 @@ public class RoleController {
         return ResponseEntity.ok(roleService.GetAllRoles());
     }
 
-    @PreAuthorize("hasAuthority('ALL') or hasAuthority('USER_ACCESS')")
+    @PreAuthorize("hasAuthority('ALL') or hasAuthority('ROLE_ACCESS')")
     @PostMapping("/search")
     public ResponseEntity<?> search(@RequestBody List<FilterDTO<Privilege>> filters){
         log.info(filters.toString());

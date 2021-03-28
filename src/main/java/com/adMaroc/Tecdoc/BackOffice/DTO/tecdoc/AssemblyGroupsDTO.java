@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AssemblyGroupsDTO {
     String bgNr;
-    String value;
+    DescriptionDTO value;
 
     public AssemblyGroupsDTO(AssemblyGroups assemblyGroups) {
         bgNr=assemblyGroups.getBgNr();
-        value=assemblyGroups.getLanguageDescriptions().getBez();
+        value=new DescriptionDTO(assemblyGroups.getLanguageDescriptions());
     }
 }

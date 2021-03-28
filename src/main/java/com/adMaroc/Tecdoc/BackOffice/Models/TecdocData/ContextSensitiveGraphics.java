@@ -30,7 +30,7 @@ public class ContextSensitiveGraphics {
     long loschFlag;
 
     @MapsId("GraphicsDocumentsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "bildnr",
@@ -44,12 +44,12 @@ public class ContextSensitiveGraphics {
     })
     private GraphicsDocuments graphicsDocuments;
     @MapsId("dokumentenArt")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "dokumentenArt",
                 referencedColumnName = "dokumentenArt")
     private DocumentTypes documentTypes;
     @MapsId("sprachNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "sprachNr",
                 referencedColumnName = "sprachNr")
     private Language language;

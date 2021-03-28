@@ -2,6 +2,7 @@ package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData;
 
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.BodyTypeId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,11 +26,11 @@ public class BodyType {
     long sortNr;
     long loschFlag;
     String lKZ;
-
+    @JsonIgnore
     @MapsId("kTypNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "kTypNr",
-                referencedColumnName = "kTypNr")
+            referencedColumnName = "kTypNr")
     private VehicleTypes vehicleTypes;
 
 

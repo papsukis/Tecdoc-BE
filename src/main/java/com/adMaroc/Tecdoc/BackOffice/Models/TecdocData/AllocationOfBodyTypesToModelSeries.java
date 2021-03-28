@@ -30,7 +30,7 @@ public class AllocationOfBodyTypesToModelSeries {
 
 
     @MapsId("kModNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "kmodnr",
                 referencedColumnName = "kmodnr")
     private VehicleModelSeries vehicleModelSeries;

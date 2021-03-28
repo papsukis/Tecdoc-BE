@@ -1,5 +1,6 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,16 +35,14 @@ public class VehicleModelSeries {
     long delet;
     long transporter;
     long sprachNr;
-
+    @JsonIgnore
     @MapsId("herNr")
-    @NotFound(action = NotFoundAction.IGNORE)
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "herNr",
                 referencedColumnName = "herNr")
     private Manufacturer manufacturer;
     @MapsId("CountryAndLanguageDependentDescriptionsId")
-    @NotFound(action = NotFoundAction.IGNORE)
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "lBezNr",
@@ -52,23 +51,46 @@ public class VehicleModelSeries {
                     name="sprachNr",
                     referencedColumnName = "sprachNr")})
     private CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions;
+    @OneToMany(fetch=FetchType.LAZY,
+            cascade=CascadeType.ALL,
+            mappedBy = "vehicleModelSeries")
+    private List<VehicleTypes > vehicleTypes;
+    @OneToMany(fetch=FetchType.LAZY,
+            cascade=CascadeType.ALL,
+            mappedBy = "vehicleModelSeries")
+    private List<Axle >axle;
+    @OneToMany(fetch=FetchType.LAZY,
+            cascade=CascadeType.ALL,
+            mappedBy = "vehicleModelSeries")
+    private List<AdditionalDescriptionsToVehicleModelSeries >additionalDescriptionsToVehicleModelSeries;
+    @OneToMany(fetch=FetchType.LAZY,
+            cascade=CascadeType.ALL,
+            mappedBy = "vehicleModelSeries")
+    private List<BodyTypeSynonyms> bodyTypeSynonyms;
+    @OneToMany(fetch=FetchType.LAZY,
+            cascade=CascadeType.ALL,
+            mappedBy = "vehicleModelSeries")
+    private List<CVTypes> cvTypes;
 
-
-
-    public VehicleModelSeries(Map<String,String> datas) {
-        this.kModNr = Integer.valueOf(datas.get("KModNr"));
-        this.dLNr = Integer.valueOf(datas.get("DLNr"));
-        this.sA = Integer.valueOf(datas.get("SA"));
-        this.lBezNr = Integer.valueOf(datas.get("LBezNr"));
-        this.herNr = Integer.valueOf(datas.get("HerNr"));
-        this.sortNr = Integer.valueOf(datas.get("SortNr"));
-        this.bjvon = Integer.valueOf(datas.get("Bjvon"));
-        this.bJBis = Integer.valueOf(datas.get("BJBis"));
-        this.pKW = Integer.valueOf(datas.get("PKW"));
-        this.nKW = Integer.valueOf(datas.get("NKW"));
-        this.achse = Integer.valueOf(datas.get("Achse"));
-        this.delet = Integer.valueOf(datas.get("Delete"));
-        this.transporter = Integer.valueOf(datas.get("Transporter"));
+    @Override
+    public String toString() {
+        return "VehicleModelSeries{" +
+                "kModNr=" + kModNr +
+                ", dLNr=" + dLNr +
+                ", sA=" + sA +
+                ", lBezNr=" + lBezNr +
+                ", herNr=" + herNr +
+                ", sortNr=" + sortNr +
+                ", bjvon=" + bjvon +
+                ", bJBis=" + bJBis +
+                ", pKW=" + pKW +
+                ", nKW=" + nKW +
+                ", achse=" + achse +
+                ", delet=" + delet +
+                ", transporter=" + transporter +
+                ", sprachNr=" + sprachNr +
+                ", vehicleTypes=" + vehicleTypes +
+                '}';
     }
 
     public long getkModNr() {

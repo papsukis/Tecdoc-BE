@@ -26,12 +26,12 @@ public class CVCountrySpecificDeviations {
     long bjbis;
 
     @MapsId("lKZ")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "lKZ",
                 referencedColumnName = "lKZ")
     private CountryTable countryTable;
     @MapsId("nTypNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "nTypNr",
                 referencedColumnName = "nTypNr")
     private CVTypes cvTypes;

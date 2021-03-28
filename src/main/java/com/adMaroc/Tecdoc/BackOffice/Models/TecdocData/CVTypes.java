@@ -40,8 +40,7 @@ public class CVTypes {
     long delet;
     long sprachNr;
     @MapsId("CountryAndLanguageDependentDescriptionsId")
-    @NotFound(action = NotFoundAction.IGNORE)
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "lbezNr",
@@ -52,7 +51,7 @@ public class CVTypes {
     private CountryAndLanguageDependentDescriptions countryAndLanguageDependentDescriptions;
 
     @MapsId("kModNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "kModNr",
                 referencedColumnName = "kModNr")
     private VehicleModelSeries vehicleModelSeries;

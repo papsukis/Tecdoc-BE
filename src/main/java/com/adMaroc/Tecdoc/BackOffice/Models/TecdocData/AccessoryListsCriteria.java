@@ -30,7 +30,7 @@ public class AccessoryListsCriteria {
     @Column(name="dl_nr")
     long dlnr;
     @MapsId("AccessoryListsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "artnr",
@@ -44,7 +44,7 @@ public class AccessoryListsCriteria {
     })
     private AccessoryLists accessoryLists;
     @MapsId("CriteriaId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "dl_nr",

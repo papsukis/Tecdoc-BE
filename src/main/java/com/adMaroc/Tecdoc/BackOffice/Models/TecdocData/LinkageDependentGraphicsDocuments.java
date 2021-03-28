@@ -31,7 +31,7 @@ public class LinkageDependentGraphicsDocuments {
     long loschFlag;
 
     @MapsId("ArticleLinkageId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "artNr",
@@ -50,17 +50,17 @@ public class LinkageDependentGraphicsDocuments {
                     referencedColumnName = "lfdnr")})
     private ArticleLinkage articleLinkage;
     @MapsId("dokumentenArt")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "dokumentenArt",
                 referencedColumnName = "dokumentenArt")
     private DocumentTypes documentTypes;
     @MapsId("genArtNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "genArtNr",
                 referencedColumnName = "genArtNr")
     private GenericArticles genericArticles;
     @MapsId("GraphicsDocumentsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "bildNr",
@@ -73,7 +73,7 @@ public class LinkageDependentGraphicsDocuments {
                     referencedColumnName = "sprachNr")})
     private GraphicsDocuments graphicsDocuments;
     @MapsId("artNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "artNr",
                 referencedColumnName = "artNr")
     private ArticleTable articleTable;

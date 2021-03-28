@@ -28,24 +28,24 @@ public class KeyTablesEntries {
     long loschFlag;
     long sprachNr;
     @MapsId("tabNr")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "tabNr",
                 referencedColumnName = "tabNr")
     private KeyTables keyTables;
 
-    @ManyToOne(
-            fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL)
-    @JoinColumns({
-            @JoinColumn(
-                    name = "dl_nr",
-                    referencedColumnName = "dLNr"),
-            @JoinColumn(
-                    name = "kritNr",
-                    referencedColumnName = "kritNr")})
-    private CriteriaTable criteriaTable;
+//    @ManyToOne(
+//            fetch=FetchType.LAZY,
+//            cascade=CascadeType.ALL)
+//    @JoinColumns({
+//            @JoinColumn(
+//                    name = "dl_nr",
+//                    referencedColumnName = "dLNr"),
+//            @JoinColumn(
+//                    name = "kritNr",
+//                    referencedColumnName = "kritNr")})
+//    private CriteriaTable criteriaTable;
     @MapsId("LanguageDescriptions")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "bezNr",
@@ -129,13 +129,13 @@ public class KeyTablesEntries {
         this.sprachNr = sprachNr;
     }
 
-    public CriteriaTable getCriteriaTable() {
-        return criteriaTable;
-    }
-
-    public void setCriteriaTable(CriteriaTable criteriaTable) {
-        this.criteriaTable = criteriaTable;
-    }
+//    public CriteriaTable getCriteriaTable() {
+//        return criteriaTable;
+//    }
+//
+//    public void setCriteriaTable(CriteriaTable criteriaTable) {
+//        this.criteriaTable = criteriaTable;
+//    }
 
     public LanguageDescriptions getLanguageDescriptions() {
         return languageDescriptions;

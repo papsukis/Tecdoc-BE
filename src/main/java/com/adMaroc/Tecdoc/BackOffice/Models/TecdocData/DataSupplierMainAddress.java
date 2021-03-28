@@ -41,20 +41,8 @@ public class DataSupplierMainAddress {
     long loschFlag;
 
 
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(
-                    name = "tabNr",
-                    referencedColumnName = "tabNr"),
-            @JoinColumn(
-                    name = "cle",
-                    referencedColumnName = "cle")})
-
-    private KeyTablesEntries keyTablesEntries;
-
-
-    public DataSupplierMainAddress(Map<String,String> datas) {
-        this.id = new DataSupplierMainAddressId(Integer.valueOf(datas.get("DLNr")),Integer.valueOf(datas.get("Adressart")));
+    public DataSupplierMainAddress(Map<String, String> datas) {
+        this.id = new DataSupplierMainAddressId(Integer.valueOf(datas.get("DLNr")), Integer.valueOf(datas.get("Adressart")));
         this.sA = Integer.valueOf(datas.get("SA"));
         this.lKZ = datas.get("LKZ");
         this.bez = datas.get("Bez");
@@ -227,11 +215,4 @@ public class DataSupplierMainAddress {
         this.loschFlag = loschFlag;
     }
 
-    public KeyTablesEntries getKeyTablesEntries() {
-        return keyTablesEntries;
-    }
-
-    public void setKeyTablesEntries(KeyTablesEntries keyTablesEntries) {
-        this.keyTablesEntries = keyTablesEntries;
-    }
 }

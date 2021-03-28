@@ -33,8 +33,7 @@ public class KBATypeAllocation {
 
 
     @MapsId("kTypNr")
-    @NotFound( action = NotFoundAction.IGNORE)
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "kTypNr",
                 referencedColumnName = "kTypNr")
     private VehicleTypes vehicleTypes;

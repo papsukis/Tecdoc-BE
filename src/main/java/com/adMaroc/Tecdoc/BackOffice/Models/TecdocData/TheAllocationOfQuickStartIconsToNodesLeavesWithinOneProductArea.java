@@ -25,7 +25,7 @@ public class TheAllocationOfQuickStartIconsToNodesLeavesWithinOneProductArea {
     long sortNr;
 
     @MapsId("AllocationOfQuickStartIconsToProductAreasId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
                     name = "treetypnr",
@@ -35,12 +35,12 @@ public class TheAllocationOfQuickStartIconsToNodesLeavesWithinOneProductArea {
                     referencedColumnName = "qsId")})
     private AllocationOfQuickStartIconsToProductAreas allocationOfQuickStartIconsToProductAreas;
     @MapsId("qsId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "qsId",
                 referencedColumnName = "qsId")
     private QuickStartIcons quickStartIcons;
     @MapsId("nodeId")
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "nodeId",
                 referencedColumnName = "nodeId")
     private TecdocSearchStructure tecdocSearchStructure;
