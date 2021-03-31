@@ -49,7 +49,6 @@ public class VehicleTypeDTO {
     public VehicleTypeDTO(VehicleTypes vehicleTypes) {
         kTypNr=vehicleTypes.getkTypNr();
         description1=vehicleTypes.getCountryAndLanguageDependentDescriptions()!=null?new DescriptionDTO(vehicleTypes.getCountryAndLanguageDependentDescriptions()):new DescriptionDTO(String.valueOf(vehicleTypes.getLbezNr()));
-        vehicleModelSerie=new VehicleModelSerieDTO(vehicleTypes.getVehicleModelSeries());
         try {
             from=new SimpleDateFormat("YYYYmm").parse(String.valueOf(vehicleTypes.getBjvon()));
             to=new SimpleDateFormat("YYYYmm").parse(String.valueOf(vehicleTypes.getBjbis()));
@@ -78,7 +77,12 @@ public class VehicleTypeDTO {
         catalystConverterType = new KeyTableDTO(89,vehicleTypes.getKatArt());//89
         tansmissionType = new KeyTableDTO(85,vehicleTypes.getGetrArt());//85
         bodyType = new KeyTableDTO(86,vehicleTypes.getAufbauArt());//86
-
+        if(vehicleTypes.getAdditionalVehicleTypeDescriptions().size()>0)
+        {
+            description2=new DescriptionDTO(vehicleTypes.getAdditionalVehicleTypeDescriptions().get(0).getCountryAndLanguageDependentDescriptions1());
+            description3=vehicleTypes.getAdditionalVehicleTypeDescriptions().get(0).getLbezNr1()!=vehicleTypes.getAdditionalVehicleTypeDescriptions().get(0).getLbezNr2()?
+                    new DescriptionDTO(vehicleTypes.getAdditionalVehicleTypeDescriptions().get(0).getCountryAndLanguageDependentDescriptions1()):null;
+        }
     }
 
     public VehicleTypeDTO(long kTypNr) {

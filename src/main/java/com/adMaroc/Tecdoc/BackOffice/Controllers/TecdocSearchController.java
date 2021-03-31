@@ -1,8 +1,10 @@
 package com.adMaroc.Tecdoc.BackOffice.Controllers;
 
 import com.adMaroc.Tecdoc.BackOffice.DTO.SearchDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.SearchResponse;
 import com.adMaroc.Tecdoc.BackOffice.DTO.SearchStructureTree;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.ArticleDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.ArticleCDTO;
 import com.adMaroc.Tecdoc.BackOffice.Services.TecdocDataGetService;
 import com.adMaroc.Tecdoc.BackOffice.Services.TecdocDataSearchService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,11 +25,16 @@ public class TecdocSearchController {
     TecdocDataSearchService tecdocService;
 
     @PostMapping("referenceNr")
-    public ResponseEntity<?> findByReferenceNumber(@RequestBody SearchDTO searchDTO){
-        return ResponseEntity.ok(tecdocService.findByReferenceNumber(searchDTO.getReferenceNumber()));
+    public ResponseEntity<SearchResponse> findByReferenceNumber(@RequestBody SearchDTO searchDTO){
+        log.info(searchDTO.toString());
+        return ResponseEntity.ok(tecdocService.findByReferenceNumber(searchDTO));
     }
     @PostMapping("ean")
     public ResponseEntity<?> findByEan(@RequestBody SearchDTO searchDTO){
         return ResponseEntity.ok(tecdocService.findByEan(searchDTO.getEan()));
+    }
+    @PostMapping("findArticleByVehicleType")
+    public ResponseEntity<SearchResponse> findArticleByVehicleType(@RequestBody SearchDTO searchDTO){
+        return ResponseEntity.ok(tecdocService.findArticleByVehicleType(searchDTO));
     }
 }

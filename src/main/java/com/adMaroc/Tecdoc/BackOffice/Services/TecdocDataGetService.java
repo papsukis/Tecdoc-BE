@@ -5,14 +5,9 @@ import com.adMaroc.Tecdoc.BackOffice.DTO.ManufacturerList;
 import com.adMaroc.Tecdoc.BackOffice.DTO.SearchDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.SearchStructureTree;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.ArticleCDTO;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.ManufacturerCDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.CVTypesCDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehicleModelSeriesCDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehicleTypeCDTO;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehiculeModelSeriesCDTO;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.CriteriaTable;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.Manufacturer;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.TecdocSearchStructure;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.LanguageDescriptionsId;
 import com.adMaroc.Tecdoc.BackOffice.Repository.custom.CustomTecdocSearchRepository;
 import com.adMaroc.Tecdoc.BackOffice.Repository.custom.TecdocCustomRepository;
 import com.adMaroc.Tecdoc.BackOffice.Repository.custom.CustomTecdocGetRepository;
@@ -120,12 +115,11 @@ public class TecdocDataGetService {
         tmp.setCriterionChildren(sub);
         return tmp;
     }
-    public List<VehiculeModelSeriesCDTO> findAllVehicleModelSeries(){
-        return tecdocService.vehicleModelSeriesRepository.findAll().stream().map(VehiculeModelSeriesCDTO::new).collect(Collectors.toList());
+    public List<VehicleModelSeriesCDTO> findAllVehicleModelSeries(){
+        return tecdocService.vehicleModelSeriesRepository.findAll().stream().map(VehicleModelSeriesCDTO::new).collect(Collectors.toList());
     }
-    public List<VehicleModelSerieDTO> findVehicleModelSerieByHernr(SearchDTO search){
-        log.info(search.toString());
-        return tecdocGetRepository.findVehicleModelSerieByHernr(Long.valueOf(search.getHerNr()));
+    public List<VehicleModelSeriesCDTO> findVehicleModelSerieByHernr(SearchDTO search){
+        return tecdocGetRepository.findVehicleModelSerieByHernr(search);
     }
     public List<VehicleTypeCDTO> findAllVehicleTypes(){
         int i=0;
@@ -135,5 +129,24 @@ public class TecdocDataGetService {
     public List<ArticleImageDTO> findAllArticles(List<Long> dlnr) {
         log.info("loading articles");
         return tecdocGetRepository.getAllArticles(dlnr);
+    }
+
+//
+//    public List<VehicleTypeDTO> findVehicleTypesByKmodNr(SearchDTO search) {
+//        log.info("loading VehicleTypes");
+//        return tecdocGetRepository.findVehicleTypeByKmodNr(search);
+//    }
+
+    public VehicleModelSeriesCDTO findVehicleModelSerie(SearchDTO search) {
+
+        return tecdocBuilder.buildModelSerie(tecdocGetRepository.findModelSerieByKmodNr(Long.parseLong(search.getKmodNr())),search.getType());
+    }
+
+    public VehicleTypeCDTO findVehicleType(SearchDTO search) {
+        return tecdocBuilder.buildVehicleType(tecdocGetRepository.findVehicleTypeByKtypNr(Long.parseLong(search.getKtypNr())));
+    }
+
+    public CVTypesCDTO findCVType(SearchDTO search) {
+        return tecdocBuilder.buildCVType(tecdocGetRepository.findCVTypeByNtypNr(Long.parseLong(search.getNtypNr())));
     }
 }

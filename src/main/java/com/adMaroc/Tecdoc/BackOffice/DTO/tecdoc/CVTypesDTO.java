@@ -48,6 +48,7 @@ public class CVTypesDTO {
         engineOutputFromHP=cvTypes.getPsvon();
         engineOutputToHP = cvTypes.getPsbis();
         engineCapacity=cvTypes.getCcmTech();
+        tonnage=cvTypes.getTonnage();
         bodyType=new KeyTableDTO(67,cvTypes.getBauart());
         engineType=new KeyTableDTO(80,cvTypes.getMotart());
         axleConfiguration=new KeyTableDTO(65,cvTypes.getAchsconfig());

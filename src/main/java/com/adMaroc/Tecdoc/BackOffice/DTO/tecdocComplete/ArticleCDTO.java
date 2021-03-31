@@ -35,6 +35,7 @@ public class ArticleCDTO {
     List<LinkedArticlesCDTO> linkedArticles=new ArrayList<>();
     List<TecdocImages> images = new ArrayList<>();
     List<ArticleDataDTO> articleData = new ArrayList<>();
+    ManufacturerDTO manufacturer;
     @QueryProjection
     public ArticleCDTO(ArticleTable article) {
         artNr = article.getArtNr();

@@ -55,6 +55,36 @@
       "pos" : 36,
       "length" : 6,
       "type" : "(N)",
-      "description" : "Model year to YYYYMM"}
+      "description" : "Model year to YYYYMM"},
+    {
+      "name" : "pKW",
+      "pos" : 42,
+      "length" : 1,
+      "type" : "(N)",
+      "description" : "PC model series =’1’"},
+    {
+      "name" : "nKW",
+      "pos" : 43,
+      "length" : 1,
+      "type" : "(N)",
+      "description" : "CV model series =’1’"},
+    {
+      "name" : "achse",
+      "pos" : 44,
+      "length" : 1,
+      "type" : "(N)",
+      "description" : "Axel model series =’1’"},
+    {
+      "name" : "delet",
+      "pos" : 45,
+      "length" : 1,
+      "type" : "(N)",
+      "description" : "1: Model series is proposed for deletion, otherwise 0"},
+    {
+      "name" : "transporter",
+      "pos" : 46,
+      "length" : 1,
+      "type" : "(N)",
+      "description" : "LCV model series"}
   ]
 }

@@ -27,7 +27,7 @@ public class ManufacturerCDTO {
     boolean engineManufacturer;
     boolean transmissionManufacturer;
     boolean lightComercialVehicleManufacturer;
-    List<VehiculeModelSeriesCDTO> vehicleModelSerieList;
+    List<VehicleModelSerieDTO> vehicleModelSerieList;
     List<ManufacturerKBAReferenceDTO> kbaReferences;
 
     public ManufacturerCDTO(Manufacturer manufacturer) {
@@ -41,7 +41,7 @@ public class ManufacturerCDTO {
         transmissionManufacturer=manufacturer.getGetriebe()==1;
         engineManufacturer=manufacturer.getMotor()==1;
         lightComercialVehicleManufacturer=manufacturer.getTransporter()==1;
-        vehicleModelSerieList=manufacturer.getVehicleModelSeries().stream().map(VehiculeModelSeriesCDTO::new).collect(Collectors.toList());
+        vehicleModelSerieList=manufacturer.getVehicleModelSeries().stream().map(VehicleModelSerieDTO::new).collect(Collectors.toList());
         kbaReferences=manufacturer.getManufacturerKBAReference().stream().map(ManufacturerKBAReferenceDTO::new).collect(Collectors.toList());
     }
 }

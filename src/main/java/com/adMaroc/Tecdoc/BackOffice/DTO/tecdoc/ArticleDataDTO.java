@@ -15,7 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class ArticleDataDTO {
     String artNr;
-    String packingUnit;
+    long packingUnit;
     long quantityPerPack;
     KeyTableDTO articleStatus;
     Date statusDateFrom;
@@ -23,11 +23,11 @@ public class ArticleDataDTO {
     @QueryProjection
     public ArticleDataDTO(CountrySpecificArticleData articleData) {
         this.artNr = articleData.getId().getArtNr();
-        this.packingUnit = articleData.getvPE();
+        this.packingUnit = Long.parseLong(articleData.getvPE());
         this.quantityPerPack = articleData.getMengeProVPE();
         this.articleStatus = new KeyTableDTO(73,articleData.getArtStat());
         try {
-            this.statusDateFrom = new SimpleDateFormat("YYYYmmdd").parse(String.valueOf(articleData.getStatusDat()));
+            this.statusDateFrom =articleData.getStatusDat()!=0? new SimpleDateFormat("YYYYmmDD").parse(String.valueOf(articleData.getStatusDat())):null;
         } catch (ParseException e) {
             e.printStackTrace();
         }

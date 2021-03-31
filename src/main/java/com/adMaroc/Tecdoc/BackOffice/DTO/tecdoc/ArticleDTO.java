@@ -4,6 +4,7 @@ import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.ArticleTable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.Criteria;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class ArticleDTO {
     List<TecdocImages> images = new ArrayList<>();
     ManufacturerDTO manufacturer;
     List<ArticleDataDTO> articleData = new ArrayList<>();
+    List<CriteriaDTO> criteria = new ArrayList<>();
     public ArticleDTO(ArticleTable article) {
         artNr = article.getArtNr();
         dlnr=article.getdLNr();

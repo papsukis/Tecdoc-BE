@@ -12,25 +12,24 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class VehicleModelSerieDTO {
     long kModNr;
-    String description;
+    DescriptionDTO description;
     Date from;
     Date to;
     boolean personalCarModelSerie;
     boolean comercialVehicleModelSerie;
     boolean axleModelSerie;
     boolean transporterModelSerie;
-//    List<VehicleTypeDTO> vehicleType;
-//    List<CVTypesDTO> cvTypes=new ArrayList<>();
     @QueryProjection
     public VehicleModelSerieDTO(VehicleModelSeries vehicleModelSeries) {
         kModNr=vehicleModelSeries.getkModNr();
-        description=vehicleModelSeries.getCountryAndLanguageDependentDescriptions()!=null?vehicleModelSeries.getCountryAndLanguageDependentDescriptions().getBez():"";
+        description=vehicleModelSeries.getCountryAndLanguageDependentDescriptions()!=null?new DescriptionDTO(vehicleModelSeries.getCountryAndLanguageDependentDescriptions()):new DescriptionDTO(String.valueOf(vehicleModelSeries.getlBezNr()));
         try {
             from=new SimpleDateFormat("YYYYmm").parse(String.valueOf(vehicleModelSeries.getBjvon()));
             to=new SimpleDateFormat("YYYYmm").parse(String.valueOf(vehicleModelSeries.getbJBis()));

@@ -50,12 +50,12 @@ public class JwtTokenManager {
                     .setSigningKey(jwtConfig.getSecret().getBytes())
                     .parseClaimsJws(authToken);
 
-            Date issuedAT = Jwts.parser()
-                    .setSigningKey(jwtConfig.getSecret().getBytes())
-                    .parseClaimsJws(authToken).getBody().getIssuedAt();
+//            Date issuedAT = Jwts.parser()
+//                    .setSigningKey(jwtConfig.getSecret().getBytes())
+//                    .parseClaimsJws(authToken).getBody().getIssuedAt();
 
-            if(issuedAT.before(lastLogged))
-                throw new AlreadyLoggedException("Already Logged");
+//            if(issuedAT.before(lastLogged))
+//                throw new AlreadyLoggedException("Already Logged");
 
             return true;
         }catch(AlreadyLoggedException ex){

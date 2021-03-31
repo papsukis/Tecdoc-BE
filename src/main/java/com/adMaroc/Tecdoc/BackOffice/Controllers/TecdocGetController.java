@@ -5,10 +5,9 @@ import com.adMaroc.Tecdoc.BackOffice.DTO.ManufacturerToSaveXlsx;
 import com.adMaroc.Tecdoc.BackOffice.DTO.SearchDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.SearchStructureTree;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.ManufacturerCDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.CVTypesCDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehicleModelSeriesCDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehicleTypeCDTO;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehiculeModelSeriesCDTO;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.TecdocSearchStructure;
 import com.adMaroc.Tecdoc.BackOffice.Services.ExcelConverter;
 import com.adMaroc.Tecdoc.BackOffice.Services.TecdocDataGetService;
 import com.adMaroc.Tecdoc.BackOffice.Services.WrapperTecdocDataService;
@@ -51,23 +50,35 @@ public class TecdocGetController {
 
         return ResponseEntity.ok(tecdocService.findAllGenericArticle());
     }
-//    @GetMapping("criteria")
-////    public ResponseEntity<List<CriteriaDTO>> getAllCriteria(){
-////        return ResponseEntity.ok(tecdocService.findAllCriteria());
-////    }
+
     @PostMapping("vehicleModelSeries")
-    public ResponseEntity<List<VehicleModelSerieDTO>>getAllVehicleModelSeries(@RequestBody SearchDTO search){
+    public ResponseEntity<List<VehicleModelSeriesCDTO>>getAllVehicleModelSeries(@RequestBody SearchDTO search){
 
         return ResponseEntity.ok(tecdocService.findVehicleModelSerieByHernr(search));
     }
-    @GetMapping("vehicleTypes")
-    public ResponseEntity<List<VehicleTypeCDTO>> getAllVehicleTypes(){
-        return ResponseEntity.ok(tecdocService.findAllVehicleTypes());
+    @PostMapping("getVehicleModelSerie")
+    public ResponseEntity<VehicleModelSeriesCDTO> getVehicleModelSerie(@RequestBody SearchDTO search){
+
+        return ResponseEntity.ok(tecdocService.findVehicleModelSerie(search));
     }
-    @GetMapping("engines")
-    public ResponseEntity<List<EngineDTO>> getAllEngines(){
-        return ResponseEntity.ok(tecdocDataService.enginesRepository.findAll().stream().map(EngineDTO::new).collect(Collectors.toList()).subList(0,50));
+    @PostMapping("getVehicleType")
+    public ResponseEntity<VehicleTypeCDTO> getVehicleType(@RequestBody SearchDTO search){
+
+        return ResponseEntity.ok(tecdocService.findVehicleType(search));
     }
+    @PostMapping("getCVType")
+    public ResponseEntity<CVTypesCDTO> getCVType(@RequestBody SearchDTO search){
+
+        return ResponseEntity.ok(tecdocService.findCVType(search));
+    }
+//    @PostMapping("vehicleTypes")
+//    public ResponseEntity<List<VehicleTypeDTO>> getAllVehicleTypes(@RequestBody SearchDTO search){
+//        return ResponseEntity.ok(tecdocService.findVehicleTypesByKmodNr(search));
+//    }
+//    @GetMapping("engines")
+//    public ResponseEntity<List<EngineDTO>> getAllEngines(){
+//        return ResponseEntity.ok(tecdocDataService.enginesRepository.findAll().stream().map(EngineDTO::new).collect(Collectors.toList()).subList(0,50));
+//    }
     @PostMapping("test")
     public ResponseEntity<?> test(@RequestBody SearchDTO searchDTO){
         return ResponseEntity.ok(tecdocService.test(searchDTO));

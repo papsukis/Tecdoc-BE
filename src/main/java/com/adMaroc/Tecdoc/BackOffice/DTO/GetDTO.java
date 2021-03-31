@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SearchDTO {
+public class GetDTO {
     String referenceNumber;
     String artNr;
     String herNr;
@@ -18,5 +18,4 @@ public class SearchDTO {
     String ean;
     long page;
     long nbrPerPage;
-    long totalResults;
 }

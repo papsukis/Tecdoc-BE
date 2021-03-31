@@ -1,6 +1,7 @@
 package com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc;
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.Axle;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,8 +15,8 @@ import java.util.Date;
 @NoArgsConstructor
 public class AxleDTO {
     long aTypNr;
-    String description;
-    VehicleModelSerieDTO vehicleModelSerieDTO;
+    DescriptionDTO description;
+    VehicleModelSerieDTO vehicleModelSerie;
     Date from;
     Date to;
     long maximumLoadFromKg;
@@ -29,11 +30,11 @@ public class AxleDTO {
     KeyTableDTO brakeType;
     KeyTableDTO axleBody;
     KeyTableDTO wheelMounting;
-
+    @QueryProjection
     public AxleDTO(Axle axle) {
         aTypNr=axle.getaTypNr();
-        description=axle.getBezeichnung();
-        vehicleModelSerieDTO=new VehicleModelSerieDTO(axle.getVehicleModelSeries());
+        description=new DescriptionDTO(axle.getBezeichnung());
+        vehicleModelSerie=new VehicleModelSerieDTO(axle.getVehicleModelSeries());
         try {
             from=new SimpleDateFormat("YYYYmm").parse(String.valueOf(axle.getBjvon()));
             to=new SimpleDateFormat("YYYYmm").parse(String.valueOf(axle.getBjbis()));

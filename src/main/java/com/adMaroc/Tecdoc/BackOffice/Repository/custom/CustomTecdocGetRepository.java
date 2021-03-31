@@ -1,8 +1,12 @@
 package com.adMaroc.Tecdoc.BackOffice.Repository.custom;
 
 import com.adMaroc.Tecdoc.BackOffice.DTO.ManufacturerList;
+import com.adMaroc.Tecdoc.BackOffice.DTO.SearchDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.CVTypesCDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.LinkedArticlesCDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehicleModelSeriesCDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehicleTypeCDTO;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -63,7 +67,23 @@ public interface CustomTecdocGetRepository {
 
     List<CVTypesDTO> findCVTypesByHernr(long hernr);
 
-    List<VehicleModelSerieDTO> findVehicleModelSerieByHernr(long hernr);
+    List<VehicleModelSeriesCDTO> findVehicleModelSerieByHernr(SearchDTO search);
 
     List<VehicleTypeDTO> findVehicleTypeByKmodNr(long kModNr);
+
+    List<BodyTypeDTO> findBodyTypesByKmodNr(long kModNr);
+
+    List<BodyTypeSynonymsDTO> findBodyTypesSynonymsByKmodNr(long kModNr);
+
+    List<AxleDTO> findAxleByKmodNr(long kModNr);
+
+    List<CVTypesDTO> findCVTypesByKmodNr(long kModNr);
+
+    List<CVDriverCabDTO> findCVDriverCabsByKmodNr(long kModNr);
+
+    VehicleModelSeriesCDTO findModelSerieByKmodNr(long kModNr);
+
+    VehicleTypeCDTO findVehicleTypeByKtypNr(long ktypNr);
+
+    CVTypesCDTO findCVTypeByNtypNr(long ntypNr);
 }

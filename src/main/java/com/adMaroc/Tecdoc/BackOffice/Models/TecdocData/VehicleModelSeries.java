@@ -54,23 +54,8 @@ public class VehicleModelSeries {
     @OneToMany(fetch=FetchType.LAZY,
             cascade=CascadeType.ALL,
             mappedBy = "vehicleModelSeries")
-    private List<VehicleTypes > vehicleTypes;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "vehicleModelSeries")
-    private List<Axle >axle;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "vehicleModelSeries")
     private List<AdditionalDescriptionsToVehicleModelSeries >additionalDescriptionsToVehicleModelSeries;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "vehicleModelSeries")
-    private List<BodyTypeSynonyms> bodyTypeSynonyms;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "vehicleModelSeries")
-    private List<CVTypes> cvTypes;
+
 
     @Override
     public String toString() {
@@ -89,7 +74,6 @@ public class VehicleModelSeries {
                 ", delet=" + delet +
                 ", transporter=" + transporter +
                 ", sprachNr=" + sprachNr +
-                ", vehicleTypes=" + vehicleTypes +
                 '}';
     }
 

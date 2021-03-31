@@ -16,11 +16,11 @@ import java.util.stream.Collectors;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class VehiculeModelSeriesCDTO {
+public class VehicleModelSeriesCDTO {
     long kModNr;
-    String description;
-    String description2;
-    String description3;
+    DescriptionDTO description;
+    DescriptionDTO description2;
+    DescriptionDTO description3;
     Date from;
     Date to;
     boolean personalCarModelSerie;
@@ -31,10 +31,12 @@ public class VehiculeModelSeriesCDTO {
     ManufacturerDTO manufacturer;
     List<BodyTypeDTO> bodytypes=new ArrayList<>();
     List<BodyTypeSynonymsDTO> bodyTypeSynonyms=new ArrayList<>();
+    List<AxleDTO> axle=new ArrayList<>();
     List<CVTypesDTO> cvTypes=new ArrayList<>();
-    public VehiculeModelSeriesCDTO(VehicleModelSeries vehicleModelSeries) {
+    List<CVDriverCabDTO> cvDriverCab=new ArrayList<>();
+    public VehicleModelSeriesCDTO(VehicleModelSeries vehicleModelSeries) {
         kModNr=vehicleModelSeries.getkModNr();
-        description=vehicleModelSeries.getCountryAndLanguageDependentDescriptions()!=null?vehicleModelSeries.getCountryAndLanguageDependentDescriptions().getBez():"";
+        description=vehicleModelSeries.getCountryAndLanguageDependentDescriptions()!=null?new DescriptionDTO(vehicleModelSeries.getCountryAndLanguageDependentDescriptions()):new DescriptionDTO(String.valueOf(vehicleModelSeries.getlBezNr()));
         try {
             from=new SimpleDateFormat("YYYYmm").parse(String.valueOf(vehicleModelSeries.getBjvon()));
             to=new SimpleDateFormat("YYYYmm").parse(String.valueOf(vehicleModelSeries.getbJBis()));
@@ -45,9 +47,11 @@ public class VehiculeModelSeriesCDTO {
         axleModelSerie=vehicleModelSeries.getAchse()==1;
         transporterModelSerie=vehicleModelSeries.getTransporter()==1;
         manufacturer=new ManufacturerDTO(vehicleModelSeries.getManufacturer());
-
-        vehicleTypes=vehicleModelSeries.getVehicleTypes().stream().map(VehicleTypeDTO::new).collect(Collectors.toList());
-        bodyTypeSynonyms=vehicleModelSeries.getBodyTypeSynonyms().stream().map(BodyTypeSynonymsDTO::new).collect(Collectors.toList());
-        cvTypes=vehicleModelSeries.getCvTypes().stream().map(CVTypesDTO::new).collect(Collectors.toList());
+        if(vehicleModelSeries.getAdditionalDescriptionsToVehicleModelSeries().size()>0)
+        {
+            description2=new DescriptionDTO(vehicleModelSeries.getAdditionalDescriptionsToVehicleModelSeries().get(0).getCountryAndLanguageDependentDescriptions1());
+            description3=vehicleModelSeries.getAdditionalDescriptionsToVehicleModelSeries().get(0).getLbezNr1()!=vehicleModelSeries.getAdditionalDescriptionsToVehicleModelSeries().get(0).getLbezNr2()?
+                    new DescriptionDTO(vehicleModelSeries.getAdditionalDescriptionsToVehicleModelSeries().get(0).getCountryAndLanguageDependentDescriptions1()):null;
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete;
 
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.VehicleTypes;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -53,6 +54,7 @@ public class VehicleTypeCDTO {
     private List<KBATypeNrDTO> kbaTypeNr = new ArrayList<>();
     private List<EngineDTO> engines = new ArrayList<>();
     private List<AxleDTO> axles = new ArrayList<>();
+    @QueryProjection
     public VehicleTypeCDTO(VehicleTypes vehicleTypes) {
             kTypNr=vehicleTypes.getkTypNr();
             description=new DescriptionDTO(vehicleTypes.getCountryAndLanguageDependentDescriptions());
@@ -76,7 +78,6 @@ public class VehicleTypeCDTO {
         ABS=vehicleTypes.getaBS()==1;
         ASR=vehicleTypes.getaSR()==1;
         valves=vehicleTypes.getVentileBrennraum();
-        bodyTypes=vehicleTypes.getBodyTypes().stream().map(BodyTypeDTO::new).collect(Collectors.toList());
         driveTypeSynonyms=vehicleTypes.getDriveTypeSynonyms().stream().map(DriveTypeSynonymsDTO::new).collect(Collectors.toList());
         kbaTypeNr=vehicleTypes.getKbaTypeAllocations().stream().map(KBATypeNrDTO::new).collect(Collectors.toList());
 

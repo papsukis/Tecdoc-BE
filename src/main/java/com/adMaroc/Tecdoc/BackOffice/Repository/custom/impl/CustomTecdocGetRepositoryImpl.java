@@ -1,8 +1,12 @@
 package com.adMaroc.Tecdoc.BackOffice.Repository.custom.impl;
 
 import com.adMaroc.Tecdoc.BackOffice.DTO.ManufacturerList;
+import com.adMaroc.Tecdoc.BackOffice.DTO.SearchDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.CVTypesCDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.LinkedArticlesCDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehicleModelSeriesCDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehicleTypeCDTO;
 import com.adMaroc.Tecdoc.BackOffice.Models.Brand;
 import com.adMaroc.Tecdoc.BackOffice.Models.BrandList;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.*;
@@ -13,7 +17,6 @@ import com.adMaroc.Tecdoc.BackOffice.Utils.JsonReader;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
-import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -37,9 +40,10 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
     private EntityManager em;
     @Autowired
     TecdocBuilder builder;
-    JPAQueryFactory query ;
+    JPAQueryFactory query;
     @Autowired
     TecdocCustomRepository tecdocRepository;
+
 
     @Override
     @Transactional
@@ -444,13 +448,26 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
         query = new JPAQueryFactory(em);
 
         QManufacturer manufacturer= QManufacturer.manufacturer;
-
+        QVehicleModelSeries vehicleModelSeries=QVehicleModelSeries.vehicleModelSeries;
+        QVehicleTypes vehicleTypes=QVehicleTypes.vehicleTypes;
+        QCVTypes cvType=QCVTypes.cVTypes;
         List<ManufacturerList> manufacturers = new ArrayList<>();
         ManufacturerList tmp=new ManufacturerList();
         JPAQuery<ManufacturerDTO> jpaQuery=query.
                 select(Projections.constructor(ManufacturerDTO.class,manufacturer))
                 .from(manufacturer)
-                .where(manufacturer.pKW.eq((long) 1));
+                .where(manufacturer.pKW.eq((long) 1)
+                        .and(
+                                (JPAExpressions.select(vehicleModelSeries.count())
+                                        .from(vehicleModelSeries)
+                                        .where(vehicleModelSeries.herNr.eq(manufacturer.herNr)
+                                    .and(
+                                            (JPAExpressions.select(vehicleTypes.count())
+                                                    .from(vehicleTypes)
+                                                    .where(vehicleTypes.kModNr.eq(vehicleModelSeries.kModNr)))
+                                             .gt((long)0))))
+                                        .gt(Long.valueOf(0))
+                ));
         tmp.setManufacturerType("PC");
         tmp.setManufacturers(jpaQuery.fetch());
         manufacturers.add(tmp);
@@ -458,7 +475,19 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
         jpaQuery=query.
                 select(Projections.constructor(ManufacturerDTO.class,manufacturer))
                 .from(manufacturer)
-                .where(manufacturer.nKW.eq((long) 1));
+                .where(manufacturer.nKW.eq((long) 1)
+                        .and(
+                                (JPAExpressions.select(vehicleModelSeries.count())
+                                        .from(vehicleModelSeries)
+                                        .where(vehicleModelSeries.herNr.eq(manufacturer.herNr)
+                                        .and(
+                                        (JPAExpressions.select(cvType.count())
+                                                .from(cvType)
+                                                .where(cvType.kModNr.eq(vehicleModelSeries.kModNr))
+                                        )
+                                        .gt(Long.valueOf(0))
+                                ))).gt((long)0))
+                );
         tmp.setManufacturerType("CV");
         tmp.setManufacturers(jpaQuery.fetch());
         manufacturers.add(tmp);
@@ -466,7 +495,19 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
         jpaQuery=query.
                 select(Projections.constructor(ManufacturerDTO.class,manufacturer))
                 .from(manufacturer)
-                .where(manufacturer.transporter.eq((long) 1));
+                .where(manufacturer.transporter.eq((long) 1)
+                        .and(
+                                        (JPAExpressions.select(vehicleModelSeries.count())
+                                                .from(vehicleModelSeries)
+                                                .where(vehicleModelSeries.herNr.eq(manufacturer.herNr)
+                                                        .and(
+                                                                (JPAExpressions.select(cvType.count())
+                                                                        .from(cvType)
+                                                                        .where(cvType.kModNr.eq(vehicleModelSeries.kModNr))
+                                                                )
+                                                                        .gt(Long.valueOf(0))
+                                                        ))).gt((long)0))
+                        );
         tmp.setManufacturerType("LCV");
         tmp.setManufacturers(jpaQuery.fetch());
         manufacturers.add(tmp);
@@ -488,15 +529,31 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
         return jpaQuery.fetch();
     }
     @Override
-    public List<VehicleModelSerieDTO> findVehicleModelSerieByHernr(long hernr){
+    public List<VehicleModelSeriesCDTO> findVehicleModelSerieByHernr(SearchDTO search){
         query = new JPAQueryFactory(em);
         QVehicleModelSeries vehicleModelSeries=QVehicleModelSeries.vehicleModelSeries;
+        QVehicleTypes vehicleTypes=QVehicleTypes.vehicleTypes;
 
+        BooleanBuilder booleanBuilder=new BooleanBuilder();
 
-        JPAQuery<VehicleModelSerieDTO> jpaQuery = query
-                .select(Projections.constructor(VehicleModelSerieDTO.class,vehicleModelSeries))
+        switch (search.getType()){
+            case "PC":
+                booleanBuilder.and(vehicleModelSeries.pKW.eq((long) 1));
+                break;
+            case "CV":
+                booleanBuilder.and(vehicleModelSeries.nKW.eq((long) 1));
+                break;
+            case "LCV":
+                booleanBuilder.and(vehicleModelSeries.transporter.eq((long) 1));
+                break;
+        }
+
+        JPAQuery<VehicleModelSeriesCDTO> jpaQuery = query
+                .select(Projections.constructor(VehicleModelSeriesCDTO.class,vehicleModelSeries))
                 .from(vehicleModelSeries)
-                .where(vehicleModelSeries.herNr.eq(hernr));
+                .where(vehicleModelSeries.herNr.eq(Long.valueOf(search.getHerNr()))
+                        .and(booleanBuilder)
+                );
 
         return jpaQuery.fetch();
 
@@ -514,5 +571,101 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
 
         return jpaQuery.fetch();
 
+    }
+    @Override
+    public List<BodyTypeDTO> findBodyTypesByKmodNr(long kModNr){
+        query = new JPAQueryFactory(em);
+        QAllocationOfBodyTypesToModelSeries allocation=QAllocationOfBodyTypesToModelSeries.allocationOfBodyTypesToModelSeries;
+
+        QBodyType bodyType=QBodyType.bodyType;
+
+        JPAQuery<BodyTypeDTO> jpaQuery = query
+                .select(Projections.constructor(BodyTypeDTO.class,allocation))
+                .from(allocation)
+                .where(allocation.id.kmodNr.eq(kModNr));
+
+        return jpaQuery.fetch();
+
+    }
+
+    @Override
+    public List<BodyTypeSynonymsDTO> findBodyTypesSynonymsByKmodNr(long kModNr){
+        query = new JPAQueryFactory(em);
+        QBodyTypeSynonyms bodyTypeSynonyms=QBodyTypeSynonyms.bodyTypeSynonyms;
+        QBodyType bodyType=QBodyType.bodyType;
+
+        JPAQuery<BodyTypeSynonymsDTO> jpaQuery = query
+                .select(Projections.constructor(BodyTypeSynonymsDTO.class,bodyTypeSynonyms))
+                .from(bodyTypeSynonyms)
+                .where(bodyTypeSynonyms.id.kModNr.eq(kModNr));
+
+        return jpaQuery.fetch();
+    }
+    @Override
+    public List<AxleDTO> findAxleByKmodNr(long kModNr){
+        query = new JPAQueryFactory(em);
+
+        QAxle axle=QAxle.axle;
+        JPAQuery<AxleDTO> jpaQuery = query
+                .select(Projections.constructor(AxleDTO.class,axle))
+                .from(axle)
+                .where(axle.kmodNr.eq(kModNr));
+        return jpaQuery.fetch();
+    }
+    @Override
+    public List<CVTypesDTO> findCVTypesByKmodNr(long kModNr){
+        query = new JPAQueryFactory(em);
+
+        QCVTypes cvTypes=QCVTypes.cVTypes;
+        JPAQuery<CVTypesDTO> jpaQuery = query
+                .select(Projections.constructor(CVTypesDTO.class,cvTypes))
+                .from(cvTypes)
+                .where(cvTypes.kModNr.eq(kModNr));
+        return jpaQuery.fetch();
+    }
+    @Override
+        public List<CVDriverCabDTO> findCVDriverCabsByKmodNr(long kModNr){
+            query = new JPAQueryFactory(em);
+
+            QCVDriverCabs cvDriverCabs=QCVDriverCabs.cVDriverCabs;
+            JPAQuery<CVDriverCabDTO> jpaQuery = query
+                    .select(Projections.constructor(CVDriverCabDTO.class,cvDriverCabs))
+                    .from(cvDriverCabs)
+                    .where(cvDriverCabs.kModNr.eq(kModNr));
+            return jpaQuery.fetch();
+    }
+    @Override
+    public VehicleModelSeriesCDTO findModelSerieByKmodNr(long kModNr){
+        query = new JPAQueryFactory(em);
+
+        QVehicleModelSeries vehicleModelSeries=QVehicleModelSeries.vehicleModelSeries;
+        JPAQuery<VehicleModelSeriesCDTO> jpaQuery = query
+                .select(Projections.constructor(VehicleModelSeriesCDTO.class,vehicleModelSeries))
+                .from(vehicleModelSeries)
+                .where(vehicleModelSeries.kModNr.eq(kModNr));
+        return jpaQuery.fetchFirst();
+    }
+    @Override
+    public VehicleTypeCDTO findVehicleTypeByKtypNr(long ktypNr){
+        query = new JPAQueryFactory(em);
+        QVehicleTypes vehicleType=QVehicleTypes.vehicleTypes;
+
+        JPAQuery<VehicleTypeCDTO> jpaQuery=query
+                .select(Projections.constructor(VehicleTypeCDTO.class,vehicleType))
+                .from(vehicleType)
+                .where(vehicleType.kTypNr.eq(ktypNr));
+        return jpaQuery.fetchFirst();
+    }
+
+    @Override
+    public CVTypesCDTO findCVTypeByNtypNr(long ntypNr){
+        query = new JPAQueryFactory(em);
+        QCVTypes cvType=QCVTypes.cVTypes;
+
+        JPAQuery<CVTypesCDTO> jpaQuery=query
+                .select(Projections.constructor(CVTypesCDTO.class,cvType))
+                .from(cvType)
+                .where(cvType.nTypNr.eq(ntypNr));
+        return jpaQuery.fetchFirst();
     }
 }

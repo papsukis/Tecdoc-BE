@@ -3,8 +3,7 @@ package com.adMaroc.Tecdoc.BackOffice.Services;
 import com.adMaroc.Tecdoc.BackOffice.DTO.ManufacturerList;
 import com.adMaroc.Tecdoc.BackOffice.DTO.SearchDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.ArticleCDTO;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.LinkedArticlesCDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.*;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.Manufacturer;
 import com.adMaroc.Tecdoc.BackOffice.Repository.custom.CustomTecdocGetRepository;
 import com.adMaroc.Tecdoc.BackOffice.Repository.custom.TecdocCustomRepository;
@@ -34,8 +33,9 @@ public class TecdocBuilder {
         tmp.setSupersedingArticles(tecdocGetRepository.findSuperSedingArticlesByArtNr(article.getArtNr()));
         tmp.setEans(tecdocGetRepository.findEansByArtNr(article.getArtNr()));
         tmp.setReferenceNumbers(tecdocGetRepository.findReferenceNumbersByArtNr(article.getArtNr()));
-        tmp.setCriterias(tecdocGetRepository.findCriteriaByArtNr(article.getArtNr()));
-//        tmp.setLinkedArticles(
+        tmp.setCriterias(tecdocGetRepository.findCriteriaByArtNr(article.getArtNr()).stream().map(this::buildCriterion).collect(Collectors.toList()));
+        tmp.setManufacturer(buildManufacturer(tecdocGetRepository.findByDlnr(article.getDlnr()),""));
+        //        tmp.setLinkedArticles(
 //                tecdocGetRepository.findArticleLinkage(article.getArtNr()).stream().map(this::buildLinkedArticles).collect(Collectors.toList())
 //        );
         tmp.setImages(
@@ -49,11 +49,12 @@ public class TecdocBuilder {
     }
     public ArticleDTO buildArticle(ArticleDTO article){
         ArticleDTO tmp=article;
-        log.info("Building article");
+        log.info("Building article with artNr : {}",article.getArtNr());
         tmp.setGenericArticle(tecdocGetRepository.findGenericArticleByArtNr(article.getArtNr()));
         tmp.setImages(
                 tecdocGetRepository.findImagesByArticle(article.getArtNr()).stream().map(this::buildImages).collect(Collectors.toList())
         );
+        tmp.setCriteria(tecdocGetRepository.findCriteriaByArtNr(article.getArtNr()).stream().map(this::buildCriterion).collect(Collectors.toList()));
         tmp.setManufacturer(
                 tecdocGetRepository.findByDlnr(article.getDlnr())
         );
@@ -89,7 +90,7 @@ public class TecdocBuilder {
 
     public GenericArticleDTO buildGenericArticle(GenericArticleDTO genericArticleDTO) {
             GenericArticleDTO tmp=genericArticleDTO;
-            log.info("Building generic article");
+            log.info("Building generic article with genArtNr : {}",tmp.getGenArtNr());
             tmp.setMandatoryCriteria(tecdocGetRepository.findMandatoryCriteriaByGenArtNr(genericArticleDTO.getGenArtNr()).stream().map(this::buildMandatoryCriteria).collect(Collectors.toList()));
             tmp.setProposedCriteria(tecdocGetRepository.findProposedCriteriaByGenArtNr(genericArticleDTO.getGenArtNr()));
             log.info("Generic article builded");
@@ -138,14 +139,32 @@ public class TecdocBuilder {
     }
     public VehicleModelSerieDTO buildSmallModelSerieDTO(VehicleModelSerieDTO vehicleModelSerie){
         VehicleModelSerieDTO tmp = vehicleModelSerie;
-        log.info("Building vehicle model serie");
-//        tmp.setVehicleType(tecdocGetRepository.findVehicleTypeByKmodNr(vehicleModelSerie.getKModNr()).stream().map(this::buildSmallVehicleType).collect(Collectors.toList()));
+        log.info("Building vehicle model serie with kModNr : {}",tmp.getKModNr());
+//        tmp.setVehicleType(tecdocGetRepository.findVehicleTypeByKmodNr(vehicleModelSerie.getKModNr()));
         log.info("Vehicle model serie builded");
+        return tmp;
+    }
+    public VehicleModelSeriesCDTO buildModelSerie(VehicleModelSeriesCDTO vehicleModelSeries,String manufacturerType) {
+        VehicleModelSeriesCDTO tmp = vehicleModelSeries;
+        log.info("Building vehicle model serie with kModNr : {}",tmp.getKModNr());
+
+        tmp.setAxle(tecdocGetRepository.findAxleByKmodNr(vehicleModelSeries.getKModNr()));
+        tmp.setVehicleTypes(tecdocGetRepository.findVehicleTypeByKmodNr(vehicleModelSeries.getKModNr()));
+        tmp.setCvTypes(tecdocGetRepository.findCVTypesByKmodNr(vehicleModelSeries.getKModNr()));
+        tmp.setBodytypes(tecdocGetRepository.findBodyTypesByKmodNr(vehicleModelSeries.getKModNr()));
+        tmp.setBodyTypeSynonyms(tecdocGetRepository.findBodyTypesSynonymsByKmodNr(vehicleModelSeries.getKModNr()).stream().map(this::buildBodyTypeSynonyms).collect(Collectors.toList()));
+//        tmp.setCvDriverCab(tecdocGetRepository.findCVDriverCabsByKmodNr(vehicleModelSeries.getKModNr()));
+        log.info("Vehicle model serie builded");
+        return tmp;
+    }
+    public BodyTypeSynonymsDTO buildBodyTypeSynonyms(BodyTypeSynonymsDTO bodyTypeSynonyms){
+        BodyTypeSynonymsDTO tmp=bodyTypeSynonyms;
+        tmp.setBodyType(buildKeyTable(bodyTypeSynonyms.getBodyType()));
         return tmp;
     }
     public ManufacturerList buildManufacturerList(ManufacturerList manufacturer){
         ManufacturerList tmp=manufacturer;
-        log.info("Building manufacturers");
+        log.info("Building manufacturers with type : {}",tmp.getManufacturerType());
         tmp.setManufacturers(tmp.getManufacturers().stream().map(man->buildManufacturer(man,manufacturer.getManufacturerType())).collect(Collectors.toList()));
         log.info("Manufacturers builded");
         return tmp;
@@ -169,7 +188,7 @@ public class TecdocBuilder {
 
     public VehicleTypeDTO buildSmallVehicleType(VehicleTypeDTO vehicleType){
         VehicleTypeDTO tmp=vehicleType;
-        log.info("building vehicle Type");
+        log.info("building vehicle Type with kTypNr : {}",tmp.getKTypNr());
 
         tmp.setBodyType(buildKeyTable(tmp.getBodyType()));
         tmp.setEngineType(buildKeyTable(tmp.getEngineType()));
@@ -226,4 +245,29 @@ public class TecdocBuilder {
         return criteriaDTO;
     }
 
+
+    public VehicleTypeCDTO buildVehicleType(VehicleTypeCDTO vehicleType) {
+        VehicleTypeCDTO tmp=vehicleType;
+        log.info("building vehicle Type with kTypNr : {}",tmp.getKTypNr());
+
+        tmp.setBodyType(buildKeyTable(tmp.getBodyType()));
+        tmp.setEngineType(buildKeyTable(tmp.getEngineType()));
+        tmp.setFuelMixture(buildKeyTable(tmp.getFuelMixture()));
+        tmp.setDriveType(buildKeyTable(tmp.getDriveType()));
+        tmp.setBrakeType(buildKeyTable(tmp.getBrakeType()));
+        tmp.setBrakeSystem(buildKeyTable(tmp.getBrakeSystem()));
+        tmp.setFuelType(buildKeyTable(tmp.getFuelType()));
+        tmp.setCatalystConverterType(buildKeyTable(tmp.getCatalystConverterType()));
+        tmp.setTansmissionType(buildKeyTable(tmp.getTansmissionType()));
+
+
+
+        log.info("Vehicle type builded");
+        return tmp;
+    }
+
+    public CVTypesCDTO buildCVType(CVTypesCDTO cvType) {
+        CVTypesCDTO tmp=cvType;
+        return tmp;
+    }
 }
