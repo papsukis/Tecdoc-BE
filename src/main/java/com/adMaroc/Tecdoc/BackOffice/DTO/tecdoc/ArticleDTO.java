@@ -27,7 +27,12 @@ public class ArticleDTO {
     List<TecdocImages> images = new ArrayList<>();
     ManufacturerDTO manufacturer;
     List<ArticleDataDTO> articleData = new ArrayList<>();
-    List<CriteriaDTO> criteria = new ArrayList<>();
+    List<SupersedingArticleDTO> supersedingArticles = new ArrayList<>();
+    List<ArticleInformationDTO> articleInformations = new ArrayList<>();
+    List<PriceInformationDTO> priceInformations=new ArrayList<>();
+    List<ReferenceNumberDTO> referencedArticles = new ArrayList<>();
+    List<TradeNumberDTO> tradeNumbers = new ArrayList<>();
+    List<CriteriaDTO> criterias=new ArrayList<>();
     public ArticleDTO(ArticleTable article) {
         artNr = article.getArtNr();
         dlnr=article.getdLNr();

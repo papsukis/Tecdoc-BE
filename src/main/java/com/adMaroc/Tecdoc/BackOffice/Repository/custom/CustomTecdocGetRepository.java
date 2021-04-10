@@ -3,10 +3,8 @@ package com.adMaroc.Tecdoc.BackOffice.Repository.custom;
 import com.adMaroc.Tecdoc.BackOffice.DTO.ManufacturerList;
 import com.adMaroc.Tecdoc.BackOffice.DTO.SearchDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.CVTypesCDTO;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.LinkedArticlesCDTO;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehicleModelSeriesCDTO;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehicleTypeCDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.*;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -18,6 +16,8 @@ public interface CustomTecdocGetRepository {
     List<SearchStructureDTO> getAllSearchStructure();
 
 
+    ArticleCDTO getArticle(String artNr);
+
     @Transactional
     List<GenericArticleDTO> findGenericArticleByNodeId(long nodeId);
 
@@ -28,7 +28,18 @@ public interface CustomTecdocGetRepository {
     List<MandatoryCriteriaDTO> findMandatoryCriteriaByGenArtNr(long genArtNr);
 
     @Transactional
+    KeyTableDTO findKeyTable(KeyTableDTO keyTable);
+
+    @Transactional
     List<ProposedCriteriaDTO> findProposedCriteriaByGenArtNr(long genArtNr);
+
+    List<KeyTableDTO> findAllKeyTables();
+
+    @Cacheable("languageDescriptions")
+    List<DescriptionDTO> findAllLanguageDescriptions();
+
+    @Cacheable("countryAndlanguageDescriptions")
+    List<DescriptionDTO> findAllCountryAndlanguageDescriptions();
 
     List<GenericArticleDTO> findGenericArticleByArtNr(String artNr);
 
@@ -54,6 +65,8 @@ public interface CustomTecdocGetRepository {
 
     List<CriteriaDTO> findCriteriaByArticleLinkage(LinkedArticlesCDTO linkedArticlesCDTO);
 
+    List<LinkageInformationDTO> findLinkageInformationByLinkage(LinkedArticlesCDTO linkage);
+
     List<TecdocImages> findImagesByArticle(String artNr);
 
     List<ArticleImageDTO> getAllArticles(List<Long> dlnr);
@@ -61,6 +74,8 @@ public interface CustomTecdocGetRepository {
     ManufacturerDTO findByDlnr(long dlnr);
 
     List<ArticleDataDTO> findArticleDataByArtnr(String artNr);
+
+    ArticleDTO findArticleArtnr(String artNr);
 
     List<ManufacturerList> findManufacturers();
 
@@ -86,4 +101,6 @@ public interface CustomTecdocGetRepository {
     VehicleTypeCDTO findVehicleTypeByKtypNr(long ktypNr);
 
     CVTypesCDTO findCVTypeByNtypNr(long ntypNr);
+
+    List<ManufacturerDTO> findAllSavedManufacturers();
 }

@@ -14,11 +14,13 @@ public class ReferenceNumberDTO {
     String artNr;
     ManufacturerDTO manufacturer;
     boolean additiv;
+    ArticleDTO referencedArticle;
 
     public ReferenceNumberDTO(ReferenceNumbers referenceNumber) {
         refNr=referenceNumber.getRefNr();
         artNr=referenceNumber.getId().getArtNr();
         manufacturer=new ManufacturerDTO(referenceNumber.getManufacturer());
         additiv=referenceNumber.getAdditiv()==1;
+        referencedArticle=new ArticleDTO(refNr);
     }
 }

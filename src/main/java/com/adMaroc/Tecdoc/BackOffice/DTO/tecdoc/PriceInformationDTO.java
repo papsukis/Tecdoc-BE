@@ -15,15 +15,22 @@ import java.util.Date;
 public class PriceInformationDTO {
     String artNr;
     long prArt;
+    long pENr;
+    String mENr;
     String currencyCode;
     String discountGroup;
     long discount;
     KeyTableDTO priceType;
+    KeyTableDTO quantityUnit;
+    KeyTableDTO priceUnit;
+    long price;
     Date from;
     Date to;
     public PriceInformationDTO(PriceInformation priceInformation) {
         artNr=priceInformation.getId().getArtNr();
         prArt=priceInformation.getId().getPrArt();
+        mENr=priceInformation.getId().getmENr();
+        pENr=priceInformation.getId().getpENr();
         try {
             from=new SimpleDateFormat("YYYYmm").parse(String.valueOf(priceInformation.getId().getDatvon()));
             to=new SimpleDateFormat("YYYYmm").parse(String.valueOf(priceInformation.getDatbis()));
@@ -34,5 +41,8 @@ public class PriceInformationDTO {
         discount=priceInformation.getMinderrabatt();
         discountGroup=priceInformation.getRabattgruppe();
         priceType=new KeyTableDTO(74,prArt);
+        quantityUnit=new KeyTableDTO(71,mENr);
+        priceUnit=new KeyTableDTO(70,pENr);
+        price=priceInformation.getPreis();
     }
 }

@@ -1,6 +1,8 @@
 package com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete;
 
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.AddressDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.ManufacturerKBAReferenceDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.TecdocImages;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.VehicleModelSerieDTO;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.CVDriverCabs;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.Manufacturer;
@@ -10,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +32,8 @@ public class ManufacturerCDTO {
     boolean lightComercialVehicleManufacturer;
     List<VehicleModelSerieDTO> vehicleModelSerieList;
     List<ManufacturerKBAReferenceDTO> kbaReferences;
-
+    List<AddressDTO> address=new ArrayList<>();
+    TecdocImages logo;
     public ManufacturerCDTO(Manufacturer manufacturer) {
         herNr=manufacturer.getHerNr();
         shortCode=manufacturer.gethKZ();

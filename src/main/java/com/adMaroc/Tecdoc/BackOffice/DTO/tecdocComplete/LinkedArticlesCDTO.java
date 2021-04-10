@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -26,7 +27,8 @@ public class LinkedArticlesCDTO {
     EngineDTO engine;
     CVTypesDTO cvTypes;
     AxleDTO axle;
-    List<CriteriaDTO> criteria;
+    List<CriteriaDTO> criteria = new ArrayList<>();
+    List<LinkageInformationDTO> linkageInformation = new ArrayList<>();
     public LinkedArticlesCDTO(ArticleLinkage articleLinkage) {
         artNr=articleLinkage.getId().getArtNr();
         genArtNr=articleLinkage.getId().getGenArtNr();

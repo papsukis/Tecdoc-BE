@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 public class ManufacturerDTO {
 
     long herNr;
+    long dlnr;
     String shortCode;
     DescriptionDTO longCode;
     boolean personalCarManufacturer;
@@ -31,19 +32,36 @@ public class ManufacturerDTO {
 
 
     public ManufacturerDTO(Manufacturer manufacturer) {
-        if(manufacturer!=null){
-        herNr=manufacturer.getHerNr();
-        shortCode=manufacturer.gethKZ();
-        longCode=manufacturer.getCountryAndLanguageDependentDescription()!=null?new DescriptionDTO(manufacturer.getCountryAndLanguageDependentDescription()):new DescriptionDTO(String.valueOf(manufacturer.getlBezNr()));
-        personalCarManufacturer=manufacturer.getpKW()==1;
-        commercialVehicleManufacturer=manufacturer.getnKW()==1;
-        comparativeManufacturer=manufacturer.getvGL()==1;
-        axleManufacturer=manufacturer.getAchse()==1;
-        transmissionManufacturer=manufacturer.getGetriebe()==1;
-        engineManufacturer=manufacturer.getMotor()==1;
-        lightComercialVehicleManufacturer=manufacturer.getTransporter()==1;
+        if (manufacturer != null) {
+            herNr = manufacturer.getHerNr();
+            dlnr = 9999;
+            shortCode = manufacturer.gethKZ();
+            longCode = manufacturer.getCountryAndLanguageDependentDescription() != null ? new DescriptionDTO(manufacturer.getCountryAndLanguageDependentDescription()) : new DescriptionDTO(String.valueOf(manufacturer.getlBezNr()));
+            personalCarManufacturer = manufacturer.getpKW() == 1;
+            commercialVehicleManufacturer = manufacturer.getnKW() == 1;
+            comparativeManufacturer = manufacturer.getvGL() == 1;
+            axleManufacturer = manufacturer.getAchse() == 1;
+            transmissionManufacturer = manufacturer.getGetriebe() == 1;
+            engineManufacturer = manufacturer.getMotor() == 1;
+            lightComercialVehicleManufacturer = manufacturer.getTransporter() == 1;
 //        vehicleModelSerie=manufacturer.getVehicleModelSeries().size()>0?manufacturer.getVehicleModelSeries().stream().map(VehicleModelSerieDTO::new).collect(Collectors.toList()):new ArrayList<>();
         }
+    }
+        public ManufacturerDTO(Manufacturer manufacturer,long dlnr) {
+            if(manufacturer!=null){
+                herNr=manufacturer.getHerNr();
+                this.dlnr=dlnr;
+                shortCode=manufacturer.gethKZ();
+                longCode=manufacturer.getCountryAndLanguageDependentDescription()!=null?new DescriptionDTO(manufacturer.getCountryAndLanguageDependentDescription()):new DescriptionDTO(String.valueOf(manufacturer.getlBezNr()));
+                personalCarManufacturer=manufacturer.getpKW()==1;
+                commercialVehicleManufacturer=manufacturer.getnKW()==1;
+                comparativeManufacturer=manufacturer.getvGL()==1;
+                axleManufacturer=manufacturer.getAchse()==1;
+                transmissionManufacturer=manufacturer.getGetriebe()==1;
+                engineManufacturer=manufacturer.getMotor()==1;
+                lightComercialVehicleManufacturer=manufacturer.getTransporter()==1;
+//        vehicleModelSerie=manufacturer.getVehicleModelSeries().size()>0?manufacturer.getVehicleModelSeries().stream().map(VehicleModelSerieDTO::new).collect(Collectors.toList()):new ArrayList<>();
+            }
     }
 
     public ManufacturerDTO(long herNr) {

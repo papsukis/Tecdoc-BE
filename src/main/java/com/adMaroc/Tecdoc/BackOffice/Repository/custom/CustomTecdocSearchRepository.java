@@ -16,4 +16,8 @@ public interface CustomTecdocSearchRepository {
     List<ArticleDTO> findArticlesByEan(String ean);
 
     SearchResponse findArticlesByKtypNr(SearchDTO search);
+
+    SearchResponse findArticlesByGenericArticle(SearchDTO search);
+
+    SearchResponse findArticlesByNtypNr(SearchDTO search);
 }

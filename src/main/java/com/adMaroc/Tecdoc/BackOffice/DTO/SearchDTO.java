@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,6 +18,8 @@ public class SearchDTO {
     String ntypNr;
     String type;
     String ean;
+    List<Long> dlnr;
+    List<Long> genArtNr;
     long page;
     long nbrPerPage;
     long totalResults;

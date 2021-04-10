@@ -36,10 +36,11 @@ public class CriteriaDTO {
     CriteriaDTO parentCriterion;
     List<CriteriaDTO> criterionChildren;
     @QueryProjection
-    public CriteriaDTO(CriteriaTable criteriaTable,String value) {
+    public CriteriaDTO(CriteriaTable criteriaTable,String value,Long immediateDisplay) {
         kritNr=criteriaTable.getId().getKritNr();
         description=new DescriptionDTO(criteriaTable.getLanguageDescriptions());
         this.value=value;
+        this.immediateDisplay=immediateDisplay==1;
         type=criteriaTable.getTyp();
         maxLength=criteriaTable.getMaxLen();
         article=criteriaTable.getOkArtikel()==1;

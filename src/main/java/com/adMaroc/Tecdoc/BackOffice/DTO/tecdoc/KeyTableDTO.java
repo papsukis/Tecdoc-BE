@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
+import java.util.Objects;
 import java.util.Optional;
 
 @Data
@@ -43,9 +44,31 @@ public class KeyTableDTO {
         this.tabNr = tabNr;
         this.key = key;
     }
+    @QueryProjection
     public KeyTableDTO(KeyTables keyTablesEntries) {
         tabNr=keyTablesEntries.getTabNr();
         value=new DescriptionDTO(keyTablesEntries.getLanguageDescriptions());
         label=new DescriptionDTO(keyTablesEntries.getLanguageDescriptions());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        KeyTableDTO that = (KeyTableDTO) o;
+        return tabNr == that.tabNr &&
+                convertString(key,3).contains(convertString(that.key,3));
+    }
+    private String convertString(String key,int length){
+        String tmp=String.valueOf(key);
+//        int j=length-tmp.length();
+        for(int i=tmp.length();i<length;i++)
+            tmp="0"+tmp;
+
+        return tmp;
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(tabNr, key);
     }
 }

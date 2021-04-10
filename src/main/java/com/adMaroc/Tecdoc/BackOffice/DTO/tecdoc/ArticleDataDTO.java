@@ -23,7 +23,7 @@ public class ArticleDataDTO {
     @QueryProjection
     public ArticleDataDTO(CountrySpecificArticleData articleData) {
         this.artNr = articleData.getId().getArtNr();
-        this.packingUnit = Long.parseLong(articleData.getvPE());
+        this.packingUnit =  articleData.getvPE().length()>0? Long.parseLong(articleData.getvPE()):0;
         this.quantityPerPack = articleData.getMengeProVPE();
         this.articleStatus = new KeyTableDTO(73,articleData.getArtStat());
         try {

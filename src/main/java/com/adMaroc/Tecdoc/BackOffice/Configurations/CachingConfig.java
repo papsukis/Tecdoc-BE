@@ -20,6 +20,10 @@ public class CachingConfig {
         cacheManager.setCaches(Arrays.asList(
                 new ConcurrentMapCache("searchStructure"),
                 new ConcurrentMapCache("genericArticles"),
+                new ConcurrentMapCache("savedManufacturers"),
+                new ConcurrentMapCache("keyTables"),
+                new ConcurrentMapCache("countryAndlanguageDescriptions"),
+                new ConcurrentMapCache("languageDescriptions"),
                 new ConcurrentMapCache("manufacturers")));
         return cacheManager;
     }

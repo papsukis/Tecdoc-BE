@@ -1,5 +1,6 @@
 package com.adMaroc.Tecdoc.BackOffice.DTO;
 
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.ArticleDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.ArticleCDTO;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.ArticleTable;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ public class SearchResponse {
     int pageNr;
     int nrPerPage;
     long totalResults;
-    List<ArticleCDTO> response=new ArrayList<>();
+    List<ArticleDTO> response=new ArrayList<>();
 
     public SearchResponse(ArticleTable article) {
     }

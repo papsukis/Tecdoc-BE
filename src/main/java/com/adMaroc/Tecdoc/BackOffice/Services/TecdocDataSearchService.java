@@ -36,10 +36,8 @@ public class TecdocDataSearchService {
 
     public SearchResponse findByReferenceNumber(SearchDTO search) {
         SearchResponse tmp=tecdocSearchRepository.findArticlesByReferenceNumber(search);
-        tmp.setResponse(tmp.getResponse()
-        .stream().map(builder::buildArticleComplete).collect(Collectors.toList()));
 
-        return tmp;
+        return builder.buildResponse(tmp);
     }
 
     public List<ArticleDTO> findByEan(String ean) {
@@ -47,6 +45,13 @@ public class TecdocDataSearchService {
     }
 
     public SearchResponse findArticleByVehicleType(SearchDTO search) {
-        return tecdocSearchRepository.findArticlesByKtypNr(search);
+        return builder.buildResponse(tecdocSearchRepository.findArticlesByKtypNr(search));
+    }
+
+    public SearchResponse findArticleByCVType(SearchDTO search) {
+        return builder.buildResponse(tecdocSearchRepository.findArticlesByNtypNr(search));
+    }
+    public SearchResponse findArticleByGenArt(SearchDTO search) {
+        return builder.buildResponse(tecdocSearchRepository.findArticlesByGenericArticle(search));
     }
 }

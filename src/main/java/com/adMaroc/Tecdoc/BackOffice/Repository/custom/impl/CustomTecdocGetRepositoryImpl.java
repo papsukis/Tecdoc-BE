@@ -3,10 +3,7 @@ package com.adMaroc.Tecdoc.BackOffice.Repository.custom.impl;
 import com.adMaroc.Tecdoc.BackOffice.DTO.ManufacturerList;
 import com.adMaroc.Tecdoc.BackOffice.DTO.SearchDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.CVTypesCDTO;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.LinkedArticlesCDTO;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehicleModelSeriesCDTO;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehicleTypeCDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.*;
 import com.adMaroc.Tecdoc.BackOffice.Models.Brand;
 import com.adMaroc.Tecdoc.BackOffice.Models.BrandList;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.*;
@@ -15,12 +12,15 @@ import com.adMaroc.Tecdoc.BackOffice.Repository.custom.TecdocCustomRepository;
 import com.adMaroc.Tecdoc.BackOffice.Services.TecdocBuilder;
 import com.adMaroc.Tecdoc.BackOffice.Utils.JsonReader;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -51,11 +51,18 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
         query = new JPAQueryFactory(em);
         QTecdocSearchStructure searchStructure=QTecdocSearchStructure.tecdocSearchStructure;
 
-        JPAQuery<TecdocSearchStructure> jpaQuery=query.selectFrom(searchStructure).where(searchStructure.stufe.eq((long)1));
+        BooleanExpression vehicleT = searchStructure.treeTypNr.eq((long) 1);
+        BooleanExpression cvT = searchStructure.treeTypNr.eq((long) 2);
+
+        JPAQuery<TecdocSearchStructure> jpaQuery=query.selectFrom(searchStructure).where(searchStructure.stufe.eq((long)1)
+                .and(vehicleT.or(cvT))
+        );
 
         List<TecdocSearchStructure> parentlist=jpaQuery.fetch();
 
-        jpaQuery=query.selectFrom(searchStructure).where(searchStructure.stufe.ne((long)1));
+        jpaQuery=query.selectFrom(searchStructure).where(searchStructure.stufe.ne((long)1)
+                .and(vehicleT.or(cvT))
+        );
 
         List<TecdocSearchStructure> childrenList=jpaQuery.fetch();
 
@@ -74,6 +81,16 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
                 )
                 .map(searchNode->setHierarchy(searchNode,childrenList))
                 .collect(Collectors.toList());
+    }
+    @Override
+    public ArticleCDTO getArticle(String artNr){
+        query = new JPAQueryFactory(em);
+        QArticleTable articleTable=QArticleTable.articleTable;
+        JPAQuery<ArticleCDTO> jpaQuery=query
+                .select(Projections.constructor(ArticleCDTO.class,articleTable))
+                .from(articleTable)
+                .where(articleTable.artNr.eq(artNr));
+        return jpaQuery.fetchOne();
     }
     @Override
     @Transactional
@@ -127,7 +144,27 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
                     return m;
                 }).collect(Collectors.toList());
     }
+    @Override
+    @Transactional
+    public KeyTableDTO findKeyTable(KeyTableDTO keyTable){
+        query = new JPAQueryFactory(em);
+        QKeyTablesEntries keyTables=QKeyTablesEntries.keyTablesEntries;
 
+        JPAQuery<KeyTableDTO> jpaQuery=query
+                .select(Projections.constructor(KeyTableDTO.class,keyTables))
+                .from(keyTables)
+                .where(keyTables.id.tabNr.eq(keyTable.getTabNr()).and(keyTables.id.key.eq(convertString(keyTable.getKey(),3))));
+
+        return jpaQuery.fetchFirst();
+    }
+    private String convertString(String key,int length){
+        String tmp=String.valueOf(key);
+//        int j=length-tmp.length();
+        for(int i=tmp.length();i<length;i++)
+            tmp="0"+tmp;
+
+        return tmp;
+    }
     @Override
     @Transactional
     public List<ProposedCriteriaDTO> findProposedCriteriaByGenArtNr(long genArtNr){
@@ -169,6 +206,33 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
             }
         }
         return tmp;
+    }
+    @Cacheable("keyTables")
+    @Override
+    public List<KeyTableDTO> findAllKeyTables(){
+        query = new JPAQueryFactory(em);
+        QKeyTablesEntries keyTables=QKeyTablesEntries.keyTablesEntries;
+        JPAQuery<KeyTableDTO> jpaQuery=query.select(Projections.constructor(KeyTableDTO.class,keyTables))
+                .from(keyTables);
+        return jpaQuery.fetch();
+    }
+    @Cacheable("languageDescriptions")
+    @Override
+    public List<DescriptionDTO> findAllLanguageDescriptions(){
+        query = new JPAQueryFactory(em);
+        QLanguageDescriptions languageDescriptions=QLanguageDescriptions.languageDescriptions;
+        JPAQuery<DescriptionDTO> jpaQuery=query.select(Projections.constructor(DescriptionDTO.class,languageDescriptions))
+                .from(languageDescriptions);
+        return jpaQuery.fetch();
+    }
+    @Cacheable("countryAndlanguageDescriptions")
+    @Override
+    public List<DescriptionDTO> findAllCountryAndlanguageDescriptions(){
+        query = new JPAQueryFactory(em);
+        QCountryAndLanguageDependentDescriptions languageDependentDescriptions=QCountryAndLanguageDependentDescriptions.countryAndLanguageDependentDescriptions;
+        JPAQuery<DescriptionDTO> jpaQuery=query.select(Projections.constructor(DescriptionDTO.class,languageDependentDescriptions))
+                .from(languageDependentDescriptions);
+        return jpaQuery.fetch();
     }
     @Override
     @Transactional
@@ -238,7 +302,7 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
     public List<SupersedingArticleDTO> findSuperSedingArticlesByArtNr(String artNr){
         query = new JPAQueryFactory(em);
         QSupersedingArticles supersedingArticles=QSupersedingArticles.supersedingArticles;
-        JPAQuery<SupersedingArticles> jpaQuery=query.selectFrom(supersedingArticles).where(supersedingArticles.id.artNr.eq(artNr));
+        JPAQuery<SupersedingArticles> jpaQuery=query.selectFrom(supersedingArticles).where(supersedingArticles.id.ersatzNr.eq(artNr));
         return jpaQuery.fetch().stream().map(SupersedingArticleDTO::new).collect(Collectors.toList());
     }
     @Override
@@ -278,7 +342,7 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
         QCriteriaTable criteria=QCriteriaTable.criteriaTable;
         QArticleTable articleTable=QArticleTable.articleTable;
         JPAQuery<CriteriaDTO> jpaQuery=query
-                .select(Projections.constructor(CriteriaDTO.class,criteria,articleCriteria.kritWert))
+                .select(Projections.constructor(CriteriaDTO.class,criteria,articleCriteria.kritWert,articleCriteria.anzSofort))
                 .from(articleCriteria)
                 .join(articleCriteria.articleTable,articleTable)
                 .join(articleCriteria.criteriaTable,criteria)
@@ -308,10 +372,28 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
         return list.stream().map(linkageAttribute ->{
                     return new CriteriaDTO(query
                             .selectFrom(criteria)
-                            .where(criteria.id.kritNr.eq(linkageAttribute.getKritNr())).fetchFirst(),linkageAttribute.getKritWert());
+                            .where(criteria.id.kritNr.eq(linkageAttribute.getKritNr())).fetchFirst(),linkageAttribute.getKritWert(),linkageAttribute.getAnzSofort());
         }).collect(Collectors.toList());
     }
+    @Override
+    public List<LinkageInformationDTO> findLinkageInformationByLinkage(LinkedArticlesCDTO linkage){
+        query = new JPAQueryFactory(em);
+        QSearchInformationTexts searchInformationTexts=QSearchInformationTexts.searchInformationTexts;
+        QCriteriaTable criteria=QCriteriaTable.criteriaTable;
+        QArticleTable articleTable=QArticleTable.articleTable;
 
+
+        JPAQuery<LinkageInformationDTO> jpaQuery=query
+                .select(Projections.constructor(LinkageInformationDTO.class,searchInformationTexts))
+                .from(searchInformationTexts)
+                .where(
+                        searchInformationTexts.id.artNr.eq(linkage.getArtNr())
+                                .and(searchInformationTexts.id.genArtNr.eq(linkage.getGenArtNr()))
+                                .and(searchInformationTexts.id.vknZielArt.eq(linkage.getTypeNr()))
+                                .and(searchInformationTexts.id.vknZielNr.eq(linkage.getLinkageId()))
+                );
+        return jpaQuery.fetch();
+    }
     @Override
     @Transactional
     public List<TecdocImages> findImagesByArticle(String artNr){
@@ -442,6 +524,19 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
                 .where(articleData.id.artNr.eq(artNr));
 
         return jpaQuery.fetch();
+    }
+
+    @Override
+    public ArticleDTO findArticleArtnr(String artNr){
+        query = new JPAQueryFactory(em);
+        QArticleTable articleTable=QArticleTable.articleTable;
+
+        JPAQuery<ArticleDTO> jpaQuery=query.
+                select(Projections.constructor(ArticleDTO.class,articleTable))
+                .from(articleTable)
+                .where(articleTable.artNr.eq(artNr));
+
+        return jpaQuery.fetchFirst();
     }
     @Override
     public List<ManufacturerList> findManufacturers(){
@@ -667,5 +762,25 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
                 .from(cvType)
                 .where(cvType.nTypNr.eq(ntypNr));
         return jpaQuery.fetchFirst();
+    }
+
+    @Override
+    public List<ManufacturerDTO> findAllSavedManufacturers() {
+        query = new JPAQueryFactory(em);
+        QManufacturer manufacturer=QManufacturer.manufacturer;
+        QHeader header=QHeader.header;
+
+        JPAQuery<ManufacturerDTO> jpaQuery=query.
+                select(Projections.constructor(ManufacturerDTO.class,manufacturer))
+                .from(manufacturer)
+                .where(manufacturer.herNr.in(
+                        JPAExpressions.select(header.hernr).from(header))
+                );
+        List<ManufacturerDTO> list=jpaQuery.fetch();
+        list.stream().map(x->{
+            x.setDlnr(query.select(header.dLNr).from(header).where(header.hernr.eq(x.getHerNr())).fetchOne());
+            return x;
+        }).collect(Collectors.toList());
+        return list;
     }
 }

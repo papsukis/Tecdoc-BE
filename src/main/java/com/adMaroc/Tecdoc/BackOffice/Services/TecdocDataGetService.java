@@ -5,6 +5,7 @@ import com.adMaroc.Tecdoc.BackOffice.DTO.ManufacturerList;
 import com.adMaroc.Tecdoc.BackOffice.DTO.SearchDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.SearchStructureTree;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.ArticleCDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.CVTypesCDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehicleModelSeriesCDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehicleTypeCDTO;
@@ -44,6 +45,7 @@ public class TecdocDataGetService {
         List<SearchStructureDTO> nodes= tecdocGetRepository.getAllSearchStructure();
         log.info("creating tree");
         for(KeyTableDTO keytable : keyTableDTOS){
+            if(keytable.getKey().contains("1") || keytable.getKey().contains("2"))
            tree.add(new SearchStructureTree(keytable));
         }
         for(SearchStructureDTO node: nodes){
@@ -67,39 +69,9 @@ public class TecdocDataGetService {
         return tecdocGetRepository.findManufacturers().stream().map(tecdocBuilder::buildManufacturerList).collect(Collectors.toList());
     }
     public List<GenericArticleDTO> findAllGenericArticle(){
-        return tecdocService.genericArticlesRepository.findAll().stream().map(GenericArticleDTO::new).collect(Collectors.toList());
+        return tecdocService.genericArticlesRepository.findAll().stream().map(GenericArticleDTO::new).map(tecdocBuilder::buildGenericArticle).collect(Collectors.toList());
     }
-//    public List<CriteriaDTO> findAllCriteria(){
-//        List<CriteriaTable> tmp = tecdocService.criteriaTableRepository.findAll();
-//        List<CriteriaDTO> list=tmp.stream().map(CriteriaDTO::new).collect(Collectors.toList());
-//
-//        List<CriteriaDTO> parent=list.stream().filter(criteriaTable -> criteriaTable.getParentCriterion()==null).collect(Collectors.toList());;
-//        List<CriteriaDTO> children=list.stream().filter(criteriaTable -> criteriaTable.getParentCriterion()!=null).collect(Collectors.toList());;
-//        return parent.stream().map(criteriaDTO -> {return buildCriterion(criteriaDTO);}).map(criteria->setCriteriaHierarchy(criteria,children)).collect(Collectors.toList());
-//    }
-//    public CriteriaDTO buildCriterion(CriteriaDTO criteriaDTO){
-//        if(criteriaDTO.getType().contains("K")){
-//            criteriaDTO.setKeyTable(
-//                    new KeyTableDTO(
-//                            tecdocService.keyTablesRepository.findById(criteriaDTO.getKeyTable().getTabNr()).get()
-//                    )
-//            );
-//        }
-//        if(criteriaDTO.getAbreviation().getBezNr()=="0")
-//            criteriaDTO.setAbreviation(
-//                    tecdocCustomRepository.findanguageDescriptionsByLbeznr(
-//                                criteriaDTO.getAbreviationId()
-//                        ).getBez()
-//            );
-//        if(criteriaDTO.getUnitId()!=0)
-//            criteriaDTO.setUnit(
-//                    tecdocCustomRepository.findanguageDescriptionsByLbeznr(
-//                            criteriaDTO.getUnitId()
-//                    ).getBez()
-//            );
-//
-//        return criteriaDTO;
-//    }
+
     private CriteriaDTO setCriteriaHierarchy(CriteriaDTO criteria,List<CriteriaDTO> childrenList){
         CriteriaDTO tmp=criteria;
         List<CriteriaDTO> sub = new ArrayList<>();
@@ -148,5 +120,12 @@ public class TecdocDataGetService {
 
     public CVTypesCDTO findCVType(SearchDTO search) {
         return tecdocBuilder.buildCVType(tecdocGetRepository.findCVTypeByNtypNr(Long.parseLong(search.getNtypNr())));
+    }
+
+    public List<ManufacturerDTO> findAllSavedManufacturers() {
+        return tecdocGetRepository.findAllSavedManufacturers().stream().map(tecdocBuilder::buildManufacturer).collect(Collectors.toList());
+    }
+    public ArticleCDTO getArticle(SearchDTO search){
+        return tecdocBuilder.buildArticleComplete(tecdocGetRepository.getArticle(search.getArtNr()));
     }
 }

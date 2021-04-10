@@ -17,7 +17,7 @@ import java.util.Date;
 public class VehicleTypeDTO {
 
     long kTypNr;
-    DescriptionDTO description1;
+    DescriptionDTO description;
     DescriptionDTO description2;
     DescriptionDTO description3;
     VehicleModelSerieDTO vehicleModelSerie;
@@ -48,7 +48,7 @@ public class VehicleTypeDTO {
     @QueryProjection
     public VehicleTypeDTO(VehicleTypes vehicleTypes) {
         kTypNr=vehicleTypes.getkTypNr();
-        description1=vehicleTypes.getCountryAndLanguageDependentDescriptions()!=null?new DescriptionDTO(vehicleTypes.getCountryAndLanguageDependentDescriptions()):new DescriptionDTO(String.valueOf(vehicleTypes.getLbezNr()));
+        description=vehicleTypes.getCountryAndLanguageDependentDescriptions()!=null?new DescriptionDTO(vehicleTypes.getCountryAndLanguageDependentDescriptions()):new DescriptionDTO(String.valueOf(vehicleTypes.getLbezNr()));
         try {
             from=new SimpleDateFormat("YYYYmm").parse(String.valueOf(vehicleTypes.getBjvon()));
             to=new SimpleDateFormat("YYYYmm").parse(String.valueOf(vehicleTypes.getBjbis()));

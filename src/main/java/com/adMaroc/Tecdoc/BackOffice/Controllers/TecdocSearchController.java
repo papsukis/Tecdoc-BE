@@ -37,4 +37,12 @@ public class TecdocSearchController {
     public ResponseEntity<SearchResponse> findArticleByVehicleType(@RequestBody SearchDTO searchDTO){
         return ResponseEntity.ok(tecdocService.findArticleByVehicleType(searchDTO));
     }
+    @PostMapping("findArticleByCVType")
+    public ResponseEntity<SearchResponse> findArticleByCVType(@RequestBody SearchDTO searchDTO){
+        return ResponseEntity.ok(tecdocService.findArticleByCVType(searchDTO));
+    }
+    @PostMapping("findArticleByGenArt")
+    public ResponseEntity<SearchResponse> findArticleByGenArt(@RequestBody SearchDTO searchDTO){
+        return ResponseEntity.ok(tecdocService.findArticleByCVType(searchDTO));
+    }
 }
