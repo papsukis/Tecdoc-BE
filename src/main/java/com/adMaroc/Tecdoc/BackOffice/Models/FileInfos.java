@@ -1,4 +1,4 @@
-package com.adMaroc.Tecdoc.BackOffice.DTO;
+package com.adMaroc.Tecdoc.BackOffice.Models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FileToGetDataDTO {
-
+public class FileInfos {
     String fileName;
-    String fullpath;
+    int brandNumber;
+    String brandName;
 }

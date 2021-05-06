@@ -61,7 +61,32 @@ public class CriteriaDTO {
             parentCriterion.setKritNr(criteriaTable.getNachfolgeCriterion());
         criterionChildren=new ArrayList<>();
     }
-
+    @QueryProjection
+    public CriteriaDTO(CriteriaTable criteriaTable,String value) {
+        kritNr=criteriaTable.getId().getKritNr();
+        description=new DescriptionDTO(criteriaTable.getLanguageDescriptions());
+        this.value=value;
+        this.immediateDisplay=true;
+        type=criteriaTable.getTyp();
+        maxLength=criteriaTable.getMaxLen();
+        article=criteriaTable.getOkArtikel()==1;
+        keyTable=criteriaTable.getTyp().contains("K")?new KeyTableDTO(criteriaTable.getTabNr()):null;
+        personalCarCriterion=criteriaTable.getoKPKW()==1;
+        commercialVehicleCriterion=criteriaTable.getoKNKW()==1;
+        engineCriterion=criteriaTable.getoKMotor()==1;
+        driverCabCriterion=criteriaTable.getoKFahrerhaus()==1;
+        partsListCriterion=criteriaTable.getStucklistenCriterion()==1;
+        accessoryListCriterion=criteriaTable.getZubehorCriterion()==1;
+        axleCriterion=criteriaTable.getoKAchse()==1;
+        linkage=criteriaTable.getMehrfachVerwendung()==1;
+        abreviation=new DescriptionDTO(String.valueOf(criteriaTable.getBezNrAbk()));
+        unit=new DescriptionDTO(String.valueOf(criteriaTable.getBezNrEinheit()));
+        interval=criteriaTable.getIntervallCriterion()==1;
+        parentCriterion=criteriaTable.getNachfolgeCriterion()!=0?new CriteriaDTO():null;
+        if(parentCriterion!=null)
+            parentCriterion.setKritNr(criteriaTable.getNachfolgeCriterion());
+        criterionChildren=new ArrayList<>();
+    }
     public CriteriaDTO(CriteriaTable criteriaTable) {
         kritNr=criteriaTable.getId().getKritNr();
         description=new DescriptionDTO(criteriaTable.getLanguageDescriptions());

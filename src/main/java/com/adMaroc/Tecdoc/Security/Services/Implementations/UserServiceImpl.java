@@ -2,6 +2,7 @@ package com.adMaroc.Tecdoc.Security.Services.Implementations;
 
 
 import com.adMaroc.Tecdoc.BackOffice.DTO.FilterDTO;
+import com.adMaroc.Tecdoc.BackOffice.Models.Actions;
 import com.adMaroc.Tecdoc.Security.Exceptions.*;
 import com.adMaroc.Tecdoc.Security.Models.Role;
 import com.adMaroc.Tecdoc.Security.Models.User;
@@ -76,7 +77,7 @@ public class UserServiceImpl implements UserService {
         Long now = System.currentTimeMillis();
         user.setLastLogged(new Date(now));
 
-        UserLog userLog = new UserLog(user.getUsername(),user.getLastLogged(),context.getRemoteAddr(),"login");
+        UserLog userLog = new UserLog(user.getUsername(),user.getLastLogged(),context.getRemoteAddr(), Actions.LOGIN.label);
 //                new UserLog(user.getUsername(),user.getLastLogged(),context.getRemoteAddr(),"login");
 
 

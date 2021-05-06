@@ -33,7 +33,6 @@ public class CVTypesCDTO {
 
     VehicleModelSerieDTO vehicleModelSerie;
     List<CVSecondaryTypeDTO> cvSecondaryTypes = new ArrayList<>();
-    List<EngineDTO> engines = new ArrayList<>();
     List<CVDriverCabDTO> cvDriverCabs = new ArrayList<>();
     List<CVTypeVoltageDTO> cvTypeVoltages = new ArrayList<>();
     List<CVSuspensionDTO> cvSuspensions = new ArrayList<>();
@@ -53,6 +52,7 @@ public class CVTypesCDTO {
         }catch (ParseException e){
 
         }
+        vehicleModelSerie=new VehicleModelSerieDTO(cvTypes.getVehicleModelSeries());
         engineOutputFromKW=cvTypes.getKwvon();
         engineOutputToKW=cvTypes.getKwbis();
         engineOutputFromHP=cvTypes.getPsvon();
@@ -62,5 +62,30 @@ public class CVTypesCDTO {
         bodyType=new KeyTableDTO(67,cvTypes.getBauart());
         engineType=new KeyTableDTO(80,cvTypes.getMotart());
         axleConfiguration=new KeyTableDTO(65,cvTypes.getAchsconfig());
+    }
+
+    public CVTypesCDTO(CVTypesDTO cvTypes) {
+
+    }
+
+    public CVTypesCDTO(CVTypesCDTO cvTypesCDTO) {
+        nTypNr=cvTypesCDTO.getNTypNr();
+        description=cvTypesCDTO.getDescription();
+        from=cvTypesCDTO.getFrom();
+        to=cvTypesCDTO.getTo();
+        vehicleModelSerie=cvTypesCDTO.getVehicleModelSerie();
+        engineOutputFromKW=cvTypesCDTO.getEngineOutputFromKW();
+        engineOutputToKW=cvTypesCDTO.getEngineOutputToKW();
+        engineOutputFromHP=cvTypesCDTO.getEngineOutputFromHP();
+        engineOutputToHP = cvTypesCDTO.getEngineOutputToHP();
+        engineCapacity=cvTypesCDTO.getEngineCapacity();
+        tonnage=cvTypesCDTO.getTonnage();
+        bodyType=cvTypesCDTO.getBodyType();
+        engineType=cvTypesCDTO.getEngineType();
+        axleConfiguration=cvTypesCDTO.getAxleConfiguration();
+    }
+
+    public CVTypesCDTO(long nTypNr) {
+        this.nTypNr=nTypNr;
     }
 }

@@ -11,6 +11,7 @@ import java.util.List;
 @Component
 public abstract interface TecdocCustomRepository  {
 
+
     KeyTableDTO getKeyTableValue(long tabNr, String key);
 
     KeyTableDTO getKeyTableValue(KeyTableDTO keyTable);

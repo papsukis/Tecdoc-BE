@@ -1,16 +1,12 @@
 package com.adMaroc.Tecdoc.BackOffice.Utils;
 
+
 import com.adMaroc.Tecdoc.BackOffice.Models.Attributs;
 import com.adMaroc.Tecdoc.BackOffice.Models.FileStructure;
-import com.adMaroc.Tecdoc.Security.Exceptions.InternalServerException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.commons.beanutils.PropertyUtilsBean;
-import org.springframework.stereotype.Service;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Constructor;
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,7 +34,7 @@ public class Converter {
         return s.trim();
     }
 
-    public Object instantiate(FileStructure fileStructure,String line) throws Exception {
+    public Object instantiate(FileStructure fileStructure, String line) throws Exception {
         // Load the class.
         Class<?> clazz = Class.forName("com.adMaroc.Tecdoc.BackOffice.Models.TecdocData."+fileStructure.getClassName());
         Object id=null;

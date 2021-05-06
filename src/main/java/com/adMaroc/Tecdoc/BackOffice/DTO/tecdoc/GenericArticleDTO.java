@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -42,4 +43,16 @@ public class GenericArticleDTO {
         assemblyGroups=genericArticle.getAssemblyGroups()!=null ?new AssemblyGroupsDTO(genericArticle.getAssemblyGroups()):null;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GenericArticleDTO that = (GenericArticleDTO) o;
+        return genArtNr == that.genArtNr;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(genArtNr);
+    }
 }

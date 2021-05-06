@@ -1,14 +1,14 @@
 package com.adMaroc.Tecdoc.BackOffice.Services;
 
 
+import com.adMaroc.Tecdoc.BackOffice.DTO.Linkage.LinkageDetails;
+import com.adMaroc.Tecdoc.BackOffice.DTO.Linkage.LinkageResponse;
 import com.adMaroc.Tecdoc.BackOffice.DTO.ManufacturerList;
+import com.adMaroc.Tecdoc.BackOffice.DTO.ManufacturerReferenceNumbersDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.SearchDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.SearchStructureTree;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.ArticleCDTO;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.CVTypesCDTO;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehicleModelSeriesCDTO;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehicleTypeCDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.*;
 import com.adMaroc.Tecdoc.BackOffice.Repository.custom.CustomTecdocSearchRepository;
 import com.adMaroc.Tecdoc.BackOffice.Repository.custom.TecdocCustomRepository;
 import com.adMaroc.Tecdoc.BackOffice.Repository.custom.CustomTecdocGetRepository;
@@ -125,7 +125,36 @@ public class TecdocDataGetService {
     public List<ManufacturerDTO> findAllSavedManufacturers() {
         return tecdocGetRepository.findAllSavedManufacturers().stream().map(tecdocBuilder::buildManufacturer).collect(Collectors.toList());
     }
-    public ArticleCDTO getArticle(SearchDTO search){
-        return tecdocBuilder.buildArticleComplete(tecdocGetRepository.getArticle(search.getArtNr()));
+    public ArticleDTO getArticle(SearchDTO search){
+        return tecdocBuilder.buildPartListAndAccessoryList(tecdocBuilder.buildArticle(tecdocGetRepository.getArticle(search.getArtNr())));
+    }
+
+    public List<LinkageResponse> getArticleLinkage(SearchDTO search) {
+        return tecdocBuilder.buildLinkageResponse(tecdocGetRepository.findArticleLinkage(search.getArtNr()));
+    }
+    public LinkageDetails getLinkageDetails(SearchDTO search){
+        return tecdocBuilder.buildLinkageDetails(search.getLinkageId());
+    }
+
+    public List<ManufacturerReferenceNumbersDTO> getReferenceNumbers(SearchDTO search) {
+        List<ReferenceNumberDTO> refs=tecdocGetRepository.findAllReferenceNumbers(search);
+        List<ManufacturerDTO> mans = new ArrayList<>();
+        for(ReferenceNumberDTO r: refs){
+            mans.add(r.getManufacturer());
+        }
+        mans=mans.stream().distinct().collect(Collectors.toList());
+        List<ManufacturerReferenceNumbersDTO> tmp=new ArrayList<>();
+        mans.forEach(x->{
+            tmp.add(new ManufacturerReferenceNumbersDTO(x));
+        });
+        for(ReferenceNumberDTO r:refs){
+            for(ManufacturerReferenceNumbersDTO man:tmp){
+                if(man.getManufacturer().getHerNr()==r.getManufacturer().getHerNr()){
+                    man.getReferenceNumbers().add(r);
+                }
+            }
+        }
+
+        return tmp;
     }
 }

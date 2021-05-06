@@ -7,9 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UnCompressAndSaveRequest {
-
-    private String fileName;
-    private boolean selected;
-    private String fullPath;
+public class GetRequest {
+    Long id;
 }

@@ -1,4 +1,4 @@
-package com.adMaroc.Tecdoc.BackOffice.Repository.others;
+package com.adMaroc.Tecdoc.BackOffice.Repository.logs;
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TableSaveLog;
 import org.springframework.data.jpa.repository.JpaRepository;

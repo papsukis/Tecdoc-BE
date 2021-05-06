@@ -22,9 +22,21 @@ public class CachingConfig {
                 new ConcurrentMapCache("genericArticles"),
                 new ConcurrentMapCache("savedManufacturers"),
                 new ConcurrentMapCache("keyTables"),
+                new ConcurrentMapCache("manufacturers"),
+                new ConcurrentMapCache("images"),
+                new ConcurrentMapCache("articles"),
+                new ConcurrentMapCache("article"),
+                new ConcurrentMapCache("genericArticles"),
+                new ConcurrentMapCache("genericArticle"),
+                new ConcurrentMapCache("vehicleModelSeries"),
+                new ConcurrentMapCache("vehicleTypes"),
+                new ConcurrentMapCache("criteria"),
+                new ConcurrentMapCache("cvTypes"),
+                new ConcurrentMapCache("manyfacturer"),
                 new ConcurrentMapCache("countryAndlanguageDescriptions"),
                 new ConcurrentMapCache("languageDescriptions"),
-                new ConcurrentMapCache("manufacturers")));
+                new ConcurrentMapCache("textModules"))
+        );
         return cacheManager;
     }
 }

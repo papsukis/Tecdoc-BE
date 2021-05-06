@@ -1,6 +1,7 @@
 package com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc;
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.Engines;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -57,6 +58,7 @@ public class EngineDTO {
     KeyTableDTO engineManagement;//77
     KeyTableDTO valveControl;//78
     KeyTableDTO coolingType;//76
+    @QueryProjection
     public EngineDTO(Engines engines) {
 
         motNr=engines.getMotNr();
@@ -66,6 +68,7 @@ public class EngineDTO {
             to=new SimpleDateFormat("YYYYmm").parse(String.valueOf(engines.getBjbis()));
         }catch (ParseException e){
         }
+        manufacturer=new ManufacturerDTO(engines.getHerNr());
         engineOutputFromKW=engines.getkWvon();
         engineOutputToKW=engines.getkWbis();
         engineOutputFromHP=engines.getpSvon();

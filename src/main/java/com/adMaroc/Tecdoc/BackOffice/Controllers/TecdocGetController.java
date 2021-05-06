@@ -1,14 +1,10 @@
 package com.adMaroc.Tecdoc.BackOffice.Controllers;
 
-import com.adMaroc.Tecdoc.BackOffice.DTO.ManufacturerList;
-import com.adMaroc.Tecdoc.BackOffice.DTO.ManufacturerToSaveXlsx;
-import com.adMaroc.Tecdoc.BackOffice.DTO.SearchDTO;
-import com.adMaroc.Tecdoc.BackOffice.DTO.SearchStructureTree;
+import com.adMaroc.Tecdoc.BackOffice.DTO.*;
+import com.adMaroc.Tecdoc.BackOffice.DTO.Linkage.LinkageDetails;
+import com.adMaroc.Tecdoc.BackOffice.DTO.Linkage.LinkageResponse;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.ArticleCDTO;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.CVTypesCDTO;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehicleModelSeriesCDTO;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehicleTypeCDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.*;
 import com.adMaroc.Tecdoc.BackOffice.Services.ExcelConverter;
 import com.adMaroc.Tecdoc.BackOffice.Services.TecdocDataGetService;
 import com.adMaroc.Tecdoc.BackOffice.Services.WrapperTecdocDataService;
@@ -63,6 +59,7 @@ public class TecdocGetController {
 
         return ResponseEntity.ok(tecdocService.findVehicleModelSerieByHernr(search));
     }
+
     @PostMapping("getVehicleModelSerie")
     public ResponseEntity<VehicleModelSeriesCDTO> getVehicleModelSerie(@RequestBody SearchDTO search){
 
@@ -90,15 +87,31 @@ public class TecdocGetController {
     public ResponseEntity<?> test(@RequestBody SearchDTO searchDTO){
         return ResponseEntity.ok(tecdocService.test(searchDTO));
     }
+
     @PostMapping("getArticle")
-    public ResponseEntity<ArticleCDTO> getArticle(@RequestBody SearchDTO search){
+    public ResponseEntity<ArticleDTO> getArticle(@RequestBody SearchDTO search){
         return ResponseEntity.ok(tecdocService.getArticle(search));
     }
+
     @PostMapping("saveArticlesToxlsx")
     public ResponseEntity<?> save(@RequestBody ManufacturerToSaveXlsx req){
         List<ArticleImageDTO> list=tecdocService.findAllArticles(req.getDlnr());
         log.info("articles loaded");
         excelConverter.contactListToExcelFile(list);
         return ResponseEntity.ok(list);
+    }
+
+    @PostMapping("getArticleLinkage")
+    public ResponseEntity<List<LinkageResponse>> getArticleLinkage(@RequestBody SearchDTO search){
+        return ResponseEntity.ok(tecdocService.getArticleLinkage(search));
+    }
+
+    @PostMapping("getLinkage")
+    public ResponseEntity<LinkageDetails> getArticleDetails(@RequestBody SearchDTO search){
+        return ResponseEntity.ok(tecdocService.getLinkageDetails(search));
+    }
+    @PostMapping("getReferenceNumbers")
+    public ResponseEntity<List<ManufacturerReferenceNumbersDTO>> getReferenceNumbers(@RequestBody SearchDTO search){
+        return ResponseEntity.ok(tecdocService.getReferenceNumbers(search));
     }
 }

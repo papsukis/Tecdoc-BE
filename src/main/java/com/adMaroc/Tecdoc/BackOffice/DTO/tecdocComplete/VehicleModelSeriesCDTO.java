@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Data
@@ -53,5 +54,37 @@ public class VehicleModelSeriesCDTO {
             description3=vehicleModelSeries.getAdditionalDescriptionsToVehicleModelSeries().get(0).getLbezNr1()!=vehicleModelSeries.getAdditionalDescriptionsToVehicleModelSeries().get(0).getLbezNr2()?
                     new DescriptionDTO(vehicleModelSeries.getAdditionalDescriptionsToVehicleModelSeries().get(0).getCountryAndLanguageDependentDescriptions1()):null;
         }
+    }
+
+    public VehicleModelSeriesCDTO(VehicleModelSerieDTO vehicleModelSeries) {
+        kModNr=vehicleModelSeries.getKModNr();
+        description=vehicleModelSeries.getDescription();
+        from=vehicleModelSeries.getFrom();
+        to=vehicleModelSeries.getTo();
+        personalCarModelSerie=vehicleModelSeries.isPersonalCarModelSerie();
+        comercialVehicleModelSerie=vehicleModelSeries.isComercialVehicleModelSerie();
+        axleModelSerie=vehicleModelSeries.isAxleModelSerie();
+        transporterModelSerie=vehicleModelSeries.isTransporterModelSerie();
+        manufacturer=vehicleModelSeries.getManufacturer();
+        description2=vehicleModelSeries.getDescription2();
+        description3=vehicleModelSeries.getDescription3();
+
+    }
+
+    public VehicleModelSeriesCDTO(long kmodNr) {
+        kModNr=kmodNr;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        VehicleModelSeriesCDTO that = (VehicleModelSeriesCDTO) o;
+        return kModNr == that.kModNr;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(kModNr);
     }
 }

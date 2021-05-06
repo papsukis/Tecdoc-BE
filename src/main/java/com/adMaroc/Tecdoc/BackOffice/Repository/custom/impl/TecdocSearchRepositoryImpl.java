@@ -14,6 +14,7 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.net.nntp.Article;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -30,28 +31,125 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
     JPAQueryFactory query ;
     QArticleTable article=QArticleTable.articleTable;
     QReferenceNumbers referenceNumbers=QReferenceNumbers.referenceNumbers;
+    QLanguageDescriptions languageDescriptions=QLanguageDescriptions.languageDescriptions;
     QEAN qEan =QEAN.eAN;
     QArticleLinkage articleLinkage=QArticleLinkage.articleLinkage;
     QArticleToGenericArticleAllocation allocation=QArticleToGenericArticleAllocation.articleToGenericArticleAllocation;
+    QManufacturer manufacturer=QManufacturer.manufacturer;
+    @Override
+    public SearchResponse findArticlesByOEReferenceNumber(SearchDTO search){
+        QArticleTable article=QArticleTable.articleTable;
+        query=new JPAQueryFactory(em);
+        SearchResponse tmp = new SearchResponse();
+        BooleanExpression reference;
+        if(search.getReferenceNumber()!=null)
+        {
+            reference =search.getReferenceNumber().endsWith("*")?
+                    Expressions.stringTemplate("replace({0},' ','')", referenceNumbers.refNr).containsIgnoreCase(search.getReferenceNumber().replace(" ","").substring(0,search.getReferenceNumber().replace(" ","").length()-1))
+                            .and(manufacturer.vGL.ne((long)1)) :
+                    Expressions.stringTemplate("replace({0},' ','')", referenceNumbers.refNr).eq(search.getReferenceNumber().replace(" ","")).and(manufacturer.vGL.ne((long)1));
+//        .or(Expressions.stringTemplate("replace({0},' ','')", referenceNumbers.refNr).containsIgnoreCase(search.getReferenceNumber().replace(" ","").substring(0,search.getReferenceNumber().replace(" ","").length()-1)).and(manufacturer.vGL.ne((long)1)))
+        }
+        else{
+            reference=Expressions.asBoolean(true).isTrue();
+        }
+        JPAQuery<ArticleDTO> jpaQuery=query
+                .select(Projections.constructor(ArticleDTO.class,article))
+                .from(referenceNumbers)
+                .where(
+                        getFilters(search).and(reference)
+                )
+                .limit(search.getNbrPerPage())
+                .offset(search.getNbrPerPage()*(search.getPage()-1));
+
+        tmp.setSearchType(search.getType());
+        tmp.setNrPerPage((int) search.getNbrPerPage());
+        tmp.setPageNr((int) search.getPage());
+        tmp.setResponse(jpaQuery.fetch());
+        tmp.setTotalResults(jpaQuery.fetchCount());
+        return tmp;
+    }
+    @Override
+    public List<ArticleDTO> findAllArticlesByOEReferenceNumber(SearchDTO search){
+        QArticleTable article=QArticleTable.articleTable;
+        query=new JPAQueryFactory(em);
+        BooleanExpression reference;
+        if(search.getReferenceNumber()!=null)
+        {
+            reference =search.getReferenceNumber().endsWith("*")?
+                    Expressions.stringTemplate("replace({0},' ','')", referenceNumbers.refNr).containsIgnoreCase(search.getReferenceNumber().replace(" ","").substring(0,search.getReferenceNumber().replace(" ","").length()-1))
+                            .and(manufacturer.vGL.ne((long)1)) :
+                    Expressions.stringTemplate("replace({0},' ','')", referenceNumbers.refNr).eq(search.getReferenceNumber().replace(" ","")).and(manufacturer.vGL.ne((long)1));
+//        .or(Expressions.stringTemplate("replace({0},' ','')", referenceNumbers.refNr).containsIgnoreCase(search.getReferenceNumber().replace(" ","").substring(0,search.getReferenceNumber().replace(" ","").length()-1)).and(manufacturer.vGL.ne((long)1)))
+        }
+        else{
+            reference=Expressions.asBoolean(true).isTrue();
+        }
+        JPAQuery<ArticleDTO> jpaQuery=query
+                .select(Projections.constructor(ArticleDTO.class,article))
+                .from(referenceNumbers)
+                .where(
+                        getFilters(search).and(reference)
+                );
+        return jpaQuery.fetch();
+    }
+    @Override
+    public List<ArticleDTO> findAllArticlesByReferenceNumber(SearchDTO search){
+        QArticleTable article=QArticleTable.articleTable;
+        query=new JPAQueryFactory(em);
+        BooleanExpression reference;
+        if(search.getReferenceNumber()!=null)
+        {
+            reference =search.getReferenceNumber().endsWith("*")?
+                    Expressions.stringTemplate("replace({0},' ','')", article.artNr).containsIgnoreCase(search.getReferenceNumber().replace(" ","").substring(0,search.getReferenceNumber().replace(" ","").length()-1)) :
+                    Expressions.stringTemplate("replace({0},' ','')", article.artNr).eq(search.getReferenceNumber().replace(" ",""));
+//        .or(Expressions.stringTemplate("replace({0},' ','')", referenceNumbers.refNr).containsIgnoreCase(search.getReferenceNumber().replace(" ","").substring(0,search.getReferenceNumber().replace(" ","").length()-1)).and(manufacturer.vGL.ne((long)1)))
+        }
+        else{
+            reference=Expressions.asBoolean(true).isTrue();
+        }
+        JPAQuery<ArticleDTO> jpaQuery=query
+                .select(Projections.constructor(ArticleDTO.class,article))
+                .from(article)
+                .join(article.allocations,allocation)
+                .on(article.artNr.eq(allocation.id.artNr))
+
+                .where(
+                        getFilters(search).and(reference)
+                )
+                .orderBy(allocation.id.genArtNr.asc(),article.artNr.asc());
+
+
+        return jpaQuery.fetch();
+    }
 
     @Override
     public SearchResponse findArticlesByReferenceNumber(SearchDTO search){
         QArticleTable article=QArticleTable.articleTable;
         query=new JPAQueryFactory(em);
         SearchResponse tmp = new SearchResponse();
-
-        BooleanExpression reference =search.getReferenceNumber().endsWith("*")?
-                Expressions.stringTemplate("replace({0},' ','')", allocation.id.artNr).containsIgnoreCase(search.getReferenceNumber().replace(" ","").substring(0,search.getReferenceNumber().length()-1)):
-                Expressions.stringTemplate("replace({0},' ','')", allocation.id.artNr).eq(search.getReferenceNumber().replace(" ",""));
-
+        BooleanExpression reference;
+        if(search.getReferenceNumber()!=null)
+        {
+            reference =search.getReferenceNumber().endsWith("*")?
+                Expressions.stringTemplate("replace({0},' ','')", article.artNr).containsIgnoreCase(search.getReferenceNumber().replace(" ","").substring(0,search.getReferenceNumber().replace(" ","").length()-1)) :
+                Expressions.stringTemplate("replace({0},' ','')", article.artNr).eq(search.getReferenceNumber().replace(" ",""));
+//        .or(Expressions.stringTemplate("replace({0},' ','')", referenceNumbers.refNr).containsIgnoreCase(search.getReferenceNumber().replace(" ","").substring(0,search.getReferenceNumber().replace(" ","").length()-1)).and(manufacturer.vGL.ne((long)1)))
+        }
+        else{
+            reference=Expressions.asBoolean(true).isTrue();
+        }
         JPAQuery<ArticleDTO> jpaQuery=query
-                .select(Projections.constructor(ArticleDTO.class,allocation.articleTable))
-                .from(allocation)
+                .select(Projections.constructor(ArticleDTO.class,article))
+                .from(article)
+                .join(article.allocations,allocation)
+                .on(article.artNr.eq(allocation.id.artNr))
+
                 .where(
                         getFilters(search).and(reference)
                 )
-                .orderBy(allocation.id.genArtNr.asc(),allocation.id.artNr.asc())
                 .limit(search.getNbrPerPage())
+                .orderBy(allocation.id.genArtNr.asc(),article.artNr.asc())
                 .offset(search.getNbrPerPage()*(search.getPage()-1));
 
         tmp.setSearchType(search.getType());
@@ -69,7 +167,7 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
         BooleanBuilder builder = new BooleanBuilder();
         BooleanBuilder dlnrBuilder = new BooleanBuilder();
         BooleanBuilder genArtNrBuilder = new BooleanBuilder();
-        if(search.getType().contains(SearchType.REFERENCE_NUMBER.label)){
+        if(search.getType().contains(SearchType.REFERENCE_NUMBER.label) || search.getType().contains(SearchType.OE_REFERENCE_NUMBER.label) ){
             if(search.getDlnr().size()>0)
             {
              dlnrBuilder.or(allocation.dLNr.in(search.getDlnr()));
@@ -112,21 +210,23 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
     }
 
     @Override
-    public List<ArticleDTO> findArticlesByEan(String ean) {
+    public List<ArticleDTO> findAllArticlesByKtypNr(SearchDTO search) {
         query=new JPAQueryFactory(em);
-        SearchResponse tmp = new SearchResponse();
 
-                JPAQuery<ArticleDTO> jpaQuery=query
+
+
+        JPAQuery<ArticleDTO> jpaQuery=query
                 .select(Projections.constructor(ArticleDTO.class,article))
-                .from(qEan)
-                .join(qEan.articleTable,article)
-                .on(qEan.id.artNr.eq(article.artNr))
-                .where(qEan.id.eANNr.eq(Long.parseLong(ean)));
-
+                .from(articleLinkage)
+                .where(articleLinkage.id.vknZielArt.eq((long) 2).and(
+                        articleLinkage.id.vknZielNr.eq(Long.valueOf(search.getKtypNr()))
+                                .and(getFilters(search))
+                ))
+                .orderBy(articleLinkage.id.genArtNr.asc(),articleLinkage.id.artNr.asc(),articleLinkage.id.lfdNr.asc())
+                ;
 
         return jpaQuery.fetch();
     }
-
     @Override
     public SearchResponse findArticlesByKtypNr(SearchDTO search) {
         query=new JPAQueryFactory(em);
@@ -153,7 +253,6 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
         log.info("req finished");
         return tmp;
     }
-
     @Override
     public SearchResponse findArticlesByGenericArticle(SearchDTO search){
         query=new JPAQueryFactory(em);
@@ -176,9 +275,21 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
         return tmp;
     }
     @Override
+    public List<ArticleDTO> findAllArticlesByGenericArticle(SearchDTO search){
+        query=new JPAQueryFactory(em);
+        JPAQuery<ArticleDTO> jpaQuery=query
+                .select(Projections.constructor(ArticleDTO.class,article))
+                .from(allocation)
+                .where(allocation.id.genArtNr.in(search.getGenArtNr())
+                        .and(getFilters(search))
+                )
+                .orderBy(allocation.id.genArtNr.asc(),allocation.id.artNr.asc());
+
+        return jpaQuery.fetch();
+    }
+    @Override
     public SearchResponse findArticlesByNtypNr(SearchDTO search) {
         query=new JPAQueryFactory(em);
-        log.info(search.toString());
         SearchResponse tmp = new SearchResponse();
         JPAQuery<ArticleDTO> jpaQuery=query
                 .select(Projections.constructor(ArticleDTO.class,article))
@@ -198,5 +309,18 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
         tmp.setResponse(jpaQuery.fetch());
         return tmp;
     }
+    @Override
+    public List<ArticleDTO> findAllArticlesByNtypNr(SearchDTO search) {
+        query=new JPAQueryFactory(em);
+        JPAQuery<ArticleDTO> jpaQuery=query
+                .select(Projections.constructor(ArticleDTO.class,article))
+                .from(articleLinkage)
+                .where(articleLinkage.id.vknZielArt.eq((long) 16).and(
+                        articleLinkage.id.vknZielNr.eq(Long.valueOf(search.getNtypNr()))
+                                .and(getFilters(search))
+                ))
+                .orderBy(articleLinkage.id.genArtNr.asc(),articleLinkage.id.artNr.asc(),articleLinkage.id.lfdNr.asc());
 
+        return jpaQuery.fetch();
+    }
 }

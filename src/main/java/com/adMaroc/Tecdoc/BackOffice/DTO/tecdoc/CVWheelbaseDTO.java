@@ -1,6 +1,7 @@
 package com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc;
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.CVWheelbase;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ public class CVWheelbaseDTO {
     long wheelbase;
     KeyTableDTO axlePosition;
     long sequentialNr;
-
+    @QueryProjection
     public CVWheelbaseDTO(CVWheelbase cvWheelbase) {
         this.nTypNr = cvWheelbase.getId().getnTypNr();
         this.nTypSubNr = cvWheelbase.getId().getnTypSubNr();

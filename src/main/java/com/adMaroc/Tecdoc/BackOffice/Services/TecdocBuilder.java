@@ -1,13 +1,10 @@
 package com.adMaroc.Tecdoc.BackOffice.Services;
 
+import com.adMaroc.Tecdoc.BackOffice.DTO.Linkage.*;
 import com.adMaroc.Tecdoc.BackOffice.DTO.ManufacturerList;
-import com.adMaroc.Tecdoc.BackOffice.DTO.SearchDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.SearchResponse;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.*;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.LanguageDescriptions;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.Manufacturer;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.ProposedCriteria;
 import com.adMaroc.Tecdoc.BackOffice.Repository.custom.CustomTecdocGetRepository;
 import com.adMaroc.Tecdoc.BackOffice.Repository.custom.TecdocCustomRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,38 +29,55 @@ public class TecdocBuilder {
     public SearchResponse buildResponse(SearchResponse response){
         SearchResponse tmp=response;
         log.info("Building response");
-        tmp.setResponse(tmp.getResponse().stream().map(this::buildArticle).collect(Collectors.toList()));
+        tmp.setResponse(tmp.getResponse().stream().distinct().map(this::buildArticleSmall).collect(Collectors.toList()));
         log.info("Response builded");
         return tmp;
     }
 
-    public ArticleCDTO buildArticleComplete(ArticleCDTO article){
-        ArticleCDTO tmp=article;
-        log.info("Building article with artNr : {}",article.getArtNr());
+    public SupersedingArticleDTO buildSuperSedingArticle(SupersedingArticleDTO supersedingArticle){
+        SupersedingArticleDTO tmp= supersedingArticle;
+        tmp.setSupersedingArticle(buildArticleSmall(tecdocGetRepository.findArticleArtnr(tmp.getSupersedingArticle().getArtNr())));
+        return tmp;
+    }
 
+    public ArticleDTO buildArticleforXlsx(ArticleDTO article){
+        ArticleDTO tmp=article;
+        log.info("Building article for excel with artNr : {}",article.getArtNr());
         tmp.setGenericArticle(tecdocGetRepository.findGenericArticleByArtNr(article.getArtNr()));
-        tmp.setArticleInformations(tecdocGetRepository.findArticleInformationByArtNr(article.getArtNr()).stream().map(this::buildArticleInformation).collect(Collectors.toList()));
-        tmp.setPriceInformations(tecdocGetRepository.findPriceInformationsByArtNr(article.getArtNr()).stream().map(this::buildPriceInformation).collect(Collectors.toList()));
-        tmp.setSupersedingArticles(tecdocGetRepository.findSuperSedingArticlesByArtNr(article.getArtNr()).stream().map(this::buildSuperSedingArticle).collect(Collectors.toList()));
-        tmp.setEans(tecdocGetRepository.findEansByArtNr(article.getArtNr()));
-        tmp.setReferenceNumbers(tecdocGetRepository.findReferenceNumbersByArtNr(article.getArtNr()).stream().map(this::buildReferencedArticles).collect(Collectors.toList()));
-        tmp.setCriterias(tecdocGetRepository.findCriteriaByArtNr(article.getArtNr()).stream().map(this::buildCriterion).collect(Collectors.toList()));
+
         tmp.setManufacturer(buildManufacturer(tecdocGetRepository.findByDlnr(article.getDlnr())));
-                tmp.setLinkedArticles(
-                tecdocGetRepository.findArticleLinkage(article.getArtNr()).stream().map(this::buildLinkedArticles).collect(Collectors.toList())
-        );
-        tmp.setImages(
-                tecdocGetRepository.findImagesByArticle(article.getArtNr()).stream().map(this::buildImages).collect(Collectors.toList())
-        );
+
         tmp.setArticleData(
                 tecdocGetRepository.findArticleDataByArtnr(article.getArtNr()).stream().map(this::buildArticleData).collect(Collectors.toList())
         );
-        log.info("Article Builded");
+
+        tmp.setCriterias(tecdocGetRepository.findCriteriaByArtNr(article.getArtNr()).stream().map(this::buildCriterion).collect(Collectors.toList()));
+
+        tmp.setTradeNumbers(tecdocGetRepository.findTradeNumbersByArtNr(article.getArtNr()));
+
+        tmp.setEans(tecdocGetRepository.findEansByArtNr(article.getArtNr()));
+
+        tmp.setArticleInformations(tecdocGetRepository.findArticleInformationByArtNr(article.getArtNr()).stream().map(this::buildArticleInformation).collect(Collectors.toList()));
+
+        log.info("Article for excel Builded");
+
         return tmp;
     }
-    public SupersedingArticleDTO buildSuperSedingArticle(SupersedingArticleDTO supersedingArticle){
-        SupersedingArticleDTO tmp= supersedingArticle;
-        tmp.setSupersedingArticle(buildreferencedArticle(tecdocGetRepository.findArticleArtnr(tmp.getSupersedingArticle().getArtNr())));
+    public ArticleDTO buildArticleSmall(ArticleDTO article){
+        ArticleDTO tmp=article;
+        log.info("Building article small with artNr : {}",article.getArtNr());
+        tmp.setGenericArticle(tecdocGetRepository.findGenericArticleByArtNr(article.getArtNr()));
+        tmp.setImages(
+                tecdocGetRepository.findImagesByArticle(article.getArtNr()).stream().map(this::buildImages).collect(Collectors.toList())
+        );
+        tmp.setManufacturer(buildManufacturer(tecdocGetRepository.findByDlnr(article.getDlnr())));
+        tmp.setArticleData(
+                tecdocGetRepository.findArticleDataByArtnr(article.getArtNr()).stream().map(this::buildArticleData).collect(Collectors.toList())
+        );
+        tmp.setSupersedingArticles(tecdocGetRepository.findSuperSedingArticlesByArtNr(article.getArtNr()).stream().map(this::buildSuperSedingArticle).collect(Collectors.toList()));
+        tmp.setCriterias(tecdocGetRepository.findCriteriaByArtNr(article.getArtNr()).stream().map(this::buildCriterion).collect(Collectors.toList()));
+        log.info("Article small Builded");
+
         return tmp;
     }
     public PriceInformationDTO buildPriceInformation(PriceInformationDTO priceInformation){
@@ -72,6 +87,20 @@ public class TecdocBuilder {
         tmp.setQuantityUnit(buildKeyTable(tmp.getQuantityUnit()));
         return tmp;
     }
+
+    public ArticleDTO buildArticleMin(ArticleDTO article){
+        ArticleDTO tmp=article;
+        log.info("Building article min with artNr : {}",article.getArtNr());
+        tmp.setGenericArticle(tecdocGetRepository.findGenericArticleByArtNr(article.getArtNr()));
+        tmp.setImages(
+                tecdocGetRepository.findImagesByArticle(article.getArtNr()).stream().map(this::buildImages).collect(Collectors.toList())
+        );
+        tmp.setManufacturer(buildManufacturer(tecdocGetRepository.findByDlnr(article.getDlnr())));
+        log.info("Article min Builded");
+
+        return tmp;
+    }
+
     public ArticleDTO buildArticle(ArticleDTO article){
         ArticleDTO tmp=article;
         log.info("Building article with artNr : {}",article.getArtNr());
@@ -82,13 +111,23 @@ public class TecdocBuilder {
         tmp.setTradeNumbers(
                 tecdocGetRepository.findTradeNumbersByArtNr(article.getArtNr())
         );
+        tmp.setEans(tecdocGetRepository.findEansByArtNr(article.getArtNr()));
         tmp.setArticleInformations(tecdocGetRepository.findArticleInformationByArtNr(article.getArtNr()).stream().map(this::buildArticleInformation).collect(Collectors.toList()));
-        tmp.setPriceInformations(tecdocGetRepository.findPriceInformationsByArtNr(article.getArtNr()).stream().map(this::buildPriceInformation).collect(Collectors.toList()));
+        ManufacturerDTO man=buildManufacturer(tecdocGetRepository.findByDlnr(article.getDlnr()));
+        man.setLogo(tecdocGetRepository.getManufacturerLogo(article.getDlnr()));
+        tmp.setManufacturer(man);
+
         tmp.setSupersedingArticles(tecdocGetRepository.findSuperSedingArticlesByArtNr(article.getArtNr()).stream().map(this::buildSuperSedingArticle).collect(Collectors.toList()));
-        tmp.setManufacturer(
-                tecdocGetRepository.findByDlnr(article.getDlnr())
-        );
-        tmp.setReferencedArticles(tecdocGetRepository.findReferenceNumbersByArtNr(article.getArtNr()).stream().map(this::buildReferencedArticles).filter(x->x.getReferencedArticle().getDlnr()!=0).collect(Collectors.toList()));
+
+        tmp.setReferencedArticles(tecdocGetRepository.findReferenceNumbersByArtNr(article.getArtNr()).stream().filter(x->x.getRefNr()!=article.getArtNr()).map(this::buildReferencedArticles).filter(x->x.getReferencedArticle().getDlnr()!=0).filter(y->{
+            boolean same=false;
+          for(GenericArticleDTO gen:y.getReferencedArticle().getGenericArticle()){
+              if(article.getGenericArticle().contains(gen)){
+                  same=true;
+              }
+          }
+          return same;
+        }).collect(Collectors.toList()));
         tmp.setArticleData(
                 tecdocGetRepository.findArticleDataByArtnr(article.getArtNr()).stream().map(this::buildArticleData).collect(Collectors.toList())
         );
@@ -96,6 +135,157 @@ public class TecdocBuilder {
         log.info("Article Builded");
         return tmp;
     }
+    public ArticleDTO buildPartListAndAccessoryList(ArticleDTO article){
+        ArticleDTO tmp=article;
+
+            tmp.setPartsList(tecdocGetRepository.findPartListbyArtNr(article.getArtNr()).stream().map(this::buildPartList).collect(Collectors.toList()));
+
+            tmp.setAcessoryList(tecdocGetRepository.findAccessoryListByArtNr(tmp.getArtNr()).stream().map(this::buildAcessoryList).collect(Collectors.toList()));
+
+
+        return tmp;
+    }
+    public AcessoryListDTO buildAcessoryList(AcessoryListDTO acessoryList){
+        AcessoryListDTO tmp =acessoryList;
+        tmp.setAccessoryPart(buildArticleSmall(tecdocGetRepository.findArticleArtnr(tmp.getAccessoryPart().getArtNr())));
+        tmp.setCriterias(tecdocGetRepository.findAcessoryCriteria(tmp).stream().map(this::buildCriterion).collect(Collectors.toList()));
+        switch ((int)tmp.getTypeLinkage()){
+            case 1:
+                tmp.setManufacturer(buildManufacturer(new ManufacturerDTO(tecdocCustomRepository.findManufacturerByHernr(tmp.getManufacturer().getHerNr()))));
+                break;
+            case 2:
+                tmp.setVehicleModelSerie(tecdocGetRepository.findModelSerieByKmodNr(tmp.getVehicleModelSerie().getKModNr()));
+                break;
+            case 3:
+                tmp.setVehicleType(tecdocGetRepository.findVehicleTypeByKtypNr(tmp.getVehicleType().getKTypNr()));
+                break;
+            case 4:
+                tmp.setCvType(tecdocGetRepository.findCVTypeByNtypNr(tmp.getCvType().getNTypNr()));
+                break;
+
+        }
+        return tmp;
+    }
+    public PartsListsDTO buildPartList(PartsListsDTO partList){
+        PartsListsDTO tmp=partList;
+        tmp.setArticlePart(buildArticleSmall(tecdocGetRepository.findArticleArtnr(tmp.getArticlePart().getArtNr())));
+        tmp.setCriterias(tecdocGetRepository.findPartCriteria(partList).stream().map(this::buildCriterion).collect(Collectors.toList()));
+        return tmp;
+    }
+    public List<LinkageResponse> buildLinkageResponse(List<LinkedArticlesCDTO> linkedArticles){
+        List<Integer> categories = new ArrayList<>(Arrays.asList(2,16));
+        log.info("BuildingLinkage");
+        List<LinkageResponse> response=new ArrayList<>();
+//        List<KeyTableDTO> ketCat = new ArrayList<>();
+
+        for(Integer c:categories){
+            LinkageResponse tmp= new LinkageResponse();
+            tmp.setLinkageType(buildKeyTable(new KeyTableDTO(271,Long.valueOf(c))));
+            List<LinkedArticlesCDTO> tmpList=new ArrayList<>();
+            for(LinkedArticlesCDTO l: linkedArticles)
+            {
+                if(l.getLinkageType().equals(tmp.getLinkageType())){
+                    tmpList.add(buildLinkedArticles(l));
+                }
+            }
+            tmp.setLinked(orderLinkageByManufacturer(tmpList));
+            response.add(tmp);
+        }
+        log.info("Linkage builded");
+        return response;
+    }
+    private List<LinkedManufacturer> orderLinkageByManufacturer(List<LinkedArticlesCDTO> list){
+        List<LinkedManufacturer> manufacturerList=new ArrayList<>();
+        for(LinkedArticlesCDTO l:list){
+            if(l.getTypeNr()==2)
+            manufacturerList.add(new LinkedManufacturer(l.getVehicleType().getVehicleModelSerie().getManufacturer()));
+            if(l.getTypeNr()==16)
+                manufacturerList.add(new LinkedManufacturer(l.getCvTypes().getVehicleModelSerie().getManufacturer()));
+        }
+
+        manufacturerList=manufacturerList.stream().distinct().collect(Collectors.toList());
+
+        for(LinkedArticlesCDTO linked:list){
+            LinkedManufacturer tmp=new LinkedManufacturer();
+            switch ((int)linked.getTypeNr()){
+                case 2:
+
+                        for(LinkedManufacturer l: manufacturerList){
+                            if(l.getManufacturer().equals(linked.getVehicleType().getVehicleModelSerie().getManufacturer())){
+                                tmp=l;
+                            }
+                        }
+                    VehicleModelSerieDTO tmpModel=linked.getVehicleType().getVehicleModelSerie();
+
+                    if(!tmp.getVehicleModelSeries().contains(new LinkedModelSerie(tmpModel))){
+                            List<LinkedModelSerie> modelSeriesList=tmp.getVehicleModelSeries();
+                            modelSeriesList.add(new LinkedModelSerie(tmpModel));
+                            tmp.setVehicleModelSeries(modelSeriesList);
+                    }
+                        for (LinkedModelSerie v:tmp.getVehicleModelSeries()){
+                            if(v.equals(new LinkedModelSerie(tmpModel))){
+                                List<LinkedVehicleType> l=v.getVehicleTypes();
+                                l.add(new LinkedVehicleType(linked,linked.getVehicleType()));
+                                v.setVehicleTypes(l);
+                                break;
+                            }
+                    }
+                    for(LinkedManufacturer man:manufacturerList){
+                        if(man.getManufacturer().getHerNr()==tmp.getManufacturer().getHerNr())
+                        {
+                            man.setManufacturer(tmp.getManufacturer());
+                        }
+                    }
+                    break;
+                case 7:
+                    if(!manufacturerList.contains(new LinkedManufacturer(linked.getManufacturer())))
+                        manufacturerList.add(new LinkedManufacturer(linked.getManufacturer()));
+                    for(LinkedManufacturer man:manufacturerList){
+
+                        if(man.getManufacturer().getHerNr()==linked.getManufacturer().getHerNr())
+                        {
+                            List<LinkageManufacturer> l=man.getLinkageManufacturers();
+                            l.add(new LinkageManufacturer(linked));
+                            man.setLinkageManufacturers(l);
+                            break;
+//                            man.getLinkageManufacturers().add(new LinkageManufacturer(linked));
+                        }
+                    }
+                    break;
+
+                case 16:
+                    for(LinkedManufacturer l: manufacturerList){
+                        if(l.getManufacturer().equals(linked.getCvTypes().getVehicleModelSerie().getManufacturer())){
+                            tmp=l;
+                        }
+                    }
+                tmpModel=linked.getCvTypes().getVehicleModelSerie();
+
+                if(!tmp.getVehicleModelSeries().contains(new LinkedModelSerie(tmpModel))){
+                    List<LinkedModelSerie> modelSeriesList=tmp.getVehicleModelSeries();
+                    modelSeriesList.add(new LinkedModelSerie(tmpModel));
+                    tmp.setVehicleModelSeries(modelSeriesList);
+                }
+                for (LinkedModelSerie v:tmp.getVehicleModelSeries()){
+                    if(v.equals(new LinkedModelSerie(tmpModel))){
+                        List<LinkedCVType> l=v.getCvTypes();
+                        l.add(new LinkedCVType(linked,linked.getCvTypes()));
+                        v.setCvTypes(l);
+                        break;
+                    }
+                }
+                for(LinkedManufacturer man:manufacturerList){
+                    if(man.getManufacturer().getHerNr()==tmp.getManufacturer().getHerNr())
+                    {
+                        man.setManufacturer(tmp.getManufacturer());
+                    }
+                }
+                break;
+            }
+        }
+        return manufacturerList;
+    }
+
     public ArticleDTO buildreferencedArticle(ArticleDTO article){
         ArticleDTO tmp=article;
         tmp.setGenericArticle(tecdocGetRepository.findGenericArticleByArtNr(article.getArtNr()));
@@ -103,11 +293,10 @@ public class TecdocBuilder {
                 tecdocGetRepository.findImagesByArticle(article.getArtNr()).stream().map(this::buildImages).collect(Collectors.toList())
         );
         tmp.setArticleInformations(tecdocGetRepository.findArticleInformationByArtNr(article.getArtNr()).stream().map(this::buildArticleInformation).collect(Collectors.toList()));
-        tmp.setPriceInformations(tecdocGetRepository.findPriceInformationsByArtNr(article.getArtNr()).stream().map(this::buildPriceInformation).collect(Collectors.toList()));
+        ManufacturerDTO man=buildManufacturer(tecdocGetRepository.findByDlnr(article.getDlnr()));
+        man.setLogo(tecdocGetRepository.getManufacturerLogo(article.getDlnr()));
+        tmp.setManufacturer(man);
         tmp.setSupersedingArticles(tecdocGetRepository.findSuperSedingArticlesByArtNr(article.getArtNr()).stream().map(this::buildSuperSedingArticle).collect(Collectors.toList()));
-        tmp.setManufacturer(
-                buildManufacturer(tecdocGetRepository.findByDlnr(article.getDlnr()))
-        );
         tmp.setTradeNumbers(
                 tecdocGetRepository.findTradeNumbersByArtNr(article.getArtNr())
         );
@@ -127,8 +316,8 @@ public class TecdocBuilder {
     public ReferenceNumberDTO buildReferencedArticles(ReferenceNumberDTO referenceNumberDTO){
         ReferenceNumberDTO tmp = referenceNumberDTO;
         ArticleDTO t=tecdocGetRepository.findArticleArtnr(tmp.getRefNr());
-        if(t!=null)
-        tmp.setReferencedArticle(buildreferencedArticle(t));
+        if(t!=null )
+        tmp.setReferencedArticle(buildArticleSmall(t));
         return tmp;
     }
     public ArticleDataDTO buildArticleData(ArticleDataDTO articleDataDTO) {
@@ -144,13 +333,24 @@ public class TecdocBuilder {
         tmp.setGraphicHeader(buildKeyTable(tmp.getGraphicHeader()));
         return tmp;
     }
-
+    public EngineDTO buildEngine(EngineDTO engine){
+        EngineDTO tmp=engine;
+        tmp.setEngineUsage(buildKeyTable(tmp.getEngineUsage()));
+        tmp.setEngineDesign(buildKeyTable(tmp.getEngineDesign()));
+        tmp.setFuelType(buildKeyTable(tmp.getFuelType()));
+        tmp.setFuelMixtureFormation(buildKeyTable(tmp.getFuelMixtureFormation()));
+        tmp.setEngineAspiration(buildKeyTable(tmp.getEngineAspiration()));
+        tmp.setEngineType(buildKeyTable(tmp.getEngineType()));
+        tmp.setExhaustNorm(buildKeyTable(tmp.getExhaustNorm()));
+        tmp.setCylinderDesign(buildKeyTable(tmp.getCylinderDesign()));
+        tmp.setEngineManagement(buildKeyTable(tmp.getEngineManagement()));
+        tmp.setValveControl(buildKeyTable(tmp.getValveControl()));
+        tmp.setCoolingType(buildKeyTable(tmp.getCoolingType()));
+        return tmp;
+    }
     public SearchStructureDTO buildSearchStructure(SearchStructureDTO searchStructure){
         SearchStructureDTO tmp = searchStructure;
-        log.info("Building SearchStruncture");
-//        tmp.setCriterias(tecdocGetRepository.findCriteriaByNodeId(searchStructure.getNodeId()).stream().map(this::buildCriterion).collect(Collectors.toList()));
         tmp.setGenericArticle(tecdocGetRepository.findGenericArticleByNodeId(searchStructure.getNodeId()));
-        log.info("SearchStruncture builded");
         return tmp;
     }
 
@@ -168,35 +368,51 @@ public class TecdocBuilder {
         tmp.setCriteria(buildCriterion(mandatoryCriteria.getCriteria()));
         return tmp;
     }
+
     public ProposedCriteriaDTO buildProposedCriteria(ProposedCriteriaDTO proposedCriteria){
         ProposedCriteriaDTO tmp= proposedCriteria;
         tmp.setCriteria(buildCriterion(proposedCriteria.getCriteria()));
         return tmp;
     }
+
     public LinkageInformationDTO buildLinkageInformation(LinkageInformationDTO linkageInformation){
         LinkageInformationDTO tmp=linkageInformation;
         tmp.setInformationType(buildKeyTable(tmp.getInformationType()));
         tmp.setText(new DescriptionDTO(tecdocCustomRepository.findTextModulesByTBSNrandSprachNr(tmp.getText().getBezNr())));
         return tmp;
     }
+    public LinkageDetails buildLinkageDetails(LinkageIdDTO linkageId){
+        LinkageDetails tmp = new LinkageDetails(linkageId);
+        tmp.setCriteria(
+                tecdocGetRepository.findCriteriaByArticleLinkage(linkageId).stream().map(this::buildCriterion).collect(Collectors.toList())
+        );
+        tmp.setLinkageInformation(tecdocGetRepository.findLinkageInformationByLinkage(linkageId).stream().map(this::buildLinkageInformation).collect(Collectors.toList()));
+        tmp.setImages(tecdocGetRepository.getLinkageImages(linkageId).stream().map(this::buildImages).collect(Collectors.toList()));
+        return tmp;
+    }
+
+    public LinkedArticlesCDTO buildLinkedCriteriaAndImages(LinkedArticlesCDTO linkedArticles) {
+        LinkedArticlesCDTO tmp =linkedArticles;
+        tmp.setCriteria(
+                tecdocGetRepository.findCriteriaByArticleLinkage(tmp).stream().map(this::buildCriterion).collect(Collectors.toList())
+        );
+        tmp.setLinkageInformation(tecdocGetRepository.findLinkageInformationByLinkage(tmp).stream().map(this::buildLinkageInformation).collect(Collectors.toList()));
+        tmp.setImages(tecdocGetRepository.getLinkageImages(tmp).stream().map(this::buildImages).collect(Collectors.toList()));
+        return tmp;
+    }
+
     public LinkedArticlesCDTO buildLinkedArticles(LinkedArticlesCDTO linkedArticles){
         LinkedArticlesCDTO tmp =linkedArticles;
         switch ((int)linkedArticles.getTypeNr()){
             case 2:
                 tmp.setVehicleType(
-                        buildSmallVehicleType(
-                        new VehicleTypeDTO(tecdocCustomRepository.findVehicleTypesByKtypnr(linkedArticles.getLinkageId())))
+                        new VehicleTypeDTO(tecdocCustomRepository.findVehicleTypesByKtypnr(linkedArticles.getLinkageId()))
                 );
                 break;
             case 7:
                 tmp.setManufacturer(
-                        new ManufacturerDTO(
-                                tecdocCustomRepository.findManufacturerByHernr(linkedArticles.getLinkageId())
-                        )
+                                buildManufacturer(tecdocGetRepository.getManufacturerByProducerId(linkedArticles.getLinkageId()))
                 );
-                break;
-            case 14:
-                tmp.setEngine(tecdocGetRepository.findEngine(linkedArticles.getLinkageId()));
                 break;
             case 16:
                 tmp.setCvTypes(
@@ -204,16 +420,22 @@ public class TecdocBuilder {
                         tecdocCustomRepository.findCVTypesByNTypNr(linkedArticles.getLinkageId()))
                 );
                 break;
-            case 19:
-                tmp.setAxle(tecdocGetRepository.findAxle(linkedArticles.getLinkageId()));
-                break;
+
             }
-            tmp.setCriteria(
-                    tecdocGetRepository.findCriteriaByArticleLinkage(tmp).stream().map(this::buildCriterion).collect(Collectors.toList())
-            );
-            tmp.setLinkageInformation(tecdocGetRepository.findLinkageInformationByLinkage(tmp).stream().map(this::buildLinkageInformation).collect(Collectors.toList()));
+            tmp.setLinkageType(buildKeyTable(tmp.getLinkageType()));
             return tmp;
     }
+
+    private AxleDTO buildAxle(AxleDTO axle) {
+        AxleDTO tmp=axle;
+        tmp.setAxleType(buildKeyTable(tmp.getAxleType()));
+        tmp.setStyle(buildKeyTable(tmp.getStyle()));
+        tmp.setBrakeType(buildKeyTable(tmp.getBrakeType()));
+        tmp.setAxleBody(buildKeyTable(tmp.getAxleBody()));
+        tmp.setWheelMounting(buildKeyTable(tmp.getWheelMounting()));
+        return tmp;
+    }
+
     public VehicleModelSerieDTO buildSmallModelSerieDTO(VehicleModelSerieDTO vehicleModelSerie){
         VehicleModelSerieDTO tmp = vehicleModelSerie;
         log.info("Building vehicle model serie with kModNr : {}",tmp.getKModNr());
@@ -225,7 +447,7 @@ public class TecdocBuilder {
         VehicleModelSeriesCDTO tmp = vehicleModelSeries;
         log.info("Building vehicle model serie with kModNr : {}",tmp.getKModNr());
 
-        tmp.setAxle(tecdocGetRepository.findAxleByKmodNr(vehicleModelSeries.getKModNr()));
+
         tmp.setVehicleTypes(tecdocGetRepository.findVehicleTypeByKmodNr(vehicleModelSeries.getKModNr()));
         tmp.setCvTypes(tecdocGetRepository.findCVTypesByKmodNr(vehicleModelSeries.getKModNr()));
         tmp.setBodytypes(tecdocGetRepository.findBodyTypesByKmodNr(vehicleModelSeries.getKModNr()));
@@ -234,6 +456,7 @@ public class TecdocBuilder {
         log.info("Vehicle model serie builded");
         return tmp;
     }
+
     public BodyTypeSynonymsDTO buildBodyTypeSynonyms(BodyTypeSynonymsDTO bodyTypeSynonyms){
         BodyTypeSynonymsDTO tmp=bodyTypeSynonyms;
         tmp.setBodyType(buildKeyTable(bodyTypeSynonyms.getBodyType()));
@@ -256,7 +479,12 @@ public class TecdocBuilder {
 
         return tmp;
     }
+    public ManufacturerCDTO buildCManufacturer(ManufacturerCDTO manufacturer){
+        ManufacturerCDTO tmp=manufacturer;
+        tmp.setLongCode((new DescriptionDTO(tecdocCustomRepository.findCountryAndLanguageDependentDescriptionsByLbeznr(Long.valueOf(manufacturer.getLongCode().getBezNr())))));
 
+        return tmp;
+    }
     private CVTypesDTO buildCVType(CVTypesDTO cvTypesDTO) {
         CVTypesDTO tmp=cvTypesDTO;
 
@@ -293,17 +521,9 @@ public class TecdocBuilder {
 
         }
         public CriteriaDTO buildCriterion(CriteriaDTO criteriaDTO){
-        log.info("building criteria");
-                if(criteriaDTO.getType().contains("K") && criteriaDTO.getValue()!=null){
-                    criteriaDTO.setKeyTable(
-                            buildKeyTable(
-                                    new KeyTableDTO(
-                                            criteriaDTO.getKeyTable().getTabNr(),
-                                            criteriaDTO.getValue()
-                                    )
-                            )
-                    );
-                }
+        if(criteriaDTO.getType().contains("K") && criteriaDTO.getValue()!=null){
+                criteriaDTO.setKeyTable(buildKeyTable(new KeyTableDTO(criteriaDTO.getKeyTable().getTabNr(),criteriaDTO.getValue()))                    );
+         }
 
         if(criteriaDTO.getAbreviation().getBezNr()!=null && (Long.parseLong(criteriaDTO.getAbreviation().getBezNr())!=0))
             {
@@ -314,7 +534,6 @@ public class TecdocBuilder {
                   new DescriptionDTO(tecdocCustomRepository.findanguageDescriptionsByLbeznr(Long.valueOf(criteriaDTO.getUnit().getBezNr())))
 
                     );
-        log.info("Critera Builded");
         return criteriaDTO;
     }
 
@@ -333,14 +552,44 @@ public class TecdocBuilder {
         tmp.setCatalystConverterType(buildKeyTable(tmp.getCatalystConverterType()));
         tmp.setTansmissionType(buildKeyTable(tmp.getTansmissionType()));
 
-
-
         log.info("Vehicle type builded");
         return tmp;
     }
 
     public CVTypesCDTO buildCVType(CVTypesCDTO cvType) {
         CVTypesCDTO tmp=cvType;
+        tmp.setBodyType(buildKeyTable(tmp.getBodyType()));
+        tmp.setEngineType(buildKeyTable(tmp.getEngineType()));
+        tmp.setAxleConfiguration(buildKeyTable(tmp.getAxleConfiguration()));
+        tmp.setCvSecondaryTypes(tecdocGetRepository.getCvSecondaryTypeByCVType(tmp.getNTypNr()));
+//        tmp.setEngines(tecdocGetRepository.getEnginesByCVType(tmp.getNTypNr()));
+        tmp.setCvDriverCabs(tecdocGetRepository.getCVDriverCabsByCVType(tmp.getNTypNr()).stream().map(this::buildCVDriverCabs).collect(Collectors.toList()));
+        tmp.setCvTypeVoltages(tecdocGetRepository.getCVTypeVoltageDTOByCVType(tmp.getNTypNr()));
+        tmp.setCvSuspensions(tecdocGetRepository.getCVSuspensionByCVType(tmp.getNTypNr()).stream().map(this::buildCVSuspension).collect(Collectors.toList()));
+        tmp.setCvWheelbases(tecdocGetRepository.getCVWheelbaseByCVType(tmp.getNTypNr()).stream().map(this::buildCVWheelbase).collect(Collectors.toList()));
+//        tmp.setCvTyres(tecdocGetRepository.getCVTyreByCVType(tmp.getNTypNr()));
+        tmp.setCvProducerIds(tecdocGetRepository.getCVProducerIdByCVType(tmp.getNTypNr()));
         return tmp;
     }
+
+    private CVWheelbaseDTO buildCVWheelbase(CVWheelbaseDTO cvWheelbase) {
+        CVWheelbaseDTO tmp=cvWheelbase;
+        tmp.setAxlePosition(buildKeyTable(tmp.getAxlePosition()));
+        return tmp;
+    }
+
+    private CVSuspensionDTO buildCVSuspension(CVSuspensionDTO cvSuspension) {
+        CVSuspensionDTO tmp=cvSuspension;
+        tmp.setSuspensionType(buildKeyTable(tmp.getSuspensionType()));
+        tmp.setAxlePosition(buildKeyTable(tmp.getAxlePosition()));
+        return tmp;
+    }
+
+    public CVDriverCabDTO buildCVDriverCabs(CVDriverCabDTO cvDriverCab){
+        CVDriverCabDTO tmp=cvDriverCab;
+        tmp.setDriverCabSize(buildKeyTable(tmp.getDriverCabSize()));
+        tmp.setVehicleModelSerie(tecdocGetRepository.findModelSerieByKmodNr(tmp.getKmodNr()));
+        return tmp;
+    }
+
 }

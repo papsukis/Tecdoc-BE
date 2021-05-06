@@ -1,7 +1,5 @@
 package com.adMaroc.Tecdoc.BackOffice.Models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

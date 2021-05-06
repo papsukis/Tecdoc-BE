@@ -1,5 +1,6 @@
 package com.adMaroc.Tecdoc.BackOffice.DTO;
 
+import com.adMaroc.Tecdoc.BackOffice.DTO.Linkage.LinkageIdDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class SearchDTO {
     String ntypNr;
     String type;
     String ean;
+    LinkageIdDTO linkageId;
     List<Long> dlnr;
     List<Long> genArtNr;
     long page;

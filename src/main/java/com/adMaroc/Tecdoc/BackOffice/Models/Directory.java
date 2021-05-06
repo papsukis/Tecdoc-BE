@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.domain.Sort.Direction;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ import java.util.List;
 public class Directory {
 
     private String name;
-    private List<String> files;
+    private List<FileInfos> files;
     private List<Directory> subDir;
     String fullPath;
     private Directory parent;

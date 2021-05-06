@@ -14,10 +14,11 @@ import java.util.List;
 public class FtpFile {
 
     private String fullPath;
-    private List<List<String>> lines;
+    private List<String> lines;
     private String fileName;
+    private String folderName;
     private int table;
     private int maxRows;
     private String tableName;
-    private int batch;
+
 }

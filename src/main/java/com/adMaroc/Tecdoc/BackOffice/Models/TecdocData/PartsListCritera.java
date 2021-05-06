@@ -26,17 +26,19 @@ public class PartsListCritera {
     String kritWert;
     long exclude;
     long loschFlag;
+    @Column(name="dl_nr")
+    long dlnr;
     @MapsId("artNr")
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "artNr",
-                referencedColumnName = "artNr")
+            referencedColumnName = "artNr")
     private ArticleTable articleTable;
 
     @MapsId("CriteriaId")
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(
-                    name = "dLNr",
+                    name = "dl_nr",
                     referencedColumnName = "dLNr"),
             @JoinColumn(
                     name = "kritNr",
@@ -49,10 +51,17 @@ public class PartsListCritera {
                     name = "artNr",
                     referencedColumnName = "artNr"),
             @JoinColumn(
-                    name = "lfdnr",
+                    name = "lfdnr1",
                     referencedColumnName = "lfdnr")})
     private PartsLists partsLists;
 
+    public long getDlnr() {
+        return dlnr;
+    }
+
+    public void setDlnr(long dlnr) {
+        this.dlnr = dlnr;
+    }
 
     public PartsListCriteraId getId() {
         return id;

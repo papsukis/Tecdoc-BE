@@ -1,8 +1,7 @@
 package com.adMaroc.Tecdoc.Security.Models;
 
 
-import com.adMaroc.Tecdoc.BackOffice.Models.FtpSaveLog;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.adMaroc.Tecdoc.BackOffice.Models.SaveTaskLog;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +10,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(	name = "user_log")
@@ -33,14 +33,6 @@ public class UserLog {
 
     private String action;
 
-    @JsonIgnore
-    @OneToOne(
-            mappedBy = "userLog",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            optional = true
-    )
-    private FtpSaveLog ftpSaveLog;
 
     public UserLog(String username, Date lastLogged, String remoteAddr, String action) {
         this.username=username;

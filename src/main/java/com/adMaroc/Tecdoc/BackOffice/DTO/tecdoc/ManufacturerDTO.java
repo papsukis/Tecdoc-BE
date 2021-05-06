@@ -1,16 +1,12 @@
 package com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc;
 
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehicleModelSeriesCDTO;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.Manufacturer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.commons.beanutils.PropertyUtils;
-
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -19,6 +15,7 @@ public class ManufacturerDTO {
 
     long herNr;
     long dlnr;
+    String herid;
     String shortCode;
     DescriptionDTO longCode;
     boolean personalCarManufacturer;
@@ -29,6 +26,7 @@ public class ManufacturerDTO {
     boolean transmissionManufacturer;
     boolean lightComercialVehicleManufacturer;
     List<VehicleModelSerieDTO> vehicleModelSerie=new ArrayList<>();
+    TecdocImages logo;
 
 
     public ManufacturerDTO(Manufacturer manufacturer) {
@@ -66,5 +64,18 @@ public class ManufacturerDTO {
 
     public ManufacturerDTO(long herNr) {
         this.herNr=herNr;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ManufacturerDTO that = (ManufacturerDTO) o;
+        return herNr == that.herNr;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(herNr);
     }
 }

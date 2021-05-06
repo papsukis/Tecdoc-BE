@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -45,10 +46,12 @@ public class VehicleTypeDTO {
     KeyTableDTO tansmissionType;//85
     KeyTableDTO bodyType;//86
 
+
     @QueryProjection
     public VehicleTypeDTO(VehicleTypes vehicleTypes) {
         kTypNr=vehicleTypes.getkTypNr();
         description=vehicleTypes.getCountryAndLanguageDependentDescriptions()!=null?new DescriptionDTO(vehicleTypes.getCountryAndLanguageDependentDescriptions()):new DescriptionDTO(String.valueOf(vehicleTypes.getLbezNr()));
+        vehicleModelSerie=new VehicleModelSerieDTO(vehicleTypes.getVehicleModelSeries());
         try {
             from=new SimpleDateFormat("YYYYmm").parse(String.valueOf(vehicleTypes.getBjvon()));
             to=new SimpleDateFormat("YYYYmm").parse(String.valueOf(vehicleTypes.getBjbis()));
@@ -87,5 +90,18 @@ public class VehicleTypeDTO {
 
     public VehicleTypeDTO(long kTypNr) {
         this.kTypNr=kTypNr;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        VehicleTypeDTO that = (VehicleTypeDTO) o;
+        return kTypNr == that.kTypNr;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(kTypNr);
     }
 }

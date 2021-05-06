@@ -1,5 +1,6 @@
 package com.adMaroc.Tecdoc.BackOffice.Repository.custom;
 
+import com.adMaroc.Tecdoc.BackOffice.DTO.Linkage.LinkageIdDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.ManufacturerList;
 import com.adMaroc.Tecdoc.BackOffice.DTO.SearchDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
@@ -13,10 +14,47 @@ import java.util.List;
 @Transactional
 @Component
 public interface CustomTecdocGetRepository {
+    List<CVSecondaryTypeDTO> getCvSecondaryTypeByCVType(long ntypNr);
+
+    List<EngineDTO> getEnginesByCVType(long ntypNr);
+
+    List<CVDriverCabDTO> getCVDriverCabsByCVType(long ntypNr);
+
+    List<CVTypeVoltageDTO> getCVTypeVoltageDTOByCVType(long ntypNr);
+
+    List<CVSuspensionDTO> getCVSuspensionByCVType(long ntypNr);
+
+    List<CVWheelbaseDTO>  getCVWheelbaseByCVType(long ntypNr);
+
+    List<CVTyreDTO>  getCVTyreByCVType(long ntypNr);
+
+    abstract TecdocImages getManufacturerLogo(long dlnr);
+
+    List<TecdocImages> getLinkageImages(LinkedArticlesCDTO linkedArticles);
+
+    List<TecdocImages> getLinkageImages(LinkageIdDTO linkedArticles);
+
+    ManufacturerDTO getManufacturerByProducerId(long herid);
+
+    List<CVProducerIdDTO>  getCVProducerIdByCVType(long ntypNr);
+
     List<SearchStructureDTO> getAllSearchStructure();
 
 
-    ArticleCDTO getArticle(String artNr);
+    List<AcessoryListDTO> findAccessoryListByArtNr(String artNr);
+
+//    List<ArticleDTO> findArticleOfAcessoryList(String artNr);
+
+    List<CriteriaDTO> findAcessoryCriteria(AcessoryListDTO acessoryList);
+
+    List<PartsListsDTO> findPartListbyArtNr(String artNr);
+
+    List<ArticleDTO> findArticlesOfPart(String artNr);
+
+    List<CriteriaDTO> findPartCriteria(PartsListsDTO partList);
+
+
+    ArticleDTO getArticle(String artNr);
 
     @Transactional
     List<GenericArticleDTO> findGenericArticleByNodeId(long nodeId);
@@ -63,9 +101,14 @@ public interface CustomTecdocGetRepository {
 
     List<CriteriaDTO> findCriteriaByArtNr(String artNr);
 
+    @Transactional
+    List<CriteriaDTO> findCriteriaByArticleLinkage(LinkageIdDTO linkedArticles);
+
     List<CriteriaDTO> findCriteriaByArticleLinkage(LinkedArticlesCDTO linkedArticlesCDTO);
 
     List<LinkageInformationDTO> findLinkageInformationByLinkage(LinkedArticlesCDTO linkage);
+
+    List<LinkageInformationDTO> findLinkageInformationByLinkage(LinkageIdDTO linkage);
 
     List<TecdocImages> findImagesByArticle(String artNr);
 
@@ -103,4 +146,6 @@ public interface CustomTecdocGetRepository {
     CVTypesCDTO findCVTypeByNtypNr(long ntypNr);
 
     List<ManufacturerDTO> findAllSavedManufacturers();
+
+    List<ReferenceNumberDTO> findAllReferenceNumbers(SearchDTO search);
 }

@@ -4,6 +4,7 @@ public enum SearchType {
     CV_TYPE("CV_TYPE"),
     VEHICLE_TYPE("VEHICLE_TYPE"),
     REFERENCE_NUMBER("REFERENCE_NUMBER"),
+    OE_REFERENCE_NUMBER("OE_REFERENCE_NUMBER"),
     GENERIC_ARTICLE("GENERIC_ARTICLE");
 
     public final String label;

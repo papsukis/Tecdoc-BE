@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -31,7 +32,7 @@ public class CVTypesDTO {
     KeyTableDTO bodyType; //67
     KeyTableDTO engineType; //80
     KeyTableDTO axleConfiguration; //65
-
+    VehicleModelSerieDTO vehicleModelSerie;
     @QueryProjection
     public CVTypesDTO(CVTypes cvTypes) {
         nTypNr=cvTypes.getnTypNr();
@@ -43,6 +44,7 @@ public class CVTypesDTO {
         }catch (ParseException e){
 
         }
+        vehicleModelSerie= new VehicleModelSerieDTO(cvTypes.getVehicleModelSeries());
         engineOutputFromKW=cvTypes.getKwvon();
         engineOutputToKW=cvTypes.getKwbis();
         engineOutputFromHP=cvTypes.getPsvon();
@@ -56,5 +58,18 @@ public class CVTypesDTO {
 
     public CVTypesDTO(long nTypNr) {
         this.nTypNr=nTypNr;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CVTypesDTO that = (CVTypesDTO) o;
+        return nTypNr == that.nTypNr;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nTypNr);
     }
 }

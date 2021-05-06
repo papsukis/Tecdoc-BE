@@ -1,6 +1,7 @@
 package com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc;
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.CVTypesVoltages;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ public class CVTypeVoltageDTO {
     long nTypSubNr;
     long sequentialNr;
     long voltage;
-
+    @QueryProjection
     public CVTypeVoltageDTO(CVTypesVoltages cvTypesVoltage) {
         this.nTypNr = cvTypesVoltage.getId().getnTypNr();
         this.nTypSubNr= cvTypesVoltage.getId().getnTypSubNr();

@@ -20,6 +20,7 @@ public class LinkedArticlesCDTO {
     String type;
     long typeNr;
     long linkageId;
+    KeyTableDTO linkageType;
     long sequentialNbr;
     GenericArticleDTO genericArticle;
     VehicleTypeDTO vehicleType;
@@ -29,6 +30,8 @@ public class LinkedArticlesCDTO {
     AxleDTO axle;
     List<CriteriaDTO> criteria = new ArrayList<>();
     List<LinkageInformationDTO> linkageInformation = new ArrayList<>();
+    List<TecdocImages> images = new ArrayList<>();
+
     public LinkedArticlesCDTO(ArticleLinkage articleLinkage) {
         artNr=articleLinkage.getId().getArtNr();
         genArtNr=articleLinkage.getId().getGenArtNr();
@@ -36,5 +39,6 @@ public class LinkedArticlesCDTO {
         typeNr=articleLinkage.getId().getVknZielArt();
         linkageId=articleLinkage.getId().getVknZielNr();
         sequentialNbr=articleLinkage.getId().getLfdNr();
+        linkageType=new KeyTableDTO(271,typeNr);
     }
 }

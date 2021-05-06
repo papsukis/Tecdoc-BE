@@ -9,6 +9,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -55,6 +56,7 @@ public class TecdocCustomRepositoryImpl implements TecdocCustomRepository {
 
         return jpaQuery.fetch().stream().map(KeyTableDTO::new).collect(Collectors.toList());
     }
+    @Cacheable("vehicleTypes")
     @Override
     public VehicleTypes findVehicleTypesByKtypnr(Long kTypNr){
         JPAQueryFactory query = new JPAQueryFactory(em);
@@ -67,6 +69,7 @@ public class TecdocCustomRepositoryImpl implements TecdocCustomRepository {
 
         return jpaQuery.fetchOne();
     }
+    @Cacheable("vehicleModelSeries")
     @Override
     public VehicleModelSeries findVehicleModelSeriesByKmodnr(Long kModNr){
         JPAQueryFactory query = new JPAQueryFactory(em);
@@ -78,6 +81,7 @@ public class TecdocCustomRepositoryImpl implements TecdocCustomRepository {
         return jpaQuery.fetchOne();
 
     }
+    @Cacheable("textModules")
     @Override
     public List<TextModules> findTextModulesByTBSNr(String tBSNr){
         JPAQueryFactory query = new JPAQueryFactory(em);
@@ -121,7 +125,7 @@ public class TecdocCustomRepositoryImpl implements TecdocCustomRepository {
         return jpaQuery.fetch();
 
     }
-
+    @Cacheable("manyfacturer")
     @Override
     public Manufacturer findManufacturerByHernr(long hernr){
         JPAQueryFactory query = new JPAQueryFactory(em);
@@ -132,6 +136,7 @@ public class TecdocCustomRepositoryImpl implements TecdocCustomRepository {
         Manufacturer result=jpaQuery.fetchOne();
         return result;
     }
+    @Cacheable("cvTypes")
     @Override
     public CVTypes findCVTypesByNTypNr(long nTypNr) {
         JPAQueryFactory query = new JPAQueryFactory(em);
@@ -143,6 +148,7 @@ public class TecdocCustomRepositoryImpl implements TecdocCustomRepository {
 
         return jpaQuery.fetchOne();
     }
+    @Cacheable("languageDescriptions")
     @Override
     public LanguageDescriptions findanguageDescriptionsByLbeznr(Long lBezNr){
         JPAQueryFactory query = new JPAQueryFactory(em);
@@ -155,13 +161,14 @@ public class TecdocCustomRepositoryImpl implements TecdocCustomRepository {
 
     }
     private String convertBezNrToString(long bezNr,int length){
-            String tmp=String.valueOf(bezNr);
+        String tmp=String.valueOf(bezNr);
 //        int j=length-tmp.length();
-            for(int i=tmp.length();i<length;i++)
-                tmp="0"+tmp;
+        for(int i=tmp.length();i<length;i++)
+            tmp="0"+tmp;
 
         return tmp;
     }
+    @Cacheable("countryAndlanguageDescriptions")
     @Override
     public CountryAndLanguageDependentDescriptions findCountryAndLanguageDependentDescriptionsByLbeznr(Long lBezNr){
         JPAQueryFactory query = new JPAQueryFactory(em);
@@ -174,6 +181,7 @@ public class TecdocCustomRepositoryImpl implements TecdocCustomRepository {
         return jpaQuery.fetchOne();
 
     }
+    @Cacheable("articles")
     @Override
     public ArticleTable findArticleTableByArtNr(String artNr){
         JPAQueryFactory query = new JPAQueryFactory(em);
@@ -250,6 +258,7 @@ public class TecdocCustomRepositoryImpl implements TecdocCustomRepository {
 
         return jpaQuery.fetchOne();
     }
+    @Cacheable("genericArticles")
     @Override
     public GenericArticles findGenericArticlesByGenArtNr(long genArtNr){
         JPAQueryFactory query = new JPAQueryFactory(em);
@@ -259,6 +268,7 @@ public class TecdocCustomRepositoryImpl implements TecdocCustomRepository {
 
         return jpaQuery.fetchOne();
     }
+    @Cacheable("criteria")
     @Override
     public CriteriaTable findCriteriaTableByKritNr(long kritNr){
         JPAQueryFactory query = new JPAQueryFactory(em);

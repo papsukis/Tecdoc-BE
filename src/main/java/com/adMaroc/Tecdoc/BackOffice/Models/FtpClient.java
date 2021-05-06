@@ -4,20 +4,13 @@ package com.adMaroc.Tecdoc.BackOffice.Models;
 import com.adMaroc.Tecdoc.BackOffice.Utils.JsonReader;
 import com.adMaroc.Tecdoc.BackOffice.Utils.OpenMultipartArchive7z;
 import com.adMaroc.Tecdoc.Security.Exceptions.InternalServerException;
-import com.adMaroc.Tecdoc.Security.Models.Config;
-import com.adMaroc.Tecdoc.Security.Repository.ConfigurationRepository;
-import com.google.common.io.ByteSource;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.sevenzipjbinding.*;
-import net.sf.sevenzipjbinding.impl.RandomAccessFileInStream;
-import net.sf.sevenzipjbinding.impl.VolumedArchiveInStream;
 import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry;
 import org.apache.commons.compress.archivers.sevenz.SevenZFile;
-import org.apache.commons.compress.archivers.sevenz.SevenZOutputFile;
-import org.apache.commons.compress.utils.SeekableInMemoryByteChannel;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
@@ -25,11 +18,9 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +35,8 @@ public class FtpClient {
     private String user;
     private String password;
     private FTPClient ftp;
+    @Autowired
+    JsonReader jsonReader;
 
     public FtpClient(String ipAddress,int port, String userName, String password){
         this.server=ipAddress;
@@ -100,6 +93,7 @@ public class FtpClient {
     }
 
     public List<String> listFiles(String path) throws IOException {
+        log.info(path);
         FTPFile[] files = ftp.listFiles(path);
         List<String> file = new ArrayList<>();
         for (FTPFile f : files) {
@@ -152,7 +146,7 @@ public class FtpClient {
         OpenMultipartArchive7z.extract(fullpath+multipart,fullpath+multipart.substring(0,4));
     }
 
-    public void uncompressFile(String file, String path,long sizelimit) throws IOException {
+    public void uncompressFile(String file, String path) throws IOException {
         log.info("Uncompressing file {} in {}",file,path);
 
         ByteArrayOutputStream fos = new ByteArrayOutputStream();
@@ -166,10 +160,8 @@ public class FtpClient {
         InputStream fi=new ByteArrayInputStream(fos.toByteArray());
         fos.close();
 
-
         ftp.makeDirectory(fullpath);
         ftp.makeDirectory(imgPath);
-
 
         SevenZFile zis = new SevenZFile(convertInputStreamToFile(fi));
         SevenZArchiveEntry entry;
@@ -180,7 +172,7 @@ public class FtpClient {
 
             File curfile = new File(entry.getName());
 
-            if(entry.getSize()<sizelimit){
+//            if(entry.getSize()<sizelimit){
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                 byte[] content =new byte[(int) entry.getSize()];
                 while(zis.read(content) > 0){
@@ -194,24 +186,24 @@ public class FtpClient {
                 out.close();
                 is.close();
 
-            }
-            else{
-                int j=1;
-                int chunk= (int) (sizelimit/2);
-                byte[] content =new byte[chunk];
-                int read=0;
-                List<ByteArrayOutputStream> tmp= new ArrayList<>();
-                while((read=zis.read(content,0,chunk)) > 1){
-                    ByteArrayOutputStream out = new ByteArrayOutputStream();
-                    out.write(content);
-                    InputStream is=new ByteArrayInputStream(out.toByteArray());
-                    putFileToPath(is,fullpath+"/"+entry.getName()+"("+j+")");
-                    j++;
-                    out.close();
-                    is.close();
-
-                }
-            }
+//            }
+//            else{
+//                int j=1;
+//                int chunk= (int) (sizelimit/2);
+//                byte[] content =new byte[chunk];
+//                int read=0;
+//                List<ByteArrayOutputStream> tmp= new ArrayList<>();
+//                while((read=zis.read(content,0,chunk)) > 1){
+//                    ByteArrayOutputStream out = new ByteArrayOutputStream();
+//                    out.write(content);
+//                    InputStream is=new ByteArrayInputStream(out.toByteArray());
+//                    putFileToPath(is,fullpath+"/"+entry.getName()+"("+j+")");
+//                    j++;
+//                    out.close();
+//                    is.close();
+//
+//                }
+//            }
         }
         zis.close();
     }
@@ -278,9 +270,9 @@ public class FtpClient {
 
     }
 
-    public FtpFile getData(String path,String fileName,long batchSize) throws IOException {
+    public FtpFile getData(String path,String fileName) throws IOException {
         FtpFile file = new FtpFile();
-        log.info(path);
+
         List<String> ipList = new ArrayList<>();
         ByteArrayOutputStream fos = new ByteArrayOutputStream();
         ftp.retrieveFile(path,fos);
@@ -295,16 +287,17 @@ public class FtpClient {
 
         fos.close();
         fi.close();
-        if(fileName.contains("(") && fileName.contains(")") && !fileName.contains("(1)"))
-            ipList.set(0,fixLines(path, ipList.get(0)));
-        if(fileName.contains("(") && fileName.contains(")"))
-        ipList.remove(ipList.size()-1);
+//        if(fileName.contains("(") && fileName.contains(")") && !fileName.contains("(1)"))
+//            ipList.set(0,fixLines(path, ipList.get(0)));
+//        if(fileName.contains("(") && fileName.contains(")"))
+//        ipList.remove(ipList.size()-1);
 
         file.setFullPath(path);
         file.setFileName(fileName);
-        file.setLines(chopped(ipList,(int)batchSize));
+        file.setLines(ipList);
         file.setTable(Integer.parseInt(fileName.substring(0,3)));
         file.setMaxRows(ipList.size());
+
 
         return file;
     }
@@ -326,7 +319,7 @@ public class FtpClient {
         fi.close();
         return lineFixed+lineToFix;
     }
-    static <T> List<List<T>> chopped(List<T> list, final int L) {
+    public static <T> List<List<T>> chopped(List<T> list, final int L) {
         List<List<T>> parts = new ArrayList<List<T>>();
         final int N = list.size();
         for (int i = 0; i < N; i += L) {

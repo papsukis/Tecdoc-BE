@@ -1,7 +1,9 @@
 package com.adMaroc.Tecdoc.BackOffice.Services;
 
 import com.adMaroc.Tecdoc.BackOffice.Configurations.FilesConfig;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.ArticleImageDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
+import com.adMaroc.Tecdoc.BackOffice.Models.ExcelCell;
+import com.adMaroc.Tecdoc.BackOffice.Models.ExcelSheet;
 import com.adMaroc.Tecdoc.BackOffice.Utils.JsonReader;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
@@ -10,9 +12,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Slf4j
@@ -25,6 +30,8 @@ public class ExcelConverter {
     JsonReader json;
     @Autowired
     FilesConfig config;
+    @Autowired
+    TecdocBuilder tecdocBuilder;
 
     public void contactListToExcelFile(List<ArticleImageDTO> articles) {
         log.info("creating excel file");
@@ -77,6 +84,141 @@ public class ExcelConverter {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public ByteArrayInputStream convertToExcel(List<ArticleDTO> articles) throws ParseException {
+        log.info("creating excel file");
+        try(Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("articles");
+
+
+            Row row = sheet.createRow(0);
+            CellStyle headerCellStyle = workbook.createCellStyle();
+            headerCellStyle.setFillForegroundColor(IndexedColors.AQUA.getIndex());
+            headerCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+            Cell cell = row.createCell(0);
+            cell.setCellValue("Article Nr");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(1);
+            cell.setCellValue("Equipementier");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(2);
+            cell.setCellValue("Designation");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(3);
+            cell.setCellValue("Description");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(4);
+            cell.setCellValue("Status");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(5);
+            cell.setCellValue("Donnees techniques");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(6);
+            cell.setCellValue("EAN");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(7);
+            cell.setCellValue("Num utilisation");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(8);
+            cell.setCellValue("Liaisons");
+            cell.setCellStyle(headerCellStyle);
+
+            for(int i = 0; i < articles.size(); i++) {
+                ArticleDTO tmp = tecdocBuilder.buildArticleforXlsx(articles.get(i));
+                Row dataRow = sheet.createRow(i + 1);
+                //ref
+                dataRow.createCell(0).setCellValue(tmp.getArtNr());
+                //equipementier
+                dataRow.createCell(1).setCellValue(tmp.getManufacturer().getLongCode().getDescription());
+                //equipementier
+                //gen art
+                String gen="";
+                for(GenericArticleDTO genArt:tmp.getGenericArticle()){
+                    gen+=genArt.getDescription().getDescription()+";";
+                }
+                dataRow.createCell(2).setCellValue(gen);
+                //article description
+                dataRow.createCell(3).setCellValue(tmp.getArticleDescription()!=null?tmp.getArticleDescription().getDescription():"null");
+                //article status
+                dataRow.createCell(4).setCellValue(tmp.getArticleData().size()>0?tmp.getArticleData().get(0).getArticleStatus().getValue().getDescription():"Normal");
+
+                //donnees technique
+                String criteria="";
+                for(CriteriaDTO crit:tmp.getCriterias()){
+                    if(crit.getType().contains("A")){
+                        criteria+=crit.getDescription().getDescription()+" : "+crit.getValue()+";";
+                    }
+                    if(crit.getType().contains("N")){
+                        criteria+=crit.getDescription().getDescription()+" : "+crit.getValue()+";";
+
+                    }
+                    if(crit.getType().contains("D")){
+                        criteria+=crit.getDescription().getDescription()+" : "+new SimpleDateFormat("YYYYmm").parse(crit.getValue())+";";
+
+                    }
+                    if(crit.getType().contains("K")){
+                        criteria+=crit.getKeyTable().getLabel().getDescription()+" : "+crit.getKeyTable().getValue().getDescription()+";";
+
+                    }
+                    if(crit.getType().contains("V")){
+                        criteria+=crit.getValue()+";";
+                    }
+                }
+                for(ArticleInformationDTO artInfo:tmp.getArticleInformations()){
+                    criteria+=artInfo.getInformationType().getValue()+" : "+artInfo.getText()+";";
+                }
+                dataRow.createCell(5).setCellValue(criteria);
+                //ean
+                String ean="";
+                for(EANDTO e:tmp.getEans()){
+                    ean+=""+e.getEanNr();
+                }
+                dataRow.createCell(6).setCellValue(ean);
+                //trade numbers
+                String tradenumber="";
+                for(TradeNumberDTO trade:tmp.getTradeNumbers()){
+                    tradenumber+=trade.getTradeNumber()+";";
+                }
+                dataRow.createCell(7).setCellValue(tradenumber);
+                //linkage TODO
+                dataRow.createCell(8).setCellValue("");
+            }
+
+            sheet.autoSizeColumn(0);
+            sheet.autoSizeColumn(1);
+            sheet.autoSizeColumn(2);
+            sheet.autoSizeColumn(3);
+            sheet.autoSizeColumn(4);
+            sheet.autoSizeColumn(5);
+            sheet.autoSizeColumn(6);
+            sheet.autoSizeColumn(7);
+            sheet.autoSizeColumn(8);
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            workbook.write(outputStream);
+//            ByteArrayOutputStream fos = outputStream;
+//            outputStream.close();
+//            FileOutputStream f = new FileOutputStream(config.getExcelFullPath()+"articles.xlsx");
+//            f.write(outputStream.toByteArray());
+//            f.close();
+//            fos.close();
+            log.info("excel file created");
+            return new ByteArrayInputStream(outputStream.toByteArray());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
 }

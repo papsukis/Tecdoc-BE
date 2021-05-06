@@ -1,16 +1,14 @@
 package com.adMaroc.Tecdoc.BackOffice.Utils;
 
-import com.adMaroc.Tecdoc.BackOffice.Configurations.FilesConfig;
 import com.adMaroc.Tecdoc.Security.Exceptions.InternalServerException;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.sevenzipjbinding.*;
 import net.sf.sevenzipjbinding.impl.RandomAccessFileInStream;
 import net.sf.sevenzipjbinding.impl.VolumedArchiveInStream;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 
 import java.io.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 public class OpenMultipartArchive7z {

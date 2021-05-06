@@ -1,5 +1,6 @@
-package com.adMaroc.Tecdoc.BackOffice.DTO;
+package com.adMaroc.Tecdoc.BackOffice.Models;
 
+import com.adMaroc.Tecdoc.Security.Models.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,4 +16,6 @@ public class FtpDTO {
     private long port;
     private String userName;
     private String password;
+    private String user;
+    private String ipAddress;
 }

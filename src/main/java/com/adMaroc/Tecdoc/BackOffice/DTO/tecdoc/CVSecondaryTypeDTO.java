@@ -1,6 +1,7 @@
 package com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc;
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.CVSecondaryTypes;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ public class CVSecondaryTypeDTO {
     String description;
     Date from;
     Date to;
-
+    @QueryProjection
     public CVSecondaryTypeDTO(CVSecondaryTypes cvSecondaryType) {
         this.nTypNr = cvSecondaryType.getId().getnTypNr();
         this.nTypSubNr = cvSecondaryType.getId().getnTypSubNr();

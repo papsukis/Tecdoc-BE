@@ -42,8 +42,14 @@ public class ArticleTable {
                     name = "sprachNr",
                     referencedColumnName = "sprachNr")})
     private LanguageDescriptions languageDescriptions;
-
-
+    @OneToMany(fetch=FetchType.LAZY,
+            cascade=CascadeType.ALL,
+            mappedBy = "articleTable")
+    private List<ReferenceNumbers> referenceNumbers;
+    @OneToMany(fetch=FetchType.LAZY,
+            cascade=CascadeType.ALL,
+            mappedBy = "articleTable")
+    private List<ArticleToGenericArticleAllocation> allocations;
 
     public String getArtNr() {
         return artNr;

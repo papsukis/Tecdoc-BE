@@ -2,6 +2,7 @@ package com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc;
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.CVSuspension;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.CVTyres;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ public class CVSuspensionDTO {
     KeyTableDTO suspensionType;
     KeyTableDTO axlePosition;
     long sequentialNr;
-
+    @QueryProjection
     public CVSuspensionDTO(CVSuspension cvSuspension) {
         this.nTypNr = cvSuspension.getId().getnTypNr();
         this.nTypSubNr = cvSuspension.getId().getnTypSubNr();

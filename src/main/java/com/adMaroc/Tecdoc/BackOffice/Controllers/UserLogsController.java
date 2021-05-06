@@ -1,10 +1,7 @@
 package com.adMaroc.Tecdoc.BackOffice.Controllers;
 
 import com.adMaroc.Tecdoc.BackOffice.DTO.FilterDTO;
-import com.adMaroc.Tecdoc.BackOffice.DTO.FtpDTO;
-import com.adMaroc.Tecdoc.BackOffice.Models.Directory;
 import com.adMaroc.Tecdoc.BackOffice.Services.LogService;
-import com.adMaroc.Tecdoc.Security.Models.Role;
 import com.adMaroc.Tecdoc.Security.Models.UserLog;
 import com.adMaroc.Tecdoc.Security.Services.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,11 +27,6 @@ public class UserLogsController {
     @GetMapping("/findAll")
     public ResponseEntity<?> findAllLogs() throws IOException {
          return ResponseEntity.ok(logService.findAll());
-    }
-    @PreAuthorize("hasAuthority('LOGS_ACESS') or hasAuthority('ALL')")
-    @PostMapping("/findByUserLog")
-    public ResponseEntity<?> findByUserLog(@RequestBody UserLog userLog) throws IOException {
-        return ResponseEntity.ok(logService.findByUserLog(userLog));
     }
 
     @PreAuthorize("hasAuthority('LOGS_ACESS') or hasAuthority('ALL')")

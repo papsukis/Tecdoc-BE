@@ -1,5 +1,6 @@
 package com.adMaroc.Tecdoc.BackOffice.Repository.custom.impl;
 
+import com.adMaroc.Tecdoc.BackOffice.DTO.Linkage.LinkageIdDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.ManufacturerList;
 import com.adMaroc.Tecdoc.BackOffice.DTO.SearchDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
@@ -12,7 +13,6 @@ import com.adMaroc.Tecdoc.BackOffice.Repository.custom.TecdocCustomRepository;
 import com.adMaroc.Tecdoc.BackOffice.Services.TecdocBuilder;
 import com.adMaroc.Tecdoc.BackOffice.Utils.JsonReader;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
@@ -45,6 +45,192 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
     TecdocCustomRepository tecdocRepository;
 
 
+    @Override
+    public List<CVSecondaryTypeDTO> getCvSecondaryTypeByCVType(long ntypNr){
+        query = new JPAQueryFactory(em);
+
+        QCVSecondaryTypes cvSecondaryTypes=QCVSecondaryTypes.cVSecondaryTypes;
+
+        BooleanExpression cvSecondary=cvSecondaryTypes.id.nTypNr.eq(ntypNr);
+        JPAQuery<CVSecondaryTypeDTO> jpaQuery=query
+                .select(Projections.constructor(CVSecondaryTypeDTO.class,cvSecondaryTypes))
+                .from(cvSecondaryTypes)
+                .where(cvSecondary);
+
+        return jpaQuery.fetch();
+    }
+    @Override
+    public List<EngineDTO> getEnginesByCVType(long ntypNr){
+        query = new JPAQueryFactory(em);
+
+        QCVTypesAndEngineAllocation engines= QCVTypesAndEngineAllocation.cVTypesAndEngineAllocation;
+        QEngines qEngines = QEngines.engines;
+        BooleanExpression engineCondition=engines.id.nTypNr.eq(ntypNr);
+        JPAQuery<EngineDTO> jpaQuery=query
+                .select(Projections.constructor(EngineDTO.class,qEngines))
+                .from(engines)
+                .where(engineCondition);
+
+        return jpaQuery.fetch();
+    }
+    @Override
+    public List<CVDriverCabDTO> getCVDriverCabsByCVType(long ntypNr){
+        query = new JPAQueryFactory(em);
+
+        QAllocationOfDriverCabsToCVs allocation = QAllocationOfDriverCabsToCVs.allocationOfDriverCabsToCVs;
+        QCVDriverCabs cvDriverCabs = QCVDriverCabs.cVDriverCabs;
+
+        BooleanExpression cvDriverCabCondition =allocation.id.nTypNr.eq(ntypNr);
+        JPAQuery<CVDriverCabDTO> jpaQuery=query
+                .select(Projections.constructor(CVDriverCabDTO.class,allocation.cvDriverCabs))
+                .from(allocation)
+                .where(cvDriverCabCondition);
+
+        return jpaQuery.fetch();
+    }
+    @Override
+    public List<CVTypeVoltageDTO> getCVTypeVoltageDTOByCVType(long ntypNr){
+        query = new JPAQueryFactory(em);
+
+        QCVTypesVoltages cvTypesVoltages=QCVTypesVoltages.cVTypesVoltages;
+        BooleanExpression cvTypesVoltagesCondition =cvTypesVoltages.id.nTypNr.eq(ntypNr);
+        JPAQuery<CVTypeVoltageDTO> jpaQuery=query
+                .select(Projections.constructor(CVTypeVoltageDTO.class,cvTypesVoltages))
+                .from(cvTypesVoltages)
+                .where(cvTypesVoltagesCondition);
+
+        return jpaQuery.fetch();
+    }
+    @Override
+    public List<CVSuspensionDTO> getCVSuspensionByCVType(long ntypNr){
+        query = new JPAQueryFactory(em);
+
+        QCVSuspension cvSuspension=QCVSuspension.cVSuspension;
+        BooleanExpression cvSuspensionCondition =cvSuspension.id.nTypNr.eq(ntypNr);
+        JPAQuery<CVSuspensionDTO> jpaQuery=query
+                .select(Projections.constructor(CVSuspensionDTO.class,cvSuspension))
+                .from(cvSuspension)
+                .where(cvSuspensionCondition);
+
+        return jpaQuery.fetch();
+    }
+    @Override
+    public List<CVWheelbaseDTO>  getCVWheelbaseByCVType(long ntypNr){
+        query = new JPAQueryFactory(em);
+
+        QCVWheelbase cvWheelbase=QCVWheelbase.cVWheelbase;
+        BooleanExpression cvWheelbaseCondition =cvWheelbase.id.nTypNr.eq(ntypNr);
+        JPAQuery<CVWheelbaseDTO> jpaQuery=query
+                .select(Projections.constructor(CVWheelbaseDTO.class,cvWheelbase))
+                .from(cvWheelbase)
+                .where(cvWheelbaseCondition);
+
+        return jpaQuery.fetch();
+    }
+    @Override
+    public List<CVTyreDTO>  getCVTyreByCVType(long ntypNr){
+        query = new JPAQueryFactory(em);
+
+        QCVTyres cvTyres=QCVTyres.cVTyres;
+
+        BooleanExpression cvTyresCondition =cvTyres.id.nTypNr.eq(ntypNr);
+        JPAQuery<CVTyreDTO> jpaQuery=query
+                .select(Projections.constructor(CVTyreDTO.class,cvTyres))
+                .from(cvTyres)
+                .where(cvTyresCondition);
+
+        return jpaQuery.fetch();
+    }
+    @Override
+    public TecdocImages getManufacturerLogo(long dlnr){
+        query = new JPAQueryFactory(em);
+
+        QGraphicsDocuments graphicsDocuments = QGraphicsDocuments.graphicsDocuments;
+        BooleanExpression logo = graphicsDocuments.bildType.eq((long) 2);
+        JPAQuery<TecdocImages> jpaQuery = query
+                .select(Projections.constructor(TecdocImages.class,graphicsDocuments))
+                .from(graphicsDocuments)
+                .where(graphicsDocuments.dLNr.eq(dlnr).and(logo));
+        return jpaQuery.fetchFirst();
+    }
+    @Cacheable("images")
+    @Override
+    public List<TecdocImages> getLinkageImages(LinkedArticlesCDTO linkedArticles){
+        query = new JPAQueryFactory(em);
+        log.info(linkedArticles.toString());
+        QLinkageDependentGraphicsDocuments linkageGraphicsDocuments = QLinkageDependentGraphicsDocuments.linkageDependentGraphicsDocuments;
+            QGraphicsDocuments graphicsDocuments=QGraphicsDocuments.graphicsDocuments;
+
+        BooleanExpression linkedId = linkageGraphicsDocuments.id.artNr.eq(linkedArticles.getArtNr())
+                .and(linkageGraphicsDocuments.id.genArtNr.eq(linkedArticles.getGenArtNr()))
+                .and(linkageGraphicsDocuments.id.vknZielArt.eq(linkedArticles.getTypeNr()))
+                .and(linkageGraphicsDocuments.id.vknZielNr.eq(linkedArticles.getLinkageId()));
+
+        JPAQuery<TecdocImages> jpaQuery = query
+                .select(Projections.constructor(TecdocImages.class,linkageGraphicsDocuments.graphicsDocuments))
+                .from(linkageGraphicsDocuments)
+                .where(linkedId);
+        return jpaQuery.fetch();
+    }
+    @Override
+    public List<TecdocImages> getLinkageImages(LinkageIdDTO linkedArticles){
+        query = new JPAQueryFactory(em);
+        log.info(linkedArticles.toString());
+        QLinkageDependentGraphicsDocuments linkageGraphicsDocuments = QLinkageDependentGraphicsDocuments.linkageDependentGraphicsDocuments;
+        QGraphicsDocuments graphicsDocuments=QGraphicsDocuments.graphicsDocuments;
+
+        BooleanExpression linkedId = linkageGraphicsDocuments.id.artNr.eq(linkedArticles.getArtNr())
+                .and(linkageGraphicsDocuments.id.genArtNr.eq(linkedArticles.getGenArtNr()))
+                .and(linkageGraphicsDocuments.id.vknZielArt.eq(linkedArticles.getTypeNr()))
+                .and(linkageGraphicsDocuments.id.vknZielNr.eq(linkedArticles.getLinkageId()));
+
+        BooleanExpression imageCondition= linkageGraphicsDocuments.dokumentenArt.eq((long) 1)
+                                    .or(linkageGraphicsDocuments.dokumentenArt.eq((long) 3))
+                                    .or(linkageGraphicsDocuments.dokumentenArt.eq((long) 6))
+                                    .or(linkageGraphicsDocuments.dokumentenArt.eq((long) 7))
+                                    .or(linkageGraphicsDocuments.dokumentenArt.eq((long) 5));
+
+        JPAQuery<TecdocImages> jpaQuery = query
+                .select(Projections.constructor(TecdocImages.class,linkageGraphicsDocuments.graphicsDocuments))
+                .from(linkageGraphicsDocuments)
+                .where(linkedId.and(imageCondition));
+
+        return jpaQuery.fetch();
+    }
+    @Override
+    public ManufacturerDTO getManufacturerByProducerId(long herid){
+        query = new JPAQueryFactory(em);
+
+//        QAllocationOfCVToCVIDNumbers allocation=QAllocationOfCVToCVIDNumbers.allocationOfCVToCVIDNumbers;
+        QCVProducerIDs cvProducerIDs=QCVProducerIDs.cVProducerIDs;
+        QManufacturer manufacturer = QManufacturer.manufacturer;
+        BooleanExpression cvProducerIDsCondition =cvProducerIDs.herlDNr.eq(herid);
+        JPAQuery<ManufacturerDTO> jpaQuery=query
+                .select(Projections.constructor(ManufacturerDTO.class,manufacturer))
+                .from(manufacturer)
+                .where(manufacturer.herNr.eq(
+                        JPAExpressions.select(cvProducerIDs.herNr).from(cvProducerIDs).where(cvProducerIDsCondition)
+                ));
+        ManufacturerDTO tmp=jpaQuery.fetchFirst();
+        tmp.setHerid(query.select(cvProducerIDs.herID).from(cvProducerIDs).where(cvProducerIDsCondition.and(cvProducerIDs.herNr.eq(tmp.getHerNr()))).fetchFirst());
+        return tmp;
+    }
+
+    @Override
+    public List<CVProducerIdDTO>  getCVProducerIdByCVType(long ntypNr){
+        query = new JPAQueryFactory(em);
+
+        QAllocationOfCVToCVIDNumbers allocation=QAllocationOfCVToCVIDNumbers.allocationOfCVToCVIDNumbers;
+        QCVProducerIDs cvProducerIDs=QCVProducerIDs.cVProducerIDs;
+
+        BooleanExpression cvProducerIDsCondition =allocation.id.nTypNr.eq(ntypNr);
+        JPAQuery<CVProducerIdDTO> jpaQuery=query
+                .select(Projections.constructor(CVProducerIdDTO.class,allocation.cvProducerIDs))
+                .from(allocation)
+                .where(cvProducerIDsCondition);
+
+        return jpaQuery.fetch();
+    }
     @Override
     @Transactional
     public List<SearchStructureDTO> getAllSearchStructure(){
@@ -83,17 +269,79 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
                 .collect(Collectors.toList());
     }
     @Override
-    public ArticleCDTO getArticle(String artNr){
+    public List<AcessoryListDTO> findAccessoryListByArtNr(String artNr){
+        query = new JPAQueryFactory(em);
+        QAccessoryLists accessoryLists=QAccessoryLists.accessoryLists;
+        JPAQuery<AcessoryListDTO> jpaQuery=query
+                .select(Projections.constructor(AcessoryListDTO.class,accessoryLists))
+                .from(accessoryLists)
+                .where(accessoryLists.id.artNr.eq(artNr));
+        return jpaQuery.fetch();
+    }
+    @Override
+    public List<CriteriaDTO> findAcessoryCriteria(AcessoryListDTO acessoryList){
+        query = new JPAQueryFactory(em);
+        QAccessoryListsCriteria accessoryListsCriteria=QAccessoryListsCriteria.accessoryListsCriteria;
+
+        JPAQuery<CriteriaDTO> jpaQuery=query
+                .select(Projections.constructor(CriteriaDTO.class,accessoryListsCriteria.criteriaTable,accessoryListsCriteria.kritWert))
+                .from(accessoryListsCriteria)
+                .where(accessoryListsCriteria.id.artNr.eq(acessoryList.getArtNr()).and(accessoryListsCriteria.id.lfdNr1.eq(acessoryList.getSequentialNr())));
+
+        return jpaQuery.fetch();
+    }
+
+    @Override
+    public List< PartsListsDTO> findPartListbyArtNr(String artNr){
+        query = new JPAQueryFactory(em);
+        QPartsLists partsLists= QPartsLists.partsLists;
+        JPAQuery<PartsListsDTO> jpaQuery=query
+                .select(Projections.constructor(PartsListsDTO.class,partsLists))
+                .distinct()
+                .from(partsLists)
+                .where(partsLists.id.artNr.eq(artNr));
+
+        return jpaQuery.fetch();
+    }
+    @Override
+    public List<ArticleDTO> findArticlesOfPart(String artNr){
+        query = new JPAQueryFactory(em);
+        QPartsLists partsLists= QPartsLists.partsLists;
+        QArticleTable article=QArticleTable.articleTable;
+        JPAQuery<ArticleDTO> jpaQuery=query
+                .select(Projections.constructor(ArticleDTO.class,article))
+                .from(article)
+                .where(article.artNr.in(
+                        JPAExpressions.select(partsLists.partNr).from(partsLists).where(partsLists.id.artNr.eq(artNr))
+                ));
+
+        return jpaQuery.fetch();
+    }
+    @Override
+    public List<CriteriaDTO> findPartCriteria(PartsListsDTO partList){
+        query = new JPAQueryFactory(em);
+        QPartsListCritera partsListCritera=QPartsListCritera.partsListCritera;
+        JPAQuery<CriteriaDTO> jpaQuery=query
+                .select(Projections.constructor(CriteriaDTO.class,partsListCritera.criteriaTable,partsListCritera.kritWert))
+                .from(partsListCritera)
+                .where(partsListCritera.id.artNr.eq(partList.getArtNr()).and(partsListCritera.id.lfdNr1.eq(partList.getSequentialNr())));
+
+        return jpaQuery.fetch();
+    }
+
+    @Cacheable("article")
+    @Override
+    public ArticleDTO getArticle(String artNr){
         query = new JPAQueryFactory(em);
         QArticleTable articleTable=QArticleTable.articleTable;
-        JPAQuery<ArticleCDTO> jpaQuery=query
-                .select(Projections.constructor(ArticleCDTO.class,articleTable))
+        JPAQuery<ArticleDTO> jpaQuery=query
+                .select(Projections.constructor(ArticleDTO.class,articleTable))
+                .distinct()
                 .from(articleTable)
                 .where(articleTable.artNr.eq(artNr));
         return jpaQuery.fetchOne();
     }
     @Override
-    @Transactional
     public List<GenericArticleDTO> findGenericArticleByNodeId(long nodeId){
         query = new JPAQueryFactory(em);
         QTecdocSearchStructure searchStructure=QTecdocSearchStructure.tecdocSearchStructure;
@@ -108,7 +356,6 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
     }
 
     @Override
-    @Transactional
     public List<CriteriaDTO> findCriteriaByNodeId(long nodeId){
         query = new JPAQueryFactory(em);
         QTecdocSearchStructure searchStructure=QTecdocSearchStructure.tecdocSearchStructure;
@@ -234,6 +481,7 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
                 .from(languageDependentDescriptions);
         return jpaQuery.fetch();
     }
+    @Cacheable("genericArticle")
     @Override
     @Transactional
     public List<GenericArticleDTO> findGenericArticleByArtNr(String artNr){
@@ -245,7 +493,8 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
                 .select(Projections.constructor(GenericArticleDTO.class,genericArticles))
                 .from(articleToGenericArticleAllocation)
                 .join(articleToGenericArticleAllocation.genericArticles,genericArticles)
-                .on(articleToGenericArticleAllocation.id.artNr.eq(artNr));
+                .on(articleToGenericArticleAllocation.id.artNr.eq(artNr))
+                .where(articleToGenericArticleAllocation.dLNr.eq(articleToGenericArticleAllocation.articleTable.dLNr));
 
         return jpaQuery.fetch();
     }
@@ -265,9 +514,13 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
         query = new JPAQueryFactory(em);
         QArticleLinkage articleLinkage=QArticleLinkage.articleLinkage;
 
-        JPAQuery<ArticleLinkage> jpaQuery=query.selectFrom(articleLinkage).where(articleLinkage.id.artNr.eq(artNr));
+        JPAQuery<ArticleLinkage> jpaQuery=query.selectFrom(articleLinkage).where(articleLinkage.id.artNr.eq(artNr).and(getNoEngineAndNoAxle()));
 
         return jpaQuery.fetch().stream().map(LinkedArticlesCDTO::new).collect(Collectors.toList());
+    }
+    private BooleanExpression getNoEngineAndNoAxle(){
+        QArticleLinkage articleLinkage=QArticleLinkage.articleLinkage;
+        return articleLinkage.id.vknZielArt.ne((long) 14).and(articleLinkage.id.vknZielArt.ne(((long) 19)));
     }
     @Override
     @Transactional
@@ -331,9 +584,20 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
     public List<ReferenceNumberDTO> findReferenceNumbersByArtNr(String artNr){
         query = new JPAQueryFactory(em);
         QReferenceNumbers referenceNumbers=QReferenceNumbers.referenceNumbers;
-        JPAQuery<ReferenceNumbers> jpaQuery=query.selectFrom(referenceNumbers).where(referenceNumbers.id.artNr.eq(artNr));
-        return jpaQuery.fetch().stream().map(ReferenceNumberDTO::new).collect(Collectors.toList());
+        QManufacturer manufacturer=QManufacturer.manufacturer;
+        JPAQuery<ReferenceNumberDTO> jpaQuery=query
+                .select(Projections.constructor(ReferenceNumberDTO.class,referenceNumbers))
+                .from(referenceNumbers)
+                .join(referenceNumbers.manufacturer,manufacturer)
+                .on(referenceNumbers.id.herNr.eq(manufacturer.herNr))
+                .where(
+                        referenceNumbers.id.artNr.eq(artNr)
+                                .and(referenceNumbers.id.artNr.ne(referenceNumbers.refNr))
+                        .and(manufacturer.vGL.eq((long) 1))
+                );
+        return jpaQuery.fetch();
     }
+
     @Override
     @Transactional
     public List<CriteriaDTO> findCriteriaByArtNr(String artNr){
@@ -350,6 +614,30 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
                 .where(articleCriteria.id.artNr.eq(artNr));
 
         return jpaQuery.fetch();
+    }
+    @Override
+    @Transactional
+    public List<CriteriaDTO> findCriteriaByArticleLinkage(LinkageIdDTO linkedArticles){
+        query = new JPAQueryFactory(em);
+        QLinkageAttributes linkageAttributes=QLinkageAttributes.linkageAttributes;
+        QCriteriaTable criteria=QCriteriaTable.criteriaTable;
+        QArticleTable articleTable=QArticleTable.articleTable;
+
+
+        JPAQuery<LinkageAttributes> jpaQuery=query
+                .selectFrom(linkageAttributes)
+                .where(
+                        linkageAttributes.id.artNr.eq(linkedArticles.getArtNr())
+                                .and(linkageAttributes.id.genArtNr.eq(linkedArticles.getGenArtNr()))
+                                .and(linkageAttributes.id.vknZielArt.eq(linkedArticles.getTypeNr()))
+                                .and(linkageAttributes.id.vknZielNr.eq(linkedArticles.getLinkageId()))
+                );
+        List<LinkageAttributes> list=jpaQuery.fetch();
+        return list.stream().map(linkageAttribute ->{
+            return new CriteriaDTO(query
+                    .selectFrom(criteria)
+                    .where(criteria.id.kritNr.eq(linkageAttribute.getKritNr())).fetchFirst(),linkageAttribute.getKritWert(),linkageAttribute.getAnzSofort());
+        }).collect(Collectors.toList());
     }
     @Override
     @Transactional
@@ -390,10 +678,32 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
                         searchInformationTexts.id.artNr.eq(linkage.getArtNr())
                                 .and(searchInformationTexts.id.genArtNr.eq(linkage.getGenArtNr()))
                                 .and(searchInformationTexts.id.vknZielArt.eq(linkage.getTypeNr()))
-                                .and(searchInformationTexts.id.vknZielNr.eq(linkage.getLinkageId()))
+                                .and(searchInformationTexts.id.vknZielNr.eq(linkage.getLinkageId())
+                                .and(searchInformationTexts.id.vknZielArt.ne((long) 14).and(searchInformationTexts.id.vknZielArt.ne((long) 19))))
                 );
         return jpaQuery.fetch();
     }
+    @Override
+    public List<LinkageInformationDTO> findLinkageInformationByLinkage(LinkageIdDTO linkage){
+        query = new JPAQueryFactory(em);
+        QSearchInformationTexts searchInformationTexts=QSearchInformationTexts.searchInformationTexts;
+        QCriteriaTable criteria=QCriteriaTable.criteriaTable;
+        QArticleTable articleTable=QArticleTable.articleTable;
+
+
+        JPAQuery<LinkageInformationDTO> jpaQuery=query
+                .select(Projections.constructor(LinkageInformationDTO.class,searchInformationTexts))
+                .from(searchInformationTexts)
+                .where(
+                        searchInformationTexts.id.artNr.eq(linkage.getArtNr())
+                                .and(searchInformationTexts.id.genArtNr.eq(linkage.getGenArtNr()))
+                                .and(searchInformationTexts.id.vknZielArt.eq(linkage.getTypeNr()))
+                                .and(searchInformationTexts.id.vknZielNr.eq(linkage.getLinkageId())
+                                        .and(searchInformationTexts.id.vknZielArt.ne((long) 14).and(searchInformationTexts.id.vknZielArt.ne((long) 19))))
+                );
+        return jpaQuery.fetch();
+    }
+    @Cacheable("images")
     @Override
     @Transactional
     public List<TecdocImages> findImagesByArticle(String artNr){
@@ -782,5 +1092,21 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
             return x;
         }).collect(Collectors.toList());
         return list;
+    }
+
+    @Override
+    public List<ReferenceNumberDTO> findAllReferenceNumbers(SearchDTO search) {
+        query = new JPAQueryFactory(em);
+
+        QReferenceNumbers referenceNumbers=QReferenceNumbers.referenceNumbers;
+
+        JPAQuery<ReferenceNumberDTO> jpaQuery = query
+                .select(Projections.constructor(ReferenceNumberDTO.class,referenceNumbers))
+                .from(referenceNumbers)
+                .where(referenceNumbers.id.artNr.eq(search.getArtNr()).and(referenceNumbers.manufacturer.vGL.ne((long) 1)))
+                .orderBy(referenceNumbers.manufacturer.herNr.asc());
+
+
+        return jpaQuery.fetch();
     }
 }

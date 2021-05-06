@@ -1,5 +1,6 @@
 package com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc;
 
+import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.AccessoryLists;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.ArticleTable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,6 +9,7 @@ import org.hibernate.Criteria;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -33,6 +35,10 @@ public class ArticleDTO {
     List<ReferenceNumberDTO> referencedArticles = new ArrayList<>();
     List<TradeNumberDTO> tradeNumbers = new ArrayList<>();
     List<CriteriaDTO> criterias=new ArrayList<>();
+    List<EANDTO> eans = new ArrayList<>();
+
+    List<PartsListsDTO> partsList;
+    List<AcessoryListDTO> acessoryList;
     public ArticleDTO(ArticleTable article) {
         artNr = article.getArtNr();
         dlnr=article.getdLNr();
@@ -47,5 +53,18 @@ public class ArticleDTO {
 
     public ArticleDTO(String artNr) {
         this.artNr=artNr;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ArticleDTO that = (ArticleDTO) o;
+        return Objects.equals(artNr, that.artNr);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(artNr);
     }
 }

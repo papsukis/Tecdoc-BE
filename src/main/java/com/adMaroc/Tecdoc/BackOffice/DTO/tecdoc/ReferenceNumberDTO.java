@@ -1,6 +1,7 @@
 package com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc;
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.ReferenceNumbers;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ public class ReferenceNumberDTO {
     ManufacturerDTO manufacturer;
     boolean additiv;
     ArticleDTO referencedArticle;
-
+    @QueryProjection
     public ReferenceNumberDTO(ReferenceNumbers referenceNumber) {
         refNr=referenceNumber.getRefNr();
         artNr=referenceNumber.getId().getArtNr();

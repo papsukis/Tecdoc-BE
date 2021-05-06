@@ -92,4 +92,40 @@ public class VehicleTypeCDTO {
         bodyType = new KeyTableDTO(86,vehicleTypes.getAufbauArt());//86
     }
 
+
+
+    public VehicleTypeCDTO(VehicleTypeDTO vehicleTypes) {
+        kTypNr=vehicleTypes.getKTypNr();
+        description=vehicleTypes.getDescription();
+        description2=vehicleTypes.getDescription2();
+        description3=vehicleTypes.getDescription3();
+        vehicleModelSerie=vehicleTypes.getVehicleModelSerie();
+        from=vehicleTypes.getFrom();
+        to=vehicleTypes.getTo();
+        engineOutputKW=vehicleTypes.getEngineOutputKW();
+        engineOutputHP=vehicleTypes.getEngineOutputHP();
+        engineCapacityTaxation=vehicleTypes.getEngineCapacityTaxation();
+        engineCapacityTechnical=vehicleTypes.getEngineCapacityTechnical();
+        litre=vehicleTypes.getLitre();
+        cylindre=vehicleTypes.getCylindre();
+        door=vehicleTypes.getDoor();
+        fuelTankCapacity=vehicleTypes.getFuelTankCapacity();
+        voltage=vehicleTypes.getVoltage();
+        ABS=vehicleTypes.isABS();
+        ASR=vehicleTypes.isASR();
+        valves=vehicleTypes.getValves();
+        engineType =vehicleTypes.getEngineType();
+        fuelMixture = vehicleTypes.getFuelMixture();
+        driveType = vehicleTypes.getDriveType();
+        brakeType = vehicleTypes.getBrakeType();
+        brakeSystem = vehicleTypes.getBrakeSystem();
+        fuelType = vehicleTypes.getFuelType();
+        catalystConverterType = vehicleTypes.getCatalystConverterType();
+        tansmissionType = vehicleTypes.getTansmissionType();
+        bodyType = vehicleTypes.getBodyType();
+    }
+
+    public VehicleTypeCDTO(long kTypNr) {
+        this.kTypNr=kTypNr;
+    }
 }
