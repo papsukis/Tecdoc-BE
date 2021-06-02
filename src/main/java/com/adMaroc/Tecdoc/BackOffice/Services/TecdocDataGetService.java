@@ -69,7 +69,7 @@ public class TecdocDataGetService {
         return tecdocGetRepository.findManufacturers().stream().map(tecdocBuilder::buildManufacturerList).collect(Collectors.toList());
     }
     public List<GenericArticleDTO> findAllGenericArticle(){
-        return tecdocService.genericArticlesRepository.findAll().stream().map(GenericArticleDTO::new).map(tecdocBuilder::buildGenericArticle).collect(Collectors.toList());
+        return tecdocService.genericArticlesRepository.findAll().stream().map(GenericArticleDTO::new).collect(Collectors.toList());
     }
 
     private CriteriaDTO setCriteriaHierarchy(CriteriaDTO criteria,List<CriteriaDTO> childrenList){
@@ -122,8 +122,13 @@ public class TecdocDataGetService {
         return tecdocBuilder.buildCVType(tecdocGetRepository.findCVTypeByNtypNr(Long.parseLong(search.getNtypNr())));
     }
 
-    public List<ManufacturerDTO> findAllSavedManufacturers() {
-        return tecdocGetRepository.findAllSavedManufacturers().stream().map(tecdocBuilder::buildManufacturer).collect(Collectors.toList());
+    public List<SavedManufacturer> findAllSavedManufacturers() {
+        return tecdocGetRepository.findAllSavedManufacturers().stream()
+                .map(tecdocBuilder::buildManufacturer)
+                .map(manufacturer -> {
+                    return new SavedManufacturer(manufacturer,tecdocGetRepository.getGenArtByHernr(manufacturer.getHerNr()));
+                })
+                .collect(Collectors.toList());
     }
     public ArticleDTO getArticle(SearchDTO search){
         return tecdocBuilder.buildPartListAndAccessoryList(tecdocBuilder.buildArticle(tecdocGetRepository.getArticle(search.getArtNr())));

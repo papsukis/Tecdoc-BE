@@ -17,6 +17,8 @@ public class SearchDTO {
     String kmodNr;
     String ktypNr;
     String ntypNr;
+    List<String> ktypNrList;
+    List<String> ntypNrList;
     String type;
     String ean;
     LinkageIdDTO linkageId;

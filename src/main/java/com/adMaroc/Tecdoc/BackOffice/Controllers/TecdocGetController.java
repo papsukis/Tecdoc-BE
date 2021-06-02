@@ -42,7 +42,7 @@ public class TecdocGetController {
         return ResponseEntity.ok(tecdocService.findAllManufacturers());
     }
     @GetMapping("savedManufacturers")
-    public ResponseEntity<List<ManufacturerDTO>> findAllSavedManufacturers(){
+    public ResponseEntity<List<SavedManufacturer>> findAllSavedManufacturers(){
 
         return ResponseEntity.ok(tecdocService.findAllSavedManufacturers());
     }

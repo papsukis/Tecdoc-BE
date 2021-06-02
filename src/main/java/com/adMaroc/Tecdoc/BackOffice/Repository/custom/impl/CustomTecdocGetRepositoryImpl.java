@@ -328,7 +328,21 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
 
         return jpaQuery.fetch();
     }
-
+    @Cacheable("savedManufacturers")
+    @Override
+    public List<Long> getGenArtByHernr(Long herNr){
+        query = new JPAQueryFactory(em);
+        QArticleToGenericArticleAllocation allocation=QArticleToGenericArticleAllocation.articleToGenericArticleAllocation;
+        QHeader header=QHeader.header;
+        JPAQuery<Long> jpaQuery=query
+                .select(allocation.id.genArtNr)
+                .distinct()
+                .from(allocation)
+                .where(allocation.dLNr.eq(
+                        JPAExpressions.select(header.dLNr).from(header).where(header.hernr.eq(herNr))
+                ));
+        return jpaQuery.fetch();
+    }
     @Cacheable("article")
     @Override
     public ArticleDTO getArticle(String artNr){

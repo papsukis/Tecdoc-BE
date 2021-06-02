@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -59,6 +60,8 @@ public class TecdocBuilder {
 
         tmp.setArticleInformations(tecdocGetRepository.findArticleInformationByArtNr(article.getArtNr()).stream().map(this::buildArticleInformation).collect(Collectors.toList()));
 
+
+
         log.info("Article for excel Builded");
 
         return tmp;
@@ -70,7 +73,12 @@ public class TecdocBuilder {
         tmp.setImages(
                 tecdocGetRepository.findImagesByArticle(article.getArtNr()).stream().map(this::buildImages).collect(Collectors.toList())
         );
-        tmp.setManufacturer(buildManufacturer(tecdocGetRepository.findByDlnr(article.getDlnr())));
+
+        ManufacturerDTO man=buildManufacturer(tecdocGetRepository.findByDlnr(article.getDlnr()));
+        man.setLogo(tecdocGetRepository.getManufacturerLogo(article.getDlnr()));
+        tmp.setManufacturer(man);
+
+//        tmp.setManufacturer(buildManufacturer(tecdocGetRepository.findByDlnr(article.getDlnr())));
         tmp.setArticleData(
                 tecdocGetRepository.findArticleDataByArtnr(article.getArtNr()).stream().map(this::buildArticleData).collect(Collectors.toList())
         );
@@ -401,6 +409,45 @@ public class TecdocBuilder {
         return tmp;
     }
 
+    public String buildLinkageName(LinkedArticlesCDTO art){
+        String linkage="";
+
+//        for(LinkedArticlesCDTO art: linkedArticles){
+            art=buildLinkedArticles(art);
+            switch ((int)art.getTypeNr()){
+                case 2:
+                   linkage+=new DescriptionDTO(tecdocCustomRepository.findCountryAndLanguageDependentDescriptionsByLbeznr(Long.valueOf(art.getVehicleType().getVehicleModelSerie().getManufacturer().getLongCode().getBezNr()))).getDescription()
+                           +" /"
+                           +art.getVehicleType().getVehicleModelSerie().getDescription().getDescription().replace("/ *\\([^)]*\\) */g","")
+                           +new SimpleDateFormat("YYYY-mm").format(art.getVehicleType().getVehicleModelSerie().getFrom())
+                           +(art.getVehicleType().getVehicleModelSerie().getTo()!=null?" a "+new SimpleDateFormat("YYYYmm").format(art.getVehicleType().getVehicleModelSerie().getTo()):"")
+                           +" /"
+                           +art.getVehicleType().getDescription().getDescription().replace("/ *\\([^)]*\\) */g","")
+                           +" - "
+                           +art.getVehicleType().getEngineOutputHP() + " HP"
+                           +"("+art.getVehicleType().getEngineOutputKW()+" KW);";
+                    break;
+                case 16:
+                    linkage+=new DescriptionDTO(tecdocCustomRepository.findCountryAndLanguageDependentDescriptionsByLbeznr(Long.valueOf(art.getCvTypes().getVehicleModelSerie().getManufacturer().getLongCode().getBezNr()))).getDescription()
+                            +" /"
+                            +art.getCvTypes().getVehicleModelSerie().getDescription().getDescription().replace("/ *\\([^)]*\\) */g","")
+                            +new SimpleDateFormat("YYYY-mm").format(art.getCvTypes().getVehicleModelSerie().getFrom())+ " a "
+                            +(art.getCvTypes().getVehicleModelSerie().getTo()!=null?" a "+new SimpleDateFormat("YYYYmm").format(art.getCvTypes().getVehicleModelSerie().getTo()):"")
+                            +" /"
+                            +art.getCvTypes().getDescription().getDescription().replace("/ *\\([^)]*\\) */g","")
+                            +" - "
+                            +art.getCvTypes().getEngineOutputFromHP() + " HP"
+                            +"("+art.getCvTypes().getEngineOutputFromKW()+" KW);";
+                    break;
+
+            }
+
+
+
+        return "";
+
+    }
+
     public LinkedArticlesCDTO buildLinkedArticles(LinkedArticlesCDTO linkedArticles){
         LinkedArticlesCDTO tmp =linkedArticles;
         switch ((int)linkedArticles.getTypeNr()){
@@ -409,11 +456,11 @@ public class TecdocBuilder {
                         new VehicleTypeDTO(tecdocCustomRepository.findVehicleTypesByKtypnr(linkedArticles.getLinkageId()))
                 );
                 break;
-            case 7:
-                tmp.setManufacturer(
-                                buildManufacturer(tecdocGetRepository.getManufacturerByProducerId(linkedArticles.getLinkageId()))
-                );
-                break;
+//            case 7:
+//                tmp.setManufacturer(
+//                                buildManufacturer(tecdocGetRepository.getManufacturerByProducerId(linkedArticles.getLinkageId()))
+//                );
+//                break;
             case 16:
                 tmp.setCvTypes(
                         new CVTypesDTO(

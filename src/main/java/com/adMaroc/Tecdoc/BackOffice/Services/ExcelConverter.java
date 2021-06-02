@@ -1,9 +1,14 @@
 package com.adMaroc.Tecdoc.BackOffice.Services;
 
 import com.adMaroc.Tecdoc.BackOffice.Configurations.FilesConfig;
+import com.adMaroc.Tecdoc.BackOffice.DTO.Linkage.LinkageResponse;
+import com.adMaroc.Tecdoc.BackOffice.DTO.Linkage.LinkedManufacturer;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
+import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.LinkedArticlesCDTO;
 import com.adMaroc.Tecdoc.BackOffice.Models.ExcelCell;
 import com.adMaroc.Tecdoc.BackOffice.Models.ExcelSheet;
+import com.adMaroc.Tecdoc.BackOffice.Repository.custom.CustomTecdocGetRepository;
+import com.adMaroc.Tecdoc.BackOffice.Repository.custom.TecdocCustomRepository;
 import com.adMaroc.Tecdoc.BackOffice.Utils.JsonReader;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
@@ -11,6 +16,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -19,6 +25,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -32,7 +39,11 @@ public class ExcelConverter {
     FilesConfig config;
     @Autowired
     TecdocBuilder tecdocBuilder;
+    @Autowired
+    TecdocCustomRepository tecdocCustomRepository;
 
+    @Autowired
+    CustomTecdocGetRepository tecdocGetRepository;
     public void contactListToExcelFile(List<ArticleImageDTO> articles) {
         log.info("creating excel file");
         try(Workbook workbook = new XSSFWorkbook()){
@@ -89,8 +100,7 @@ public class ExcelConverter {
     public ByteArrayInputStream convertToExcel(List<ArticleDTO> articles) throws ParseException {
         log.info("creating excel file");
         try(Workbook workbook = new XSSFWorkbook()) {
-            Sheet sheet = workbook.createSheet("articles");
-
+            Sheet sheet = workbook.createSheet("Articles");
 
             Row row = sheet.createRow(0);
             CellStyle headerCellStyle = workbook.createCellStyle();
@@ -98,7 +108,7 @@ public class ExcelConverter {
             headerCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
             Cell cell = row.createCell(0);
-            cell.setCellValue("Article Nr");
+            cell.setCellValue("Nr Article");
             cell.setCellStyle(headerCellStyle);
 
             cell = row.createCell(1);
@@ -133,6 +143,31 @@ public class ExcelConverter {
             cell.setCellValue("Liaisons");
             cell.setCellStyle(headerCellStyle);
 
+            Sheet sheet2 = workbook.createSheet("Affectations");
+
+            Row row2 = sheet2.createRow(0);
+
+            Cell cell2 = row2.createCell(0);
+            cell.setCellValue("Nr Article");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row2.createCell(1);
+            cell.setCellValue("Equipementier");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row2.createCell(2);
+            cell.setCellValue("Marque");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row2.createCell(3);
+            cell.setCellValue("Vehicule");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row2.createCell(4);
+            cell.setCellValue("Type");
+            cell.setCellStyle(headerCellStyle);
+
+            long rowCount=1;
             for(int i = 0; i < articles.size(); i++) {
                 ArticleDTO tmp = tecdocBuilder.buildArticleforXlsx(articles.get(i));
                 Row dataRow = sheet.createRow(i + 1);
@@ -191,7 +226,73 @@ public class ExcelConverter {
                 }
                 dataRow.createCell(7).setCellValue(tradenumber);
                 //linkage TODO
-                dataRow.createCell(8).setCellValue("");
+
+                String links="";
+                List<LinkedArticlesCDTO> linked =tecdocGetRepository.findArticleLinkage(tmp.getArtNr()).stream().map(tecdocBuilder::buildLinkedArticles).collect(Collectors.toList());
+
+                for(int j = 0; j < linked.size(); j++ ){
+//                    art=tecdocBuilder.buildLinkedArticles(art);
+                    LinkedArticlesCDTO art=linked.get(j);
+                    Row dataRow2 = sheet2.createRow((int) rowCount++);
+                    dataRow2.createCell(0).setCellValue(tmp.getArtNr());
+
+                    dataRow2.createCell(1).setCellValue(
+                            new DescriptionDTO(
+                            tecdocCustomRepository.findCountryAndLanguageDependentDescriptionsByLbeznr(
+                                    Long.valueOf(tmp.getManufacturer().getLongCode().getBezNr())
+                            )).getDescription()
+                        );
+                    switch ((int)linked.get(j).getTypeNr()) {
+                        case 2:
+
+                            dataRow2.createCell(2).setCellValue(
+                                    art.getVehicleType().getVehicleModelSerie().getManufacturer().getLongCode().getDescription()
+                            );
+                            dataRow2.createCell(3).setCellValue(
+                                    art.getVehicleType().getVehicleModelSerie().getDescription().getDescription().replaceAll("\\(.*?\\)","")
+                                            + " - "
+                                            + new SimpleDateFormat("YYYY-mm").format(art.getVehicleType().getVehicleModelSerie().getFrom())
+                                            + (art.getVehicleType().getVehicleModelSerie().getTo() != null ? " a " + new SimpleDateFormat("YYYY-mm").format(art.getVehicleType().getVehicleModelSerie().getTo()) : "")
+                            );
+                            dataRow2.createCell(4).setCellValue(
+                                    art.getVehicleType().getDescription().getDescription().replaceAll("\\(.*?\\)","")
+                                            + " - "
+                                            + art.getVehicleType().getEngineOutputHP() + " HP"
+                                            + "(" + art.getVehicleType().getEngineOutputKW() + " KW)"
+                                            + " - "
+                                            + new SimpleDateFormat("YYYY-mm").format(art.getVehicleType().getFrom())
+                                            + (art.getVehicleType().getVehicleModelSerie().getTo() != null ? " a " + new SimpleDateFormat("YYYY-mm").format(art.getVehicleType().getTo()) : "")
+
+                            );
+
+                            break;
+                        case 16:
+                            dataRow2.createCell(2).setCellValue(
+                                    art.getCvTypes().getVehicleModelSerie().getManufacturer().getLongCode().getDescription()
+                            );
+                            dataRow2.createCell(3).setCellValue(
+                                    art.getCvTypes().getVehicleModelSerie().getDescription().getDescription().replaceAll("\\(.*?\\)","")
+                                            + " - "
+                                            + (art.getCvTypes().getVehicleModelSerie().getTo() != null ?new SimpleDateFormat("YYYY-mm").format(art.getCvTypes().getVehicleModelSerie().getFrom()): "")
+                                            + (art.getCvTypes().getVehicleModelSerie().getTo() != null ? " a " + new SimpleDateFormat("YYYY-mm").format(art.getCvTypes().getVehicleModelSerie().getTo()) : "")
+
+                            );
+                            dataRow2.createCell(4).setCellValue(
+                                    art.getCvTypes().getDescription().getDescription().replaceAll("\\(.*?\\)","")
+                                            + " - "
+                                            + art.getCvTypes().getEngineOutputFromKW() + " HP"
+                                            + "(" + art.getCvTypes().getEngineOutputFromHP() + " KW)"
+                                            + " - "
+                                            + (art.getCvTypes().getTo() != null ? new SimpleDateFormat("YYYY-mm").format(art.getCvTypes().getFrom()):"")
+                                            + (art.getCvTypes().getTo() != null ? " a " + new SimpleDateFormat("YYYY-mm").format(art.getCvTypes().getTo()) : "")
+
+                            );
+
+                            break;
+
+                    }
+                }
+
             }
 
             sheet.autoSizeColumn(0);
@@ -202,16 +303,19 @@ public class ExcelConverter {
             sheet.autoSizeColumn(5);
             sheet.autoSizeColumn(6);
             sheet.autoSizeColumn(7);
-            sheet.autoSizeColumn(8);
+
+            sheet2.autoSizeColumn(0);
+            sheet2.autoSizeColumn(1);
+            sheet2.autoSizeColumn(2);
+            sheet2.autoSizeColumn(3);
+            sheet2.autoSizeColumn(4);
+
+
+
 
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             workbook.write(outputStream);
-//            ByteArrayOutputStream fos = outputStream;
-//            outputStream.close();
-//            FileOutputStream f = new FileOutputStream(config.getExcelFullPath()+"articles.xlsx");
-//            f.write(outputStream.toByteArray());
-//            f.close();
-//            fos.close();
+
             log.info("excel file created");
             return new ByteArrayInputStream(outputStream.toByteArray());
         } catch (IOException e) {

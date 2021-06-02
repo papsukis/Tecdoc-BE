@@ -54,6 +54,8 @@ public interface CustomTecdocGetRepository {
     List<CriteriaDTO> findPartCriteria(PartsListsDTO partList);
 
 
+    List<Long> getGenArtByHernr(Long herNr);
+
     ArticleDTO getArticle(String artNr);
 
     @Transactional
