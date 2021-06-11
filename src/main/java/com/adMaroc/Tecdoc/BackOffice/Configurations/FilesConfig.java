@@ -13,4 +13,6 @@ public class FilesConfig {
     String excelFullPath;
     @Value( "${file.img-dir}" )
     String imgFullPath;
+    @Value("${x3.endPoint}")
+    String x3EndPoint;
 }

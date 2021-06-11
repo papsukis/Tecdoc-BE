@@ -28,7 +28,7 @@ public class TableSaveLog {
     private String fileName;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="manufacturer_log_id")
     private ManufacturerSaveLog ftpSaveLog;
 

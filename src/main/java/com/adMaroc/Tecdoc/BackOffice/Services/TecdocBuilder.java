@@ -5,6 +5,7 @@ import com.adMaroc.Tecdoc.BackOffice.DTO.ManufacturerList;
 import com.adMaroc.Tecdoc.BackOffice.DTO.SearchResponse;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.*;
+import com.adMaroc.Tecdoc.BackOffice.Models.x3Article;
 import com.adMaroc.Tecdoc.BackOffice.Repository.custom.CustomTecdocGetRepository;
 import com.adMaroc.Tecdoc.BackOffice.Repository.custom.TecdocCustomRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -26,11 +27,12 @@ public class TecdocBuilder {
     TecdocCustomRepository tecdocCustomRepository;
     @Autowired
     WrapperTecdocDataService tecdocService;
-
+    @Autowired
+    X3Service x3;
     public SearchResponse buildResponse(SearchResponse response){
         SearchResponse tmp=response;
         log.info("Building response");
-        tmp.setResponse(tmp.getResponse().stream().distinct().map(this::buildArticleSmall).collect(Collectors.toList()));
+        tmp.setResponse(tmp.getResponse().stream().map(this::buildArticleSmall).collect(Collectors.toList()));
         log.info("Response builded");
         return tmp;
     }
@@ -84,8 +86,10 @@ public class TecdocBuilder {
         );
         tmp.setSupersedingArticles(tecdocGetRepository.findSuperSedingArticlesByArtNr(article.getArtNr()).stream().map(this::buildSuperSedingArticle).collect(Collectors.toList()));
         tmp.setCriterias(tecdocGetRepository.findCriteriaByArtNr(article.getArtNr()).stream().map(this::buildCriterion).collect(Collectors.toList()));
-        log.info("Article small Builded");
 
+        x3Article x3art =x3.getArticle(tmp.getArtNr());
+        tmp.setX3status(x3art.getRef()!=null?x3art:null);
+        log.info("Article small Builded");
         return tmp;
     }
     public PriceInformationDTO buildPriceInformation(PriceInformationDTO priceInformation){
@@ -140,7 +144,10 @@ public class TecdocBuilder {
                 tecdocGetRepository.findArticleDataByArtnr(article.getArtNr()).stream().map(this::buildArticleData).collect(Collectors.toList())
         );
         tmp.setCriterias(tecdocGetRepository.findCriteriaByArtNr(article.getArtNr()).stream().map(this::buildCriterion).collect(Collectors.toList()));
+        x3Article x3art =x3.getArticle(tmp.getArtNr());
+        tmp.setX3status(x3art.getRef()!=null?x3art:null);
         log.info("Article Builded");
+
         return tmp;
     }
     public ArticleDTO buildPartListAndAccessoryList(ArticleDTO article){
@@ -325,7 +332,7 @@ public class TecdocBuilder {
         ReferenceNumberDTO tmp = referenceNumberDTO;
         ArticleDTO t=tecdocGetRepository.findArticleArtnr(tmp.getRefNr());
         if(t!=null )
-        tmp.setReferencedArticle(buildArticleSmall(t));
+        tmp.setReferencedArticle(buildArticleMin(t));
         return tmp;
     }
     public ArticleDataDTO buildArticleData(ArticleDataDTO articleDataDTO) {

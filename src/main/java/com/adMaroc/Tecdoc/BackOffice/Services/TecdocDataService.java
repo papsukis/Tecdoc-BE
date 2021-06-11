@@ -1084,8 +1084,7 @@ public class TecdocDataService {
                 ftpLogService.updateTableSaveLog(saveLog, FTP_Status.ERROR);
                 throw new InternalServerException(e.getMessage());
             }
-            saveLog.setTotalSavedRows((long)savedRows.get());
-            ftpLogService.updateTableSaveLog(saveLog, FTP_Status.SAVING_DATA);
+            ftpLogService.updateTableSaveLog(saveLog, (long)savedRows.get());
         }
 
 

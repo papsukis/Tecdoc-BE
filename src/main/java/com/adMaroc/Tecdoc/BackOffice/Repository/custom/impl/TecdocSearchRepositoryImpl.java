@@ -297,11 +297,16 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
     public SearchResponse findArticlesByGenericArticle(SearchDTO search){
         query=new JPAQueryFactory(em);
         SearchResponse tmp = new SearchResponse();
+
+        BooleanExpression dlnr=search.getDlnr().size()>0?allocation.dLNr.in(search.getDlnr()):Expressions.asBoolean(true).isTrue();
+
+
+
         JPAQuery<ArticleDTO> jpaQuery=query
-                .select(Projections.constructor(ArticleDTO.class,article))
+                .select(Projections.constructor(ArticleDTO.class,allocation.articleTable))
                 .from(allocation)
                 .where(allocation.id.genArtNr.in(search.getGenArtNr())
-                        .and(getFilters(search))
+                        .and(dlnr)
                         .and(getNotLivrable(allocation.id.artNr))
 
                 )
@@ -319,12 +324,15 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
     @Override
     public List<ArticleDTO> findAllArticlesByGenericArticle(SearchDTO search){
         query=new JPAQueryFactory(em);
+        BooleanExpression dlnr=search.getDlnr().size()>0?allocation.dLNr.in(search.getDlnr()):Expressions.asBoolean(true).isTrue();
+
         JPAQuery<ArticleDTO> jpaQuery=query
+
                 .select(Projections.constructor(ArticleDTO.class,article))
 
                 .from(allocation)
                 .where(allocation.id.genArtNr.in(search.getGenArtNr())
-                        .and(getFilters(search))
+                        .and(dlnr)
                         .and(getNotLivrable(allocation.id.artNr))
 
                 )

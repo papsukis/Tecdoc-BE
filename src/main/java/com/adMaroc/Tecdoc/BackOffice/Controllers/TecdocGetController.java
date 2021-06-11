@@ -1,10 +1,12 @@
 package com.adMaroc.Tecdoc.BackOffice.Controllers;
 
+import com.adMaroc.Tecdoc.BackOffice.Configurations.FilesConfig;
 import com.adMaroc.Tecdoc.BackOffice.DTO.*;
 import com.adMaroc.Tecdoc.BackOffice.DTO.Linkage.LinkageDetails;
 import com.adMaroc.Tecdoc.BackOffice.DTO.Linkage.LinkageResponse;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.*;
+import com.adMaroc.Tecdoc.BackOffice.Models.x3Article;
 import com.adMaroc.Tecdoc.BackOffice.Services.ExcelConverter;
 import com.adMaroc.Tecdoc.BackOffice.Services.TecdocDataGetService;
 import com.adMaroc.Tecdoc.BackOffice.Services.WrapperTecdocDataService;
@@ -13,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +33,10 @@ public class TecdocGetController {
     WrapperTecdocDataService tecdocDataService;
     @Autowired
     ExcelConverter excelConverter;
+    @Autowired
+    WebClient localApiClient;
+
+
     @Cacheable("searchStructure")
     @GetMapping("searchStructure")
     public ResponseEntity<List<SearchStructureTree>> findAllSearchStructure(){
@@ -83,9 +91,22 @@ public class TecdocGetController {
 //    public ResponseEntity<List<EngineDTO>> getAllEngines(){
 //        return ResponseEntity.ok(tecdocDataService.enginesRepository.findAll().stream().map(EngineDTO::new).collect(Collectors.toList()).subList(0,50));
 //    }
+
+
     @PostMapping("test")
     public ResponseEntity<?> test(@RequestBody SearchDTO searchDTO){
-        return ResponseEntity.ok(tecdocService.test(searchDTO));
+
+//        localApiClient
+//                .get()
+//                .uri("GDB400")
+//                .retrieve()
+//                .bodyToMono(x3Article.class)
+//                ;
+
+
+        return ResponseEntity.ok(true
+
+                );
     }
 
     @PostMapping("getArticle")

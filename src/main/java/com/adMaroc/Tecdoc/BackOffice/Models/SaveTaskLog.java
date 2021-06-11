@@ -29,7 +29,7 @@ public class SaveTaskLog {
 
     @OneToMany(
             mappedBy = "saveTaskLog",
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             orphanRemoval = true)
     private List<ManufacturerSaveLog> manufacturerSaveLogs;
 

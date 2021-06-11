@@ -6,7 +6,7 @@ import com.adMaroc.Tecdoc.BackOffice.Utils.Converter;
 import com.adMaroc.Tecdoc.BackOffice.Utils.JsonReader;
 import com.adMaroc.Tecdoc.Security.Exceptions.InternalServerException;
 import com.adMaroc.Tecdoc.Security.Repository.ConfigurationRepository;
-import com.querydsl.jpa.hibernate.HibernateUtil;
+
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Hibernate;
@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import com.adMaroc.Tecdoc.BackOffice.Utils.HibernateUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -50,8 +51,8 @@ public class FtpService {
     CacheManager cacheManager;
     @Autowired
     FTPLogService ftpLogService;
-    @PersistenceContext
-    private EntityManager em;
+//    @PersistenceContext
+//    private EntityManager em;
     public void close() throws IOException {
         this.ftp.close();
     }
@@ -85,7 +86,6 @@ public class FtpService {
     }
 
 //    @SneakyThrows
-    @Transactional
     @Async
     public void asyncDownload(DownloadRequest downloadRequest, FtpDTO ftpLogs) {
         SaveTaskLog currentTask = ftpLogService.startTask(downloadRequest.getFiles(),ftpLogs.getUser(),Actions.DOWNLOAD_AND_SAVE,ftpLogs.getIpAdress());
@@ -122,7 +122,8 @@ public class FtpService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            currentMan=updateManufacturerLog(currentMan,FTP_Status.SAVING_DATA);
+            currentMan=ftpLogService.updateManufacturerSaveLog(ftpLogService.getManufacturerLog(currentMan.getId()),FTP_Status.SAVING_DATA);
+//                    updateManufacturerLog(,);
             for(String file : sortedList)
             {
 
@@ -145,12 +146,10 @@ public class FtpService {
         ftpLogService.completeTask(currentTask);
     }
 //    @SneakyThrows
-    @Transactional
-    public ManufacturerSaveLog updateManufacturerLog(ManufacturerSaveLog log,FTP_Status status){
-        return ftpLogService.updateManufacturerSaveLog(ftpLogService.getManufacturerLog(log.getId()),status);
-    }
+//    public ManufacturerSaveLog updateManufacturerLog(ManufacturerSaveLog log,FTP_Status status){
+//        return ;
+//    }
 
-    @Transactional
     @Async
     public void asyncUncompress(DownloadRequest downloadRequest, FtpDTO ftpLogs) {
 
@@ -204,9 +203,13 @@ public class FtpService {
         }
         ftpLogService.completeTask(currentTask);
     }
-    @Transactional
+//    @Transactional
 @Async public void asyncSave(DownloadRequest downloadRequest, FtpDTO ftpLogs)  {
+//    Session session = HibernateUtil.getSessionFactory().openSession();
+//    session.beginTransaction();
+
         SaveTaskLog currentTask = ftpLogService.startTask(downloadRequest.getFiles(),ftpLogs.getUser(),Actions.SAVE_ONLY,ftpLogs.getIpAdress());
+//        session.getTransaction().commit();
 
         for(UnCompressAndSaveRequest t: downloadRequest.getFiles())
         {
@@ -217,7 +220,7 @@ public class FtpService {
             }
 
             ManufacturerSaveLog currentMan=ftpLogService.getManufacturerSaveLog(t.getFileName(),currentTask);
-            currentMan=updateManufacturerLog(currentMan,FTP_Status.SAVING_DATA);
+            currentMan=ftpLogService.updateManufacturerSaveLog(currentMan,FTP_Status.SAVING_DATA);
 
             String folder=t.getFileName().contains("REFERENCE_DATA")?"REFERENCE_DATA":t.getFileName().substring(0,4);
             List<String> sortedList= null;
@@ -241,6 +244,7 @@ public class FtpService {
                     log.error(e.getMessage());
                     ftpLogService.updateTableSaveLog(currentTable,FTP_Status.ERROR);
                 }
+
             }
             currentMan=ftpLogService.getManufacturerLog(currentMan.getId());
             ftpLogService.updateManufacturerSaveLog(currentMan,FTP_Status.COMPLETED);
@@ -251,8 +255,12 @@ public class FtpService {
             }
         }
         ftpLogService.completeTask(currentTask);
-    }
-    @Transactional
+
+        cacheManager.getCacheNames().stream()
+            .forEach(cacheName -> cacheManager.getCache(cacheName).clear());
+
+}
+//    @Transactional
     @Async
     public void downloadOnly(DownloadRequest downloadRequest, FtpDTO ftpLogs) {
         SaveTaskLog currentTask = ftpLogService.startTask(downloadRequest.getFiles(),ftpLogs.getUser(),Actions.DOWNLOAD_ONLY,ftpLogs.getIpAdress());
@@ -266,6 +274,7 @@ public class FtpService {
         });
         ftpLogService.completeTask(currentTask);
     }
+
     private void save(String file,String folder,TableSaveLog currentTable) throws Exception {
 
         currentTable=ftpLogService.updateTableSaveLog(currentTable,FTP_Status.READING_DATA);
@@ -274,12 +283,10 @@ public class FtpService {
         currentTable=ftpLogService.updateTableSaveLog(currentTable,FTP_Status.CREATING_ENTITIES);
         EntityWrapper entities=createEntities( file1);
         currentTable=ftpLogService.updateTableSaveLog(currentTable,FTP_Status.SAVING_DATA);
-        tecdocDataService.save(entities,currentTable);
+        currentTable=tecdocDataService.save(entities,currentTable);
         currentTable.setEndTime(new Date());
         currentTable=ftpLogService.updateTableSaveLog(currentTable,FTP_Status.COMPLETED);
-        cacheManager.getCacheNames().stream()
-                .forEach(cacheName -> cacheManager.getCache(cacheName).clear());
-        ftpLogService.updateManufacturerSaveLog(currentTable.getFtpSaveLog(),FTP_Status.COMPLETED);
+//        ftpLogService.updateManufacturerSaveLog(currentTable.getFtpSaveLog(),FTP_Status.COMPLETED);
     }
 
     private void openConexion(FtpDTO ftpLogs) throws IOException {

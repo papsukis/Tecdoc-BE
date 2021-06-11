@@ -35,7 +35,7 @@ public class ManufacturerSaveLog {
          orphanRemoval = true)
     private List<TableSaveLog> tableSaveLog;
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="save_task_id")
     private SaveTaskLog saveTaskLog;
 

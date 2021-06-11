@@ -2,6 +2,7 @@ package com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc;
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.AccessoryLists;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.ArticleTable;
+import com.adMaroc.Tecdoc.BackOffice.Models.x3Article;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,7 +37,7 @@ public class ArticleDTO {
     List<TradeNumberDTO> tradeNumbers = new ArrayList<>();
     List<CriteriaDTO> criterias=new ArrayList<>();
     List<EANDTO> eans = new ArrayList<>();
-
+    x3Article x3status;
     List<PartsListsDTO> partsList;
     List<AcessoryListDTO> acessoryList;
     public ArticleDTO(ArticleTable article) {

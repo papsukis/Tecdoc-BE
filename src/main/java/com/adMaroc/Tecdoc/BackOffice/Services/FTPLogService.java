@@ -4,15 +4,18 @@ import com.adMaroc.Tecdoc.BackOffice.Models.*;
 import com.adMaroc.Tecdoc.BackOffice.Repository.logs.ManufacturerSaveLogRepository;
 import com.adMaroc.Tecdoc.BackOffice.Repository.logs.SaveTaskLogRepository;
 import com.adMaroc.Tecdoc.BackOffice.Repository.logs.TableSaveLogRepository;
+import com.adMaroc.Tecdoc.BackOffice.Utils.HibernateUtil;
 import com.adMaroc.Tecdoc.BackOffice.Utils.JsonReader;
 import com.adMaroc.Tecdoc.Security.Models.User;
 import com.adMaroc.Tecdoc.Security.Models.UserLog;
 import com.adMaroc.Tecdoc.Security.Repository.UserLogRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.table.TableRowSorter;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,7 +39,11 @@ public class FTPLogService {
     @Autowired
     private JsonReader jsonReader;
 
+//    private HibernateUtil hibernateUtil=new HibernateUtil();
+
     public SaveTaskLog startTask(List<UnCompressAndSaveRequest> req, String user,Actions action,String ip){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
 
         SaveTaskLog currentTask=new SaveTaskLog();
         currentTask.setStartTime(new Date());
@@ -45,7 +52,6 @@ public class FTPLogService {
         currentTask.setUserName(user);
         currentTask.setIp(ip);
         BrandList brands=jsonReader.getBrandName();
-
         List<ManufacturerSaveLog> currentManufacturers = new ArrayList<>();
         for(UnCompressAndSaveRequest r:req){
             if(r.getFileName().contains(".7z") && !r.getFileName().contains("REFERENCE_DATA") && isNumeric(r.getFileName().substring(0,4)) )
@@ -78,18 +84,27 @@ public class FTPLogService {
                 currentManufacturers.add(tmp);
             }
         }
-        currentManufacturers=manufacturerLog.saveAll(currentManufacturers
-//                .stream().map(man->{man.setSaveTaskLog(currentTask);return man; }).collect(Collectors.toList())
-        );
+        SaveTaskLog finalCurrentTask =saveTaskLog.save(currentTask);
+        ;
+        for(ManufacturerSaveLog man:currentManufacturers){
+            man.setSaveTaskLog(currentTask);
+            log.info(man.toString());
+        }
+        currentManufacturers=manufacturerLog.saveAll(currentManufacturers);
         currentTask.setManufacturerSaveLogs(currentManufacturers);
-//        currentTask=saveTaskLog.saveAndFlush(currentTask);
-        return saveTaskLog.saveAndFlush(currentTask);
+        currentTask=saveTaskLog.save(finalCurrentTask);
+//        session.getTransaction().commit();
+//        session.close();
+
+        return currentTask;
     }
+
     public void completeTask(SaveTaskLog taskLog){
         taskLog.setStatus(FTP_Status.COMPLETED.label);
         taskLog.setEndTime(new Date());
         saveTaskLog.saveAndFlush(taskLog);
     }
+
     private boolean isNumeric(String strNum) {
         Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
@@ -112,10 +127,15 @@ public class FTPLogService {
         return tmpMan;
     }
     public ManufacturerSaveLog updateManufacturerSaveLog(ManufacturerSaveLog manufacturerSaveLog,FTP_Status status){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+
         ManufacturerSaveLog tmpMan=manufacturerLog.getOne(manufacturerSaveLog.getId());
         tmpMan.setStatus(status.label);
-        tmpMan.setSaveTaskLog(manufacturerSaveLog.getSaveTaskLog());
+        tmpMan.setSaveTaskLog(getSaveTask(tmpMan.getSaveTaskLog().getId()));
         ManufacturerSaveLog tmp=manufacturerLog.saveAndFlush(tmpMan);
+        session.getTransaction().commit();
+        session.close();
         return tmp;
     }
 
@@ -159,10 +179,26 @@ public class FTPLogService {
         }
         return tmpTable;
     }
+
     public TableSaveLog updateTableSaveLog(TableSaveLog tableLog,FTP_Status status){
-        tableLog.setStatus(status.label);
-        return tableSaveLog.save(tableLog);
+        TableSaveLog tmp=tableLog;
+        TableSaveLog table=tableSaveLog.getOne(tableLog.getId());
+        table.setStatus(status.label);
+
+        table=tableSaveLog.save(table);
+
+        return table;
     }
+    public TableSaveLog updateTableSaveLog(TableSaveLog tableLog,long savedRows){
+
+        TableSaveLog table=tableSaveLog.getOne(tableLog.getId());
+        table.setTotalSavedRows(savedRows);
+
+        table=tableSaveLog.save(table);
+
+        return table;
+    }
+
     public SaveTaskLog getSaveTask(long id) {
         return saveTaskLog.getOne(id);
     }
