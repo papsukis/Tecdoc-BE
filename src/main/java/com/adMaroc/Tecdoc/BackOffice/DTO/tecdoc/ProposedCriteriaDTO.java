@@ -1,7 +1,7 @@
 package com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc;
 
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.MandatoryCriteria;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.ProposedCriteria;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.MandatoryCriteria;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.ProposedCriteria;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;
 import lombok.Data;

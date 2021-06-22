@@ -11,7 +11,7 @@ import java.util.Objects;
 @Embeddable
 public class CountrySpecificPartsListQuantitiesId implements Serializable{
 
-    @Column(name="artnr")
+    @Column(name="artNr")
     private String artNr;
     @Column(name="lfdnrstk")
     private long lfdNrStk;

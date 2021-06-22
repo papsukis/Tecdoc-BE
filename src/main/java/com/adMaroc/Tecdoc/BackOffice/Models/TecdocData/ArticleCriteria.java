@@ -1,4 +1,5 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData;
+;
 
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.ArticleCriteriaId;
@@ -31,10 +32,15 @@ public class ArticleCriteria {
     @Column(name="dl_nr")
     long dlnr;
 
-    @MapsId("artNr")
+    @MapsId("ArticleTableId")
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "artNr",
-                referencedColumnName = "artNr")
+    @JoinColumns({
+        @JoinColumn(name = "artNr",
+                referencedColumnName = "artNr"),
+        @JoinColumn(
+                name = "dLNr",
+                referencedColumnName = "dLNr")
+    })
     private ArticleTable articleTable;
     @MapsId("CriteriaId")
     @ManyToOne(fetch=FetchType.LAZY)

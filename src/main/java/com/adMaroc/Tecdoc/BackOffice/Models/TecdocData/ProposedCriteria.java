@@ -1,4 +1,5 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData;
+;
 
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.ProposedCriteriaId;
@@ -8,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Map;
 
 @Data
 @AllArgsConstructor

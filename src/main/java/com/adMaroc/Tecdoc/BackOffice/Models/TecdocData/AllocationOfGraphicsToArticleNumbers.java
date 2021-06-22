@@ -1,4 +1,5 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData;
+;
 
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.AllocationOfGraphicsToArticleNumbersId;
@@ -6,12 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Map;
 
 @Data
 @AllArgsConstructor
@@ -31,10 +28,15 @@ public class AllocationOfGraphicsToArticleNumbers {
     long dokumentenArt;
     long loschFlag;
     long sprachNr;
-    @MapsId("artNr")
+    @MapsId("ArticleTableId")
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "artNr",
-                referencedColumnName = "artNr")
+    @JoinColumns({
+        @JoinColumn(name = "artNr",
+                referencedColumnName = "artNr"),
+        @JoinColumn(
+                name = "dLNr",
+                referencedColumnName = "dLNr")
+    })
     private ArticleTable articleTable;
     @MapsId("GraphicsDocumentsId")
     @ManyToOne(fetch=FetchType.LAZY)

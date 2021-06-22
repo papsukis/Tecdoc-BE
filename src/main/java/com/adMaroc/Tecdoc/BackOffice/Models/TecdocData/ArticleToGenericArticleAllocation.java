@@ -1,4 +1,5 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData;
+;
 
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.ArticleToGenericArticleAllocationId;
@@ -23,10 +24,15 @@ public class ArticleToGenericArticleAllocation {
     long dLNr;
     long sA;
     long loschFlag;
-    @MapsId("artNr")
+    @MapsId("ArticleTableId")
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "artNr",
-                referencedColumnName = "artNr")
+    @JoinColumns({
+        @JoinColumn(name = "artNr",
+                referencedColumnName = "artNr"),
+        @JoinColumn(
+                name = "dLNr",
+                referencedColumnName = "dLNr")
+    })
     private ArticleTable articleTable;
     @MapsId("genArtNr")
     @ManyToOne(fetch=FetchType.LAZY)

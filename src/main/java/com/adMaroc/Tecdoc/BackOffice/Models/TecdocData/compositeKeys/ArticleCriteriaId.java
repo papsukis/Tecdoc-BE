@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -17,7 +16,7 @@ import java.util.Objects;
 @Embeddable
 public class ArticleCriteriaId implements Serializable{
 
-    @Column(name="artnr")
+    @Column(name="artNr")
     String artNr;
     @Column(name="sortnr")
     long sortNr;

@@ -3,8 +3,8 @@ package com.adMaroc.Tecdoc.BackOffice.Services;
 import com.adMaroc.Tecdoc.BackOffice.Models.EntityWrapper;
 import com.adMaroc.Tecdoc.BackOffice.Models.FTP_Status;
 import com.adMaroc.Tecdoc.BackOffice.Models.TableSaveLog;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.*;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.*;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.*;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.*;
 import com.adMaroc.Tecdoc.BackOffice.Utils.JsonReader;
 import com.adMaroc.Tecdoc.Security.Exceptions.InternalServerException;
 import lombok.extern.slf4j.Slf4j;
@@ -1087,7 +1087,6 @@ public class TecdocDataService {
             ftpLogService.updateTableSaveLog(saveLog, (long)savedRows.get());
         }
 
-
         log.info("table number : {} saved , {} rows",wrapper.getTableNumber(),saveLog.getTotalSavedRows());
         return saveLog;
     }
@@ -1507,7 +1506,7 @@ public class TecdocDataService {
                     ((PriceInformation)tmp)
                             .setArticleTable(
                                     tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
-                                            ((PriceInformation) tmp).getId().getArtNr()
+                                            ((PriceInformation) tmp).getId().getArtNr(),((PriceInformation) tmp).getdLNr()
                                     )
                             );
                         if(((PriceInformation) tmp).getArticleTable()==null)
@@ -1523,7 +1522,7 @@ public class TecdocDataService {
                             );
                     ((ArticleCountryRestrictions) tmp).setArticleTable(
                             tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
-                                    ((ArticleCountryRestrictions) tmp).getId().getArtNr()
+                                    ((ArticleCountryRestrictions) tmp).getId().getArtNr(),((ArticleCountryRestrictions) tmp).getdLNr()
                             )
                     );
                     if(((ArticleCountryRestrictions) tmp).getArticleTable()==null ||((ArticleCountryRestrictions) tmp).getCountryTable()==null)
@@ -1534,7 +1533,7 @@ public class TecdocDataService {
                     ((ReferenceNumbers)tmp)
                             .setArticleTable(
                                     tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
-                                            ((ReferenceNumbers) tmp).getId().getArtNr()
+                                            ((ReferenceNumbers) tmp).getId().getArtNr(),((ReferenceNumbers) tmp).getdLNr()
                                     )
                             );
                     ((ReferenceNumbers)tmp)
@@ -1549,7 +1548,7 @@ public class TecdocDataService {
                 ((SupersedingArticles)tmp)
                         .setArticleTable(
                                 tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
-                                        ((SupersedingArticles) tmp).getId().getArtNr()
+                                        ((SupersedingArticles) tmp).getId().getArtNr(),((SupersedingArticles) tmp).getdLNr()
                                 )
                         );
                 return entity;
@@ -1558,7 +1557,7 @@ public class TecdocDataService {
                     ((PartsLists)tmp)
                             .setArticleTable(
                                     tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
-                                            ((PartsLists) tmp).getId().getArtNr()
+                                            ((PartsLists) tmp).getId().getArtNr(),((PartsLists) tmp).getdLNr()
                                     )
                             );
                     ((PartsLists) tmp)
@@ -1580,7 +1579,7 @@ public class TecdocDataService {
                     ((ArticleInformation)tmp)
                             .setArticleTable(
                                     tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
-                                            ((ArticleInformation) tmp).getId().getArtNr()
+                                            ((ArticleInformation) tmp).getId().getArtNr(),((ArticleInformation) tmp).getdLNr()
                                     )
                             );
                     ((ArticleInformation) tmp).setTextModules(
@@ -1596,7 +1595,7 @@ public class TecdocDataService {
                     ((TradeNumbers)tmp)
                             .setArticleTable(
                                     tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
-                                            ((TradeNumbers) tmp).getId().getArtNr()
+                                            ((TradeNumbers) tmp).getId().getArtNr(),((TradeNumbers) tmp).getdLNr()
                                     )
                             );
                     TradeNumbersId id=((TradeNumbers)tmp).getId();
@@ -1611,7 +1610,7 @@ public class TecdocDataService {
                     ((PartsListCritera)tmp)
                             .setArticleTable(
                                     tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
-                                            ((PartsListCritera) tmp).getId().getArtNr()
+                                            ((PartsListCritera) tmp).getId().getArtNr(),((PartsListCritera) tmp).getdLNr()
                                     )
                             );
                     ((PartsListCritera) tmp).setCriteriaTable(
@@ -1636,7 +1635,7 @@ public class TecdocDataService {
                     ((EAN)tmp)
                             .setArticleTable(
                                     tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
-                                            ((EAN) tmp).getId().getArtNr()
+                                            ((EAN) tmp).getId().getArtNr(),((EAN) tmp).getdLNr()
                                     )
                             );
 
@@ -1646,7 +1645,7 @@ public class TecdocDataService {
                     ((ArticleCriteria)tmp)
                             .setArticleTable(
                                     tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
-                                            ((ArticleCriteria) tmp).getId().getArtNr()
+                                            ((ArticleCriteria) tmp).getId().getArtNr(),((ArticleCriteria) tmp).getdLNr()
                                     )
                             );
                     ((ArticleCriteria) tmp)
@@ -1664,7 +1663,7 @@ public class TecdocDataService {
                     ((ArticleToGenericArticleAllocation)tmp)
                             .setArticleTable(
                                     tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
-                                            ((ArticleToGenericArticleAllocation) tmp).getId().getArtNr()
+                                            ((ArticleToGenericArticleAllocation) tmp).getId().getArtNr(),((ArticleToGenericArticleAllocation) tmp).getdLNr()
                                     )
                             );
                     ((ArticleToGenericArticleAllocation) tmp).setGenericArticles(
@@ -1680,7 +1679,7 @@ public class TecdocDataService {
                     ((CountrySpecificArticleData)tmp)
                             .setArticleTable(
                                     tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
-                                            ((CountrySpecificArticleData) tmp).getId().getArtNr()
+                                            ((CountrySpecificArticleData) tmp).getId().getArtNr(),((CountrySpecificArticleData) tmp).getdLNr()
                                     )
                             );
                     if(((CountrySpecificArticleData) tmp).getArticleTable()==null )
@@ -1691,7 +1690,7 @@ public class TecdocDataService {
                     ((PartsListsCountryRestrictions)tmp)
                             .setArticleTable(
                                     tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
-                                            ((PartsListsCountryRestrictions) tmp).getId().getArtNr()
+                                            ((PartsListsCountryRestrictions) tmp).getId().getArtNr(),((PartsListsCountryRestrictions) tmp).getdLNr()
                                     )
                             );
                     ((PartsListsCountryRestrictions) tmp).setPartsLists(
@@ -1718,7 +1717,7 @@ public class TecdocDataService {
                             .setArticleTable(
                                     tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
                                             ((AllocationOfPartsListCoordinatesToContextSensitiveGraphics) tmp).getId()
-                                            .getArtNr()
+                                            .getArtNr(),((AllocationOfPartsListCoordinatesToContextSensitiveGraphics) tmp).getdLNr()
                                     )
                             );
                     ((AllocationOfPartsListCoordinatesToContextSensitiveGraphics) tmp)
@@ -1751,7 +1750,7 @@ public class TecdocDataService {
                     ((AccessoryLists)tmp)
                             .setArticleTable(
                                     tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
-                                            ((AccessoryLists) tmp).getId().getArtNr()
+                                            ((AccessoryLists) tmp).getId().getArtNr(),((AccessoryLists) tmp).getdLNr()
                                     )
                             );
                     ((AccessoryLists) tmp).setGenericArticles(
@@ -1820,7 +1819,7 @@ public class TecdocDataService {
                     ((AllocationOfGraphicsToArticleNumbers)tmp)
                             .setArticleTable(
                                     tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
-                                            ((AllocationOfGraphicsToArticleNumbers) tmp).getId().getArtNr()
+                                            ((AllocationOfGraphicsToArticleNumbers) tmp).getId().getArtNr(),((AllocationOfGraphicsToArticleNumbers) tmp).getdLNr()
                                     )
                             );
                     ((AllocationOfGraphicsToArticleNumbers) tmp)
@@ -1886,7 +1885,7 @@ public class TecdocDataService {
                     tmp=entity;
                     ((AllocationOfCriteriaToTheSearchStructure)tmp)
                             .setCriteriaTable(
-                                            tecdocDataService.tecdocCustomRepository.findCriteriaTableByKritNr(((PartsListCritera) tmp).getKritNr())
+                                            tecdocDataService.tecdocCustomRepository.findCriteriaTableByKritNr(((AllocationOfCriteriaToTheSearchStructure) tmp).getId().getKritNr())
                                     );
                     ((AllocationOfCriteriaToTheSearchStructure) tmp).setGenericArticles(
                             tecdocDataService.tecdocCustomRepository.findGenericArticlesByGenArtNr(
@@ -2005,7 +2004,7 @@ public class TecdocDataService {
                     tmp=entity;
                     ((MandatoryCriteria)tmp)
                             .setCriteriaTable(
-                                    tecdocDataService.tecdocCustomRepository.findCriteriaTableByKritNr(((PartsListCritera) tmp).getKritNr())
+                                    tecdocDataService.tecdocCustomRepository.findCriteriaTableByKritNr(((MandatoryCriteria) tmp).getKritNr())
                             );
                     ((MandatoryCriteria) tmp).setGenericArticles(
                             tecdocDataService.tecdocCustomRepository.findGenericArticlesByGenArtNr(
@@ -2019,7 +2018,7 @@ public class TecdocDataService {
                     tmp=entity;
                     ((ProposedCriteria)tmp)
                             .setCriteriaTable(
-                                    tecdocDataService.tecdocCustomRepository.findCriteriaTableByKritNr(((PartsListCritera) tmp).getKritNr())
+                                    tecdocDataService.tecdocCustomRepository.findCriteriaTableByKritNr(((ProposedCriteria) tmp).getKritNr())
                             );
                     ((ProposedCriteria) tmp).setGenericArticles(
                             tecdocDataService.tecdocCustomRepository.findGenericArticlesByGenArtNr(
@@ -2055,7 +2054,7 @@ public class TecdocDataService {
                     ((ArticleLinkage)tmp)
                             .setArticleTable(
                                     tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
-                                            ((ArticleLinkage) tmp).getId().getArtNr()
+                                            ((ArticleLinkage) tmp).getId().getArtNr(),((ArticleLinkage) tmp).getdLNr()
                                     )
                             );
                     ((ArticleLinkage) tmp)
@@ -2070,7 +2069,7 @@ public class TecdocDataService {
                     ((SearchInformationTexts)tmp)
                             .setArticleTable(
                                     tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
-                                            ((SearchInformationTexts) tmp).getId().getArtNr()
+                                            ((SearchInformationTexts) tmp).getId().getArtNr(),((SearchInformationTexts) tmp).getdLNr()
                                     )
                             );
                     ((SearchInformationTexts) tmp)
@@ -2092,7 +2091,7 @@ public class TecdocDataService {
                     ((LinkagesNotToBeDisplayedInCertainCountries)tmp)
                             .setArticleTable(
                                     tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
-                                            ((LinkagesNotToBeDisplayedInCertainCountries) tmp).getId().getArtNr()
+                                            ((LinkagesNotToBeDisplayedInCertainCountries) tmp).getId().getArtNr(),((LinkagesNotToBeDisplayedInCertainCountries) tmp).getdLNr()
                                     )
                             );
                     ((LinkagesNotToBeDisplayedInCertainCountries) tmp)
@@ -2112,7 +2111,7 @@ public class TecdocDataService {
                     ((CountryRestrictionOfTheLinkage)tmp)
                             .setArticleTable(
                                     tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
-                                            ((CountryRestrictionOfTheLinkage) tmp).getId().getArtNr()
+                                            ((CountryRestrictionOfTheLinkage) tmp).getId().getArtNr(),((CountryRestrictionOfTheLinkage) tmp).getdLNr()
                                     )
                             );
                     ((CountryRestrictionOfTheLinkage) tmp)
@@ -2133,7 +2132,7 @@ public class TecdocDataService {
                     ((SortingOfTheLinkage)tmp)
                             .setArticleTable(
                                     tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
-                                            ((SortingOfTheLinkage) tmp).getId().getArtNr()
+                                            ((SortingOfTheLinkage) tmp).getId().getArtNr(),((SortingOfTheLinkage) tmp).getdLNr()
                                     )
                             );
                     ((SortingOfTheLinkage) tmp)
@@ -2150,7 +2149,7 @@ public class TecdocDataService {
                     ((LinkageAttributes)tmp)
                             .setArticleTable(
                                     tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
-                                            ((LinkageAttributes) tmp).getId().getArtNr()
+                                            ((LinkageAttributes) tmp).getId().getArtNr(),((LinkageAttributes) tmp).getdLNr()
                                     )
                             );
                     ((LinkageAttributes) tmp)
@@ -2187,7 +2186,7 @@ public class TecdocDataService {
                         ((LinkageDependentGraphicsDocuments) tmp)
                                 .setArticleTable(
                                         tecdocDataService.tecdocCustomRepository.findArticleTableByArtNr(
-                                                ((LinkageDependentGraphicsDocuments) tmp).getId().getArtNr()
+                                                ((LinkageDependentGraphicsDocuments) tmp).getId().getArtNr(),((LinkageDependentGraphicsDocuments) tmp).getdLNr()
                                         )
                                 );
                         ((LinkageDependentGraphicsDocuments) tmp)

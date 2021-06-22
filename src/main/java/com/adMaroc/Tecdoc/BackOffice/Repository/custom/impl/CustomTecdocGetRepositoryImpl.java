@@ -1,13 +1,12 @@
 package com.adMaroc.Tecdoc.BackOffice.Repository.custom.impl;
 
-import com.adMaroc.Tecdoc.BackOffice.DTO.Linkage.LinkageIdDTO;
-import com.adMaroc.Tecdoc.BackOffice.DTO.ManufacturerList;
-import com.adMaroc.Tecdoc.BackOffice.DTO.SearchDTO;
+import com.adMaroc.Tecdoc.BackOffice.DTO.Linkage.*;
+import com.adMaroc.Tecdoc.BackOffice.DTO.*;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.*;
 import com.adMaroc.Tecdoc.BackOffice.Models.Brand;
 import com.adMaroc.Tecdoc.BackOffice.Models.BrandList;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.*;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.*;
 import com.adMaroc.Tecdoc.BackOffice.Repository.custom.CustomTecdocGetRepository;
 import com.adMaroc.Tecdoc.BackOffice.Repository.custom.TecdocCustomRepository;
 import com.adMaroc.Tecdoc.BackOffice.Services.TecdocBuilder;
@@ -311,8 +310,10 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
         JPAQuery<ArticleDTO> jpaQuery=query
                 .select(Projections.constructor(ArticleDTO.class,article))
                 .from(article)
-                .where(article.artNr.in(
-                        JPAExpressions.select(partsLists.partNr).from(partsLists).where(partsLists.id.artNr.eq(artNr))
+                .where(article.id.artNr.in(
+                        JPAExpressions.select(partsLists.partNr).from(partsLists).where(partsLists.id.artNr.eq(artNr)
+                        )
+
                 ));
 
         return jpaQuery.fetch();
@@ -345,6 +346,18 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
     }
     @Cacheable("article")
     @Override
+    public ArticleDTO getArticle(String artNr, long dlnr){
+        query = new JPAQueryFactory(em);
+        QArticleTable articleTable=QArticleTable.articleTable;
+        JPAQuery<ArticleDTO> jpaQuery=query
+                .select(Projections.constructor(ArticleDTO.class,articleTable))
+                .distinct()
+                .from(articleTable)
+                .where(articleTable.id.artNr.eq(artNr).and(articleTable.id.dLNr.eq(dlnr)));
+        return jpaQuery.fetchOne();
+    }
+    @Cacheable("article")
+    @Override
     public ArticleDTO getArticle(String artNr){
         query = new JPAQueryFactory(em);
         QArticleTable articleTable=QArticleTable.articleTable;
@@ -352,7 +365,7 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
                 .select(Projections.constructor(ArticleDTO.class,articleTable))
                 .distinct()
                 .from(articleTable)
-                .where(articleTable.artNr.eq(artNr));
+                .where(articleTable.id.artNr.eq(artNr));
         return jpaQuery.fetchOne();
     }
     @Override
@@ -508,7 +521,7 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
                 .from(articleToGenericArticleAllocation)
                 .join(articleToGenericArticleAllocation.genericArticles,genericArticles)
                 .on(articleToGenericArticleAllocation.id.artNr.eq(artNr))
-                .where(articleToGenericArticleAllocation.dLNr.eq(articleToGenericArticleAllocation.articleTable.dLNr));
+                .where(articleToGenericArticleAllocation.dLNr.eq(articleToGenericArticleAllocation.articleTable.id.dLNr));
 
         return jpaQuery.fetch();
     }
@@ -589,7 +602,7 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
         JPAQuery<EAN> jpaQuery=query
                 .selectFrom(qean)
                 .join(qean.articleTable,article)
-                .on(qean.id.artNr.eq(article.artNr))
+                .on(qean.id.artNr.eq(article.id.artNr).and(qean.dLNr.eq(article.id.dLNr)))
                 .where(qean.id.artNr.eq(artNr));
         return jpaQuery.fetch().stream().map(EANDTO::new).collect(Collectors.toList());
     }
@@ -624,7 +637,7 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
                 .from(articleCriteria)
                 .join(articleCriteria.articleTable,articleTable)
                 .join(articleCriteria.criteriaTable,criteria)
-                .on(articleTable.artNr.eq(articleCriteria.id.artNr))
+                .on(articleTable.id.artNr.eq(articleCriteria.id.artNr))
                 .where(articleCriteria.id.artNr.eq(artNr));
 
         return jpaQuery.fetch();
@@ -858,7 +871,7 @@ public class CustomTecdocGetRepositoryImpl implements CustomTecdocGetRepository 
         JPAQuery<ArticleDTO> jpaQuery=query.
                 select(Projections.constructor(ArticleDTO.class,articleTable))
                 .from(articleTable)
-                .where(articleTable.artNr.eq(artNr));
+                .where(articleTable.id.artNr.eq(artNr));
 
         return jpaQuery.fetchFirst();
     }

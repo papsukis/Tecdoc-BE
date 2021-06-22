@@ -1,4 +1,5 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData;
+;
 
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.AccessoryListsCountryRestrictionsId;
@@ -8,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Map;
 
 @Data
@@ -23,10 +23,15 @@ public class AccessoryListsCountryRestrictions {
     AccessoryListsCountryRestrictionsId id;
     private long dLNr;
     private long sA;
-    @MapsId("artNr")
+    @MapsId("ArticleTableId")
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "artNr",
-            referencedColumnName = "artNr")
+    @JoinColumns({
+        @JoinColumn(name = "artNr",
+                referencedColumnName = "artNr"),
+        @JoinColumn(
+                name = "dLNr",
+                referencedColumnName = "dLNr")
+    })
     private ArticleTable articleTable;
     @MapsId("AccessoryListsId")
     @ManyToOne(fetch=FetchType.LAZY)

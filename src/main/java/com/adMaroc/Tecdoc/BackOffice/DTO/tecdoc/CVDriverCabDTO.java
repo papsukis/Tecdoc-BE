@@ -1,7 +1,7 @@
 package com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc;
 
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.VehicleModelSeriesCDTO;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.CVDriverCabs;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.CVDriverCabs;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,5 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData;
+;
 
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.CountryRestrictionsForTheAllocationOfCVToIDNumbersId;
@@ -15,7 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="t_539_country_restrictions_for_the_allocation_of_cv_to_id_numbers")
+@Table(name="t_539_cr_for_the_allocation_of_cv_to_id_numbers")
 public class CountryRestrictionsForTheAllocationOfCVToIDNumbers {
 
     @EmbeddedId

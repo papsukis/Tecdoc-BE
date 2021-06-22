@@ -1,4 +1,5 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData;
+;
 
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.SearchInformationTextsId;
@@ -8,8 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Map;
 
 @Data
 @AllArgsConstructor
@@ -29,10 +28,15 @@ public class SearchInformationTexts {
     String tBSNr;
     long exclude;
     long loschFlag;
-    @MapsId("artNr")
+    @MapsId("ArticleTableId")
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "artNr")
-    private ArticleTable articleTable;
+    @JoinColumns({
+        @JoinColumn(name = "artNr",
+                referencedColumnName = "artNr"),
+        @JoinColumn(
+                name = "dLNr",
+                referencedColumnName = "dLNr")
+    })    private ArticleTable articleTable;
     @MapsId("genArtNr")
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "genArtNr")

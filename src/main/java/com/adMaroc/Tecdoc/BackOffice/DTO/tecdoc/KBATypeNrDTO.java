@@ -1,6 +1,6 @@
 package com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc;
 
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.KBATypeAllocation;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.KBATypeAllocation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

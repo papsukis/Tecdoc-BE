@@ -4,25 +4,18 @@ import com.adMaroc.Tecdoc.BackOffice.Models.*;
 import com.adMaroc.Tecdoc.BackOffice.Repository.logs.ManufacturerSaveLogRepository;
 import com.adMaroc.Tecdoc.BackOffice.Repository.logs.SaveTaskLogRepository;
 import com.adMaroc.Tecdoc.BackOffice.Repository.logs.TableSaveLogRepository;
-import com.adMaroc.Tecdoc.BackOffice.Utils.HibernateUtil;
 import com.adMaroc.Tecdoc.BackOffice.Utils.JsonReader;
-import com.adMaroc.Tecdoc.Security.Models.User;
-import com.adMaroc.Tecdoc.Security.Models.UserLog;
 import com.adMaroc.Tecdoc.Security.Repository.UserLogRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.swing.table.TableRowSorter;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -42,8 +35,6 @@ public class FTPLogService {
 //    private HibernateUtil hibernateUtil=new HibernateUtil();
 
     public SaveTaskLog startTask(List<UnCompressAndSaveRequest> req, String user,Actions action,String ip){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
 
         SaveTaskLog currentTask=new SaveTaskLog();
         currentTask.setStartTime(new Date());
@@ -74,13 +65,9 @@ public class FTPLogService {
                 ManufacturerSaveLog tmp=new ManufacturerSaveLog();
                 tmp.setStartTime(new Date());
                 tmp.setStatus(FTP_Status.PENDING.label);
-                tmp.setManufacturerCode(Long.parseLong(r.getFileName().substring(0,4)));
-                for(Brand b:brands.getBrandList()){
-                    if(tmp.getManufacturerCode()==b.getBrandNumber()){
-                        tmp.setManufacturerName(b.getBrandName());
-                        break;
-                    }
-                }
+                tmp.setManufacturerCode((long) 9999);
+                tmp.setManufacturerName("REFERENCE_DATA");
+                tmp.setFileName(r.getFileName());
                 currentManufacturers.add(tmp);
             }
         }
@@ -88,7 +75,6 @@ public class FTPLogService {
         ;
         for(ManufacturerSaveLog man:currentManufacturers){
             man.setSaveTaskLog(currentTask);
-            log.info(man.toString());
         }
         currentManufacturers=manufacturerLog.saveAll(currentManufacturers);
         currentTask.setManufacturerSaveLogs(currentManufacturers);
@@ -127,19 +113,16 @@ public class FTPLogService {
         return tmpMan;
     }
     public ManufacturerSaveLog updateManufacturerSaveLog(ManufacturerSaveLog manufacturerSaveLog,FTP_Status status){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
 
         ManufacturerSaveLog tmpMan=manufacturerLog.getOne(manufacturerSaveLog.getId());
         tmpMan.setStatus(status.label);
         tmpMan.setSaveTaskLog(getSaveTask(tmpMan.getSaveTaskLog().getId()));
         ManufacturerSaveLog tmp=manufacturerLog.saveAndFlush(tmpMan);
-        session.getTransaction().commit();
-        session.close();
         return tmp;
     }
 
     public ManufacturerSaveLog prepareSaving(ManufacturerSaveLog man,List<String> files) throws IOException {
+        ManufacturerSaveLog m=getManufacturerLog(man.getId());
         List<TableSaveLog> currentTableSavesLogs = new ArrayList<>();
         for(String file :files){
             TableSaveLog tmp=new TableSaveLog();
@@ -149,11 +132,13 @@ public class FTPLogService {
             tmp.setTableName(fs.getTableName());
             tmp.setTableNumber((long) fs.getTableNumber());
             tmp.setFileName(file);
-            tmp.setFtpSaveLog(getManufacturerLog(man.getId()));
-            currentTableSavesLogs.add(tableSaveLog.save(tmp));
+            tmp.setFtpSaveLog(m);
+            currentTableSavesLogs.add(tmp);
         }
-        man.setTableSaveLog(currentTableSavesLogs);
-        return man;
+        tableSaveLog.saveAll(currentTableSavesLogs);
+        m.setTableSaveLog(currentTableSavesLogs);
+
+        return manufacturerLog.save(m);
 
     }
     public List<SaveTaskLog> getAllTasks(){

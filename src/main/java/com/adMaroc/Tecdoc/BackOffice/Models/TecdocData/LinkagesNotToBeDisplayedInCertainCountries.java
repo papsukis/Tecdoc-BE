@@ -1,4 +1,5 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData;
+;
 
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.LinkagesNotToBeDisplayedInCertainCountriesId;
@@ -25,10 +26,15 @@ public class LinkagesNotToBeDisplayedInCertainCountries {
     long sA;
     long loschFlag;
 
-    @MapsId("artNr")
+    @MapsId("ArticleTableId")
     @ManyToOne
-    @JoinColumn(name = "artNr",
-                referencedColumnName = "artNr")
+    @JoinColumns({
+        @JoinColumn(name = "artNr",
+                referencedColumnName = "artNr"),
+        @JoinColumn(
+                name = "dLNr",
+                referencedColumnName = "dLNr")
+    })
     private ArticleTable articleTable;
     @MapsId("lKZ")
     @ManyToOne

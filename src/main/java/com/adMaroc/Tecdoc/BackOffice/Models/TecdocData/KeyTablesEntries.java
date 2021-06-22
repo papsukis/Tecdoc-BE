@@ -1,4 +1,5 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData;
+;
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.KeyTablesEntriesId;
 import lombok.AllArgsConstructor;
@@ -7,8 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Map;
 
 @Data
 @AllArgsConstructor

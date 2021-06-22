@@ -1,7 +1,7 @@
 package com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc;
 
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.CVChassis;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.CVSuspension;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.CVChassis;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.CVSuspension;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

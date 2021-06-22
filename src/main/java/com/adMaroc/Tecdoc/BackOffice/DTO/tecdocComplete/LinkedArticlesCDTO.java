@@ -1,7 +1,7 @@
 package com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete;
 
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.ArticleLinkage;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.ArticleLinkage;
 import javafx.scene.chart.Axis;
 import lombok.AllArgsConstructor;
 import lombok.Data;

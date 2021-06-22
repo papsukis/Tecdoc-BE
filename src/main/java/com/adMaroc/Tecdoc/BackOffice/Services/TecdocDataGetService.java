@@ -46,14 +46,14 @@ public class TecdocDataGetService {
         log.info("creating tree");
         for(KeyTableDTO keytable : keyTableDTOS){
             if(keytable.getKey().contains("1") || keytable.getKey().contains("2"))
-           tree.add(new SearchStructureTree(keytable));
+                tree.add(new SearchStructureTree(keytable));
         }
         for(SearchStructureDTO node: nodes){
             for(SearchStructureTree tree1:tree){
-               if(tree1.getProductSection().getKey().contains(node.getTreeType().getKey())){
-                   tree1.getTree().add(node);
-               }
-           }
+                if(tree1.getProductSection().getKey().contains(node.getTreeType().getKey())){
+                    tree1.getTree().add(node);
+                }
+            }
         }
         log.info("tree created");
         return tree;

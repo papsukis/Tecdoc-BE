@@ -1,13 +1,13 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData;
+;
 
+import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.ArticleTableId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Map;
 
 @Data
 @AllArgsConstructor
@@ -17,9 +17,9 @@ import java.util.Map;
 @Table(name="t_200_article_table")
 public class ArticleTable {
 
-    @Id
-    String artNr;
-    long dLNr;
+    @EmbeddedId
+    ArticleTableId id;
+//    long dLNr;
     long sA;
     String bezNr;
     long kZSB;
@@ -42,30 +42,23 @@ public class ArticleTable {
                     name = "sprachNr",
                     referencedColumnName = "sprachNr")})
     private LanguageDescriptions languageDescriptions;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "articleTable")
-    private List<ReferenceNumbers> referenceNumbers;
-    @OneToMany(fetch=FetchType.LAZY,
-            cascade=CascadeType.ALL,
-            mappedBy = "articleTable")
-    private List<ArticleToGenericArticleAllocation> allocations;
 
-    public String getArtNr() {
-        return artNr;
+
+    public ArticleTableId getId() {
+        return id;
     }
 
-    public void setArtNr(String artNr) {
-        this.artNr = artNr;
+    public void setId(ArticleTableId id) {
+        this.id = id;
     }
-
-    public long getdLNr() {
-        return dLNr;
-    }
-
-    public void setdLNr(long dLNr) {
-        this.dLNr = dLNr;
-    }
+//
+//    public long getdLNr() {
+//        return dLNr;
+//    }
+//
+//    public void setdLNr(long dLNr) {
+//        this.dLNr = dLNr;
+//    }
 
     public long getsA() {
         return sA;

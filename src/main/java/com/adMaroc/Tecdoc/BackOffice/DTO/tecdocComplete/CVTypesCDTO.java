@@ -1,7 +1,7 @@
 package com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete;
 
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.CVTypes;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.CVTypes;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;
 import lombok.Data;

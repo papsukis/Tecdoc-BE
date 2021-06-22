@@ -31,8 +31,8 @@ public class ManufacturerSaveLog {
 
     @OneToMany(
          mappedBy = "ftpSaveLog",
-            fetch = FetchType.EAGER,
-         orphanRemoval = true)
+            fetch = FetchType.EAGER
+         )
     private List<TableSaveLog> tableSaveLog;
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)

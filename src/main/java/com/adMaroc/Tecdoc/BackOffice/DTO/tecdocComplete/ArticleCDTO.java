@@ -2,7 +2,7 @@ package com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete;
 
 import com.adMaroc.Tecdoc.BackOffice.DTO.Linkage.LinkageResponse;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.*;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.ArticleTable;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.ArticleTable;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -39,8 +39,8 @@ public class ArticleCDTO {
     ManufacturerDTO manufacturer;
     @QueryProjection
     public ArticleCDTO(ArticleTable article) {
-        artNr = article.getArtNr();
-        dlnr=article.getdLNr();
+        artNr = article.getId().getArtNr();
+        dlnr=article.getId().getdLNr();
         articleDescription=article.getLanguageDescriptions()!=null?new DescriptionDTO(article.getLanguageDescriptions()):null;
         selfServingPack=article.getkZSB()==1;
         materialCertification=article.getkZMat()==1;

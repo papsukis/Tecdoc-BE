@@ -1,6 +1,6 @@
 package com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc;
 
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.CriteriaTable;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.CriteriaTable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;

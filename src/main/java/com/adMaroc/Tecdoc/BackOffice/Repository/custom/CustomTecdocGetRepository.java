@@ -56,6 +56,10 @@ public interface CustomTecdocGetRepository {
 
     List<Long> getGenArtByHernr(Long herNr);
 
+    @Cacheable("article")
+    ArticleDTO getArticle(String artNr, long dlnr);
+
+    @Cacheable("article")
     ArticleDTO getArticle(String artNr);
 
     @Transactional

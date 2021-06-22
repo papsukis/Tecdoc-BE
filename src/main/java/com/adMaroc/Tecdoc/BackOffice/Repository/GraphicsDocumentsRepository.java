@@ -1,7 +1,7 @@
 package com.adMaroc.Tecdoc.BackOffice.Repository;
 
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.GraphicsDocuments;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.GraphicsDocumentsId;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.GraphicsDocuments;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.GraphicsDocumentsId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

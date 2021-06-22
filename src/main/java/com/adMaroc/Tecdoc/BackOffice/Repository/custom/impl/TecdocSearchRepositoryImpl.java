@@ -4,13 +4,13 @@ import com.adMaroc.Tecdoc.BackOffice.DTO.SearchDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.SearchResponse;
 import com.adMaroc.Tecdoc.BackOffice.DTO.SearchType;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.ArticleDTO;
-import com.adMaroc.Tecdoc.BackOffice.DTO.tecdocComplete.ArticleCDTO;
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.*;
 import com.adMaroc.Tecdoc.BackOffice.Repository.custom.CustomTecdocSearchRepository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQuery;
@@ -55,8 +55,8 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
         {
             reference =search.getReferenceNumber().endsWith("*")?
                     Expressions.stringTemplate("replace({0},' ','')", referenceNumbers.refNr).containsIgnoreCase(search.getReferenceNumber().replace(" ","").substring(0,search.getReferenceNumber().replace(" ","").length()-1))
-                            .and(referenceNumbers.manufacturer.vGL.ne((long)1)) :
-                    Expressions.stringTemplate("replace({0},' ','')", referenceNumbers.refNr).eq(search.getReferenceNumber().replace(" ","")).and(referenceNumbers.manufacturer.vGL.ne((long)1));
+                             :
+                    Expressions.stringTemplate("replace({0},' ','')", referenceNumbers.refNr).eq(search.getReferenceNumber().replace(" ",""));
 //        .or(Expressions.stringTemplate("replace({0},' ','')", referenceNumbers.refNr).containsIgnoreCase(search.getReferenceNumber().replace(" ","").substring(0,search.getReferenceNumber().replace(" ","").length()-1)).and(manufacturer.vGL.ne((long)1)))
         }
         else{
@@ -68,7 +68,7 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
                 .where(
                         getFilters(search)
                                 .and(reference)
-                                .and(getNotLivrable(referenceNumbers.id.artNr))
+                                .and(getNotLivrable(referenceNumbers.id.artNr,referenceNumbers.dLNr))
 
                 )
                 .limit(search.getNbrPerPage())
@@ -91,8 +91,8 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
         {
             reference =search.getReferenceNumber().endsWith("*")?
                     Expressions.stringTemplate("replace({0},' ','')", referenceNumbers.refNr).containsIgnoreCase(search.getReferenceNumber().replace(" ","").substring(0,search.getReferenceNumber().replace(" ","").length()-1))
-                            .and(manufacturer.vGL.ne((long)1)) :
-                    Expressions.stringTemplate("replace({0},' ','')", referenceNumbers.refNr).eq(search.getReferenceNumber().replace(" ","")).and(manufacturer.vGL.ne((long)1));
+                            :
+                    Expressions.stringTemplate("replace({0},' ','')", referenceNumbers.refNr).eq(search.getReferenceNumber().replace(" ",""));
 //        .or(Expressions.stringTemplate("replace({0},' ','')", referenceNumbers.refNr).containsIgnoreCase(search.getReferenceNumber().replace(" ","").substring(0,search.getReferenceNumber().replace(" ","").length()-1)).and(manufacturer.vGL.ne((long)1)))
         }
         else{
@@ -102,12 +102,12 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
                 .select(Projections.constructor(ArticleDTO.class,article))
                 .from(referenceNumbers)
                 .join(referenceNumbers.articleTable,article)
-                .on(article.artNr.eq(referenceNumbers.refNr))
+                .on(article.id.artNr.eq(referenceNumbers.refNr))
 
                 .where(
                         getFilters(search)
                                 .and(reference)
-                                .and(getNotLivrable(article.artNr))
+                                .and(getNotLivrable(article.id.artNr,article.id.dLNr))
                 );
         return jpaQuery.fetch();
     }
@@ -119,8 +119,8 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
         if(search.getReferenceNumber()!=null)
         {
             reference =search.getReferenceNumber().endsWith("*")?
-                    Expressions.stringTemplate("replace({0},' ','')", article.artNr).containsIgnoreCase(search.getReferenceNumber().replace(" ","").substring(0,search.getReferenceNumber().replace(" ","").length()-1)) :
-                    Expressions.stringTemplate("replace({0},' ','')", article.artNr).eq(search.getReferenceNumber().replace(" ",""));
+                    Expressions.stringTemplate("replace({0},' ','')", article.id.artNr).containsIgnoreCase(search.getReferenceNumber().replace(" ","").substring(0,search.getReferenceNumber().replace(" ","").length()-1)) :
+                    Expressions.stringTemplate("replace({0},' ','')", article.id.artNr).eq(search.getReferenceNumber().replace(" ",""));
 //        .or(Expressions.stringTemplate("replace({0},' ','')", referenceNumbers.refNr).containsIgnoreCase(search.getReferenceNumber().replace(" ","").substring(0,search.getReferenceNumber().replace(" ","").length()-1)).and(manufacturer.vGL.ne((long)1)))
         }
         else{
@@ -129,13 +129,10 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
         JPAQuery<ArticleDTO> jpaQuery=query
                 .select(Projections.constructor(ArticleDTO.class,article))
                 .from(article)
-                .join(article.allocations,allocation)
-                .on(article.artNr.eq(allocation.id.artNr))
-
                 .where(
-                        getFilters(search).and(reference).and(getNotLivrable(allocation.id.artNr))
+                        getFilters(search).and(reference).and(getNotLivrable(article.id.artNr,article.id.dLNr))
                 )
-                .orderBy(allocation.id.genArtNr.asc(),article.artNr.asc());
+                .orderBy(article.id.artNr.asc());
 
 
         return jpaQuery.fetch();
@@ -150,8 +147,8 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
         if(search.getReferenceNumber()!=null)
         {
             reference =search.getReferenceNumber().endsWith("*")?
-                Expressions.stringTemplate("replace({0},' ','')", article.artNr).containsIgnoreCase(search.getReferenceNumber().replace(" ","").substring(0,search.getReferenceNumber().replace(" ","").length()-1)) :
-                Expressions.stringTemplate("replace({0},' ','')", article.artNr).eq(search.getReferenceNumber().replace(" ",""));
+                Expressions.stringTemplate("replace({0},' ','')", article.id.artNr).containsIgnoreCase(search.getReferenceNumber().replace(" ","").substring(0,search.getReferenceNumber().replace(" ","").length()-1)) :
+                Expressions.stringTemplate("replace({0},' ','')", article.id.artNr).eq(search.getReferenceNumber().replace(" ",""));
 //        .or(Expressions.stringTemplate("replace({0},' ','')", referenceNumbers.refNr).containsIgnoreCase(search.getReferenceNumber().replace(" ","").substring(0,search.getReferenceNumber().replace(" ","").length()-1)).and(manufacturer.vGL.ne((long)1)))
         }
         else{
@@ -160,14 +157,11 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
         JPAQuery<ArticleDTO> jpaQuery=query
                 .select(Projections.constructor(ArticleDTO.class,article))
                 .from(article)
-                .join(article.allocations,allocation)
-                .on(article.artNr.eq(allocation.id.artNr))
-
                 .where(
-                        getFilters(search).and(reference).and(getNotLivrable(article.artNr))
+                        getFilters(search).and(reference).and(getNotLivrable(article.id.artNr,article.id.dLNr))
                 )
                 .limit(search.getNbrPerPage())
-                .orderBy(allocation.id.genArtNr.asc(),article.artNr.asc())
+                .orderBy(article.id.artNr.asc())
                 .offset(search.getNbrPerPage()*(search.getPage()-1));
 
         tmp.setSearchType(search.getType());
@@ -179,9 +173,9 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
     }
 
 
-    private BooleanExpression getNotLivrable(StringPath artNr){
+    private BooleanExpression getNotLivrable(StringPath artNr, NumberPath dlnr){
         JPQLQuery<Long> artStat=JPAExpressions.select(articleData.artStat).from(articleData)
-                .where(articleData.id.artNr.eq(artNr));
+                .where(articleData.id.artNr.eq(artNr).and(articleData.dLNr.eq(dlnr)));
         return  artStat.ne((long) 2).and(artStat.ne((long) 9))
                 ;
 
@@ -258,7 +252,7 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
                 .where(articleLinkage.id.vknZielArt.eq((long) 2).and(
                         articleLinkage.id.vknZielNr.in(search.getKtypNrList().stream().map(Long::valueOf).collect(Collectors.toList()))
                                 .and(getFilters(search))
-                        .and(getNotLivrable(articleLinkage.id.artNr))
+                        .and(getNotLivrable(articleLinkage.id.artNr,articleLinkage.dLNr))
                 ))
                 .orderBy(articleLinkage.id.genArtNr.asc(),articleLinkage.id.artNr.asc(),articleLinkage.id.lfdNr.asc())
                 ;
@@ -278,7 +272,7 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
                 .where(articleLinkage.id.vknZielArt.eq((long) 2).and(
                         articleLinkage.id.vknZielNr.in(search.getKtypNrList().stream().map(Long::valueOf).collect(Collectors.toList()))
                         .and(getFilters(search))
-                        .and(getNotLivrable(articleLinkage.id.artNr))
+                        .and(getNotLivrable(articleLinkage.id.artNr,articleLinkage.dLNr))
 
                 ))
                 .orderBy(articleLinkage.id.genArtNr.asc(),articleLinkage.id.artNr.asc(),articleLinkage.id.lfdNr.asc())
@@ -307,7 +301,7 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
                 .from(allocation)
                 .where(allocation.id.genArtNr.in(search.getGenArtNr())
                         .and(dlnr)
-                        .and(getNotLivrable(allocation.id.artNr))
+                        .and(getNotLivrable(allocation.id.artNr,allocation.dLNr))
 
                 )
                 .orderBy(allocation.id.genArtNr.asc(),allocation.id.artNr.asc())
@@ -333,7 +327,7 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
                 .from(allocation)
                 .where(allocation.id.genArtNr.in(search.getGenArtNr())
                         .and(dlnr)
-                        .and(getNotLivrable(allocation.id.artNr))
+                        .and(getNotLivrable(allocation.id.artNr,allocation.dLNr))
 
                 )
                 .orderBy(allocation.id.genArtNr.asc(),allocation.id.artNr.asc());
@@ -350,7 +344,7 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
                 .where(articleLinkage.id.vknZielArt.eq((long) 16).and(
                         articleLinkage.id.vknZielNr.in(search.getNtypNrList().stream().map(Long::valueOf).collect(Collectors.toList()))
                                 .and(getFilters(search))
-                                .and(getNotLivrable(articleLinkage.id.artNr))
+                                .and(getNotLivrable(articleLinkage.id.artNr,articleLinkage.dLNr))
 
                 ))
                 .orderBy(articleLinkage.id.genArtNr.asc(),articleLinkage.id.artNr.asc(),articleLinkage.id.lfdNr.asc())
@@ -373,7 +367,7 @@ public class TecdocSearchRepositoryImpl implements CustomTecdocSearchRepository 
                 .where(articleLinkage.id.vknZielArt.eq((long) 16).and(
                         articleLinkage.id.vknZielNr.in(search.getNtypNrList().stream().map(Long::valueOf).collect(Collectors.toList()))
                                 .and(getFilters(search))
-                                .and(getNotLivrable(articleLinkage.id.artNr))
+                                .and(getNotLivrable(articleLinkage.id.artNr,articleLinkage.dLNr))
 
                 ))
                 .orderBy(articleLinkage.id.genArtNr.asc(),articleLinkage.id.artNr.asc(),articleLinkage.id.lfdNr.asc());

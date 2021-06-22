@@ -4,7 +4,7 @@
   "length": 53,
   "contents":  "Main Article data table" ,
   "sorting": "artNr",
-  "primaryKey": "artNr",
+  "primaryKey": "artNr,dLNr",
   "deltaKey": "artNr",
   "className" : "ArticleTable",
   "attr": [

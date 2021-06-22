@@ -1,4 +1,5 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData;
+;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

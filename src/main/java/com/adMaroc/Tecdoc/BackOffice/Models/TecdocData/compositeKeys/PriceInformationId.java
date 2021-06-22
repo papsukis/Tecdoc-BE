@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Index;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -12,7 +11,7 @@ import java.util.Objects;
 @Embeddable
 public class PriceInformationId implements Serializable{
 
-    @Column(name="artNr",length = 100 )
+    @Column(name="artNr")
     String artNr;
     @Column(name="prart",length = 100)
     long prArt;

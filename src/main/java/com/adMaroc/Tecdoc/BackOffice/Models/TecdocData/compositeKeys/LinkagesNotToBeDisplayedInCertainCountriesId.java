@@ -11,7 +11,7 @@ import java.util.Objects;
 @Embeddable
 public class LinkagesNotToBeDisplayedInCertainCountriesId implements Serializable {
 
-    @Column(name="artnr")
+    @Column(name="artNr")
     String artNr;
     @Column(name="genartnr")
     long genArtNr;

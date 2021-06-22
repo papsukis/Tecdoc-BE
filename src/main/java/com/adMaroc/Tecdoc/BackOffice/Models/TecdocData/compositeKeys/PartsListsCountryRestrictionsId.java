@@ -6,11 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
+
 @Data
 @Embeddable
 public class PartsListsCountryRestrictionsId implements Serializable {
 
-    @Column(name="artnr")
+    @Column(name="artNr")
     String artNr;
     @Column(name="lfdnr")
     long lfdNr;

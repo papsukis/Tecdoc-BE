@@ -3,7 +3,8 @@ package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,7 +12,7 @@ import java.util.Objects;
 @Embeddable
 public class SortingOfTheLinkageId implements Serializable {
 
-    @Column(name="artnr")
+    @Column(name="artNr")
     String artNr;
     @Column(name="genartnr")
     long genArtNr;

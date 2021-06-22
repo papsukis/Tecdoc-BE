@@ -3,7 +3,7 @@ package com.adMaroc.Tecdoc.BackOffice.Repository.custom;
 import com.adMaroc.Tecdoc.BackOffice.DTO.SearchDTO;
 import com.adMaroc.Tecdoc.BackOffice.DTO.SearchResponse;
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.ArticleDTO;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.ArticleTable;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.ArticleTable;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;

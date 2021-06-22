@@ -11,7 +11,7 @@ import java.util.Objects;
 @Embeddable
 public class PartsListCriteraId implements Serializable {
 
-    @Column(name="artnr")
+    @Column(name="artNr")
     String artNr;
     @Column(name="lfdnr1")
     long lfdNr1;

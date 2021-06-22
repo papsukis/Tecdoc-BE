@@ -14,17 +14,18 @@ public class X3Service {
 
     public x3Article getArticle(String artNr){
         RestTemplate restTemplate = new RestTemplate();
-
-        x3Article result = restTemplate.getForObject(filesConfig.getX3EndPoint()+correctArtNr(artNr), x3Article.class);
+        x3Article result =new x3Article();
+        try {
+            result=restTemplate.getForObject(filesConfig.getX3EndPoint() + correctArtNr(artNr), x3Article.class);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
         return result;
     }
 
     private String correctArtNr(String artNr){
         return artNr
-                .replace(".","")
-                .replace(" ","")
-                .replace("+","")
                 .replace("=","");
     }
 }

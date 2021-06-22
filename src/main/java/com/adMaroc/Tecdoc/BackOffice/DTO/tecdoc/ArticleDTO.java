@@ -1,7 +1,7 @@
 package com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc;
 
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.AccessoryLists;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.ArticleTable;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.AccessoryLists;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.ArticleTable;
 import com.adMaroc.Tecdoc.BackOffice.Models.x3Article;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,8 +41,8 @@ public class ArticleDTO {
     List<PartsListsDTO> partsList;
     List<AcessoryListDTO> acessoryList;
     public ArticleDTO(ArticleTable article) {
-        artNr = article.getArtNr();
-        dlnr=article.getdLNr();
+        artNr = article.getId().getArtNr();
+        dlnr=article.getId().getdLNr();
         articleDescription=article.getLanguageDescriptions()!=null?new DescriptionDTO(article.getLanguageDescriptions()):null;
         selfServingPack=article.getkZSB()==1;
         materialCertification=article.getkZMat()==1;

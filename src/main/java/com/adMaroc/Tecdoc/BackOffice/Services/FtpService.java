@@ -7,20 +7,12 @@ import com.adMaroc.Tecdoc.BackOffice.Utils.JsonReader;
 import com.adMaroc.Tecdoc.Security.Exceptions.InternalServerException;
 import com.adMaroc.Tecdoc.Security.Repository.ConfigurationRepository;
 
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import com.adMaroc.Tecdoc.BackOffice.Utils.HibernateUtil;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -104,6 +96,7 @@ public class FtpService {
             }
             ManufacturerSaveLog currentMan=ftpLogService.getManufacturerSaveLog(t.getFileName(),currentTask);
             currentMan=ftpLogService.updateManufacturerSaveLog(currentMan,FTP_Status.UNCOMPRESSING);
+
             FileDto tmp= null;
             try {
                 tmp = UnCompressFiles(t);
@@ -142,6 +135,10 @@ public class FtpService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+//            if(t.getFileName().contains("REFERENCE_DATA"))
+//                cacheManager.getCacheNames().stream()
+//                        .forEach(cacheName -> cacheManager.getCache(cacheName).clear());
+
         }
         ftpLogService.completeTask(currentTask);
     }
@@ -185,13 +182,18 @@ public class FtpService {
             for(String file : sortedList)
             {
 
+
                 TableSaveLog currentTable=ftpLogService.getTableLog(file,currentMan.getTableSaveLog());
                 try {
                     save(file,tmp.getPath(),currentTable);
                 } catch (Exception e) {
+                    e.printStackTrace();
                     log.error(e.getMessage());
                     ftpLogService.updateTableSaveLog(currentTable,FTP_Status.ERROR);
                 }
+//                if(file.contains("REFERENCE_DATA"))
+//                    cacheManager.getCacheNames().stream()
+//                            .forEach(cacheName -> cacheManager.getCache(cacheName).clear());
             }
             currentMan=ftpLogService.getManufacturerLog(currentMan.getId());
             ftpLogService.updateManufacturerSaveLog(currentMan,FTP_Status.COMPLETED);
@@ -200,16 +202,15 @@ public class FtpService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+//            if(t.getFileName().contains("REFERENCE_DATA"))
+//                cacheManager.getCacheNames().stream()
+//                        .forEach(cacheName -> cacheManager.getCache(cacheName).clear());
         }
         ftpLogService.completeTask(currentTask);
     }
-//    @Transactional
-@Async public void asyncSave(DownloadRequest downloadRequest, FtpDTO ftpLogs)  {
-//    Session session = HibernateUtil.getSessionFactory().openSession();
-//    session.beginTransaction();
-
+    @Async
+    public void asyncSave(DownloadRequest downloadRequest, FtpDTO ftpLogs)  {
         SaveTaskLog currentTask = ftpLogService.startTask(downloadRequest.getFiles(),ftpLogs.getUser(),Actions.SAVE_ONLY,ftpLogs.getIpAdress());
-//        session.getTransaction().commit();
 
         for(UnCompressAndSaveRequest t: downloadRequest.getFiles())
         {
@@ -238,6 +239,10 @@ public class FtpService {
             for(String file : sortedList)
             {
                 TableSaveLog currentTable=ftpLogService.getTableLog(file,currentMan.getTableSaveLog());
+//                if(file.contains("REFERENCE_DATA"))
+//                    cacheManager.getCacheNames().stream()
+//                            .forEach(cacheName -> cacheManager.getCache(cacheName).clear());
+
                 try {
                     save(file,folder,currentTable);
                 } catch (Exception e) {
@@ -255,10 +260,6 @@ public class FtpService {
             }
         }
         ftpLogService.completeTask(currentTask);
-
-        cacheManager.getCacheNames().stream()
-            .forEach(cacheName -> cacheManager.getCache(cacheName).clear());
-
 }
 //    @Transactional
     @Async
@@ -308,6 +309,8 @@ public class FtpService {
             file.close();
             currentMan=ftpLogService.updateManufacturerSaveLog(currentMan,FTP_Status.DOWNLOADING_PICTURES);
             downloadPictures(u.getFileName());
+            currentMan=ftpLogService.updateManufacturerSaveLog(currentMan,FTP_Status.COMPLETED);
+
         }
         ftp.close();
         ftpRemote.close();

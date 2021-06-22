@@ -1,4 +1,5 @@
 package com.adMaroc.Tecdoc.BackOffice.Models.TecdocData;
+;
 
 
 import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.PartsListCriteraId;
@@ -8,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Map;
 
 @Data
 @AllArgsConstructor
@@ -28,10 +28,15 @@ public class PartsListCritera {
     long loschFlag;
     @Column(name="dl_nr")
     long dlnr;
-    @MapsId("artNr")
+    @MapsId("ArticleTableId")
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "artNr",
-            referencedColumnName = "artNr")
+    @JoinColumns({
+        @JoinColumn(name = "artNr",
+                referencedColumnName = "artNr"),
+        @JoinColumn(
+                name = "dLNr",
+                referencedColumnName = "dLNr")
+    })
     private ArticleTable articleTable;
 
     @MapsId("CriteriaId")
@@ -55,13 +60,6 @@ public class PartsListCritera {
                     referencedColumnName = "lfdnr")})
     private PartsLists partsLists;
 
-    public long getDlnr() {
-        return dlnr;
-    }
-
-    public void setDlnr(long dlnr) {
-        this.dlnr = dlnr;
-    }
 
     public PartsListCriteraId getId() {
         return id;
@@ -69,6 +67,14 @@ public class PartsListCritera {
 
     public void setId(PartsListCriteraId id) {
         this.id = id;
+    }
+
+    public long getDlnr() {
+        return dlnr;
+    }
+
+    public void setDlnr(long dlnr) {
+        this.dlnr = dlnr;
     }
 
     public long getdLNr() {

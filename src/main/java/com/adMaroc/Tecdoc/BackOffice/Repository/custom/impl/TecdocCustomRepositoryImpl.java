@@ -1,9 +1,9 @@
 package com.adMaroc.Tecdoc.BackOffice.Repository.custom.impl;
 
 import com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc.KeyTableDTO;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.*;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.AccessoryListsId;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.QCountryAndLanguageDependentDescriptionsId;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.*;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.AccessoryListsId;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.QCountryAndLanguageDependentDescriptionsId;
 import com.adMaroc.Tecdoc.BackOffice.Repository.custom.TecdocCustomRepository;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -183,12 +183,12 @@ public class TecdocCustomRepositoryImpl implements TecdocCustomRepository {
     }
     @Cacheable("articles")
     @Override
-    public ArticleTable findArticleTableByArtNr(String artNr){
+    public ArticleTable findArticleTableByArtNr(String artNr,Long dlnr){
         JPAQueryFactory query = new JPAQueryFactory(em);
 
         QArticleTable articleTable=QArticleTable.articleTable;
 
-        JPAQuery<ArticleTable> jpaQuery=query.selectFrom(articleTable).where(articleTable.artNr.eq(artNr));
+        JPAQuery<ArticleTable> jpaQuery=query.selectFrom(articleTable).where(articleTable.id.artNr.eq(artNr).and(articleTable.id.dLNr.eq(dlnr)));
 
         return jpaQuery.fetchOne();
     }

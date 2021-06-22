@@ -1,7 +1,7 @@
 package com.adMaroc.Tecdoc.BackOffice.DTO.tecdoc;
 
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.AxleBrakeSize;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.AxleWheelbases;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.AxleBrakeSize;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.AxleWheelbases;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

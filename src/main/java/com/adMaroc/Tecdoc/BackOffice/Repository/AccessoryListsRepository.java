@@ -1,7 +1,7 @@
 package com.adMaroc.Tecdoc.BackOffice.Repository;
 
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.AccessoryLists;
-import com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.AccessoryListsId;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.AccessoryLists;
+import  com.adMaroc.Tecdoc.BackOffice.Models.TecdocData.compositeKeys.AccessoryListsId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

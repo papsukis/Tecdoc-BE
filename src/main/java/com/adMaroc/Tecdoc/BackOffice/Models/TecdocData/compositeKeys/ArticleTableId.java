@@ -4,15 +4,16 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Data
 @Embeddable
-public class ArticleTableId {
+public class ArticleTableId implements Serializable {
     @Column(name="artNr")
     String artNr;
 
-    @Column(name="dlnr")
+    @Column(name="dLNr")
     long dLNr;
 
     public ArticleTableId(String artNr, long dLNr) {
